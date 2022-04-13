@@ -1,0 +1,3 @@
+name: 1-functions-go
+runtime: go
+description: A minimal Go Pulumi program
