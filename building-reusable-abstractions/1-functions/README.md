@@ -4,7 +4,7 @@ The first tool in our arsenal is the almighty function. Almost every programming
 
 Whether we're talking [DRY (Don't Repeat Yourself)](https://en.wikipedia.org/wiki/Don%27t_repeat_yourself), [SOLID](https://en.wikipedia.org/wiki/SOLID), or just good programming practices, functions are the foundation of providing composable abstractions that allow us to restrict the scope of a unit (for testing, among many other things) and save us from repeating ourselves in our code.
 
-In this exercise, we're going to build a function that will allow us to create a Kubernetes cluster on Civo Cloud.
+In this exercise, we're going to build a function that will allow us to create a network on Civo Cloud.
 
 ## Exercises
 

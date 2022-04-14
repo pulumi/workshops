@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/pulumi/pulumi-civo/sdk/go/civo"
-	k8s "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes"
+	"github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes"
 	appsv1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/apps/v1"
 	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/core/v1"
 	metav1 "github.com/pulumi/pulumi-kubernetes/sdk/v3/go/kubernetes/meta/v1"
@@ -30,7 +30,7 @@ func main() {
 			return err
 		}
 
-		kubernetesProvider, err := k8s.NewProvider(ctx, "kubernetesProvider", &k8s.ProviderArgs{
+		kubernetesProvider, err := kubernetes.NewProvider(ctx, "kubernetesProvider", &k8s.ProviderArgs{
 			Kubeconfig: cluster.Kubeconfig,
 		})
 
