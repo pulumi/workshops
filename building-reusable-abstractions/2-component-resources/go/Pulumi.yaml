@@ -1,0 +1,3 @@
+name: 2-cs-go
+runtime: go
+description: A minimal Go Pulumi program

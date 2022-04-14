@@ -1,0 +1,3 @@
+name: 2-cs-typescript
+runtime: nodejs
+description: A minimal TypeScript Pulumi program
