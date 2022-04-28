@@ -10,7 +10,8 @@ But first, we need to pass in the following configuration values:
 
 
 <details>
-<summary>**Question: Where do you think we should pass those config values: To the local program (`api/burner.py`) or to the wrapper (`infra/basic.py`)?**</summary>
+<summary><b>Question: Where do you think we should pass those config values: To the local program (<pre>api/burner.py</pre>) or to the wrapper (<pre>infra/basic.py</pre>)?</b></summary>
+
 
 Answer: You want to pass it to the local program.
 </details>
@@ -31,15 +32,19 @@ $ curl localhost:8000/location
 While the CURL command is running, switch back to the terminal window running your API.
 
 <details>
-<summary>**Question: Where are you finding the logs?</summary>
+<summary><b>Question: Where are you finding the logs?</b></summary>
 
-You'll find all of the info logs appearing in the terminal with your API.
+
+Answer: You'll find all of the info logs appearing in the terminal with your API.
 </details>
 
 This program automatically destroys all resources after a successful run, so you shouldn't need to spin anything down.
 
 <details>
-<summary>**Question: How would you destroy the stack manually?</summary>
+<summary>
+**Question: How would you destroy the stack manually?**
+</summary>
 
-You can change into the `api` directory and run Pulumi commands as normal, including `pulumi destroy` because we updated `api/__main__.py` to point to and run the same `burner.pulumi_program()` call that the Automation API is running.
+
+Answer: You can change into the `api` directory and run Pulumi commands as normal, including `pulumi destroy` because we updated `api/__main__.py` to point to and run the same `burner.pulumi_program()` call that the Automation API is running.
 </details>
