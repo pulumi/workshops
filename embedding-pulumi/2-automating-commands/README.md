@@ -4,9 +4,14 @@ Now that we have a basic structure, we're going to create a Pulumi program that 
 
 The local program is in `burner.py` in this directory.
 
-**Question: Does anything about the file seem different to you?**
+<details>
+<summary><b>Question:</b> Does anything about the file seem different to you?</summary>
 
-To set up a local program, we create a standard Pulumi program, and then we wrap it in a function call so the Automation API can interact with it. Here, we're creating an AWS Lambda function with the requisite roles and policies and an invocation. The exports will get fed up to our API program.
+<br/>
+<b>Answer:</b> It should! To set up a local program, we create a standard Pulumi program, and then we wrap it in a function call so the Automation API can interact with it.
+</details>
+
+Here, we're creating an AWS Lambda function with the requisite roles and policies and an invocation. The exports will get fed up to our API program.
 
 Drop `burner.py` into the `api` directory.
 
@@ -19,7 +24,12 @@ burner.pulumi_program()
 
 ```
 
-**Question: Why would we be doing that?**
+<details>
+<summary><b>Question:</b> Why would we be doing that?</summary>
+
+<br/>
+<b>Answer:</b> That's so we call the right program from our Automation API and so we can call the program directly later.
+</details>
 
 Here's what the directory structure is now:
 

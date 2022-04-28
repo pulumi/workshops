@@ -4,4 +4,4 @@ Without proper logging, we won't get much output to the terminal that's running 
 
 Our logging and exception handling is all happening in `infra/basic.py`.
 
-**Action: Let's explore the logging and exception handling.**
+**Action:** Let's explore the logging and exception handling.

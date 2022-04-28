@@ -34,7 +34,12 @@ time-auto-api/
         requirements.txt
 ```
 
-**Question: Let's go explore the `basic.py` file. What do you think is happening in this file?**
+<details>
+<summary><b>Question:</b> Let's go explore the <code>basic.py</code> file. What do you think is happening in this file?</summary>
+
+<br/>
+<b>Answer:</b> We're wrapping each step that the Pulumi CLI would take into its own function using the Automation API to define the actual actions. We're doing that to ensure we can log at each step and raise exceptions at the right points if there are errors (more on that in a moment).
+</details>
 
 ## Creating the API itself
 
@@ -67,4 +72,9 @@ time-auto-api/
 
 Lines 28 on in `infra_api.py` is all Falcon, a lightweight WSGI framework for REST APIs. But the part that we're really interested in from a Pulumi standpoint is on lines 11 to 25. Each endpoint that returns data from our "datacenter" calls that function and returns the data to the endpoint.
 
-**Question: Can you follow what's happening? Where's the virtual environment coming from?**
+<details>
+<summary><b>Question:</b> Can you follow what's happening? Where's the virtual environment coming from?</summary>
+
+<br/>
+<b>Answer:</b>The virtual environment is coming from the <code>api/</code> directory because the code is running in that context.
+</details>
