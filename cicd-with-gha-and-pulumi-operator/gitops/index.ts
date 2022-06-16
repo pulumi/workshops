@@ -3,9 +3,13 @@ import * as kx from "@pulumi/kubernetesx";
 
 const appLabels = { app: "nginx" };
 const deployment = new kx.Deployment("nginx", {
+  metadata: {
+    labels: appLabels,
+  },
   spec: {
     selector: { matchLabels: appLabels },
     template: {
+      metadata: { labels: appLabels },
       spec: {
         containers: [
           {
