@@ -1,0 +1,29 @@
+name: main
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+    paths:
+      - "**"
+  schedule:
+    - cron: "6 6 * * *"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: infrastructure
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14.x
+      - run: npm install
+      - uses: pulumi/actions@v3
+        with:
+          command: up
+          stack-name: workshop
+          refresh: true
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}

@@ -1,0 +1,4 @@
+name: cicd-with-gha-and-pulumi-operator
+runtime: nodejs
+description: Example of Deploying a Kubernetes Cluster via GitHub Actions and Workloads
+  with Pulumi Kubernetes Operator
