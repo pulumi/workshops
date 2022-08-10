@@ -1,0 +1,16 @@
+name: fundamentals
+runtime: yaml
+description: a yaml test
+resources:
+  backend-image:
+    type: docker:index:RemoteImage
+    properties:
+      name: pulumi/tutorial-pulumi-fundamentals-backend:latest
+  frontend-image:
+    type: docker:index:RemoteImage
+    properties:
+      name: pulumi/tutorial-pulumi-fundamentals-frontend:latest
+  mongo-image:
+    type: docker:index:RemoteImage
+    properties:
+      name: pulumi/tutorial-pulumi-fundamentals-database-local:latest
