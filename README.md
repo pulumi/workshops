@@ -6,11 +6,14 @@ Each workshop has a directory. Inside the directory is a README with details abo
 
 Topic | Language | Provider | Link
 ---|---|---|---
-Cloud Basics | Python | AWS | cloud-engineering-with-aws-X/python
-Cloud Basics | Java | AWS | cloud-engineering-with-aws-X/java
-Basics | YAML | Docker | yaml-introduction
-Automation API | Python | AWS | embedding-pulumi
 Abstractions | TypeScript | Civo | building-reusable-abstractions
 Abstractions | Python | Civo | building-reusable-abstractions
 Abstractions | Go | Civo | building-reusable-abstractions
-CICD | TypeScript | GitHub, Kubernetes | cicd-with-gha-and-pulumi-operator
+Automation API | Python | AWS | embedding-pulumi
+Basics | YAML | Docker | yaml-introduction
+CI/CD | TypeScript | GitHub, Kubernetes | cicd-with-gha-and-pulumi-operator
+Cloud Basics | Python | AWS | cloud-engineering-with-aws-X/python
+Cloud Basics | Java | AWS | cloud-engineering-with-aws-X/java
+Cloud Basics | TypeScript | AWS | modern-infrastructure-as-code-ts
+Platform Engineering | TypeScript, Python, Go | AWS | building-a-kubernetes-platform-in-amazon-eks
+
