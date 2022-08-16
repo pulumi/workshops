@@ -1,0 +1,50 @@
+{
+  "name": "pulumipus-boba-tea-shop",
+  "version": "0.0.1",
+  "description": "Pulumipus Boba Tea Shop Demo App",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "client": "cd client && npm start",
+    "server": "nodemon server.js",
+    "dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
+    "dev:server": "cd client && yarn build && cd .. && yarn start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pulumi/tutorials.git"
+  },
+  "keywords": [
+    "pulumi",
+    "demo",
+    "react",
+    "javsacript",
+    "nodejs",
+    "mongodb",
+    "shopping-cart",
+    "backend-services",
+    "hooks-api-react",
+    "context-api",
+    "usereducer",
+    "tea",
+    "create-react-app",
+    "mern-stack"
+  ],
+  "author": "Pulumi (forked from shubhambattoo)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pulumi/tutorials/issues"
+  },
+  "homepage": "https://learn.pulumi.com",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.2",
+    "morgan": "^1.10.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.3"
+  }
+}

@@ -1,3 +1,16 @@
+---
+author: David
+language: yaml
+provider: docker
+use: first-party
+last-ran: unknown
+boilerplate: something
+last-host: David
+learn-content: https://www.pulumi.com/learn/pulumi-fundamentals/
+original-repo: none
+status: active
+---
+
 # IAC Fundamentals
 
 For this workshop, we're going to learn more about cloud computing by exploring

@@ -8,6 +8,7 @@ boilerplate: something
 last-host: Kat C.
 learn-content: none
 original-repo: https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content
+status: active
 ---
 
 # Cloud Engineering with AWS and Python

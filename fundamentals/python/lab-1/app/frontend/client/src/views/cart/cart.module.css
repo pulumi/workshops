@@ -1,0 +1,275 @@
+.page {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--background);
+  z-index: 1;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: 1fr 500px;
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 500;
+}
+
+.items {
+  height: calc(100vh - 164px);
+  overflow: auto;
+  padding: 82px 50px;
+}
+
+.checkout {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  height: 100vh;
+  padding: 82px 50px;
+}
+
+.item:not(:last-child) {
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.item_wrapper {
+  display: grid;
+  grid-template-columns: 50px 200px auto 100px 120px;
+  gap: 20px;
+  align-items: center;
+}
+
+.item_image {
+  width: 200px;
+  height: 200px;
+}
+
+.item_image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.item_details h3 {
+  margin: 0 0 10px;
+  padding: 0;
+  font-family: var(--font-family-2);
+  font-weight: 400;
+}
+
+.item_meta {
+  font-size: 14px;
+  font-weight: 400;
+  color: #777;
+}
+
+.item_controller {
+  background-color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: #777;
+  border-radius: 30px;
+  overflow: hidden;
+  padding: 2px;
+}
+
+@media screen and (max-width: 992px) {
+
+  .wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .checkout {
+    position: fixed;
+    right: 0;
+    width: 400px;
+    transform: translateX(100%);
+  }
+
+  .checkout_shown {
+    transform: translateX(0%);
+  }
+}
+
+@media screen and (max-width: 600px) {
+
+
+  .checkout {
+    position: fixed;
+    right: 0;
+    width: calc(100% - 100px);
+    left: 0;
+  }
+}
+
+.item_controller button {
+  background-color: transparent;
+  border: none;
+  height: 30px;
+  width: 30px;
+  padding: 0;
+  border-radius: 30px;
+  cursor: pointer;
+  /* transition: background .2s ease-in; */
+}
+
+.item_controller button:disabled {
+  opacity: 0.3;
+}
+
+/* .item_controller button:hover {
+  background-color: var(--black-color);
+}
+
+.item_controller button:hover i {
+  color: #fff;
+} */
+
+.item_controller button:focus {
+  outline: none;
+}
+
+.item_controller button i {
+  font-size: 16px;
+}
+
+.item_remove {
+  justify-self: flex-start;
+}
+
+.item_remove button {
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  border: none;
+  transition: background .2s ease-in;
+  cursor: pointer;
+  background-color: #ededed;
+  padding-top: 3px;
+}
+
+.item_remove button:hover {
+  /* background-color: #dcdada; */
+  background-color: var(--black-color);
+}
+
+.item_remove button:hover span {
+  color: #fff;
+}
+
+.item_remove button:focus {
+  outline: none;
+}
+
+.item_remove button span {
+  font-size: 22px;
+}
+
+.item_price {
+  justify-self: flex-end;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.total_box {
+  border-top: 1px solid #ddd;
+}
+
+.total_box_content {
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+}
+
+.total_item {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-weight: 400;
+  color: #555;
+}
+
+.coupon {
+  color: salmon
+}
+
+.total_item:last-of-type {
+  border-top: 1px solid #eee;
+  padding-top: 1rem;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.checkout_footer {
+  padding: 10px 0;
+  margin-top: 10px;
+}
+
+.checkout_footer button {
+  background-color: var(--black-color);
+  padding: 16px 20px;
+  border: none;
+  color: #fff;
+  font-weight: 400;
+  font-size: 17px;
+  width: 100%;
+  border-radius: 2px;
+  text-transform: uppercase;
+  transition: background .2s ease-in;
+  cursor: pointer;
+}
+
+.checkout_footer button:hover {
+  background-color: #000;
+}
+
+.toggle_btn {
+  position: fixed;
+  right: 50px;
+  bottom: 1rem;
+  display: flex;
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  background: #eee;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  transition: background .2s ease-in;
+  border: none;
+}
+
+.toggle_btn:hover {
+  background: #dcdada
+}
+
+.toggle_btn:focus {
+  outline: none;
+}
+
+.toggle_close {
+  transform: rotate(180deg);
+}
+
+@media screen and (min-width:993px) {
+  .toggle_btn {
+    display: none;
+  }
+}
+
+@media screen and (max-width:600px) {
+  .toggle_btn {
+    right: 20px;
+  }
+}

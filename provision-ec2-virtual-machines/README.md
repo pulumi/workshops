@@ -8,6 +8,7 @@ boilerplate: something
 last-host: unknown
 learn-content: none
 original-repo: https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content
+status: stale
 ---
 
 # Provision EC2 Virtual Machines

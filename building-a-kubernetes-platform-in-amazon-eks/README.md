@@ -8,6 +8,7 @@ boilerplate: something
 last-host: unknown
 learn-content: none
 original-repo: https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content
+status: stale
 ---
 
 # Building a Kubernetes Platform in Amazon EKS (Multi-language)
