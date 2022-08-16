@@ -6,14 +6,18 @@ Each workshop has a directory. Inside the directory is a README with details abo
 
 Topic | Language | Provider | Link
 ---|---|---|---
-Abstractions | TypeScript | Civo | building-reusable-abstractions
-Abstractions | Python | Civo | building-reusable-abstractions
-Abstractions | Go | Civo | building-reusable-abstractions
-Automation API | Python | AWS | embedding-pulumi
-Basics | YAML | Docker | yaml-introduction
-CI/CD | TypeScript | GitHub, Kubernetes | cicd-with-gha-and-pulumi-operator
-Cloud Basics | Python | AWS | cloud-engineering-with-aws-X/python
-Cloud Basics | Java | AWS | cloud-engineering-with-aws-X/java
-Cloud Basics | TypeScript | AWS | modern-infrastructure-as-code-ts
-Platform Engineering | TypeScript, Python, Go | AWS | building-a-kubernetes-platform-in-amazon-eks
-
+Abstractions | TypeScript | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
+Abstractions | Python | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
+Abstractions | Go | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
+Automation API | Python | AWS | [embedding-pulumi](./embedding-pulumi/)
+Basics | YAML | Docker | [yaml-introduction](./yaml-introduction/)
+CI/CD | TypeScript | AWS, Kubernetes, Helm | [deploying-argocd-to-amazon-eks](./deploying-argocd-to-amazon-eks/)
+CI/CD and GitOps | TypeScript | GitHub, Kubernetes | [cicd-with-gha-and-pulumi-operator](./cicd-with-gha-and-pulumi-operator/)
+Cloud Basics | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
+Cloud Basics | Java | AWS | [cloud-engineering-with-aws-X/java](./cloud-engineering-with-aws-X/java/)
+Cloud Basics | TypeScript | AWS | [modern-infrastructure-as-code-ts](./modern-infrastructure-as-code-ts/)
+Cloud Basics | TypeScript | AWS | [deploying-containers-to-ecs](./deploying-containers-to-ecs/)
+Cloud Basics | TypeScript | AWS | [provision-ec2-virtual-machines](./provision-ec2-virtual-machines/)
+GitOps | TypeScript | AWS | [gitops-for-socks-shop](./gitops-for-socks-shop/)
+Platform Engineering | TypeScript, Python, Go | AWS | [building-a-kubernetes-platform-in-amazon-eks](./building-a-kubernetes-platform-in-amazon-eks/)
+Serverless | TypeScript | AWS | [lambda-for-serverless-application-patterns](./lambda-for-serverless-application-patterns/)
