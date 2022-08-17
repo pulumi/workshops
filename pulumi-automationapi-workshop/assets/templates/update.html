@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}Update site '{{ name }}'{% endblock %}
+{% endblock %}
+
+{% block content %}
+  <div class="p-2">
+    <form method="post">
+      <div class="mb-3">
+        <label for="file-url" class="form-label">File URL</label>
+        <input type="text" class="form-control" name="file-url" id="file-url">
+      </div>
+      <div class="mb-3">
+        <strong>OR</strong>
+      </div>
+      <div class="mb-3">
+        <label for="site-content" class="form-label">Content</label>
+        <textarea class="form-control" name="site-content" id="site-content" rows="5">{{ content }}</textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}Deployment Directory{% endblock %}
+{% endblock %}
+
+{% block content %}
+  <table class="table">
+    <tbody>
+      {% if not deployments %}
+      <div class="container gy-5">
+        <div class="row py-4">
+          <div class="alert alert-secondary" role="alert">
+            No deployments are currently active. Click `Create new` to get started!
+          </div>
+        </div>
+      </div>
+      {%  endif %}
+      {% for deployment in deployments %}
+        <tr>
+          <td class="align-bottom" colspan="4">
+            <div class="p-1">
+              <a href="http://{{ deployment["url"] }}" class="fs-5 align-bottom">{{ deployment["name"] }}</a>
+            </div>
+          </td>
+          <td>
+            <div class="float-end p-1">
+              <form action="{{ url_for("delete_deployment", id=deployment["name"]) }}" method="post">
+                <input class="btn btn-danger" type="submit" value="Delete">
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
