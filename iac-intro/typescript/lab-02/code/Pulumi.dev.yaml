@@ -1,0 +1,2 @@
+config:
+  docker.ts:image_name: jaxxstorm/intro-to-pulumi
