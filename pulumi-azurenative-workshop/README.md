@@ -1,6 +1,6 @@
 ---
 author: Lee B.
-language: TypeScript
+language: typescript
 provider: azure-native
 use: first-party
 last-ran: unknown
