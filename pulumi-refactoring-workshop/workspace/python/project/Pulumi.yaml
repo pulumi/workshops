@@ -1,0 +1,6 @@
+name: refactor-workshop-ws
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: A minimal Azure Native Python Pulumi program

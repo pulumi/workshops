@@ -1,0 +1,14 @@
+{
+    "python.analysis.extraPaths": [
+        "${workspaceFolder}/.venv",
+        "${workspaceFolder}/venv",
+        "${workspaceFolder}/workspace/project/python/venv"
+    ],
+    "python.autoComplete.extraPaths": [
+
+        "${workspaceFolder}/.venv",
+        "${workspaceFolder}/venv",
+        "${workspaceFolder}/workspace/project/python/venv"
+    ],
+    "python.formatting.provider": "black"
+}

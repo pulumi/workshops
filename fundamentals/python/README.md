@@ -7,7 +7,7 @@ last-ran: unknown
 boilerplate: something
 last-host: Matty
 learn-content: https://www.pulumi.com/learn/pulumi-fundamentals/
-original-repo: https://github.com/katcosgrove/iac-fundamentals
+original-repo: https://github.com/katcosgrove/iac-fundamentals and fork
 status: active
 ---
 
