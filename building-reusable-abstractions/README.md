@@ -1,3 +1,16 @@
+---
+author: David
+language: typescript, python, go
+provider: civo
+use: first-party
+last-ran: unknown
+boilerplate: something
+last-host: David
+learn-content: https://www.pulumi.com/learn/abstraction-encapsulation/
+original-repo: none
+status: active
+---
+
 # Building Reusable Abstractions
 
 This is a Pulumi workshop that aims to guide you through the process of using your programming language's, and Pulumi's, primitives to build reusable and sharable abstractions for infrastructure as code.

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<title>Pulumipus' Deployment Platyform - {% block title %}{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+<script src="{{ url_for('static', filename='bootstrap.js') }}"></script>
+
+<div class="container p-2">
+  <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
+    <a href="{{ url_for("list_deployments") }}" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
+      <span class="fs-3">Pulumipus' Deployment Platyform -</span>
+    </a>
+    <ul class="nav nav-pills">
+      <li class="nav-item fs-6"><a href="{{ url_for('create_deployment') }}" class="nav-link active">Create new</a></li>
+    </ul>
+  </header>
+</div>
+<section class="container-md px-4">
+  <div>
+    <header class="row gy-4">
+      <span class="fs-4">{% block header %}{% endblock %}</span>
+      {% for category, message in get_flashed_messages(with_categories=true) %}
+      <div class="alert alert-{{ category }}" role="alert">{{ message }}</div>
+      {% endfor %}
+    </header>
+  </div>
+  {% block content %}{% endblock %}
+</section>

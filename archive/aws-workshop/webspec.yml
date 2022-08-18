@@ -1,0 +1,35 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      docker: 18
+      dotnet: 2.2
+      python: 3.7
+      ruby: 2.6
+  pre_build:
+    commands:
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=${COMMIT_HASH:=latest}
+      - echo Initializing Git Repo
+      - git init
+      - git remote add origin $FULL_REPO_URL
+      - git fetch
+      - git checkout -f "$CODEBUILD_RESOLVED_SOURCE_VERSION"
+      - git submodule init
+      - git submodule update --recursive
+      - gem install asciidoctor
+      - echo Install Hugo
+      - curl -s https://api.github.com/repos/gohugoio/hugo/releases/latest | grep "browser_download_url.*hugo_[^extended].*_Linux-64bit\.tar\.gz" | cut -d ":" -f 2,3 | tr -d \" | wget -qi -  
+      - HUGO_TAR="$(find . -name "*Linux-64bit.tar.gz")"
+      - tar -xzf $HUGO_TAR
+      - chmod +x hugo
+
+  build:
+    commands:
+      - echo Build Website
+      - ./hugo -D
+      - echo Deploy Copy Website to S3 Bucket
+      - aws s3 cp public/ s3://${WEB_SITE_BUCKET}/ --recursive
+      - aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRO_ID} --paths /\*
+      

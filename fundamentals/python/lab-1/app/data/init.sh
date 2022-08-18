@@ -1,0 +1,1 @@
+mongoimport --db cart --collection products --type json --file /app/data/products.json --jsonArray --uri "mongodb://mongo:27017"

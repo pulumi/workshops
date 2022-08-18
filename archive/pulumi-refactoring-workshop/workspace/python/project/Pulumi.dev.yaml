@@ -1,0 +1,4 @@
+config:
+  azure-native:location: WestUS
+  refactor-workshop-ws:subnet_cidr: 192.168.0.0/28
+  refactor-workshop-ws:vnet_cidr: 192.168.0.0/24

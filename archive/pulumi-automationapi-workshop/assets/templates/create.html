@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  {% block title %}Create new static site{% endblock %}
+{% endblock %}
+
+{% block content %}
+<div class="p-2">
+  <form method="post">
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input type="text" class="form-control" name="name" id="name" aria-describedby="nameHelp" required>
+      <div id="nameHelp" class="form-text">Choose a unique name as a label for your deployment</div>
+    </div>
+    <div class="mb-3">
+      <label for="image" class="form-label">Docker Image</label>
+      <input type="text" class="form-control" id="image" name="image">
+      <div id="nameHelp" class="form-text">Specify the Docker Image you want to run</div>
+    </div>
+    <div class="mb-3">
+      <label for="port" class="form-label">Docker Port</label>
+      <input type="text" class="form-control" id="port" name="port">
+      <div id="nameHelp" class="form-text">Specify the Port that your image listens on</div>
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+</div>
+{% endblock %}

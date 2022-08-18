@@ -1,0 +1,317 @@
+[
+  {
+    "_id": {
+      "$oid": "5f6d025008a1b6f0e5636bc3"
+    },
+    "status": 1,
+    "teaType": 2,
+    "category": "boba",
+    "images": [
+      {
+        "src": "classic_boba.png"
+      }
+    ],
+    "created": 1600979464563,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "name": "Classic Milk Tea",
+    "price": 5.00,
+    "description": "Black tea is shaken with frothy milk, crushed ice, and a few generous handfuls of marble-sized, caramelized tapioca pearls.",
+    "productCode": "852542-105",
+    "ratings": {
+      "total": 63,
+      "avg": 5,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6d0ad908a1b6f0e5636bc4"
+    },
+    "status": 1,
+    "teaType": 2,
+    "category": "boba",
+    "images": [
+      {
+        "src": "ginger_boba.png"
+      }
+    ],
+    "created": 1600981421087,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "name": "Ginger Milk Tea",
+    "price": 5.00,
+    "description": "A creamy ice cold drink with a strong taste of ginger, added by a cool and refreshing tea flavor.",
+    "productCode": "CT2816-100",
+    "ratings": {
+      "total": 0,
+      "avg": 0,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6d734f19ce90070b4837ce"
+    },
+    "status": 2,
+    "teaType": 2,
+    "category": "boba",
+    "images": [
+      {
+        "src": "taro_boba.png"
+      }
+    ],
+    "created": 1601008415022,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "name": "Taro Milk Tea",
+    "price": 6.00,
+    "description": "Taro bubble tea is recognized by its color, which runs from purple-tinged brown to nearly lilac, and its coconut-like flavor. Taro (a root vegetable similar to a sweet potato) is pureed and added to boba milk tea, where it acts as a thickener and flavoring.",
+    "productCode": "CI9924-100",
+    "ratings": {
+      "total": 4,
+      "avg": 5,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6d74c519ce90070b4837cf"
+    },
+    "status": 1,
+    "teaType": 2,
+    "category": "boba",
+    "images": [
+      {
+        "src": "thai_boba.png"
+      }
+    ],
+    "created": 1601008816970,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "M",
+      "L"
+    ],
+    "name": "Thai Milk Tea",
+    "price": 5.00,
+    "description": "Thai Tea is made from strongly-brewed black tea, spiced with star anise, crushed tamarind, and cardamom. It is then sweetened sugar and sweetened condensed milk.",
+    "productCode": "AT8241-005",
+    "ratings": {
+      "total": 34,
+      "avg": 4.5,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6d761c19ce90070b4837d0"
+    },
+    "status": 1,
+    "teaType": 4,
+    "category": "chill",
+    "images": [
+      {
+        "src": "mango_chill.png"
+      }
+    ],
+    "created": 1601009129502,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "name": "Mango Chill",
+    "price": 5.00,
+    "description": "A juicy, tart-sweet blend of mango, ginger & floral notes on ice.",
+    "productCode": "CT4063-400",
+    "ratings": {
+      "total": 34,
+      "avg": 4.5,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6e0a4340fdb952de7f9314"
+    },
+    "status": 2,
+    "teaType": 3,
+    "category": "latte",
+    "images": [
+      {
+        "src": "matcha_latte.png"
+      }
+    ],
+    "created": 1601009129502,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "S",
+      "M"
+    ],
+    "name": "Matcha Latte",
+    "price": 6.00,
+    "description": "A delicious base of energizing matcha green tea, spiced to perfection with hints of cinnamon, nutmeg and cardamom. Sweet but not too sweet with the goodness of matcha.",
+    "productCode": "BQ9646-001",
+    "ratings": {
+      "total": 102,
+      "avg": 4.5,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6e0b6440fdb952de7f9315"
+    },
+    "status": 2,
+    "teaType": 4,
+    "category": "chill",
+    "images": [
+      {
+        "src": "matcha_chill.png"
+      }
+    ],
+    "created": 1601047285438,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "name": "Matcha Chill",
+    "price": 5.50,
+    "description": "A delicious base of energizing matcha green tea, spiced to perfection with hints of cinnamon, nutmeg and cardamom. Sweet but not too sweet with the goodness of matcha served over ice.",
+    "productCode": "CJ6740-002",
+    "ratings": {
+      "total": 34,
+      "avg": 4.5,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6e0c3040fdb952de7f9316"
+    },
+    "status": 1,
+    "teaType": 4,
+    "category": "chill",
+    "images": [
+      {
+        "src": "pulumipus_chill.png"
+      }
+    ],
+    "created": 1601047571500,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "name": "Pulumipus Chill",
+    "price": 6.00,
+    "description": "Our special mix of mango, pineapple, kiwi, and more. A deliciously cold drink from your favorite platypus.",
+    "productCode": "CK7513-003",
+    "ratings": {
+      "total": 182,
+      "avg": 5,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6e0d3840fdb952de7f9317"
+    },
+    "status": 1,
+    "teaType": 4,
+    "category": "chill",
+    "images": [
+      {
+        "src": "strawberry_chill.png"
+      }
+    ],
+    "created": 1601047852170,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "name": "Strawberry Chill",
+    "price": 4.5,
+    "description": "Refreshing and crisp, this tea blends juicy strawberry, tart hibiscus, floral rosehips, and brisk peppermint all combined together for the perfect summer drink.",
+    "productCode": "CZ5021-100",
+    "ratings": {
+      "total": 6,
+      "avg": 4,
+      "reviews": []
+    }
+  },
+  {
+    "_id": {
+      "$oid": "5f6e0e8940fdb952de7f9318"
+    },
+    "status": 1,
+    "teaType": 4,
+    "category": "chill",
+    "images": [
+      {
+        "src": "taro_chill.png"
+      }
+    ],
+    "created": 1601048173895,
+    "currency": {
+      "id": "USD",
+      "format": "$"
+    },
+    "sizes": [
+      "S",
+      "M",
+      "L"
+    ],
+    "name": "Taro Chill",
+    "price": 6.00,
+    "description": "Taro bubble tea is recognized by its color, which runs from purple-tinged brown to nearly lilac, and its coconut-like flavor. Taro is pureed and added to boba milk tea, and served over ice.",
+    "productCode": "AT3160-020",
+    "ratings": {
+      "total": 11,
+      "avg": 5,
+      "reviews": []
+    }
+  }
+]

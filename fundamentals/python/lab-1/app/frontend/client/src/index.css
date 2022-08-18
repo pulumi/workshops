@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500&family=Prompt:wght@200;400;500;600&display=swap');
+
+:root {
+  --background: #f7f7f7;
+  --black-color: #222;
+  --background-rgb: 247, 247, 247;
+  --font-family-2: 'Oswald', sans-serif;
+  --font-family: 'Prompt', sans-serif;
+  --header-background: var(--background);
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  font-weight: 200;
+  background-color: var(--background);
+}
+
+body.noscroll {
+  overflow: hidden;
+}
+
+body.trans {
+  --header-background: transparent;
+}
+
+@media screen and (min-width:993px) {
+  body.noscroll-web {
+    overflow: hidden;
+  }
+}
+
+.no-products {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  letter-spacing: 1px;
+  color: #888;
+  font-weight: 500;
+}
+
+.footer {
+  padding: 20px 50px;
+  font-size: 14px;
+  color: #888;
+}
+
+.footer a {
+  color: #666;
+}
+
+.footer em {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+}
+
+.react-multi-carousel-list {
+  height: 100%;
+  /* width: calc(100vw - 20px); */
+}
+
+ul.react-multi-carousel-track {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+ul.react-multi-carousel-track li {
+  height: 100%;
+}
+
+/* Grid items filtering  via css classes */
+.all_items .prod:not(.all_item) {
+  display: none !important;
+}
+
+.all_items .prod.all_item {
+  display: block !important;
+}
+
+.boba_items .prod:not(.boba_item) {
+  display: none !important;
+}
+
+.boba_items .prod.boba_item {
+  display: block !important;
+}
+
+.latte_items .prod:not(.latte_item) {
+  display: none !important;
+}
+
+.latte_items .prod.latte_item {
+  display: block !important;
+}
+
+.chills_items .prod:not(.chills_item) {
+  display: none !important;
+}
+
+.chills_items .prod.chills_item {
+  display: block !important;
+}
