@@ -1,0 +1,10 @@
+{
+    "name": "kubernetes-typescript-2",
+    "devDependencies": {
+        "@types/node": "latest"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "latest",
+        "@pulumi/kubernetes": "latest"
+    }
+}

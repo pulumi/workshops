@@ -1,0 +1,101 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Creates an S3 bucket and CloudFront Distribution using Origins Access ID
+Parameters:
+  WorkshopHostname:
+    Type: String
+    Default: xxxxxxxx
+    Description: The hostname of the workshop
+    AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,20}(?<!-)
+    ConstraintDescription: must be a valid DNS name.
+  DomainName:
+    Type: String
+    Default: awsworkshop.io
+    Description: The DNS name of an existing Amazon Route 53 hosted zone 
+    AllowedPattern: (?!-)[a-zA-Z0-9-.]{1,63}(?<!-)
+    ConstraintDescription: must be a valid DNS zone name.
+  CertificateArn:
+    Type: String
+    Default:  arn:aws:acm:us-east-1:497025854095:certificate/491991ad-c0b4-4793-98a1-dee54cc3a095
+    Description: ARN of a certificate in us-east-1 as its needed for a CloudFront Distribution
+    AllowedPattern: "arn:aws:acm:.*"
+  OriginAccessID:
+    Type: String
+    Default: E23ZJHO0JEB5ON
+    Description: CloudFront Origin Access ID
+
+Resources:
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: !Join ['', [ !Ref 'WorkshopHostname', '.', !Ref 'DomainName']]
+      AccessControl: "BucketOwnerFullControl"  
+    
+  WebsiteBucketPolicy:
+    Type: AWS::S3::BucketPolicy
+    Properties:
+      Bucket: !Ref 'WebsiteBucket'
+      PolicyDocument:
+        Statement:
+        - Action: 's3:Get*'
+          Effect: Allow
+          Resource: !Join ['', ['arn:aws:s3:::', !Ref 'WebsiteBucket', /*]]
+          Principal:
+            CanonicalUser: 42e93f3a60683439eed54df135350cf7b2eaca4dcdf8099cb1d74c4c185bc11ac4f2cbad48bc74b3c609eaa6b983096d
+          
+  WebsiteCloudFront:
+    Type: AWS::CloudFront::Distribution
+    Properties:
+      DistributionConfig:
+        Comment: !Join [' ', [!Ref 'WebsiteBucket', "Workshop Distribution"]]
+        Aliases:
+        - !Join ['', [ !Ref 'WorkshopHostname', '.', !Ref 'DomainName']]
+        DefaultCacheBehavior:
+          AllowedMethods:
+          - GET
+          - HEAD
+          - OPTIONS
+          DefaultTTL: 3600
+          ForwardedValues:
+            QueryString: true
+            Cookies:
+              Forward: none
+          TargetOriginId: "S3Origin"
+          ViewerProtocolPolicy: "redirect-to-https"
+        DefaultRootObject: index.html
+        Enabled: true
+        HttpVersion: 'http2'
+        Origins:
+        - DomainName: !GetAtt WebsiteBucket.DomainName
+          Id: S3Origin
+          S3OriginConfig:
+            OriginAccessIdentity: !Join ["", ["origin-access-identity/cloudfront/", !Ref OriginAccessID]]
+        ViewerCertificate:
+          AcmCertificateArn: !Ref CertificateArn
+          SslSupportMethod: sni-only  
+        Logging: 
+          Bucket: "access-logs-modernization-workshops.s3.amazonaws.com"
+          Prefix: !Join ['', [ !Ref 'WorkshopHostname', '/']]
+        
+  WebsiteDNSName:
+    Type: AWS::Route53::RecordSet
+    Properties:
+      AliasTarget:
+        DNSName: !GetAtt WebsiteCloudFront.DomainName
+        HostedZoneId: Z2FDTNDATAQYW2
+      HostedZoneName: !Join ['', [!Ref 'DomainName', '.']]
+      Name: !Join ['', [ !Ref 'WorkshopHostname', '.', !Ref 'DomainName']]
+      Type: "A"
+        
+Outputs:
+  BucketName:
+    Value: !Ref 'WebsiteBucket'
+    Description: Name of S3 bucket to hold website content
+  CloudFrontDistroId:
+    Value: !Ref WebsiteCloudFront
+    Description: CloudFront distribution ID
+  CloudfrontEndpoint:
+    Value: !GetAtt [WebsiteCloudFront, DomainName]
+    Description: Endpoint for CloudFront distribution
+  FullDomain:
+    Value: !Join ['', [ !Ref 'WorkshopHostname', '.', !Ref 'DomainName']]
+    Description: Full DomainName

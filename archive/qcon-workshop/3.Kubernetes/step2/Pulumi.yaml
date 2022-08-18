@@ -1,0 +1,3 @@
+name: step1
+runtime: nodejs
+description: A minimal Kubernetes TypeScript Pulumi program
