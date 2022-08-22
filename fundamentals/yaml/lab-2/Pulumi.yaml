@@ -1,24 +1,6 @@
 name: fundamentals
 runtime: yaml
 description: a yaml test
-configuration:
-  frontendPort:
-    type: Number
-  backendPort:
-    type: Number
-  mongoPort:
-    type: Number
-  mongoHost:
-    type: String
-  database:
-    type: String
-  nodeEnvironment:
-    type: String
-  protocol:
-    type: String
-variables:
-  backendImageName: backend
-  frontendImageName: frontend
 resources:
   backend-image:
     type: docker:index:RemoteImage
@@ -32,55 +14,3 @@ resources:
     type: docker:index:RemoteImage
     properties:
       name: pulumi/tutorial-pulumi-fundamentals-database-local:latest
-  network:
-    type: docker:index:Network
-    properties:
-      name: services-${pulumi.stack}
-  mongo-container:
-    type: docker:index:Container
-    properties:
-      name: mongo-${pulumi.stack}
-      image: ${mongo-image.repoDigest}
-      ports:
-        - internal: ${mongoPort}
-          external: ${mongoPort}
-      networksAdvanced:
-        - name: ${network.name}
-          aliases: ["mongo"]
-  backend-container:
-    type: docker:index:Container
-    properties:
-      name: backend-${pulumi.stack}
-      image: ${backend-image.repoDigest}
-      ports:
-        - internal: ${backendPort}
-          external: ${backendPort}
-      envs:
-        [
-          "DATABASE_HOST=${mongoHost}",
-          "DATABASE_NAME=${database}",
-          "NODE_ENV=${nodeEnvironment}"
-        ]
-      networksAdvanced:
-        - name: ${network.name}
-          aliases: ["backend-${pulumi.stack}"]
-    options:
-      dependsOn:
-        - ${mongo-container}
-  frontend-container:
-    type: docker:index:Container
-    properties:
-      name: frontend-${pulumi.stack}
-      image: ${frontend-image.repoDigest}
-      ports:
-        - internal: ${frontendPort}
-          external: ${frontendPort}
-      envs:
-        [
-          "LISTEN_PORT=${frontendPort}",
-          "HTTP_PROXY=backend-${pulumi.stack}:${backendPort}",
-          "PROXY_PROTOCOL=http://"
-        ]
-      networksAdvanced:
-        - name: ${network.name}
-          aliases: ["frontend-${pulumi.stack}"]

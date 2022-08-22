@@ -16,28 +16,11 @@ The application we'll be running on our infrastructure is in the [pulumi/tutoria
 
 ## Build your Docker Image with Pulumi
 
-Add `pulumi_docker` to your `requirements.txt`.
+<!-- deps -->
 
-Ensure your virtual environment is activated in the terminal you're working in, then install the new requirements:
+Our main program file is `Program.cs`. Add the following code below the imports:
 
-```bash
-pip install -r requirements.txt
-```
-
-Our main program file is `__main__.py`. Add the following code below the imports:
-
-```python
-import os
-import pulumi
-import pulumi_docker as docker
-
-stack = pulumi.get_stack()
-
-# build our backend image!
-backend_image_name = "backend"
-backend = docker.RemoteImage("backend",
-                             name="pulumi/tutorial-pulumi-fundamentals-backend:latest"
-                            )
+```csharp
 ```
 
 Now, run the following command:
@@ -61,52 +44,14 @@ Now that we've provisioned our first piece of infrastructure, let's add the othe
 
 Our application includes a frontend client and MongoDB. Let's add them to the program:
 
-```python
-# build our frontend image!
-frontend_image_name = "frontend"
-frontend = docker.RemoteImage("frontend",
-                              name="pulumi/tutorial-pulumi-fundamentals-frontend:latest"
-                             )
-
-# build our mongodb image!
-mongo_image = docker.RemoteImage("mongo",
-                                 name="pulumi/tutorial-pulumi-fundamentals-database-local:latest"
-                                )
+```csharp
 ```
 
 We build the frontend client and the populated MongoDB database image the same way we built the backend.
 
 Compare your program now to this complete program before we move forward:
 
-```python
-import os
-import pulumi
-import pulumi_docker as docker
-
-# get configuration
-config = pulumi.Config()
-frontend_port = config.require_int("frontend_port")
-backend_port = config.require_int("backend_port")
-mongo_port = config.require_int("mongo_port")
-
-stack = pulumi.get_stack()
-
-# build our backend image!
-backend_image_name = "backend"
-backend = docker.RemoteImage("backend",
-                             name="pulumi/tutorial-pulumi-fundamentals-backend:latest"
-                            )
-
-# build our frontend image!
-frontend_image_name = "frontend"
-frontend = docker.RemoteImage("frontend",
-                              name="pulumi/tutorial-pulumi-fundamentals-frontend:latest"
-                             )
-
-# build our mongodb image!
-mongo_image = docker.RemoteImage("mongo",
-                                 name="pulumi/tutorial-pulumi-fundamentals-database-local:latest"
-                                )
+```csharp
 ```
 
 If your code looks the same, great! Otherwise, update yours to match this code.

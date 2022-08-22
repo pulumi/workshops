@@ -15,7 +15,7 @@ mkdir my-first-app && cd my-first-app
 Let's make a new Pulumi project:
 
 ```bash
-pulumi new yaml -y
+pulumi new java-gradle --dir my_first_app --name my_first_app -y
 ```
 
 <details>
