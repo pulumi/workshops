@@ -4,14 +4,57 @@ Let's set up the application next.
 
 ## Configure the application
 
-Add the following configuration variables to your Pulumi program. These statements go after your imports.
+Add the following configuration variables to your Pulumi program. These statements go in the `main` function inside of `pulumi.Run`.
 
 ```go
+		cfg := config.New(ctx, "")
+		_ := cfg.RequireFloat("frontendPort")
+		_ := cfg.RequireFloat("backendPort")
+		_ := cfg.RequireFloat("mongoPort")
 ```
 
 Your Pulumi program should now match this code:
 
 ```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/pulumi/pulumi-docker/sdk/v3/go/docker"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		_ := cfg.RequireFloat("frontendPort")
+		_ := cfg.RequireFloat("backendPort")
+		_ := cfg.RequireFloat("mongoPort")
+		backendImageName := "backend"
+		frontendImageName := "frontend"
+		_, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.backendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-backend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		_, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.frontendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-frontend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		_, err := docker.NewRemoteImage(ctx, "mongo-image", &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-database-local:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
 ```
 
 Try and run your `pulumi up` again at this point.
@@ -43,11 +86,45 @@ Let's add container resources.
 We need a new resource: a [`Network`](https://www.pulumi.com/registry/packages/docker/api-docs/network/). Add the following code at the bottom of your program:
 
 ```go
+		network, err := docker.NewNetwork(ctx, "network", &docker.NetworkArgs{
+			Name: pulumi.String(fmt.Sprintf("services-%v", ctx.Stack())),
+		})
+		if err != nil {
+			return err
+		}
 ```
 
-Define a new [`Container`](https://www.pulumi.com/registry/packages/docker/api-docs/container/) resource in your Pulumi program below the `Network` resource:
+Define a new [`Container`](https://www.pulumi.com/registry/packages/docker/api-docs/container/) resource in your Pulumi program below the `Network` resource. Ensure you update all of the relevant `_` variables elsewhere!
 
 ```go
+		_, err = docker.NewContainer(ctx, "backend-container", &docker.ContainerArgs{
+			Name:  pulumi.String(fmt.Sprintf("backend-%v", ctx.Stack())),
+			Image: backendImage.RepoDigest,
+			Ports: ContainerPortArray{
+				&ContainerPortArgs{
+					Internal: pulumi.Float64(backendPort),
+					External: pulumi.Float64(backendPort),
+				},
+			},
+			Envs: pulumi.StringArray{
+				pulumi.String(fmt.Sprintf("DATABASE_HOST=%v", mongoHost)),
+				pulumi.String(fmt.Sprintf("DATABASE_NAME=%v", database)),
+				pulumi.String(fmt.Sprintf("NODE_ENV=%v", nodeEnvironment)),
+			},
+			NetworksAdvanced: ContainerNetworksAdvancedArray{
+				&ContainerNetworksAdvancedArgs{
+					Name: network.Name,
+					Aliases: pulumi.StringArray{
+						pulumi.String(fmt.Sprintf("backend-%v", ctx.Stack())),
+					},
+				},
+			},
+		}, pulumi.DependsOn([]pulumi.Resource{
+			mongoContainer,
+		}))
+		if err != nil {
+			return err
+		}
 ```
 
 <details>
@@ -70,25 +147,200 @@ pulumi config set protocol http://
 Add them to the top of our program with the rest of the configuration variables:
 
 ```go
+		mongoHost := cfg.Require("mongoHost")
+		database := cfg.Require("database")
+		nodeEnvironment := cfg.Require("nodeEnvironment")
+		protocol := cfg.Require("protocol")
 ```
 
 Create `Container` resources for the frontend and mongo containers. Put the `mongo-container` declaration just above the `backend-container` one, and the `frontend-container` declaration at the end of the file. Here's the code for the mongo container:
 
 ```go
+		mongoContainer, err := docker.NewContainer(ctx, "mongo-container", &docker.ContainerArgs{
+			Name:  pulumi.String(fmt.Sprintf("mongo-%v", ctx.Stack())),
+			Image: mongoImage.RepoDigest,
+			Ports: ContainerPortArray{
+				&ContainerPortArgs{
+					Internal: pulumi.Float64(mongoPort),
+					External: pulumi.Float64(mongoPort),
+				},
+			},
+			NetworksAdvanced: ContainerNetworksAdvancedArray{
+				&ContainerNetworksAdvancedArgs{
+					Name: network.Name,
+					Aliases: pulumi.StringArray{
+						pulumi.String("mongo"),
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
 ```
 
 And the code for the frontend container:
 
 ```go
+		_, err = docker.NewContainer(ctx, "frontend-container", &docker.ContainerArgs{
+			Name:  pulumi.String(fmt.Sprintf("frontend-%v", ctx.Stack())),
+			Image: frontendImage.RepoDigest,
+			Ports: ContainerPortArray{
+				&ContainerPortArgs{
+					Internal: pulumi.Float64(frontendPort),
+					External: pulumi.Float64(frontendPort),
+				},
+			},
+			Envs: pulumi.StringArray{
+				pulumi.String(fmt.Sprintf("LISTEN_PORT=%v", frontendPort)),
+				pulumi.String(fmt.Sprintf("HTTP_PROXY=backend-%v:%v", ctx.Stack(), backendPort)),
+				pulumi.String("PROXY_PROTOCOL=http://"),
+			},
+			NetworksAdvanced: ContainerNetworksAdvancedArray{
+				&ContainerNetworksAdvancedArgs{
+					Name: network.Name,
+					Aliases: pulumi.StringArray{
+						pulumi.String(fmt.Sprintf("frontend-%v", ctx.Stack())),
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
 ```
 
-Let's explore the whole program next.
+Let's explore the whole program next. Check that you've updated all of the relevant `_` variables.
 
 ## Put it all together
 
 Now that we know how to create a container we can complete our program.
 
 ```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/pulumi/pulumi-docker/sdk/v3/go/docker"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		cfg := config.New(ctx, "")
+		frontendPort := cfg.RequireFloat("frontendPort")
+		backendPort := cfg.RequireFloat("backendPort")
+		mongoPort := cfg.RequireFloat("mongoPort")
+		mongoHost := cfg.Require("mongoHost")
+		database := cfg.Require("database")
+		nodeEnvironment := cfg.Require("nodeEnvironment")
+		protocol := cfg.Require("protocol")
+		backendImageName := "backend"
+		frontendImageName := "frontend"
+		backendImage, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.backendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-backend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		frontendImage, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.frontendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-frontend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		mongoImage, err := docker.NewRemoteImage(ctx, "mongo-image", &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-database-local:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		network, err := docker.NewNetwork(ctx, "network", &docker.NetworkArgs{
+			Name: pulumi.String(fmt.Sprintf("services-%v", ctx.Stack())),
+		})
+		if err != nil {
+			return err
+		}
+		mongoContainer, err := docker.NewContainer(ctx, "mongo-container", &docker.ContainerArgs{
+			Name:  pulumi.String(fmt.Sprintf("mongo-%v", ctx.Stack())),
+			Image: mongoImage.RepoDigest,
+			Ports: ContainerPortArray{
+				&ContainerPortArgs{
+					Internal: pulumi.Float64(mongoPort),
+					External: pulumi.Float64(mongoPort),
+				},
+			},
+			NetworksAdvanced: ContainerNetworksAdvancedArray{
+				&ContainerNetworksAdvancedArgs{
+					Name: network.Name,
+					Aliases: pulumi.StringArray{
+						pulumi.String("mongo"),
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		_, err = docker.NewContainer(ctx, "backend-container", &docker.ContainerArgs{
+			Name:  pulumi.String(fmt.Sprintf("backend-%v", ctx.Stack())),
+			Image: backendImage.RepoDigest,
+			Ports: ContainerPortArray{
+				&ContainerPortArgs{
+					Internal: pulumi.Float64(backendPort),
+					External: pulumi.Float64(backendPort),
+				},
+			},
+			Envs: pulumi.StringArray{
+				pulumi.String(fmt.Sprintf("DATABASE_HOST=%v", mongoHost)),
+				pulumi.String(fmt.Sprintf("DATABASE_NAME=%v", database)),
+				pulumi.String(fmt.Sprintf("NODE_ENV=%v", nodeEnvironment)),
+			},
+			NetworksAdvanced: ContainerNetworksAdvancedArray{
+				&ContainerNetworksAdvancedArgs{
+					Name: network.Name,
+					Aliases: pulumi.StringArray{
+						pulumi.String(fmt.Sprintf("backend-%v", ctx.Stack())),
+					},
+				},
+			},
+		}, pulumi.DependsOn([]pulumi.Resource{
+			mongoContainer,
+		}))
+		if err != nil {
+			return err
+		}
+		_, err = docker.NewContainer(ctx, "frontend-container", &docker.ContainerArgs{
+			Name:  pulumi.String(fmt.Sprintf("frontend-%v", ctx.Stack())),
+			Image: frontendImage.RepoDigest,
+			Ports: ContainerPortArray{
+				&ContainerPortArgs{
+					Internal: pulumi.Float64(frontendPort),
+					External: pulumi.Float64(frontendPort),
+				},
+			},
+			Envs: pulumi.StringArray{
+				pulumi.String(fmt.Sprintf("LISTEN_PORT=%v", frontendPort)),
+				pulumi.String(fmt.Sprintf("HTTP_PROXY=backend-%v:%v", ctx.Stack(), backendPort)),
+				pulumi.String("PROXY_PROTOCOL=http://"),
+			},
+			NetworksAdvanced: ContainerNetworksAdvancedArray{
+				&ContainerNetworksAdvancedArgs{
+					Name: network.Name,
+					Aliases: pulumi.StringArray{
+						pulumi.String(fmt.Sprintf("frontend-%v", ctx.Stack())),
+					},
+				},
+			},
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
 ```
 
 <details>
