@@ -117,9 +117,10 @@ const backendContainer = new docker.Container("backendContainer", {
 We need some more environment variables:
 
 ```bash
-pulumi config set mongo_host mongodb://mongo:27017
+pulumi config set mongoHost mongodb://mongo:27017
 pulumi config set database cart
-pulumi config set node_environment development
+pulumi config set nodeEnvironment development
+pulumi config set protocol http://
 ```
 
 Add them to the top of our program with the rest of the configuration variables:

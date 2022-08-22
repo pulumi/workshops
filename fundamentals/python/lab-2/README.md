@@ -1,6 +1,6 @@
 # Lab 2: Resources, Resource Providers, and Language Hosts
 
-Let's talk about resources, resource providers, and language hosts. Learn more on the [Learn pathway]() if you're walking through this workshop alone!
+Let's talk about resources, resource providers, and language hosts. Learn more on the [Learn pathway](https://www.pulumi.com/learn/pulumi-fundamentals/create-docker-images/) if you're walking through this workshop alone!
 
 ## Verify your application
 
@@ -53,7 +53,7 @@ pulumi up
 <b>Answer:</b> Pulumi builds a Docker image for you with a preview.
 </details>
 
-If you're following along live, now we'll talk about _inputs_ and _outputs_. If you're reading this later and need a review, check out the [relevant part of the Learn pathway]()!
+If you're following along live, now we'll talk about _inputs_ and _outputs_. If you're reading this later and need a review, check out the [relevant part of the Learn pathway](https://www.pulumi.com/learn/pulumi-fundamentals/create-docker-images/)!
 
 Now that we've provisioned our first piece of infrastructure, let's add the other pieces of our application.
 

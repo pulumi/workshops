@@ -1,6 +1,6 @@
 # Lab 2: Resources, Resource Providers, and Language Hosts
 
-Let's talk about resources, resource providers, and language hosts. Learn more on the [Learn pathway]() if you're walking through this workshop alone!
+Let's talk about resources, resource providers, and language hosts. Learn more on the [Learn pathway](https://www.pulumi.com/learn/pulumi-fundamentals/create-docker-images/) if you're walking through this workshop alone!
 
 ## Verify your application
 
@@ -16,11 +16,42 @@ The application we'll be running on our infrastructure is in the [pulumi/tutoria
 
 ## Build your Docker Image with Pulumi
 
-<!-- deps -->
+Add the package reference for [Pulumi.Docker](https://www.nuget.org/packages/Pulumi.Docker) to your `.csproj` file:
 
-Our main program file is `Program.cs`. Add the following code below the imports:
+```xml
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Pulumi" Version="3.*" />
+		<PackageReference Include="Pulumi.Docker" Version="3.2.0" />
+	</ItemGroup>
+
+</Project>
+```
+
+Our main program file is `Program.cs`. Replace the auto-generated contents with the following code:
 
 ```csharp
+using System.Collections.Generic;
+using Pulumi;
+using Docker = Pulumi.Docker;
+
+return await Deployment.RunAsync(() => 
+{
+    var backendImageName = "backend";
+
+    var backendImage = new Docker.RemoteImage("backend-image", new()
+    {
+        Name = "pulumi/tutorial-pulumi-fundamentals-backend:latest",
+    });
+
+});
 ```
 
 Now, run the following command:
@@ -36,7 +67,7 @@ pulumi up
 <b>Answer:</b> Pulumi builds a Docker image for you with a preview.
 </details>
 
-If you're following along live, now we'll talk about _inputs_ and _outputs_. If you're reading this later and need a review, check out the [relevant part of the Learn pathway]()!
+If you're following along live, now we'll talk about _inputs_ and _outputs_. If you're reading this later and need a review, check out the [relevant part of the Learn pathway](https://www.pulumi.com/learn/pulumi-fundamentals/create-docker-images/)!
 
 Now that we've provisioned our first piece of infrastructure, let's add the other pieces of our application.
 
@@ -45,6 +76,17 @@ Now that we've provisioned our first piece of infrastructure, let's add the othe
 Our application includes a frontend client and MongoDB. Let's add them to the program:
 
 ```csharp
+    var frontendImageName = "frontend";
+
+    var frontendImage = new Docker.RemoteImage("frontend-image", new()
+    {
+        Name = "pulumi/tutorial-pulumi-fundamentals-frontend:latest",
+    });
+
+    var mongoImage = new Docker.RemoteImage("mongo-image", new()
+    {
+        Name = "pulumi/tutorial-pulumi-fundamentals-database-local:latest",
+    });
 ```
 
 We build the frontend client and the populated MongoDB database image the same way we built the backend.
@@ -52,6 +94,32 @@ We build the frontend client and the populated MongoDB database image the same w
 Compare your program now to this complete program before we move forward:
 
 ```csharp
+using System.Collections.Generic;
+using Pulumi;
+using Docker = Pulumi.Docker;
+
+return await Deployment.RunAsync(() => 
+{
+    var backendImageName = "backend";
+
+    var frontendImageName = "frontend";
+
+    var backendImage = new Docker.RemoteImage("backend-image", new()
+    {
+        Name = "pulumi/tutorial-pulumi-fundamentals-backend:latest",
+    });
+
+    var frontendImage = new Docker.RemoteImage("frontend-image", new()
+    {
+        Name = "pulumi/tutorial-pulumi-fundamentals-frontend:latest",
+    });
+
+    var mongoImage = new Docker.RemoteImage("mongo-image", new()
+    {
+        Name = "pulumi/tutorial-pulumi-fundamentals-database-local:latest",
+    });
+
+});
 ```
 
 If your code looks the same, great! Otherwise, update yours to match this code.

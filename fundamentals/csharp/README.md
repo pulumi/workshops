@@ -9,6 +9,7 @@ last-host: none
 learn-content: https://www.pulumi.com/learn/pulumi-fundamentals/
 original-repo: none
 status: active
+deck: Fundamentals_Agnostic
 ---
 
 # Pulumi Fundamentals
