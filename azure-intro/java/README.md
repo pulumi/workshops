@@ -1,4 +1,18 @@
-# pulumi-azurenative-workshop
+---
+author: Josh Kodroff
+language: java
+provider: azure-native
+use: both
+last-ran: none
+boilerplate: none
+last-host: none
+learn-content: none
+original-repo: none
+status: active
+deck: unknown
+---
+
+# Azure Native with Pulumi Workshop
 
 This workshops guides you through using Pulumi's [Azure Native](https://www.pulumi.com/docs/intro/cloud-providers/azure/) provider.
 
