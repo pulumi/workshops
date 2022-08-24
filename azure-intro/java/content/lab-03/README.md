@@ -313,6 +313,8 @@ Commercial support is available at
 </html>
 ```
 
+The final version of your code should look like [App.java](App.java).
+
 ## Step 5 &mdash; Cleaning up
 
 Whenever you're working on learning with Pulumi, it's always a good idea to clean up any resources you've created so you don't get charged.
