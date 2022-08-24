@@ -9,6 +9,7 @@ last-host: Kat C.
 learn-content: none
 original-repo: https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content
 status: active
+deck: Fundamentals_Agnostic OR PartnerVersion-Intro
 ---
 
 # Cloud Engineering with AWS and Python

@@ -1,5 +1,5 @@
 ---
-author: David
+author: David and Laura
 language: yaml
 provider: docker
 use: first-party
@@ -9,6 +9,7 @@ last-host: David
 learn-content: https://www.pulumi.com/learn/pulumi-fundamentals/
 original-repo: none
 status: active
+deck: Fundamentals_Agnostic
 ---
 
 # IAC Fundamentals

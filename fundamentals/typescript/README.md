@@ -1,13 +1,13 @@
 ---
-author: Kat and Matty
-language: python
+author: Laura
+language: typescript
 provider: docker
 use: first-party
-last-ran: unknown
+last-ran: none
 boilerplate: something
-last-host: Matty
+last-host: none
 learn-content: https://www.pulumi.com/learn/pulumi-fundamentals/
-original-repo: https://github.com/katcosgrove/iac-fundamentals and fork
+original-repo: none
 status: active
 deck: Fundamentals_Agnostic
 ---
@@ -30,12 +30,12 @@ You will need the following tools to complete this workshop:
     * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=github-fundamentals).
 * The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=github-fundamentals)
 * [Docker](https://docs.docker.com/get-docker/)
-* Python 3.8 or later
+* Node.js 14 or later
 
 You'll need to know how to
 
 - use your local terminal.
-- read and understand basic Python code.
+- read and understand basic TypeScript/JavaScript code.
 - read and understand Dockerfiles or understand basic Docker concepts.
 
 ## Sample app

@@ -12,28 +12,42 @@ The application we'll be running on our infrastructure is in the [pulumi/tutoria
 <br/>
 <b>Answer:</b> This Dockerfile copies the REST backend into the Docker filesystem, installs the dependencies, and builds the image. Note that port 3000 must be open on your host machine.
 </details>
+<br/>
 
 ## Build your Docker Image with Pulumi
 
-Our main program file is `Pulumi.yaml`. Add the following code:
+Our main program file is `main.go`. Replace the auto-generated code with the following code:
 
-```yaml
-name: fundamentals
-runtime: yaml
-description: A minimal Pulumi YAML program
-resources:
-  backend-image:
-    type: docker:index:RemoteImage
-    properties:
-      name: pulumi/tutorial-pulumi-fundamentals-backend:latest
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/pulumi/pulumi-docker/sdk/v3/go/docker"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		backendImageName := "backend"
+		_, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.backendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-backend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
 ```
 
-<details>
-<summary><b>Question:</b> What do you think the <code>resources</code> section does?</summary>
+Install dependencies with `go get`:
 
-<br/>
-<b>Answer:</b> In this file, we’re defining a <code>RemoteImage</code> resource using the Docker provider. The properties are the arguments (or <i>inputs</i> in Pulumi terms) that the resource takes. The Docker provider uses the <code>name</code> input to pull a remote image for us to use.
-</details>
+```bash
+go get
+```
 
 Now, run the following command:
 
@@ -56,38 +70,65 @@ Now that we've provisioned our first piece of infrastructure, let's add the othe
 
 Our application includes a frontend client and MongoDB. Let's add them to the program:
 
-```yaml
-frontend-image:
-    type: docker:index:RemoteImage
-    properties:
-      name: pulumi/tutorial-pulumi-fundamentals-frontend:latest
-mongo-image:
-  type: docker:index:RemoteImage
-  properties:
-    name: pulumi/tutorial-pulumi-fundamentals-database-local:latest
+```go
+		frontendImageName := "frontend"
+		_, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.frontendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-frontend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		_, err := docker.NewRemoteImage(ctx, "mongo-image", &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-database-local:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
 ```
 
 We build the frontend client and the populated MongoDB database image the same way we built the backend.
 
 Compare your program now to this complete program before we move forward:
 
-```yaml
-name: fundamentals
-runtime: yaml
-description: a yaml test
-resources:
-  backend-image:
-    type: docker:index:RemoteImage
-    properties:
-      name: pulumi/tutorial-pulumi-fundamentals-backend:latest
-  frontend-image:
-    type: docker:index:RemoteImage
-    properties:
-      name: pulumi/tutorial-pulumi-fundamentals-frontend:latest
-  mongo-image:
-    type: docker:index:RemoteImage
-    properties:
-      name: pulumi/tutorial-pulumi-fundamentals-database-local:latest
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/pulumi/pulumi-docker/sdk/v3/go/docker"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi"
+	"github.com/pulumi/pulumi/sdk/v3/go/pulumi/config"
+)
+
+func main() {
+	pulumi.Run(func(ctx *pulumi.Context) error {
+		backendImageName := "backend"
+		frontendImageName := "frontend"
+		_, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.backendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-backend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		_, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.frontendImageName), &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-frontend:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		_, err := docker.NewRemoteImage(ctx, "mongo-image", &docker.RemoteImageArgs{
+			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-database-local:latest"),
+		})
+		if err != nil {
+			return err
+		}
+		return nil
+	})
+}
 ```
 
 If your code looks the same, great! Otherwise, update yours to match this code.
