@@ -16,8 +16,6 @@ The application we'll be running on our infrastructure is in the [pulumi/tutoria
 
 ## Build your Docker Image with Pulumi
 
-<!-- add deps -->
-
 Our main program file is `main.go`. Replace the auto-generated code with the following code:
 
 ```go
@@ -43,6 +41,12 @@ func main() {
 		return nil
 	})
 }
+```
+
+Install dependencies with `go get`:
+
+```bash
+go get
 ```
 
 Now, run the following command:

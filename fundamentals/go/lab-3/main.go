@@ -11,22 +11,22 @@ import (
 func main() {
 	pulumi.Run(func(ctx *pulumi.Context) error {
 		cfg := config.New(ctx, "")
-		frontendPort := cfg.RequireFloat("frontendPort")
-		backendPort := cfg.RequireFloat("backendPort")
-		mongoPort := cfg.RequireFloat("mongoPort")
+		frontendPort := cfg.RequireFloat64("frontendPort")
+		backendPort := cfg.RequireFloat64("backendPort")
+		mongoPort := cfg.RequireFloat64("mongoPort")
 		mongoHost := cfg.Require("mongoHost")
 		database := cfg.Require("database")
 		nodeEnvironment := cfg.Require("nodeEnvironment")
 		protocol := cfg.Require("protocol")
 		backendImageName := "backend"
 		frontendImageName := "frontend"
-		backendImage, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.backendImageName), &docker.RemoteImageArgs{
+		backendImage, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", backendImageName), &docker.RemoteImageArgs{
 			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-backend:latest"),
 		})
 		if err != nil {
 			return err
 		}
-		frontendImage, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", ctx.frontendImageName), &docker.RemoteImageArgs{
+		frontendImage, err := docker.NewRemoteImage(ctx, fmt.Sprintf("%v-image", frontendImageName), &docker.RemoteImageArgs{
 			Name: pulumi.String("pulumi/tutorial-pulumi-fundamentals-frontend:latest"),
 		})
 		if err != nil {
@@ -47,14 +47,14 @@ func main() {
 		mongoContainer, err := docker.NewContainer(ctx, "mongo-container", &docker.ContainerArgs{
 			Name:  pulumi.String(fmt.Sprintf("mongo-%v", ctx.Stack())),
 			Image: mongoImage.RepoDigest,
-			Ports: ContainerPortArray{
-				&ContainerPortArgs{
-					Internal: pulumi.Float64(mongoPort),
-					External: pulumi.Float64(mongoPort),
+			Ports: &docker.ContainerPortArray{
+				&docker.ContainerPortArgs{
+					Internal: pulumi.Int(mongoPort),
+					External: pulumi.Int(mongoPort),
 				},
 			},
-			NetworksAdvanced: ContainerNetworksAdvancedArray{
-				&ContainerNetworksAdvancedArgs{
+			NetworksAdvanced: &docker.ContainerNetworksAdvancedArray{
+				&docker.ContainerNetworksAdvancedArgs{
 					Name: network.Name,
 					Aliases: pulumi.StringArray{
 						pulumi.String("mongo"),
@@ -68,10 +68,10 @@ func main() {
 		_, err = docker.NewContainer(ctx, "backend-container", &docker.ContainerArgs{
 			Name:  pulumi.String(fmt.Sprintf("backend-%v", ctx.Stack())),
 			Image: backendImage.RepoDigest,
-			Ports: ContainerPortArray{
-				&ContainerPortArgs{
-					Internal: pulumi.Float64(backendPort),
-					External: pulumi.Float64(backendPort),
+			Ports: &docker.ContainerPortArray{
+				&docker.ContainerPortArgs{
+					Internal: pulumi.Int(backendPort),
+					External: pulumi.Int(backendPort),
 				},
 			},
 			Envs: pulumi.StringArray{
@@ -79,8 +79,8 @@ func main() {
 				pulumi.String(fmt.Sprintf("DATABASE_NAME=%v", database)),
 				pulumi.String(fmt.Sprintf("NODE_ENV=%v", nodeEnvironment)),
 			},
-			NetworksAdvanced: ContainerNetworksAdvancedArray{
-				&ContainerNetworksAdvancedArgs{
+			NetworksAdvanced: &docker.ContainerNetworksAdvancedArray{
+				&docker.ContainerNetworksAdvancedArgs{
 					Name: network.Name,
 					Aliases: pulumi.StringArray{
 						pulumi.String(fmt.Sprintf("backend-%v", ctx.Stack())),
@@ -96,19 +96,19 @@ func main() {
 		_, err = docker.NewContainer(ctx, "frontend-container", &docker.ContainerArgs{
 			Name:  pulumi.String(fmt.Sprintf("frontend-%v", ctx.Stack())),
 			Image: frontendImage.RepoDigest,
-			Ports: ContainerPortArray{
-				&ContainerPortArgs{
-					Internal: pulumi.Float64(frontendPort),
-					External: pulumi.Float64(frontendPort),
+			Ports: &docker.ContainerPortArray{
+				&docker.ContainerPortArgs{
+					Internal: pulumi.Int(frontendPort),
+					External: pulumi.Int(frontendPort),
 				},
 			},
 			Envs: pulumi.StringArray{
 				pulumi.String(fmt.Sprintf("LISTEN_PORT=%v", frontendPort)),
 				pulumi.String(fmt.Sprintf("HTTP_PROXY=backend-%v:%v", ctx.Stack(), backendPort)),
-				pulumi.String("PROXY_PROTOCOL=http://"),
+				pulumi.String(fmt.Sprintf("PROXY_PROTOCOL=%v", protocol)),
 			},
-			NetworksAdvanced: ContainerNetworksAdvancedArray{
-				&ContainerNetworksAdvancedArgs{
+			NetworksAdvanced: &docker.ContainerNetworksAdvancedArray{
+				&docker.ContainerNetworksAdvancedArgs{
 					Name: network.Name,
 					Aliases: pulumi.StringArray{
 						pulumi.String(fmt.Sprintf("frontend-%v", ctx.Stack())),
