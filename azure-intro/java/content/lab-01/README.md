@@ -18,20 +18,6 @@ A Pulumi project is just a directory with some files in it. It's possible for yo
 pulumi new java -y
 ```
 
-This will print output similar to the following with a bit more status as it goes:
-
-```bash
-Created project 'my-first-azure-app'
-
-Please enter your desired stack name.
-To create a stack in an organization, use the format <org-name>/<stack-name> (e.g. `acmecorp/dev`).
-Created stack 'dev'
-
-(some build output)
-
-Your new project is ready to go!
-```
-
 This command has created all the files we need, initialized a new stack named `dev` (an instance of our project), and installed the needed package dependencies from Maven.
 
 ## Step 3 &mdash; Inspect Your New Project
