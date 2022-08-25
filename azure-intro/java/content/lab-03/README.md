@@ -258,7 +258,7 @@ Do you want to perform this update?  [Use arrows to move, enter to select, type 
   details
 ```
 
-Notice that the existing infrastructure (i.e. our static site in our bucket) remains unchanged. Let's deploy this by selecting "yes" and hitting return.
+Notice that the existing infrastructure (i.e., our static site in our bucket) remains unchanged. Let's deploy this by selecting "yes" and hitting return.
 
 ## Step 4 &mdash; Export the URL
 
