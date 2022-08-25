@@ -100,7 +100,7 @@ public class App {
 
 ## Step 2 &mdash; Deploy your WebApp
 
-Now, we need to deploy nginx. We'll use Azure's [Web App](https://azure.microsoft.com/en-us/services/app-service/web/) service for this.
+Now, we need to deploy NGINX. We'll use Azure's [Web App](https://azure.microsoft.com/en-us/services/app-service/web/) service for this.
 
 Add the following to the top of your `App.java` with your other imports:
 
