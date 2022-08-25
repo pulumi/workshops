@@ -115,7 +115,7 @@ for (var file : new String[] { "index.html", "404.html" }) {
 }
 ```
 
-> At this stage, your `App.java` file should look like this:
+At this stage, your `App.java` file should match this:
 
 ```java
 package myproject;
