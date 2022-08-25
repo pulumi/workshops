@@ -62,7 +62,7 @@ Feel free to explore the other files, although we won't be editing any of them b
 
 ## Step 4 &mdash; Install the Azure Native provider
 
-In order to interact with Azure, we need to install the Azure Native provider. We can do this by adding the following content to `pom.xml` under `<dependencies>`, after the `<dependency>` for `com.pulumi.pulumi`:
+In order to interact with Azure, we need to install the Azure Native provider. We can do this by adding the following content to `pom.xml` under `<dependencies>`, after the dependency definition for `com.pulumi.pulumi`:
 
 ```xml
 <dependency>
