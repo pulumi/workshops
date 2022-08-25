@@ -16,7 +16,7 @@ Next, create your Resource Group. In Pulumi, this is done by `new`-ing up an obj
 var resourceGroup = new ResourceGroup("app");
 ```
 
-At this stage, your complete `App.java` file should look like this:
+At this stage, your complete `App.java` file should match this code:
 
 ```java
 package myproject;
