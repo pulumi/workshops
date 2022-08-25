@@ -10,7 +10,7 @@ We'll first create an Azure resource group, which will be used for all the other
 import com.pulumi.azurenative.resources.ResourceGroup;
 ```
 
-Next, create your Resource Group. In Pulumi, this is done by `new`-ing up an object within the `Pulumi.run()` lambda, and assigning the resourceGroup resource to that constant, like so:
+Next, create your Resource Group. In Pulumi, this action is done by generating a new object within the `Pulumi.run()` lambda, and assigning the resourceGroup resource to that constant, like so:
 
 ```java
 var resourceGroup = new ResourceGroup("app");
