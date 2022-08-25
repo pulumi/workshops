@@ -46,7 +46,7 @@ public class App {
 }
 ```
 
-We can remove the following import from our `App.java` as it is not used in this workshop:
+We can remove the following import from our `App.java` for now:
 
 ```java
 import com.pulumi.core.Output;
