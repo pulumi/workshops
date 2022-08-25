@@ -172,7 +172,7 @@ public class App {
 
 Now we've defined our infrastructure, we use the Pulumi CLI to create the resources.
 
-Run `pulumi up` in your project directory. You should see something like this:
+Run `pulumi up` in your project directory, which results in output similar to the following:
 
 ```bash
 $ pulumi up
