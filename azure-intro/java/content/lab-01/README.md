@@ -29,7 +29,7 @@ Our project is comprised of multiple files:
 * **`Pulumi.yaml`**: your project's metadata, containing its name and language
 * **`target/`**: a directory containing your project's built artifacts
 
-Run `cat src/main/java/myproject/App.java` to see the contents of your project's empty program:
+Run `cat src/main/java/myproject/App.java` to explore the contents of your project's empty program:
 
 ```java
 package myproject;
