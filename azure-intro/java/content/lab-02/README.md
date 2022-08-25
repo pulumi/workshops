@@ -67,7 +67,7 @@ Notice a couple of things in the code we just wrote:
 
 ## Step 3 &mdash; Create your Static Website
 
-Now we need to add a new resource, a `StorageAccountStaticWebsite`. This is a similar process to before, so let's populate this resource:
+Now we need to add a new resource, a `StorageAccountStaticWebsite`. This process is similar to before, so let's populate this resource.
 
 First, we need to add the following imports:
 
