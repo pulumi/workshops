@@ -62,7 +62,7 @@ var storageAccount = new StorageAccount("app", StorageAccountArgs.builder()
 
 Notice a couple of things in the code we just wrote:
 
-1. We use the name of the resource group we created (`resourceGroup.name()`, a Pulumi output) as an input to the storage account we created. This allows the Pulumi engine to know that our resource group must be created before our storage account, and that any changes to the name of the resource group name must also be applied to the storage account. For more information, see [Inputs and Outputs](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/).
+1. We use the name of the resource group we created (`resourceGroup.name()`, a Pulumi output) as an input to the storage account we created. This allows Pulumi to know that our resource group must be created before our storage account, and that any changes to the name of the resource group name must also be applied to the storage account. For more information, see [Inputs and Outputs](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/).
 1. Pulumi has enums in the SDK to populate values without needing to look up the allowed values in the docs.
 
 ## Step 3 &mdash; Create your Static Website
