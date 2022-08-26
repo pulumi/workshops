@@ -35,7 +35,7 @@ public class App {
 
 ## Step 2 &mdash; Create a Storage Account
 
-Now we have the resource group created, we can now add an Azure storage account to store our HTML content for our static site.
+Now we have the resource group declared, we can now add an Azure storage account to store our HTML content for our static site.
 
 We'll need to import the storage account resource first, so add the following to your imports, near the top of your `App.java`:
 
