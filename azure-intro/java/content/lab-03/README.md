@@ -2,7 +2,7 @@
 
 In the previous lab, we deployed our static HTML files to Azure Storage.
 
-In the third lab of this workshop, we're going to deploy Nginx to Azure App Service.
+In the third lab of this workshop, we're going to deploy NGINX, an open source web server, to Azure App Service.
 
 ## Step 1 &mdash; Create an App Service Plan
 
