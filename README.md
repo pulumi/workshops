@@ -71,14 +71,14 @@ Topic | Language | Provider | Link
 Coming soon
 
 <details>
-<summary>Stale or Deprecated Workshops</summary>
+<summary><h2>Stale or Deprecated Workshops</h2></summary>
 
 Topic | Language | Provider | Link | Old Repo
 ---|---|---|---|---
 Automation API | .. | .. | [pulumi-automationapi-workshop](./archive/pulumi-automationapi-workshop/)
-Basics | Python | Docker | [iac-intro/python](./archive/iac-intro/python/)
-Basics | Python | Docker | [introduction-to-pulumi](./archive/introduction-to-pulumi/)
-Basics | TypeScript | Docker | [iac-intro/typescript](./archive/iac-intro/typescript/)
+Basics | Python | Docker | [iac-intro/python](./archive/iac-intro/python/) | [pulumi/infrastructure-as-code-workshop](https://github.com/pulumi/infrastructure-as-code-workshop/tree/master/labs/intro/python)
+Basics | Python | Docker | [introduction-to-pulumi](./archive/introduction-to-pulumi/) | [pulumi/introduction-to-pulumi](https://github.com/pulumi/introduction-to-pulumi)
+Basics | TypeScript | Docker | [iac-intro/typescript](./archive/iac-intro/typescript/) | [pulumi/infrastructure-as-code-workshop](https://github.com/pulumi/infrastructure-as-code-workshop/tree/master/labs/intro/typescript)
 Basics | TypeScript | Docker | [introduction-to-pulumi](./archive/introduction-to-pulumi/)
 Basics | TypeScript | AWS | [qcon-workshop](./archive/qcon-workshop/)
 CI/CD | TypeScript | AWS, Kubernetes, Helm | [deploying-argocd-to-amazon-eks](./archive/deploying-argocd-to-amazon-eks/) | [aws-samples/aws-modernization-with-pulumi](https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content)
@@ -100,7 +100,7 @@ Cloud Basics | TypeScript | GCP | [pulumi-gcp-workshop](./archive/pulumi-gcp-wor
 GitOps | TypeScript | AWS | [gitops-for-socks-shop](./archive/gitops-for-socks-shop/) | [aws-samples/aws-modernization-with-pulumi](https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content)
 Platform Engineering | TypeScript, Python, Go | AWS | [building-a-kubernetes-platform-in-amazon-eks](./archive/archive/building-a-kubernetes-platform-in-amazon-eks/) | [aws-samples/aws-modernization-with-pulumi](https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content)
 Refactoring | Python | Azure | [pulumi-refactoring-workshop](./archive/pulumi-refactoring-workshop/)
-Serverless | TypeScript | AWS | [lambda-for-serverless-application-patterns](./archive/lambda-for-serverless-application-patterns/)
+Serverless | TypeScript | AWS | [lambda-for-serverless-application-patterns](./archive/lambda-for-serverless-application-patterns/) | [aws-samples/aws-modernization-with-pulumi](https://github.com/aws-samples/aws-modernization-with-pulumi/tree/master/content)
 Testing/QA | .. | AWS | [testing-your-infrastructure](./archive/testing-your-infrastructure/)
 .. | .. | .. | [pulumi-component-workshop](./archive/pulumi-component-workshop/)
 .. | .. | .. | [pulumi-eksplatform-workshop](./archive/pulumi-eksplatform-workshop/)
