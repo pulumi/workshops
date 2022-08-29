@@ -18,6 +18,7 @@ Basics | TypeScript | Docker | [fundamentals/typescript](./fundamentals/typescri
 Basics | YAML | Docker | [fundamentals/yaml](./fundamentals/yaml/)
 Cloud Basics | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
 Cloud Basics | Java | AWS | [cloud-engineering-with-aws-X/java](./cloud-engineering-with-aws-X/java/)
+Cloud Basics | Java | Azure | [azure-intro/java](./azure-intro/java/)
 
 ## 200 Level
 
