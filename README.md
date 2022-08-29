@@ -10,15 +10,30 @@ Note that some of the workshops on the stale list may be identical to other work
 
 Topic | Language | Provider | Link
 ---|---|---|---
-Basics | C# | Docker | [fundamentals/csharp](./fundamentals/csharp/)
-Basics | Go | Docker | [fundamentals/go](./fundamentals/go/)
-Basics | Java | Docker | [fundamentals/java](./fundamentals/java/)
-Basics | Python | Docker | [fundamentals/python](./fundamentals/python/)
-Basics | TypeScript | Docker | [fundamentals/typescript](./fundamentals/typescript/)
-Basics | YAML | Docker | [fundamentals/yaml](./fundamentals/yaml/)
-Cloud Basics | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
+Fundamentals | C# | Docker | [fundamentals/csharp](./fundamentals/csharp/)
+Fundamentals | Go | Docker | [fundamentals/go](./fundamentals/go/)
+Fundamentals | Java | Docker | [fundamentals/java](./fundamentals/java/)
+Fundamentals | Python | Docker | [fundamentals/python](./fundamentals/python/)
+Fundamentals | TypeScript | Docker | [fundamentals/typescript](./fundamentals/typescript/)
+Fundamentals | YAML | Docker | [fundamentals/yaml](./fundamentals/yaml/)
+ ** | | | 
+Cloud Basics | C# | AWS | Coming soon
+Cloud Basics | Go | AWS | Coming soon
 Cloud Basics | Java | AWS | [cloud-engineering-with-aws-X/java](./cloud-engineering-with-aws-X/java/)
+Cloud Basics | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
+Cloud Basics | TypeScript | AWS | Coming soon
+ ** | | | 
+Cloud Basics | C# | Azure | Coming soon
+Cloud Basics | Go | Azure | Coming soon
 Cloud Basics | Java | Azure | [azure-intro/java](./azure-intro/java/)
+Cloud Basics | Python | Azure | Coming soon
+Cloud Basics | TypeScript | Azure | Coming soon
+ ** | | | 
+Cloud Basics | C# | GCP | Coming soon
+Cloud Basics | Go | GCP | Coming soon
+Cloud Basics | Java | GCP | Coming soon
+Cloud Basics | Python | GCP | Coming soon
+Cloud Basics | TypeScript | GCP | Coming soon
 
 ## 200 Level
 
