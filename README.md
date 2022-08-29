@@ -4,14 +4,12 @@ This is the official repo for public Pulumi workshops. If a workshop is running 
 
 Each workshop has a directory. Inside the directory is a README with details about the workshop and what to expect and subdirectories with different labs from the workshop. You generally are not expected to clone a repo to do a workshop; code provided is for copying and pasting into your own workspace.
 
-Note that some of the workshops on this list may be identical to others. Use workshops marked `ACTIVE` only! If you're updating a workshop, please update the metadata, this table, and move it out of the `archive` directory so we know it's currently in use.
+Note that some of the workshops on the stale list may be identical to other workshops currently in use. Use current workshops only! If you're updating a workshop, please update the metadata, these tables, and move it out of the `archive` directory so we know it's currently in use.
+
+## 100 Level
 
 Topic | Language | Provider | Link
 ---|---|---|---
-Abstractions | Go | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
-Abstractions | Python | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
-Abstractions | TypeScript | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
-Automation API | Python | AWS | [embedding-pulumi](./embedding-pulumi/)
 Basics | C# | Docker | [fundamentals/csharp](./fundamentals/csharp/)
 Basics | Go | Docker | [fundamentals/go](./fundamentals/go/)
 Basics | Java | Docker | [fundamentals/java](./fundamentals/java/)
@@ -20,6 +18,30 @@ Basics | TypeScript | Docker | [fundamentals/typescript](./fundamentals/typescri
 Basics | YAML | Docker | [fundamentals/yaml](./fundamentals/yaml/)
 Cloud Basics | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
 Cloud Basics | Java | AWS | [cloud-engineering-with-aws-X/java](./cloud-engineering-with-aws-X/java/)
+
+## 200 Level
+
+Topic | Language | Provider | Link
+---|---|---|---
+Abstractions | Go | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
+Abstractions | Python | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
+Abstractions | TypeScript | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
+
+## 300 Level
+
+Topic | Language | Provider | Link
+---|---|---|---
+Automation API | Python | AWS | [embedding-pulumi](./embedding-pulumi/)
+
+## 400 Level
+
+Topic | Language | Provider | Link
+---|---|---|---
+
+## Partner-Focused
+
+Topic | Language | Provider | Link
+---|---|---|---
 
 <details>
 <summary>Stale or Deprecated Workshops</summary>
