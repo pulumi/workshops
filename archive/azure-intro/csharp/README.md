@@ -7,7 +7,7 @@ last-ran: unknown
 boilerplate: something
 last-host: unknwon
 learn-content: none
-original-repo: https://github.com/pulumi/infrastructure-as-code-workshop/tree/master/labs/aws/in-person/csharp
+original-repo: https://github.com/pulumi/infrastructure-as-code-workshop/tree/master/labs/azure/csharp
 status: stale
 ---
 ### Prerequisites
