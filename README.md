@@ -4,7 +4,7 @@ This is the official repo for public Pulumi workshops. If a workshop is running 
 
 Each workshop has a directory. Inside the directory is a README with details about the workshop and what to expect and subdirectories with different labs from the workshop. You generally are not expected to clone a repo to do a workshop; code provided is for copying and pasting into your own workspace.
 
-Note that some of the workshops on the stale list may be identical to other workshops currently in use. Use current workshops only! If you're updating a workshop, please update the metadata, these tables, and move it out of the `archive` directory so we know it's currently in use.
+Note that some of the workshops on the stale list may be identical to other workshops currently in use. Use current workshops only! If you're updating a workshop, please update the metadata (i.e., the Markdown front matter in the workshop's README), these tables, and move it out of the `archive` directory so we know it's currently in use.
 
 ## 100 Level
 
