@@ -26,7 +26,7 @@ Cloud Fundamentals | YAML | AWS | Coming soon
  ** | | |
 Cloud Fundamentals | C# | Azure | Coming soon
 Cloud Fundamentals | Go | Azure | Coming soon
-Cloud Fundamentals | Java | Azure | [azure-intro/java](./cloud-engineering-with-azure/java/)
+Cloud Fundamentals | Java | Azure | [cloud-engineering-with-azure/java](./cloud-engineering-with-azure/java/)
 Cloud Fundamentals | Python | Azure | Coming soon
 Cloud Fundamentals | TypeScript | Azure | Coming soon
 Cloud Fundamentals | YAML | Azure | Coming soon
@@ -34,7 +34,7 @@ Cloud Fundamentals | YAML | Azure | Coming soon
 Cloud Fundamentals | C# | GCP | Coming soon
 Cloud Fundamentals | Go | GCP | Coming soon
 Cloud Fundamentals | Java | GCP | Coming soon
-Cloud Fundamentals | Python | GCP | Coming soon
+Cloud Fundamentals | Python | GCP | [cloud-engineering-with-gcp/azure](./cloud-engineering-with-gcp/azure)
 Cloud Fundamentals | TypeScript | GCP | Coming soon
 Cloud Fundamentals | YAML | GCP | Coming soon
 
