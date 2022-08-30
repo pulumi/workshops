@@ -14,9 +14,9 @@ deck: Fundamentals_Agnostic OR PartnerVersion-Intro
 
 # Cloud Engineering with AWS and Java
 
-Find this workshop at https://pulumi.awsworkshop.io/20_cloud_engineering_java.html
+Find this workshop at <https://pulumi.awsworkshop.io/25_cloud_engineering_java.html>
 
 There are three labs:
-* [Module 01: S3 Website](https://pulumi.awsworkshop.io/20_cloud_engineering_java/20_getting_started_with_pulumi.html)
-* [Module 02: EC2 Webserver](https://pulumi.awsworkshop.io/20_cloud_engineering_java/30_deploying_webservers.html)
-* [Module 03: Docker & ECS](https://pulumi.awsworkshop.io/20_cloud_engineering_java/40_ecs.html)
+* [Module 01: S3 Website](https://pulumi.awsworkshop.io/25_cloud_engineering_java/20_getting_started_with_pulumi.html)
+* [Module 02: EC2 Webserver](https://pulumi.awsworkshop.io/25_cloud_engineering_java/30_deploying_webservers.html)
+* [Module 03: Docker & ECS](https://pulumi.awsworkshop.io/25_cloud_engineering_java/40_ecs.html)
