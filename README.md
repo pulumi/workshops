@@ -16,21 +16,21 @@ Fundamentals | Java | Docker | [fundamentals/java](./fundamentals/java/)
 Fundamentals | Python | Docker | [fundamentals/python](./fundamentals/python/)
 Fundamentals | TypeScript | Docker | [fundamentals/typescript](./fundamentals/typescript/)
 Fundamentals | YAML | Docker | [fundamentals/yaml](./fundamentals/yaml/)
- ** | | | 
+ ** | | |
 Cloud Fundamentals | C# | AWS | Coming soon
 Cloud Fundamentals | Go | AWS | Coming soon
 Cloud Fundamentals | Java | AWS | [cloud-engineering-with-aws-X/java](./cloud-engineering-with-aws-X/java/)
 Cloud Fundamentals | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
 Cloud Fundamentals | TypeScript | AWS | Coming soon
 Cloud Fundamentals | YAML | AWS | Coming soon
- ** | | | 
+ ** | | |
 Cloud Fundamentals | C# | Azure | Coming soon
 Cloud Fundamentals | Go | Azure | Coming soon
-Cloud Fundamentals | Java | Azure | [azure-intro/java](./azure-intro/java/)
+Cloud Fundamentals | Java | Azure | [azure-intro/java](./cloud-engineering-with-azure/java/)
 Cloud Fundamentals | Python | Azure | Coming soon
 Cloud Fundamentals | TypeScript | Azure | Coming soon
 Cloud Fundamentals | YAML | Azure | Coming soon
- ** | | | 
+ ** | | |
 Cloud Fundamentals | C# | GCP | Coming soon
 Cloud Fundamentals | Go | GCP | Coming soon
 Cloud Fundamentals | Java | GCP | Coming soon
