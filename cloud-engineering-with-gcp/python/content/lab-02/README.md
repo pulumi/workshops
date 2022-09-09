@@ -37,7 +37,7 @@ bucket = gcp.storage.Bucket(
 
 ## Step 2 &mdash; Configure the ACLs for the Bucket Object
 
-When we upload the HTML files to our bucket, we want them to be publicly accessible. In order to make sure every file we place in the bucket gets desired accessibility, we need to set a default ACL.
+When we upload the HTML files to our bucket, we want them to be publicly accessible. In order to make sure every file we place in the bucket gets desired accessibility, we need to set a default access control list (ACL).
 
 Create a default ACL:
 
@@ -50,11 +50,12 @@ acl = gcp.storage.DefaultObjectAccessControl(
 )
 ```
 
-At this stage, your `__main.py__` file should match the following:
+At this stage, your `__main__.py` file should match the following code:
 
 ```python
 """A Python Pulumi program"""
 
+import pulumi
 import pulumi_gcp as gcp
 
 bucket = gcp.storage.Bucket(
@@ -80,9 +81,6 @@ Add the following statement near the top of your `__main__.py` near your other i
 
 ```python
 import os
-```
-
-```python
 for file in ["404.html", "index.html"]:
     filepath = os.path.join("../wwwroot", file)
     gcp.storage.BucketObject(
@@ -100,7 +98,7 @@ Notice the use of `depends_on`. This tells Pulumi that our `BucketObjects` shoul
 
 Now that we've defined our infrastructure, we use the Pulumi CLI to create the resources we've defined.
 
-Run `pulumi up` in your project directory. You should see something like this:
+Run `pulumi up` in your project directory. You should see output similar to the following:
 
 ```bash
 $ pulumi up
@@ -121,6 +119,7 @@ Resources:
 Do you want to perform this update?  [Use arrows to move, enter to select, type to filter]
   yes
 > no
+  details
 ```
 
 You can examine the details of the resources that will be created. When you're happy, move the arrow to `yes` and watch as Pulumi creates your resources!
@@ -136,7 +135,7 @@ static_site_url = pulumi.Output.concat(
     "https://storage.googleapis.com/", bucket.name, "/index.html")
 ```
 
-We use `pulumi.Output.concat` instead of standard Python string concatenation because `bucket.name` is a Pulumi output - a value that isn't known until after a resource has been created. For more information on Pulumi inputs and outputs, see [Inputs and Outputs](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/) in the Pulumi docs.
+We use `pulumi.Output.concat` instead of standard Python string concatenation because `bucket.name` is a Pulumi Output&mdash;a value that isn't known until after a resource has been created. For more information on Pulumi Inputs and Outputs, reference [Inputs and Outputs](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/) in the Pulumi docs.
 
 Now we can export the value as a stack export, which will allow us to view its value after our Pulumi program runs and our infrastructure has been provisioned:
 
@@ -150,7 +149,7 @@ We can obtain the value of our URL by running `pulumi up` again:
 pulumi up
 ```
 
-And we can now view our website:
+And we can now view our website's index page via `curl`:
 
 ```bash
 curl $(pulumi stack output static_site_url)
