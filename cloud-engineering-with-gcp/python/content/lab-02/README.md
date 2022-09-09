@@ -10,7 +10,7 @@ We'll first create the GCP storage bucket that will store our HTML files. Before
 import pulumi_gcp as gcp
 ```
 
-Now that we've imported our GCP provider, we can create our bucket:
+Now that we've imported our GCP provider, we can create our bucket at the end of the file:
 
 ```python
 bucket = gcp.storage.Bucket(
