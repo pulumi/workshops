@@ -21,7 +21,7 @@ bucket = gcp.storage.Bucket(
 
 You'll notice we've set a location parameter for our bucket.
 
-At this stage, your `__main.py__` file should match the following:
+At this stage, your `__main__.py` file should match the following code:
 
 ```python
 """A Python Pulumi program"""
