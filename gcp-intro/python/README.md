@@ -22,9 +22,9 @@ This workshops guides you through using Pulumi's [Google Cloud (GCP) Classic](ht
 
 You will need the following to complete this workshop:
 
-* A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-java)
-  * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-java).
-* The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-java)
+* A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python)
+  * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python).
+* The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python)
 * [Python 3.6 or later](https://www.python.org/downloads/)
 * [pip](https://pypi.org/project/pip/)
 * The [gcloud CLI](https://cloud.google.com/sdk/docs/install)
