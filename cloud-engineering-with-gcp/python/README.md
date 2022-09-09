@@ -26,7 +26,6 @@ You will need the following to complete this workshop:
   * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python).
 * The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python)
 * [Python 3.6 or later](https://www.python.org/downloads/)
-* [pip](https://pypi.org/project/pip/)
 * The [gcloud CLI](https://cloud.google.com/sdk/docs/install)
 * The [Docker Engine](https://docs.docker.com/engine/install/) installed and running, and the Docker CLI on your `PATH`.
 
