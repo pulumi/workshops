@@ -7,7 +7,8 @@ Infrastructure in Pulumi is organized into projects. Each project is a single pr
 Each Pulumi project lives in its own directory. Create one now and change into it:
 
 ```bash
-mkdir my-first-gcp-app && my-first-gcp-app
+mkdir my-first-gcp-app
+cd my-first-gcp-app
 ```
 
 Pulumi will use the directory name as your project name by default.
