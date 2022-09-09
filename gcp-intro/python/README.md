@@ -14,7 +14,7 @@ deck: unknown
 
 # Google Cloud Platform with Pulumi Workshop
 
-This workshops guides you through using Pulumi's [Google Cloud (GCP) Classic](https://www.pulumi.com/registry/packages/gcp/) provider.
+This workshops guides you through using Pulumi's [Google Cloud (GCP) Classic](https://www.pulumi.com/registry/packages/gcp/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python) provider.
 
 ## Pre-requisites
 
