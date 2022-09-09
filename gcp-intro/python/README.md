@@ -1,7 +1,7 @@
 ---
 author: Josh Kodroff
 language: python
-provider: google
+provider: gcp (classic)
 use: both
 last-ran: none
 boilerplate: none
