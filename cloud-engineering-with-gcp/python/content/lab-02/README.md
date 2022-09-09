@@ -4,7 +4,7 @@ In the second lab of this workshop, we're going to deploy some static HTML files
 
 ## Step 1 &mdash; Create a Bucket
 
-We'll first create the GCP storage bucket that will store our HTML files. Before we do that, we need to import the GCP provider into our project
+We'll first create the GCP storage bucket that will store our HTML files. Before we do that, we need to import the GCP provider into our project at the top with the other import statements:
 
 ```python
 import pulumi_gcp as gcp
