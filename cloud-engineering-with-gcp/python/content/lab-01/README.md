@@ -65,7 +65,7 @@ This installs the Pulumi GCP Classic SDK and the GCP Classic provider plugin.
 
 ## Step 5 &mdash; Configure your project
 
-We want all our resources to provision in a specific project. We'll set this globally in our Pulumi program. Run the following command in your terminal, from within your Pulumi program's directory:
+We want all our resources to provision in a specific project. We'll set this globally in our Pulumi program. Run the following command in your terminal, replacing `your-project-name` with the project name given by GCP:
 
 ```bash
 pulumi config set gcp:project your-project-name
