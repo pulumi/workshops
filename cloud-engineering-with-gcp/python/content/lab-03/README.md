@@ -62,7 +62,7 @@ docker_push = command.local.Command(
 )
 ```
 
-At this stage, your `__main.py__` file should look like this:
+At this stage, your `__main__.py` file should look like this:
 
 ```python
 """A Python Pulumi program"""
@@ -127,7 +127,7 @@ docker_push = command.local.Command(
 
 Now we've built our Docker image, we'll need to configure CloudRun to run it.
 
-Add the following to your `__main__` file:
+Add the following code to your `__main__.py` file:
 
 ```python
 service = gcp.cloudrun.Service(
@@ -157,7 +157,7 @@ service = gcp.cloudrun.Service(
 )
 ```
 
-At this stage, your `__main__` file should look like this:
+At this stage, your `__main__.py` file should match this code:
 
 ```python
 """A Python Pulumi program"""
@@ -287,7 +287,7 @@ Once Pulumi has finished creating your resources, we can check that our website 
 curl $(pulumi stack output container_url)
 ```
 
-The final version of your code should look like [`__main.py__`](__main.py__).
+The final version of your code should match [`__main__.py`](__main__.py).
 
 ## Step 6 &mdash; Cleaning up
 
