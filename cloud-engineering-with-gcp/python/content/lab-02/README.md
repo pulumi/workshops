@@ -37,6 +37,40 @@ bucket = gcp.storage.Bucket(
 )
 ```
 
+## Step 2 &mdash; Create Website Files
+
+Create a directory as a subdirectory of your project:
+
+```bash
+mkdir www
+```
+
+Create a file `www/index.html` with the following contents:
+
+```html
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hello, Pulumi!</title>
+</head>
+
+<body>
+  <p>Hello, S3!</p>
+  <p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a> and Python</p>
+  <p>Hosted with ❤️ by GCP!</p>
+  <img src="python.png" />
+</body>
+
+</html>
+```
+
+Next, download a Python image to the `www` directory:
+
+```bash
+curl https://raw.githubusercontent.com/pulumi/examples/ec43670866809bfd64d3a39f68451f957d3c1e1d/aws-py-s3-folder/www/python.png -o www/python.png
+```
+
 ## Step 2 &mdash; Configure the ACLs for the Bucket Object
 
 When we upload the HTML files to our bucket, we want them to be publicly accessible. In order to make sure every file we place in the bucket gets desired accessibility, we need to set a default access control list (ACL).
