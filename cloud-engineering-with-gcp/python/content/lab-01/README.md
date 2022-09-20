@@ -69,6 +69,8 @@ We want all our resources to provision in a specific project. We'll set this glo
 pulumi config set gcp:project your-project-name
 ```
 
+Pulumi will create the file `Pulumi.dev.yaml` which contains the configuration for our dev stack.
+
 ## Next Steps
 
 * [Create a static website](../lab-02/README.md)

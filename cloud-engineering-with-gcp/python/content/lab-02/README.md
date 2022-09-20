@@ -4,13 +4,17 @@ In the second lab of this workshop, we're going to deploy some static HTML files
 
 ## Step 1 &mdash; Create a Bucket
 
-We'll first create the GCP storage bucket that will store our HTML files. Before we do that, we need to import the GCP provider into our project at the top with the other import statements:
+We'll first create the GCP storage bucket that will store our HTML files. Before we do that, we need to import the GCP provider
+
+Add the following to the top of `__main__.py`, with the other `import` directive:
 
 ```python
 import pulumi_gcp as gcp
 ```
 
-Now that we've imported our GCP provider, we can create our bucket at the end of the file:
+Now that we've imported our GCP provider, we can create our bucket.
+
+Add the following to the bottom of `__main__.py`:
 
 ```python
 bucket = gcp.storage.Bucket(
@@ -18,8 +22,6 @@ bucket = gcp.storage.Bucket(
     location="US"
 )
 ```
-
-You'll notice we've set a location parameter for our bucket.
 
 At this stage, your `__main__.py` file should match the following code:
 
@@ -102,7 +104,13 @@ Notice the use of `depends_on`. This tells Pulumi that our `BucketObjects` shoul
 
 Now that we've defined our infrastructure, we use the Pulumi CLI to create the resources we've defined.
 
-Run `pulumi up` in your project directory. You should see output similar to the following:
+Run the following command in your project directory:
+
+```bash
+pulumi up
+```
+
+You should see output similar to the following:
 
 ```bash
 $ pulumi up
