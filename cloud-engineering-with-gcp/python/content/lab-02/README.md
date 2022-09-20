@@ -148,26 +148,17 @@ pulumi up
 
 You should see output similar to the following:
 
-```bash
-$ pulumi up
+```text
 Previewing update (dev)
 
-View Live: https://app.pulumi.com/jaxxstorm/static_site/dev/previews/b5ce861f-16ac-4930-ada4-1e9547e02eb1
+View Live: https://app.pulumi.com/jkodroff/my-first-gcp-app/dev/previews/8e2d59f2-bf22-4491-ac44-208bcc485ebc
 
-     Type                                       Name             Plan
- +   pulumi:pulumi:Stack                        static_site-dev  create
- +   ├─ gcp:storage:Bucket                      website          create
- +   ├─ gcp:storage:DefaultObjectAccessControl  website          create
- +   ├─ gcp:storage:BucketObject                404.html         create
- +   └─ gcp:storage:BucketObject                index.html       create
-
-Resources:
-    + 5 to create
-
-Do you want to perform this update?  [Use arrows to move, enter to select, type to filter]
-  yes
-> no
-  details
+     Type                                       Name                  Plan       
+ +   pulumi:pulumi:Stack                        my-first-gcp-app-dev  create     
+ +   ├─ gcp:storage:Bucket                      website               create     
+ +   ├─ gcp:storage:DefaultObjectAccessControl  website               create     
+ +   ├─ gcp:storage:BucketObject                index.html            create     
+ +   └─ gcp:storage:BucketObject                python.png            create     
 ```
 
 You can examine the details of the resources that will be created. When you're happy, move the arrow to `yes` and watch as Pulumi creates your resources!
