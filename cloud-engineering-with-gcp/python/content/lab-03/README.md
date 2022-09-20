@@ -1,23 +1,45 @@
 # Build and Deploy a Container on Google Cloud Run
 
-In our last lab, we deployed some static HTML files to a Google Cloud Storage bucket. In the third lab of this workshop, we're going create a Docker image to run our website on NGINX and deploy it to run on [Google Cloud Run](https://cloud.google.com/run/).
+In our last lab, we deployed some static HTML files to a Google Cloud Storage bucket. In the third lab of this workshop, we will create a Docker image to run our website on NGINX and deploy it to run on [Google Cloud Run](https://cloud.google.com/run/).
 
-## Step 1 &mdash; Create a Docker Image
+## Step 1 &mdash; Initialize Your Project
+
+First, we'll initialize a Pulumi project as we did in [Creating a New Project](../lab-01/README.md).
+
+Create a new directory and change into it:
+
+```bash
+mkdir my-first-gcp-cloudrun-app
+cd my-first-gcp-cloudrun-app
+```
+
+Initialize your Pulumi project:
+
+```bash
+pulumi new python -y
+```
+
+And initialize your virtualenv:
+
+```bash
+source venv/bin/activate
+```
 
 ## Step 2 &mdash; Create a Docker Image
 
-We'll use the [Pulumi Docker provider](https://www.pulumi.com/registry/packages/docker/) to build a Docker image we can push to Google Container Registry (GCR).
-
-Before we add anything to our project, let's make sure we configure the Docker CLI to push to GCR. We can do that by running the following command:
+Before we add anything to our project, let's make sure we configure the Docker CLI to push to GCR. We can do this by running the following command:
 
 ```bash
 gcloud auth configure-docker
 ```
 
-We'll also need to install the [Pulumi Command provider](https://www.pulumi.com/registry/packages/command/) so we can build our image. We can do this using `pip`. Add the following line to the bottom of your `requirements.txt`:
+In addition to the GCP provider, we'll also need to install the [Pulumi Command provider](https://www.pulumi.com/registry/packages/command/) so we can build our image. We can do this using `pip`.
+
+Add the following to your `requirements.txt`:
 
 ```text
-pulumi_command>=0.0.0,<1.0.0
+pulumi_gcp>=6.0.0,<7.0.0
+pulumi_command>=0.5.0,<1.0.0
 ```
 
 Install your dependencies using pip:
@@ -26,15 +48,12 @@ Install your dependencies using pip:
 pip install -r requirements.txt
 ```
 
-> If you'd like to do all of this from the command line in a single command, run the following:
->
-> ```bash
-> echo "pulumi_command>=0.0.0,<1.0.0 >> requirements.txt && pip install -r requirements.txt`
-> ```
+Next, we need to import the GCP and Command providers.
 
-Next, we need to import the Command provider's SDK. Add the following to the top of your `__main__.py` along with your other imports:
+Add the following to the top of your `__main__.py` along with your other imports:
 
 ```python
+import pulumi_gcp as gcp
 import pulumi_command as command
 ```
 
@@ -101,7 +120,7 @@ docker_push = command.local.Command(
 
 Now we've built our Docker image, we'll need to configure CloudRun to run it.
 
-Add the following code to your `__main__.py` file:
+Add the following code to your `__main__.py`:
 
 ```python
 service = gcp.cloudrun.Service(
