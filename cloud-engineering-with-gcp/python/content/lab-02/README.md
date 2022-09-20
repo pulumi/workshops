@@ -75,19 +75,23 @@ acl = gcp.storage.DefaultObjectAccessControl(
 
 Now we need to upload the files that comprise our website so we can view them. Because Pulumi uses real programming languages, we can use constructs like `for` loops. Let's use a `for` loop to iterate over the files in the `wwwroot` directory in this repo and upload them using the `BucketObject` resource.
 
-First, we need to import the `os` Python library. Note that a major advantage of Pulumi's design of using real programming languages is that we can make use of both standard libraries and external packages when defining our infrastructure.
+First, we need to import the `glob` Python library. Note that a major advantage of Pulumi's design of using real programming languages is that we can make use of both standard libraries and external packages when defining our infrastructure.
 
 Add the following statement near the top of your `__main__.py` near your other imports:
 
 ```python
-import os
-for file in ["404.html", "index.html"]:
-    filepath = os.path.join("../wwwroot", file)
+import glob
+```
+
+Then add the following at the bottom of your `__main.py__`:
+
+```python
+for file in glob.glob("wwwroot/*.html"):
     gcp.storage.BucketObject(
         file,
         bucket=bucket.name,
         name=file,
-        source=pulumi.FileAsset(filepath),
+        source=pulumi.FileAsset(file),
         opts=pulumi.ResourceOptions(depends_on=[acl])
     )
 ```
@@ -126,9 +130,11 @@ You can examine the details of the resources that will be created. When you're h
 
 ## Step 5 &mdash; Export the Bucket URL
 
-Our final step is to build our static site URL and add it as a [stack output](https://www.pulumi.com/learn/building-with-pulumi/stack-outputs/).
+Our final step is to build our static site URL and add it as a [stack output](https://www.pulumi.com/learn/building-with-pulumi/stack-outputs/). Stack outputs allow us to consume values from the command line or other Pulumi programs. In this case, we will consume our output from the command line.
 
-First, we assemble the output's value using `pulumi.Output.concat`:
+First, we assemble the output's value using `pulumi.Output.concat`.
+
+Add the following to your `__main__.py`:
 
 ```python
 static_site_url = pulumi.Output.concat(
@@ -137,7 +143,9 @@ static_site_url = pulumi.Output.concat(
 
 We use `pulumi.Output.concat` instead of standard Python string concatenation because `bucket.name` is a Pulumi Output&mdash;a value that isn't known until after a resource has been created. For more information on Pulumi Inputs and Outputs, reference [Inputs and Outputs](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/) in the Pulumi docs.
 
-Now we can export the value as a stack export, which will allow us to view its value after our Pulumi program runs and our infrastructure has been provisioned:
+Now we can export the value as a stack output, which will allow us to view its value from outside of our Pulumi program via the command line.
+
+Add the following to your `__main__.py`:
 
 ```python
 pulumi.export("static_site_url", static_site_url)
@@ -155,12 +163,14 @@ And we can now view our website's index page via `curl`:
 curl $(pulumi stack output static_site_url)
 ```
 
+At this point your `__main__.py` should look like this:
+
 At the end of this lab, your `__main__.py` should look like this:
 
 ```python
 """A Python Pulumi program"""
 
-import os
+import glob
 
 import pulumi
 import pulumi_gcp as gcp
@@ -177,21 +187,54 @@ acl = gcp.storage.DefaultObjectAccessControl(
     entity="allUsers"
 )
 
-for file in ["404.html", "index.html"]:
-    filepath = os.path.join("wwwroot", file)
+for file in glob.glob("wwwroot/*.html"):
     gcp.storage.BucketObject(
         file,
         bucket=bucket.name,
         name=file,
-        source=pulumi.FileAsset(filepath),
+        source=pulumi.FileAsset(file),
         opts=pulumi.ResourceOptions(depends_on=[acl])
     )
 
 static_site_url = pulumi.Output.concat(
     "https://storage.googleapis.com/", bucket.name, "/index.html")
 
-pulumi.export("static_url", static_site_url)
+pulumi.export("static_site_url", static_site_url)
 ```
+
+We can obtain the value of our URL by running `pulumi up` again, which will create the stack output:
+
+```bash
+pulumi up
+```
+
+Select `yes` to continue. One the command completes, we can now view our website.
+
+```bash
+curl $(pulumi stack output static_site_url)
+```
+
+You should see the contents of `index.html`.
+
+## Step 5 &mdash; Export the Bucket URL - Tear Down our Site
+
+Now that we've demonstrated creating a static site using Pulumi, it's time to tear down our infrastructure now that we no longer need it.
+
+Run the following command at the command line:
+
+```bash
+pulumi destroy
+```
+
+You will be presented with a preview indicating that all resources in the stack will be destroyed by continuing. Select `yes` to continue and your infrastructure will be deleted.
+
+If you'd like to remove your now-empty stack completely, you can optionally run the following command and confirm when asked if you're sure:
+
+```bash
+pulumi stack rm dev
+```
+
+That's it! We've now explored all the basics of creating and deleting infrastructure with Pulumi! Now we can move on to a slightly more advanced example: running containers on Google Cloud Run.
 
 ## Next Steps
 

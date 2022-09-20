@@ -15,7 +15,7 @@ Pulumi will use the directory name as your project name by default.
 
 ## Step 2 &mdash; Initialize Your Project
 
-A Pulumi project is just a directory with some files in it. It's possible for you to create a new one by hand. The `pulumi new` command automates the process:
+A Pulumi project is just a directory with some files in it. It's possible for you to create a new one by hand. The `pulumi new` command automates this process:
 
 ```bash
 pulumi new python -y
