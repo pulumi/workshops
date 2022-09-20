@@ -247,7 +247,7 @@ curl $(pulumi stack output static_site_url)
 
 You should see the contents of `index.html`.
 
-## Step 4 &mdash; Tear Down
+## Step 7 &mdash; Tear Down
 
 Now that we've demonstrated creating a static site using Pulumi, it's time to tear down our infrastructure now that we no longer need it.
 
