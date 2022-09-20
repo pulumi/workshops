@@ -71,7 +71,7 @@ Next, download a Python image to the `www` directory:
 curl https://raw.githubusercontent.com/pulumi/examples/ec43670866809bfd64d3a39f68451f957d3c1e1d/aws-py-s3-folder/www/python.png -o www/python.png
 ```
 
-## Step 2 &mdash; Configure the ACLs for the Bucket Object
+## Step 3 &mdash; Configure the ACLs for the Bucket Object
 
 When we upload the HTML files to our bucket, we want them to be publicly accessible. In order to make sure every file we place in the bucket gets desired accessibility, we need to set a default access control list (ACL).
 
@@ -107,7 +107,7 @@ acl = gcp.storage.DefaultObjectAccessControl(
 )
 ```
 
-## Step 3 &mdash; Upload your Objects
+## Step 4 &mdash; Upload Bucket Objects
 
 Now we need to upload the files that comprise our website so we can view them. Because Pulumi uses real programming languages, we can use constructs like `for` loops. Let's use a `for` loop to iterate over the files in the `www` directory in this repo and upload them using the `BucketObject` resource.
 
@@ -136,7 +136,7 @@ for file in os.listdir(content_dir):
 
 Notice the use of `depends_on`. This tells Pulumi that our `BucketObjects` should not be created until our `DefaultObjectAccessControl` has been fully provisioned. The `depends_on` is necessary because there's no _explicit_ dependency between the files and the ACL (i.e., there's no output from the `DefaultObjectAccessControl` resource passed to the `BucketObject` inputs). If we didn't explicitly specify `depends_on`, our files may get uploaded before the default ACL is applied, and our files would not get created with the right default permissions.
 
-## Step 4 &mdash; Run `pulumi up`
+## Step 5 &mdash; Run `pulumi up`
 
 Now that we've defined our infrastructure, we can use the Pulumi CLI to create the resources we've defined.
 
@@ -172,7 +172,7 @@ Do you want to perform this update?  [Use arrows to move, enter to select, type 
 
 You can examine the details of the resources that will be created. When you're happy, move the arrow to `yes` and watch as Pulumi creates your resources!
 
-## Step 5 &mdash; Export the Bucket URL
+## Step 6 &mdash; Export the Bucket URL
 
 Our final step is to build our static site URL and add it as a [stack output](https://www.pulumi.com/learn/building-with-pulumi/stack-outputs/). Stack outputs allow us to consume values from the command line or other Pulumi programs. In this case, we will consume our output from the command line.
 
@@ -247,7 +247,7 @@ curl $(pulumi stack output static_site_url)
 
 You should see the contents of `index.html`.
 
-## Step 5 &mdash; Tear Down our Site
+## Step 4 &mdash; Tear Down
 
 Now that we've demonstrated creating a static site using Pulumi, it's time to tear down our infrastructure now that we no longer need it.
 
