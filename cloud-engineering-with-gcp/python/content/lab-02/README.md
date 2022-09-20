@@ -100,7 +100,7 @@ bucket = gcp.storage.Bucket(
 )
 
 acl = gcp.storage.DefaultObjectAccessControl(
-    'website',
+    "website",
     bucket=bucket.name,
     role="READER",
     entity="allUsers"
@@ -109,25 +109,27 @@ acl = gcp.storage.DefaultObjectAccessControl(
 
 ## Step 3 &mdash; Upload your Objects
 
-Now we need to upload the files that comprise our website so we can view them. Because Pulumi uses real programming languages, we can use constructs like `for` loops. Let's use a `for` loop to iterate over the files in the `wwwroot` directory in this repo and upload them using the `BucketObject` resource.
+Now we need to upload the files that comprise our website so we can view them. Because Pulumi uses real programming languages, we can use constructs like `for` loops. Let's use a `for` loop to iterate over the files in the `www` directory in this repo and upload them using the `BucketObject` resource.
 
-First, we need to import the `glob` Python library. Note that a major advantage of Pulumi's design of using real programming languages is that we can make use of both standard libraries and external packages when defining our infrastructure.
+First, we need to import the `os` Python library. Note that a major advantage of Pulumi's design of using real programming languages is that we can make use of both standard libraries and external packages when defining our infrastructure.
 
 Add the following statement near the top of your `__main__.py` near your other imports:
 
 ```python
-import glob
+import os
 ```
 
 Then add the following at the bottom of your `__main.py__`:
 
 ```python
-for file in glob.glob("wwwroot/*.html"):
+content_dir = "www"
+for file in os.listdir(content_dir):
+    filepath = os.path.join(content_dir, file)
     gcp.storage.BucketObject(
         file,
         bucket=bucket.name,
         name=file,
-        source=pulumi.FileAsset(file),
+        source=pulumi.FileAsset(filepath),
         opts=pulumi.ResourceOptions(depends_on=[acl])
     )
 ```
@@ -136,7 +138,7 @@ Notice the use of `depends_on`. This tells Pulumi that our `BucketObjects` shoul
 
 ## Step 4 &mdash; Run `pulumi up`
 
-Now that we've defined our infrastructure, we use the Pulumi CLI to create the resources we've defined.
+Now that we've defined our infrastructure, we can use the Pulumi CLI to create the resources we've defined.
 
 Run the following command in your project directory:
 
@@ -193,29 +195,14 @@ Add the following to your `__main__.py`:
 pulumi.export("static_site_url", static_site_url)
 ```
 
-We can obtain the value of our URL by running `pulumi up` again:
-
-```bash
-pulumi up
-```
-
-And we can now view our website's index page via `curl`:
-
-```bash
-curl $(pulumi stack output static_site_url)
-```
-
-At this point your `__main__.py` should look like this:
-
 At the end of this lab, your `__main__.py` should look like this:
 
 ```python
 """A Python Pulumi program"""
 
-import glob
-
 import pulumi
 import pulumi_gcp as gcp
+import os
 
 bucket = gcp.storage.Bucket(
     "website",
@@ -229,12 +216,14 @@ acl = gcp.storage.DefaultObjectAccessControl(
     entity="allUsers"
 )
 
-for file in glob.glob("wwwroot/*.html"):
+content_dir = "www"
+for file in os.listdir(content_dir):
+    filepath = os.path.join(content_dir, file)
     gcp.storage.BucketObject(
         file,
         bucket=bucket.name,
         name=file,
-        source=pulumi.FileAsset(file),
+        source=pulumi.FileAsset(filepath),
         opts=pulumi.ResourceOptions(depends_on=[acl])
     )
 
@@ -258,7 +247,7 @@ curl $(pulumi stack output static_site_url)
 
 You should see the contents of `index.html`.
 
-## Step 5 &mdash; Export the Bucket URL - Tear Down our Site
+## Step 5 &mdash; Tear Down our Site
 
 Now that we've demonstrated creating a static site using Pulumi, it's time to tear down our infrastructure now that we no longer need it.
 
