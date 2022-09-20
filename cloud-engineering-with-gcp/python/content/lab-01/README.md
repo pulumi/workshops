@@ -16,7 +16,7 @@ A Pulumi project is just a directory with some files in it. It's possible for yo
 Run the following at the command line:
 
 ```bash
-pulumi new python
+pulumi new python -y
 ```
 
 This command creates all the files we need, initializes a new stack named `dev` (an instance of our project), initializes a Python virtual environment, and installs package dependencies from PyPI.
@@ -41,7 +41,7 @@ Feel free to explore the other files, although we won't be editing any of them b
 
 ## Step 3 &mdash; Install the GCP provider
 
-Pulumi created a virtualenv for us when we created our iac-workshop project. We’ll need to activate it to install dependencies:
+Pulumi created a virtualenv for us when we created our `my-first-gcp-app` project. We’ll need to activate it to install dependencies:
 
 ```bash
 source venv/bin/activate
