@@ -25,21 +25,79 @@ And initialize your virtualenv:
 source venv/bin/activate
 ```
 
-## Step 2 &mdash; Create a Docker Image
+## Step 2 &mdash; Add our Docker Image Files
 
-Before we add anything to our project, let's make sure we configure the Docker CLI to push to GCR. We can do this by running the following command:
+We need to add some files in order to create our Docker image.
+
+First, create a sub-directory of our project to hold our Docker image files:
 
 ```bash
-gcloud auth configure-docker
+mkdir docker
 ```
 
-In addition to the GCP provider, we'll also need to install the [Pulumi Command provider](https://www.pulumi.com/registry/packages/command/) so we can build our image. We can do this using `pip`.
+Create a file `docker/Dockerfile` with the following contents:
+
+```docker
+FROM nginx:mainline-alpine
+RUN rm /etc/nginx/conf.d/*
+ADD hello.conf /etc/nginx/conf.d/
+ADD index.html /usr/share/nginx/html/
+```
+
+Create a file `docker/hello.conf` with the following contents:
+
+```text
+server {
+    listen 80;
+
+    root /usr/share/nginx/html;
+    try_files /index.html =404;
+
+    expires -1;
+}
+```
+
+Create a file `docker/index.html` with the following contents:
+
+```html
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Hello, Pulumi!</title>
+</head>
+
+<body>
+  <p>Hello, S3!</p>
+  <p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a> and Python</p>
+  <p>Hosted with ❤️ by GCP!</p>
+  <img src="python.png" />
+</body>
+
+</html>
+```
+
+And finally, download a Python image:
+
+```bash
+curl https://raw.githubusercontent.com/pulumi/examples/ec43670866809bfd64d3a39f68451f957d3c1e1d/aws-py-s3-folder/www/python.png -o docker/python.png
+```
+
+## Step 3 &mdash; Create an Artifact Registry and Docker Image
+
+Before we add anything to our Pulumi program, let's make sure we configure the Docker CLI to push to Google CLoud. We can do this by running the following command:
+
+```bash
+gcloud auth configure-docker us-central1-docker.pkg.dev
+```
+
+In addition to the GCP provider, we'll also need to install the [Pulumi Docker provider](https://www.pulumi.com/registry/packages/docker/) so we can build our image. We can do this using `pip`.
 
 Add the following to your `requirements.txt`:
 
 ```text
 pulumi_gcp>=6.0.0,<7.0.0
-pulumi_command>=0.5.0,<1.0.0
+pulumi_docker>=3.0.0,<4.0.0
 ```
 
 Install your dependencies using pip:
@@ -48,37 +106,52 @@ Install your dependencies using pip:
 pip install -r requirements.txt
 ```
 
-Next, we need to import the GCP and Command providers.
+Next, we need to import the GCP and Docker provider SDKs.
 
 Add the following to the top of your `__main__.py` along with your other imports:
 
 ```python
 import pulumi_gcp as gcp
-import pulumi_command as command
+import pulumi_docker as docker
 ```
 
-Add the following to your `__main.py__` to build the Docker image:
+First, we'll need to define a Google Artifact Registry repository to hold our Docker image. Add the following to your `__main__.py`:
 
 ```python
+repo_id = "pulumi-workshop"
+repo = gcp.artifactregistry.Repository(
+    "repo",
+    gcp.artifactregistry.RepositoryArgs(
+        format="DOCKER",
+        location="us-central1",
+        repository_id=repo_id,
+    ),
+)
+```
+
+Next, we'll need to build our Docker image. Add the following to your `__main.py__`:
+
+```python
+project = pulumi.Config("gcp").require("project")
 image_tag = pulumi.Output.concat(
-    "gcr.io/",
-    pulumi.Config("gcp").require("project"),
-    "/my-first-gcp-app",
-    ":latest"
+    repo.location,
+    "-docker.pkg.dev/",
+    project,
+    "/",
+    repo_id,
+    "/my-first-gcp-cloudrun-app:latest",
 )
 
-docker_build = command.local.Command(
-    "docker-build",
-    create=pulumi.Output.concat(
-        "docker build --platform linux/amd64 -t ", image_tag, " wwwroot 2>&1"),
-    delete=pulumi.Output.concat("docker image rm ", image_tag, " || true"),
-)
-
-docker_push = command.local.Command(
-    "docker-push",
-    create=pulumi.Output.concat("docker push ", image_tag),
-    opts=pulumi.ResourceOptions(
-        depends_on=docker_build,
+image = docker.Image(
+    "image",
+    image_name=image_tag,
+    build=docker.DockerBuild(
+        context="docker",
+        env={
+            # Forces Docker to build an AMD image on ARM machines as Google
+            # Cloud Run only supports AMD64 images:
+            "DOCKER_DEFAULT_PLATFORM": "linux/amd64",
+        },
     ),
 )
 ```
@@ -90,33 +163,43 @@ At this stage, your `__main__.py` file should look like this:
 
 import pulumi
 import pulumi_gcp as gcp
-import pulumi_command as command
+import pulumi_docker as docker
 
+repo_id = "pulumi-workshop"
+repo = gcp.artifactregistry.Repository(
+    "repo",
+    gcp.artifactregistry.RepositoryArgs(
+        format="DOCKER",
+        location="us-central1",
+        repository_id=repo_id,
+    ),
+)
 
+project = pulumi.Config("gcp").require("project")
 image_tag = pulumi.Output.concat(
-    "gcr.io/",
-    pulumi.Config("gcp").require("project"),
-    "/my-first-gcp-app",
-    ":latest"
+    repo.location,
+    "-docker.pkg.dev/",
+    project,
+    "/",
+    repo_id,
+    "/my-first-gcp-cloudrun-app:latest",
 )
 
-docker_build = command.local.Command(
-    "docker-build",
-    create=pulumi.Output.concat(
-        "docker build --platform linux/amd64 -t ", image_tag, " wwwroot 2>&1"),
-    delete=pulumi.Output.concat("docker image rm ", image_tag, " || true"),
-)
-
-docker_push = command.local.Command(
-    "docker-push",
-    create=pulumi.Output.concat("docker push ", image_tag),
-    opts=pulumi.ResourceOptions(
-        depends_on=docker_build,
+image = docker.Image(
+    "image",
+    image_name=image_tag,
+    build=docker.DockerBuild(
+        context="docker",
+        env={
+            # Forces Docker to build an AMD image on ARM machines as Google
+            # Cloud Run only supports AMD64 images:
+            "DOCKER_DEFAULT_PLATFORM": "linux/amd64",
+        },
     ),
 )
 ```
 
-## Step 3 &mdash; Configure your CloudRun Service
+## Step 4 &mdash; Configure your CloudRun Service
 
 Now we've built our Docker image, we'll need to configure CloudRun to run it.
 
@@ -126,27 +209,26 @@ Add the following code to your `__main__.py`:
 service = gcp.cloudrun.Service(
     "temp-app",
     name="temp-app",
-    location="us-central1",
+    location=repo.location,
     template=gcp.cloudrun.ServiceTemplateArgs(
         spec=gcp.cloudrun.ServiceTemplateSpecArgs(
             containers=[
                 gcp.cloudrun.ServiceTemplateSpecContainerArgs(
-                    image=image_tag,
+                    image=image.base_image_name,
                     ports=[
                         gcp.cloudrun.ServiceTemplateSpecContainerPortArgs(
-                            container_port=80
-                        )
+                            container_port=80,
+                        ),
                     ],
                     resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
                         requests={"memory": "64Mi", "cpu": "200m"},
-                        limits={"memory": "265Mi", "cpu": "1000m"}
-                    )
-                )
+                        limits={"memory": "265Mi", "cpu": "1000m"},
+                    ),
+                ),
             ],
-            container_concurrency=80
-        )
+            container_concurrency=80,
+        ),
     ),
-    opts=pulumi.ResourceOptions(depends_on=docker_push)
 )
 ```
 
@@ -157,66 +239,75 @@ At this stage, your `__main__.py` file should match this code:
 
 import pulumi
 import pulumi_gcp as gcp
-import pulumi_command as command
+import pulumi_docker as docker
 
+repo_id = "pulumi-workshop"
+repo = gcp.artifactregistry.Repository(
+    "repo",
+    gcp.artifactregistry.RepositoryArgs(
+        format="DOCKER",
+        location="us-central1",
+        repository_id=repo_id,
+    ),
+)
 
+project = pulumi.Config("gcp").require("project")
 image_tag = pulumi.Output.concat(
-    "gcr.io/",
-    pulumi.Config("gcp").require("project"),
-    "/my-first-gcp-app",
-    ":latest"
+    repo.location,
+    "-docker.pkg.dev/",
+    project,
+    "/",
+    repo_id,
+    "/my-first-gcp-cloudrun-app:latest",
 )
 
-docker_build = command.local.Command(
-    "docker-build",
-    create=pulumi.Output.concat(
-        "docker build --platform linux/amd64 -t ", image_tag, " wwwroot 2>&1"),
-    delete=pulumi.Output.concat("docker image rm ", image_tag, " || true"),
-)
-
-docker_push = command.local.Command(
-    "docker-push",
-    create=pulumi.Output.concat("docker push ", image_tag),
-    opts=pulumi.ResourceOptions(
-        depends_on=docker_build,
+image = docker.Image(
+    "image",
+    image_name=image_tag,
+    build=docker.DockerBuild(
+        context="docker",
+        env={
+            # Forces Docker to build an AMD image on ARM machines as Google
+            # Cloud Run only supports AMD64 images:
+            "DOCKER_DEFAULT_PLATFORM": "linux/amd64",
+        },
     ),
 )
 
 service = gcp.cloudrun.Service(
     "temp-app",
     name="temp-app",
-    location="us-central1",
+    location=repo.location,
     template=gcp.cloudrun.ServiceTemplateArgs(
         spec=gcp.cloudrun.ServiceTemplateSpecArgs(
             containers=[
                 gcp.cloudrun.ServiceTemplateSpecContainerArgs(
-                    image=image_tag,
+                    image=image.base_image_name,
                     ports=[
                         gcp.cloudrun.ServiceTemplateSpecContainerPortArgs(
-                            container_port=80
-                        )
+                            container_port=80,
+                        ),
                     ],
                     resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
                         requests={"memory": "64Mi", "cpu": "200m"},
-                        limits={"memory": "265Mi", "cpu": "1000m"}
-                    )
-                )
+                        limits={"memory": "265Mi", "cpu": "1000m"},
+                    ),
+                ),
             ],
-            container_concurrency=80
-        )
+            container_concurrency=80,
+        ),
     ),
-    opts=pulumi.ResourceOptions(depends_on=docker_push)
 )
 ```
 
-## Step 4 &mdash; Set up public access
+## Step 5 &mdash; Set up public access
 
 We'll now need to set up an `IamMember` permission to allow anyone to view this Cloud Run image.
 
 Add the following to the end of your `__main__.py`:
 
 ```python
-iam = gcp.cloudrun.IamMember(
+gcp.cloudrun.IamMember(
     "example",
     gcp.cloudrun.IamMemberArgs(
         location=service.location,
@@ -228,12 +319,12 @@ iam = gcp.cloudrun.IamMember(
 )
 ```
 
-## Step 5 &mdash; Export the Bucket URL
+## Step 6 &mdash; Export the Container Service URL
 
 Our final step is to build our container URL. Add the following to the end of your `__main__.py`:
 
 ```python
-pulumi.export("container_url", service.statuses[0].url)
+pulumi.export("cloud_run_service_url", service.statuses[0].url)
 ```
 
 At this point, your `__main__.py` should look like this:
@@ -243,58 +334,67 @@ At this point, your `__main__.py` should look like this:
 
 import pulumi
 import pulumi_gcp as gcp
-import pulumi_command as command
+import pulumi_docker as docker
 
+repo_id = "pulumi-workshop"
+repo = gcp.artifactregistry.Repository(
+    "repo",
+    gcp.artifactregistry.RepositoryArgs(
+        format="DOCKER",
+        location="us-central1",
+        repository_id=repo_id,
+    ),
+)
 
+project = pulumi.Config("gcp").require("project")
 image_tag = pulumi.Output.concat(
-    "gcr.io/",
-    pulumi.Config("gcp").require("project"),
-    "/my-first-gcp-app",
-    ":latest"
+    repo.location,
+    "-docker.pkg.dev/",
+    project,
+    "/",
+    repo_id,
+    "/my-first-gcp-cloudrun-app:latest",
 )
 
-docker_build = command.local.Command(
-    "docker-build",
-    create=pulumi.Output.concat(
-        "docker build --platform linux/amd64 -t ", image_tag, " wwwroot 2>&1"),
-    delete=pulumi.Output.concat("docker image rm ", image_tag, " || true"),
-)
-
-docker_push = command.local.Command(
-    "docker-push",
-    create=pulumi.Output.concat("docker push ", image_tag),
-    opts=pulumi.ResourceOptions(
-        depends_on=docker_build,
+image = docker.Image(
+    "image",
+    image_name=image_tag,
+    build=docker.DockerBuild(
+        context="docker",
+        env={
+            # Forces Docker to build an AMD image on ARM machines as Google
+            # Cloud Run only supports AMD64 images:
+            "DOCKER_DEFAULT_PLATFORM": "linux/amd64",
+        },
     ),
 )
 
 service = gcp.cloudrun.Service(
     "temp-app",
     name="temp-app",
-    location="us-central1",
+    location=repo.location,
     template=gcp.cloudrun.ServiceTemplateArgs(
         spec=gcp.cloudrun.ServiceTemplateSpecArgs(
             containers=[
                 gcp.cloudrun.ServiceTemplateSpecContainerArgs(
-                    image=image_tag,
+                    image=image.base_image_name,
                     ports=[
                         gcp.cloudrun.ServiceTemplateSpecContainerPortArgs(
-                            container_port=80
-                        )
+                            container_port=80,
+                        ),
                     ],
                     resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
                         requests={"memory": "64Mi", "cpu": "200m"},
-                        limits={"memory": "265Mi", "cpu": "1000m"}
-                    )
-                )
+                        limits={"memory": "265Mi", "cpu": "1000m"},
+                    ),
+                ),
             ],
-            container_concurrency=80
-        )
+            container_concurrency=80,
+        ),
     ),
-    opts=pulumi.ResourceOptions(depends_on=docker_push)
 )
 
-iam = gcp.cloudrun.IamMember(
+gcp.cloudrun.IamMember(
     "example",
     gcp.cloudrun.IamMemberArgs(
         location=service.location,
@@ -305,7 +405,7 @@ iam = gcp.cloudrun.IamMember(
     )
 )
 
-pulumi.export("container_url", service.statuses[0].url)
+pulumi.export("cloud_run_service_url", service.statuses[0].url)
 ```
 
 ## Step 6 &mdash; Run `pulumi up`
@@ -321,10 +421,8 @@ pulumi up
 Once Pulumi has finished creating your resources, we can check that our website is up and running:
 
 ```bash
-curl $(pulumi stack output container_url)
+curl $(pulumi stack output cloud_run_service_url)
 ```
-
-The final version of your code should match [`__main__.py`](__main__.py).
 
 ## Step 7 &mdash; Cleaning up
 
