@@ -426,7 +426,7 @@ curl $(pulumi stack output cloud_run_service_url)
 
 ## Step 7 &mdash; Cleaning up
 
-Now that we've demonstrated creating a static site using Pulumi, it's time to tear down our infrastructure now that we no longer need it.
+Now that we've demonstrated creating a containerized application using Pulumi, it's time to tear down our infrastructure now that we no longer need it.
 
 Run the following command at the command line:
 
