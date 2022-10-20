@@ -9,9 +9,9 @@ Add the following configuration variables to your Pulumi program. These statemen
 ```python
 # get configuration
 config = pulumi.Config()
-frontend_port = config.require_int("frontendPort")
-backend_port = config.require_int("backendPort")
-mongo_port = config.require_int("mongoPort")
+frontend_port = config.require_int("frontend_port")
+backend_port = config.require_int("backend_port")
+mongo_port = config.require_int("mongo_port")
 ```
 
 Your Pulumi program should now match this code:
@@ -122,9 +122,9 @@ pulumi config set protocol http://
 Add them to the top of our program with the rest of the configuration variables:
 
 ```python
-mongo_host = config.require("mongoHost") # Note that strings are the default, so it's not `config.require_str`, just `config.require`.
+mongo_host = config.require("mongo_host") # Note that strings are the default, so it's not `config.require_str`, just `config.require`.
 database = config.require("database")
-node_environment = config.require("nodeEnvironment")
+node_environment = config.require("node_environment")
 protocol = config.require("protocol")
 ```
 
@@ -181,12 +181,12 @@ import pulumi_docker as docker
 
 # get configuration
 config = pulumi.Config()
-frontend_port = config.require_int("frontendPort")
-backend_port = config.require_int("backendPort")
-mongo_port = config.require_int("mongoPort")
-mongo_host = config.require("mongoHost") # Note that strings are the default, so it's not `config.require_str`, just `config.require`.
+frontend_port = config.require_int("frontend_port")
+backend_port = config.require_int("backend_port")
+mongo_port = config.require_int("mongo_port")
+mongo_host = config.require("mongo_host") # Note that strings are the default, so it's not `config.require_str`, just `config.require`.
 database = config.require("database")
-node_environment = config.require("nodeEnvironment")
+node_environment = config.require("node_environment")
 protocol = config.require("protocol")
 
 stack = pulumi.get_stack()
