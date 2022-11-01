@@ -26,7 +26,7 @@ pulumi new gcp-python -y
 </details>
 
 ## Add pulumi-synced-folder
-The **pulumi-synced-folder** is a Pulumi component that synchronizes a local folder to Google Cloud Storage. More information is available at [pulumi-synced-folder](https://github.com/pulumi/pulumi-synced-folder)
+The **pulumi-synced-folder** is a Pulumi component that synchronizes a local folder to Google Cloud Storage. More information is available at [pulumi-synced-folder](https://github.com/pulumi/pulumi-synced-folder?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
 
 
 Add the following to the bottom of the `requirements.txt`
