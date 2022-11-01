@@ -22,8 +22,6 @@ We will create a storage bucket, an iam binding, a bucket object,  and a cloudfu
 
 You will need the following tools to complete this workshop:
 
-[//]: # (Do we need to fix the url to have a referal link?)
-
 * A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
   * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops).
 * The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
