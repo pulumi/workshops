@@ -17,7 +17,7 @@ import pulumi_synced_folder as synced
 
 ## Import the program's configuration settings
 We want to use what we added via `pulumi config` in this program.
-More details are at [Accessing Configuration from Code](https://www.pulumi.com/docs/intro/concepts/config/#code)
+More details are at [Accessing Configuration from Code](https://www.pulumi.com/docs/intro/concepts/config/#code?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
 
 Append the following to `__main__.py`
 ```python
