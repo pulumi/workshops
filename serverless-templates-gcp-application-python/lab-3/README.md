@@ -187,7 +187,7 @@ site_config = gcp.storage.BucketObject(
 
 ## Export the URLs of the site and serverless endpoint
 
-We have to call [apply](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply) to
+We have to call [`apply`](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) to
 create the URL that we need to hit.
 
 Append the following to `__main__.py`
