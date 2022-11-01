@@ -223,7 +223,7 @@ pulumi destroy -y
 ## SHORTCUT - Pulumi Templates
 [Pulumi Templates](https://www.pulumi.com/templates/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) are the fastest way to deploy infrastructure to AWS, Azure, and Google Cloud. After deploying, you can easily modify the infrastructure by updating the code in TypeScript, Python, Go, Java, .NET/C#, or YAML.
 
-This entire workshop can be reduced by following the [Google Cloud Serverless Application](https://www.pulumi.com/templates/serverless-application/gcp/) template to:
+This entire workshop can be reduced by following the [Google Cloud Serverless Application](https://www.pulumi.com/templates/serverless-application/gcp/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) template to:
 
 ```bash
 mkdir my-serverless-app && cd my-serverless-app
