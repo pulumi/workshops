@@ -7,7 +7,7 @@ The key-value pairs for any given stack are stored in your project’s stack set
 
 The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/).
 
-More information on this can be found in [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values)
+More information on this can be found in [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
 ## Set the configurations for the environment
 ```bash
 pulumi config
