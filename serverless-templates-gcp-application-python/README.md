@@ -28,7 +28,7 @@ You will need the following tools to complete this workshop:
   * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops).
 * The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
 * [Python 3.8 or higher](https://www.pulumi.com/docs/get-started/gcp/begin/#choose-your-language?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
-* [Configure Pulumi to access your google cloud account](https://www.pulumi.com/docs/get-started/gcp/begin/#configure-pulumi-to-access-your-google-cloud-account)
+* [Configure Pulumi to access your google cloud account](https://www.pulumi.com/docs/get-started/gcp/begin/#configure-pulumi-to-access-your-google-cloud-account?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
 
 You'll need to know how to
 
