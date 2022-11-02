@@ -136,3 +136,7 @@ Once again we're going to destroy everything
 ```typescript
 pulumi destroy
 ```
+
+## Moving on
+
+Let's continue to [lab 3](https://github.com/pulumi/workshops/tree/main/serverless-architecture-on-aws/lab-3)

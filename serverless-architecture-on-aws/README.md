@@ -40,3 +40,7 @@ In the second lab we will take our learnings from the first lab and make changes
 ### Lab 3 - Exploring more serverless architectures
 
 In the final lab we will take a look at what tools the Pulumi AWS provider gives us to make it easier to build Serverless architectures. [View lab 3](https://github.com/pulumi/workshops/tree/main/serverless-architecture-on-aws/lab-3)
+
+## Get started
+
+Let's get started with [lab 1](https://github.com/pulumi/workshops/tree/main/serverless-architecture-on-aws/lab-1).

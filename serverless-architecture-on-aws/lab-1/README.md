@@ -28,6 +28,8 @@ Run the following command:
 pulumi up
 ```
 
+Select `yes` to continue
+
 ## Viewing the results
 
 Run the following to view the output:
@@ -51,3 +53,7 @@ Run the following command to remove resources:
 ```bash
 pulumi destroy
 ```
+
+## Moving on
+
+Let's continue to [lab 2](https://github.com/pulumi/workshops/tree/main/serverless-architecture-on-aws/lab-2).
