@@ -31,7 +31,7 @@ In this workshop, we will explore secrets, stacks, inputs and outputs, and more.
 
 ## Lab 1 - Setup
 
-Let's set up our sandbox application using a [Pulumi template for containers on Azure with Go](). First, make a new directory, and change into it.
+Let's set up our sandbox application using a [Pulumi template for containers on Azure with Go](https://www.pulumi.com/templates/container-service/azure/). First, make a new directory, and change into it.
 
 ```bash
 mkdir build-with-containers && cd build-with-containers
