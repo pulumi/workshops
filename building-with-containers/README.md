@@ -95,7 +95,7 @@ Speaking of stacks, what do we know about them?
 
 First, let's modify our code to add the stack name to the various resource names.
 
-_New lines 46-47:_
+_New lines 46-47 in ./main.go:_
 ```go
 		// Add the stack details
 		stack := ctx.Stack()
@@ -103,11 +103,29 @@ _New lines 46-47:_
 
 And then modify all of the various names like the following code from new line 50:
 
+_New line 50 in ./main.go:_
 ```go
 		resourceGroup, err := resources.NewResourceGroup(ctx, fmt.Sprintf("resource-group-%v-", stack), nil)
 ```
 
 Note that the registry name can't have dashes, so use a `0` instead for now if you want a human-readable name that doesn't run together.
+
+Let's also modify our app to have the return show which stack we're in.
+
+_New line 19 in ./app/main.go:_
+```go
+			Message: fmt.Sprintf("Hello, world, from the %s stack!", os.Getenv("STACK")),
+```
+
+and
+
+_New lines 130-133 in ./main.go:_
+```go
+						containerinstance.EnvironmentVariableArgs{
+							Name:  pulumi.String("STACK"),
+							Value: pulumi.Sprintf("%s", stack),
+						},
+```
 
 _(If you need to copy this, head to the `answers/` directory!)_
 
@@ -140,6 +158,8 @@ pulumi config
 
 Now if you run `pulumi preview --diff`, you'll find all of the resource names use the stack name!
 
+If you were to switch back to `dev` and run `pulumi up` to update the stack, you'll find the stack appears in the output, just as we modified the source code to do.
+
 <details>
 <summary><b>Question:</b> Why are stacks useful?</summary>
 
@@ -154,6 +174,7 @@ What if we wanted to call a stack output from another stack, say call something 
 
 Let's call the URL of the dev stack in the staging stack. Add the following code just before the exports, replacing the `<org>` placeholder with your username:
 
+_New lines 155-159 in ./main.go:_
 ```go
 		devStackUrl, err := pulumi.NewStackReference(ctx, "<org>/build-with-containers/dev", nil)
 		if err != nil {
@@ -164,6 +185,7 @@ Let's call the URL of the dev stack in the staging stack. Add the following code
 
 And add this export, just for fun:
 
+_New line 165 in ./main.go:_
 ```go
 		ctx.Export("devUrl", devStackUrlOutput)
 ```
@@ -188,6 +210,27 @@ Resources:
 ```
 
 Note that we **have** to export the value with a key from the original stack to get a callable reference in another stack. The stack reference is basically a map of all of the exports from any given stack.
+
+Let's stand up `staging`, just to check it out.
+
+```bash
+pulumi stack select staging
+pulumi up
+```
+
+Run the following two commands from `staging` and compare the differences:
+
+```bash
+$ curl $(pulumi stack output url)
+{"message":"Hello, world, from the staging stack!"}
+```
+
+```bash
+$ curl $(pulumi stack output devUrl)
+{"message":"Hello, world, from the dev stack!"}
+```
+
+Pretty cool!
 
 <details>
 <summary><b>Question:</b> Why are stack references useful?</summary>
