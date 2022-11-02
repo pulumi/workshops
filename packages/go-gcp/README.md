@@ -30,16 +30,16 @@ The workshop is divided into three labs:
 
 ### Lab 1 - Component schema
 
-In this lab we will define our components in the Pulumi Schema file. [View lab 1](https://github.com/pulumi/workshops/tree/main/packages/go-gcp/lab-1)
+In this lab we will define our components in the Pulumi Schema file. [View lab 1](./lab1)
 
 ### Lab 2 - Component implementation
 
-In the second lab we will take our schema from the first lab and implement our component in Go. [View lab 2](https://github.com/pulumi/workshops/tree/main/packages/go-gcp/lab-2)
+In the second lab we will take our schema from the first lab and implement our component in Go. [View lab 2](./lab2)
 
 ### Lab 3 - Component consumption
 
-In the final lab we will use our component in a Pulumi YAML program. [View lab 3](https://github.com/pulumi/workshops/tree/main/packages/go-gcp/lab-3)
+In the final lab we will use our component in a Pulumi YAML program. [View lab 3](./lab3)
 
 ## Get started
 
-Let's get started with [lab 1](https://github.com/pulumi/workshops/tree/main/packages/go-gcp/lab-1).
+Let's get started with [lab 1](./lab1).
