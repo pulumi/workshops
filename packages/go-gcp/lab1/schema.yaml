@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/pulumi/pulumi/master/pkg/codegen/schema/pulumi.json
+---
+name: ced
+language:
+  csharp:
+    packageReferences:
+      Pulumi: 3.*
+  go:
+    generateResourceContainerTypes: true
+    importBasePath: github.com/pulumi/pulumi-ced/sdk/go/ced
+  nodejs:
+    devDependencies:
+      typescript: "^3.7.0"
+  python:
+    requires:
+      pulumi: ">=3.0.0,<4.0.0"
