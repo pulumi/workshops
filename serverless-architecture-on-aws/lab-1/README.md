@@ -1,7 +1,5 @@
 # Lab 1: Getting started with Pulumi Templates
 
-* insert text about Pulumi templates *
-
 ## Create a directory
 
 To get started, we need a directory. Run these two commands in your terminal:
