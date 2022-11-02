@@ -66,7 +66,9 @@ Automation API | TypeScript | AWS | Coming soon
 
 Topic | Language | Provider | Link
 ---|---|---|---
-Coming soon
+Pulumi Packages | Go | GCP | [packages/go-gcp](./packages/go-gcp)
+
+More to come soon
 
 ## Partner-Focused
 
