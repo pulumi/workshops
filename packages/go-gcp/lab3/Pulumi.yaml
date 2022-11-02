@@ -1,0 +1,3 @@
+name: gcp-services-with-workload-identity
+runtime: yaml
+description: GCP services using a Go based component Service Identity
