@@ -160,3 +160,5 @@ language:
       pulumi-kubernetes: ">=3.0.0,<4.0.0"
 ```
 </details>
+
+Let's continue with the implementation of this component resource in [lab 2](../lab2)
