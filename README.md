@@ -21,7 +21,7 @@ Cloud Fundamentals | C# | AWS | Coming soon
 Cloud Fundamentals | Go | AWS | Coming soon
 Cloud Fundamentals | Java | AWS | [cloud-engineering-with-aws-X/java](./cloud-engineering-with-aws-X/java/)
 Cloud Fundamentals | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
-Cloud Fundamentals | TypeScript | AWS | Coming soon
+Cloud Fundamentals | TypeScript | AWS | [static-site-workshop/aws-typescript](./static-site-workshop/aws-typescript/)
 Cloud Fundamentals | YAML | AWS | Coming soon
  ** | | |
 Cloud Fundamentals | C# | Azure | Coming soon
@@ -35,6 +35,7 @@ Cloud Fundamentals | C# | GCP | Coming soon
 Cloud Fundamentals | Go | GCP | Coming soon
 Cloud Fundamentals | Java | GCP | Coming soon
 Cloud Fundamentals | Python | GCP | [cloud-engineering-with-gcp/python](./cloud-engineering-with-gcp/python)
+Cloud Fundamentals | Python | GCP | [serverless-templates-gcp-application-python](./serverless-templates-gcp-application-python)
 Cloud Fundamentals | TypeScript | GCP | Coming soon
 Cloud Fundamentals | YAML | GCP | Coming soon
 
@@ -47,6 +48,9 @@ Abstractions | Go | Civo | [building-reusable-abstractions](./building-reusable-
 Abstractions | Java | Civo | Coming Soon
 Abstractions | Python | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
 Abstractions | TypeScript | Civo | [building-reusable-abstractions](./building-reusable-abstractions/)
+Inputs and Outputs | Go | Azure | [building-with-containers/azure-go](./building-with-containers/azure-go/)
+Secrets | Go | Azure | [building-with-containers/azure-go](./building-with-containers/azure-go/)
+Stacks | Go | Azure | [building-with-containers/azure-go](./building-with-containers/azure-go/)
 
 ## 300 Level
 
