@@ -31,12 +31,12 @@ The workshop is divided into three labs:
 
 ### Lab 1 - Serverless templates
 
-In this lab we will use the AWS Serverless Application template to deploy a serverless application. [View lab 1]()
+In this lab we will use the AWS Serverless Application template to deploy a serverless application. [View lab 1](https://github.com/pulumi/workshops/tree/main/serverless-architecture-on-aws/lab-1)
 
 ### Lab 2 - Production Ready serverless application
 
-In the second lab we will take our learnings from the first lab and make changes to make it easier and more secure to deploy. [View lab 2]()
+In the second lab we will take our learnings from the first lab and make changes to make it easier and more secure to deploy. [View lab 2](https://github.com/pulumi/workshops/tree/main/serverless-architecture-on-aws/lab-2)
 
 ### Lab 3 - Exploring more serverless architectures
 
-In the final lab we will take a look at what tools the Pulumi AWS provider gives us to make it easier to build Serverless architectures. [View lab 3]()
+In the final lab we will take a look at what tools the Pulumi AWS provider gives us to make it easier to build Serverless architectures. [View lab 3](https://github.com/pulumi/workshops/tree/main/serverless-architecture-on-aws/lab-3)
