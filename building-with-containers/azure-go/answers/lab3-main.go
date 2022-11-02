@@ -127,6 +127,10 @@ func main() {
 							Name:  pulumi.String("PORT"),
 							Value: pulumi.Sprintf("%d", containerPort),
 						},
+						containerinstance.EnvironmentVariableArgs{
+							Name:  pulumi.String("STACK"),
+							Value: pulumi.Sprintf("%s", stack),
+						},
 					},
 					Resources: containerinstance.ResourceRequirementsArgs{
 						Requests: containerinstance.ResourceRequestsArgs{
@@ -148,10 +152,17 @@ func main() {
 			},
 		})
 
+		devStackUrl, err := pulumi.NewStackReference(ctx, "nimbinatus/test-ced-azure-container-go/dev", nil)
+		if err != nil {
+			return err
+		}
+		devStackUrlOutput := devStackUrl.GetOutput(pulumi.String("url"))
+
 		// Export the service's IP address, hostname, and fully-qualified URL.
 		ctx.Export("ip", containerGroup.IpAddress.Elem().Ip())
 		ctx.Export("hostname", containerGroup.IpAddress.Elem().Fqdn())
 		ctx.Export("url", pulumi.Sprintf("http://%s:%d", containerGroup.IpAddress.Elem().Fqdn(), containerPort))
+		ctx.Export("devUrl", devStackUrlOutput)
 
 		return nil
 	})
