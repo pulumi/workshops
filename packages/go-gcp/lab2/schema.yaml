@@ -1,0 +1,42 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/pulumi/pulumi/master/pkg/codegen/schema/pulumi.json
+---
+name: ced
+resources:
+  ced:iam:ServiceIdentity:
+    isComponent: true
+    inputProperties:
+      nameSpace:
+        type: string
+        description: the name of the namespace in which to create the Kubernetes service account.
+    requiredInputs:
+      - nameSpace
+    properties:
+      gcpServiceAccount:
+        type: string
+        description: The Google Cloud Service Account ID.
+      gkeServiceAccount:
+        type: string
+        description: The Kubernetes Service Account ID.
+    required:
+      - gcpServiceAccount
+      - gkeServiceAccount
+language:
+  csharp:
+    packageReferences:
+      Pulumi: 3.*
+      Pulumi.Gcp: 6.*
+      Pulumi.Kubernetes: 3.*
+  go:
+    generateResourceContainerTypes: true
+    importBasePath: github.com/pulumi/pulumi-ced/sdk/go/ced
+  nodejs:
+    dependencies:
+      "@pulumi/gcp": "^6.0.0"
+      "@pulumi/kubernetes": "^3.0.0"
+    devDependencies:
+      typescript: "^3.7.0"
+  python:
+    requires:
+      pulumi: ">=3.0.0,<4.0.0"
+      pulumi-gcp: ">=6.0.0,<7.0.0"
+      pulumi-kubernetes: ">=3.0.0,<4.0.0"
