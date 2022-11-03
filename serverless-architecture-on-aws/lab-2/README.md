@@ -101,7 +101,7 @@ const integration = new aws.apigateway.Integration("integration", {
 
 const deployment = new aws.apigateway.Deployment("deployment", {
     restApi: api.id
-});
+}, {dependsOn: [method, integration]});
 
 const stage = new aws.apigateway.Stage("stage", {
     deployment: deployment.id,
