@@ -47,7 +47,7 @@ application {
 ```
 
 
-Our main program file is `App.java`. Add the following code:
+Our main program file is `App.java`. We need to rename the `myproject` directory, so rename it now to `my_first_app`. Then, add the following code:
 
 ```java
 package my_first_app;
