@@ -29,7 +29,7 @@ You will need the following tools to complete this workshop:
 * A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=github-fundamentals)
     * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=github-fundamentals).
 * The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=github-fundamentals)
-* [Docker](https://docs.docker.com/get-docker/)
+* [Docker](https://docs.docker.com/get-docker/) (note that the output from `docker --version` should be 20.10.21 if you're on the newest versions of Pulumi)
 * Java
 * Gradle
 

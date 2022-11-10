@@ -76,9 +76,9 @@ Try and run your `pulumi up` again at this point.
 Use the `pulumi config set` command to set ports:
 
 ```bash
-pulumi config set frontend_port 3001
-pulumi config set backend_port 3000
-pulumi config set mongo_port 27017
+pulumi config set frontendPort 3001
+pulumi config set backendPort 3000
+pulumi config set mongoPort 27017
 ```
 
 **Action:** Explore the new `Pulumi.dev.yaml` file.
@@ -351,7 +351,6 @@ public class App {
         );
 
         ctx.export("link", Output.of("http://localhost:3001"));
-        return ctx.exports();
     }
 }
 ```
