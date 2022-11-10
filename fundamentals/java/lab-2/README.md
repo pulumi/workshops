@@ -31,8 +31,8 @@ repositories {
     mavenLocal()
 }
 
-var pulumiJavaSdkVersion = System.getenv("PULUMI_JAVA_SDK_VERSION") ?: "0.1.0"
-var pulumiDockerSdkVersion = System.getenv("PULUMI_DOCKER_PROVIDER_SDK_VERSION") ?: "3.2.0"
+var pulumiJavaSdkVersion = System.getenv("PULUMI_JAVA_SDK_VERSION") ?: "0.6.0"
+var pulumiDockerSdkVersion = System.getenv("PULUMI_DOCKER_PROVIDER_SDK_VERSION") ?: "3.5.0"
 
 dependencies {
     implementation "com.pulumi:pulumi:$pulumiJavaSdkVersion"
@@ -42,7 +42,7 @@ dependencies {
 application {
     mainClass = project.hasProperty("mainClass")
             ? project.getProperty("mainClass")
-            : 'my_first_app.App'
+            : 'my_first_app.App' // note this change!
 }
 ```
 
