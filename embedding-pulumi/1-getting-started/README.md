@@ -2,7 +2,7 @@
 
 We first need a small application and infrastructure to deploy. If you've ever deployed your systems across multiple datacenters, regions, or zones, you've likely wanted to keep track of various bits of data like timezones, time drift, and more. So let's make a small monitoring function that reports the timezone, location, and other data on deployment as a sample that will run quickly and take up only a little bit of space.
 
-Set up your project as follows using `pulumi new python` in each directory:
+Set up your project as follows using `pulumi new python` in each directory (call the api project `burner-program-2`):
 
 ```bash
 time-auto-api/
