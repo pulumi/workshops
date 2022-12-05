@@ -1,0 +1,11 @@
+{
+    "name": "workshop-confluent",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^14"
+    },
+    "dependencies": {
+        "@pulumi/confluentcloud": "^1.6.0",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

@@ -74,7 +74,7 @@ More to come soon
 
 Topic | Language | Provider | Link
 ---|---|---|---
-Coming soon
+Confluent Cloud | TypeScript | Confluent Cloud | [confluent/](./confluent)
 
 <details>
 <summary><h2>Stale or Deprecated Workshops</h2></summary>
