@@ -61,9 +61,9 @@ Try and run your `pulumi up` again at this point.
 Use the `pulumi config set` command to set ports:
 
 ```bash
-pulumi config set frontend_port 3001
-pulumi config set backend_port 3000
-pulumi config set mongo_port 27017
+pulumi config set frontendPort 3001
+pulumi config set backendPort 3000
+pulumi config set mongoPort 27017
 ```
 
 **Action:** Explore the new `Pulumi.dev.yaml` file.
@@ -150,7 +150,7 @@ Add them to the top of our program with the rest of the configuration variables:
     var protocol = config.Require("protocol");
 ```
 
-Create `Container` resources for the frontend and mongo containers. Put the `mongo-container` declaration just above the `backend-container` one, and the `frontend-container` declaration at the end of the file. Here's the code for the mongo container:
+Now we need to create `Container` resources for the frontend and Mongo containers. Put this code for the Mongo container **just above the `backendContainer` resource**:
 
 ```csharp
     var mongoContainer = new Docker.Container("mongo-container", new()
@@ -179,7 +179,15 @@ Create `Container` resources for the frontend and mongo containers. Put the `mon
     });
 ```
 
-And the code for the frontend container:
+<details>
+<summary><b>Question:</b> Why do you think it's important or necessary to place the declaration for the Mongo container _before_ the declaration for the backend container?</summary>
+
+<br/>
+<b>Answer:</b> In this case, we created an explicit dependency between the `backendContainer` and the `mongoContainer` with the `DependsOn` clause found at the end of the backend container definition. The resource found in the `DependsOn` clause needs to be known/defined before it is used in the code, so the Mongo container definition has to come first.
+</details>
+<br/>
+
+Put this code for the `frontendContainer` at the end of the file, **just before the last closing brace and closing parenthesis**:
 
 ```csharp
     var frontendContainer = new Docker.Container("frontend-container", new()
@@ -351,7 +359,6 @@ return await Deployment.RunAsync(() =>
             },
         },
     });
-
 });
 ```
 

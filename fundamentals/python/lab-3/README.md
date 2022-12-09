@@ -128,7 +128,7 @@ node_environment = config.require("node_environment")
 protocol = config.require("protocol")
 ```
 
-Create `Container` resources for the frontend and mongo containers. Put the `mongo-container` declaration just above the `backend-container` one, and the `frontend-container` declaration at the end of the file. Here's the code for the mongo container:
+Now we need to create `Container` resources for the frontend and Mongo containers. Put this code for the Mongo container **just above the `backend_container` resource**:
 
 ```python
 # create the mongo container!
@@ -146,7 +146,15 @@ mongo_container = docker.Container("mongo_container",
                         )
 ```
 
-And the code for the frontend container:
+<details>
+<summary><b>Question:</b> Why do you think it's important or necessary to place the declaration for the Mongo container _before_ the declaration for the backend container?</summary>
+
+<br/>
+<b>Answer:</b> In this case, we created an explicit dependency between the `backend_container` and the `mongo_container` with the `depends_on` clause found at the end of the backend container definition. The resource found in the `depends_on` clause needs to be known/defined before it is used in the code, so the Mongo container definition has to come first.
+</details>
+<br/>
+
+Put this code for the `frontend_container` at the end of the file:
 
 ```python
 # create the frontend container!
