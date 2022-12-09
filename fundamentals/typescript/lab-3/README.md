@@ -58,9 +58,9 @@ Try and run your `pulumi up` again at this point.
 Use the `pulumi config set` command to set ports:
 
 ```bash
-pulumi config set frontend_port 3001
-pulumi config set backend_port 3000
-pulumi config set mongo_port 27017
+pulumi config set frontendPort 3001
+pulumi config set backendPort 3000
+pulumi config set mongoPort 27017
 ```
 
 **Action:** Explore the new `Pulumi.dev.yaml` file.
@@ -110,7 +110,7 @@ const backendContainer = new docker.Container("backendContainer", {
 <summary><b>Question:</b> How do we define an order of operations here so Pulumi knows to create dependent things after the independent things?</summary>
 
 <br/>
-<b>Answer:</b> We don't need to! Pulumi is a declarative IaC system, which means we just tell it what we want, and it figures out how to get everything done in order. Because we're referencing the <code>repo_digest</code> value from the <code>RemoteImage</code> resource in the creation of the <code>Container</code> resource, Pulumi knows that <code>RemoteImage</code> needs to be created first. In short, it can track the dependencies.
+<b>Answer:</b> We don't need to! Pulumi is a declarative IaC system, which means we just tell it what we want, and it figures out how to get everything done in order. Because we're referencing the <code>repoDigest</code> value from the <code>RemoteImage</code> resource in the creation of the <code>Container</code> resource, Pulumi knows that <code>RemoteImage</code> needs to be created first. In short, it can track the dependencies.
 </details>
 <br/>
 
@@ -132,7 +132,7 @@ const nodeEnvironment = config.require("nodeEnvironment");
 const protocol = config.require("protocol")
 ```
 
-Create `Container` resources for the frontend and mongo containers. Put the `mongo-container` declaration just above the `backend-container` one, and the `frontend-container` declaration at the end of the file. Here's the code for the mongo container:
+Now we need to create `Container` resources for the frontend and Mongo containers. Put this code for the Mongo container **just above the `backendContainer` resource**:
 
 ```typescript
 // create the mongo container!
@@ -154,7 +154,15 @@ const mongoContainer = new docker.Container("mongoContainer", {
 });
 ```
 
-And the code for the frontend container:
+<details>
+<summary><b>Question:</b> Why do you think it's important or necessary to place the declaration for the Mongo container _before_ the declaration for the backend container?</summary>
+
+<br/>
+<b>Answer:</b> In this case, we created an explicit dependency between the `backendContainer` and the `mongoContainer` with the `dependsOn` clause found at the end of the backend container definition. The resource found in the `dependsOn` clause needs to be known/defined before it is used in the code, so the Mongo container definition has to come first.
+</details>
+<br/>
+
+Put this code for the `frontendContainer` at the end of the file:
 
 ```typescript
 // create the frontend container!
