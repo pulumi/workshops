@@ -75,6 +75,7 @@ More to come soon
 Topic | Language | Provider | Link
 ---|---|---|---
 Confluent Cloud | TypeScript | Confluent Cloud | [confluent/](./confluent)
+Advanced Networking in AWS | Python | AWS | [aws-advanced-networking/](./aws-advanced-networking)
 
 <details>
 <summary><h2>Stale or Deprecated Workshops</h2></summary>
