@@ -1,0 +1,6 @@
+config:
+  aws-hub-and-spoke-with-inspection-vpc-python:hub-and-spoke-supernet: 10.0.0.0/8
+  aws:region: us-east-1
+  aws:defaultTags:
+    tags:
+      ManagedBy: Pulumi
