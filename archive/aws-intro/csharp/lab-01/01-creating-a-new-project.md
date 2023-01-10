@@ -43,7 +43,7 @@ Our project is comprised of multiple files:
 * **`iac-workshop.csproj`**: your project's project file
 * **`Pulumi.yaml`**: your project's metadata, containing its name and language
 
-Run `cat MyStack.cs` to see the contents of your project's empty program:
+Create a `MyStack.cs` and make the contents of your project's program look like the following:
 
 ```csharp
 using Pulumi;
@@ -57,6 +57,16 @@ class MyStack : Stack
 }
 ```
 
+Replace the contents of the `Program.cs` file to make it look like the following:
+```csharp
+using System.Threading.Tasks;
+using Pulumi;
+
+class Program
+{
+    static Task<int> Main() => Deployment.RunAsync<WebsiteStack>();
+}
+```
 Feel free to explore the other files, although we won't be editing any of them by hand.
 
 # Next Steps
