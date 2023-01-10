@@ -4,7 +4,14 @@ Now that you have a project configured to use AWS, you'll create some basic infr
 
 ## Step 1 &mdash; Declare a New Bucket
 
-Add the following to your `MyStack.cs` file:
+Add the following to your `MyStack.cs` to the top of your file under `Using Aws`
+```csharp
+...
+		using Pulumi.Aws.S3;
+...
+```
+
+Add the following to your `MyStack.cs` inside the `public MyStack()`
 
 ```csharp
 ...
@@ -21,6 +28,16 @@ Now preview your changes:
 ```
 pulumi up
 ```
+
+If you run into the followng issue when you run `pulumi up`: 
+
+```bash
+Unexpected Escape Sequence: ['\x1b' 'O']
+```
+
+run the following in your terminal:
+`tput rmkx`
+since there is a bug dotnet [bug](https://github.com/dotnet/sdk/issues/15243) related to this 
 
 This command evaluates your program, determines the resource updates to make, and shows you an outline of these changes:
 
@@ -84,7 +101,7 @@ you to the [Pulumi Console](https://www.pulumi.com/docs/intro/console/), which r
 
 To inspect your new bucket, you will need its physical AWS name. Pulumi records a logical name, `my-bucket`, however the resulting AWS name will be different.
 
-Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your bucket's name by adding this output to `MyStack.cs`:
+Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your bucket's name by adding this output to `MyStack.cs` after the `{}` from the `public MyStack()`:
 
 ```csharp
 ...
