@@ -11,11 +11,17 @@ Create a new stack:
 pulumi stack init prod
 ```
 
+To seee that the current stack selected is `prod` run this command:
+
+```bash
+pulumi stack ls
+```
+
 Next, configure its two required variables:
 
 ```bash
-pulumi config set aws:region eu-west-1
-pulumi config set iac-workshop:siteDir wwwprod
+pulumi config set aws:region us-west-2
+pulumi config set siteDir wwwprod
 ```
 
 If you are ever curious to see the list of stacks for your current project, run this command:
@@ -54,6 +60,13 @@ Add a new `index.html` file to it:
 </html>
 ```
 
+Add a new `about.html` file to it:
+
+```
+<html>html
+    <p>Infrastructure as code using real languages is powerful. Welcome to the next phase</p>
+</html>
+```
 ## Step 3 &mdash; Deploy the New Stack
 
 Now deploy all of the changes:
