@@ -4,7 +4,7 @@ Now that you have a project configured to use AWS, you'll create some basic infr
 
 ## Step 1 &mdash; Declare a New Bucket
 
-Add the following to your `MyStack.cs` to the top of your file under `Using Aws`
+Add the following to your `MyStack.cs` to the top of your file under `using Aws`
 ```csharp
 ...
 		using Pulumi.Aws.S3;
