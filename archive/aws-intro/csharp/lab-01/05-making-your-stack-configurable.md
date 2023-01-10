@@ -9,11 +9,9 @@ Instead of hard-coding the `"site"` directory, we will use configuration to make
 
 Firstly, add an import to your `MyStack.cs` file:
 
-Add this to your `main.go` file:
-
-```go
+```cs
  var config = new Pulumi.Config();
-        var siteDir = config.Get("siteDir");
+ var siteDir = config.Get("siteDir");
 ```
 
 ## Step 2 &mdash; Populating the Bucket Based on Config
@@ -56,10 +54,10 @@ This results in an error like the following:
            at System.IO.Path.Combine(String path1, String path2)
 ```
 
-Configure the `iac-workshop:siteDir` variable very much like the `aws:region` variable:
+Configure the `siteDir` variable very much like the `aws:region` variable:
 
 ```bash
-pulumi config set iac-workshop:siteDir www
+pulumi config set siteDir www
 ```
 
 Pulumi has deteched that there are no changes as it's the same file that has been compiled by our go application:
