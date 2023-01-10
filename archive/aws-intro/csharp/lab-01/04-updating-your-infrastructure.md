@@ -10,7 +10,7 @@ This demonstrates how declarative infrastructure as code tools can be used not j
 
 ## Step 1 &mdash; Add an Object to Your Bucket
 
-Create a directory `site/` and add a new `index.html` file with the following contents:
+Create a directory `site/` where the current project is located and add a new `index.html` file with the following contents:
 
 ```html
 <html>
@@ -21,6 +21,13 @@ Create a directory `site/` and add a new `index.html` file with the following co
 ```
 
 And then add these lines to `MyStack.cs` right after creating the bucket itself:
+
+Add the following after the `using Pulumi.Aws.S3;` block of code at the top of the file
+```csharp
+...
+using System.IO;
+...
+```
 
 ```csharp
 ...
@@ -66,7 +73,7 @@ such tools determine the minimal set of changes necessary to update your infrast
 Finally, relist the contents of your bucket:
 
 ```bash
-aws s3 ls $(pulumi stack output bucket_name)
+aws s3 ls $(pulumi stack output BucketName)
 ```
 
 Notice that your `index.html` file has been added:
@@ -79,9 +86,16 @@ Notice that your `index.html` file has been added:
 
 To serve content from your bucket as a website, you'll need to update a few properties.
 
-First, your bucket needs a website property that sets the default index document to `index.html`:
+First, add the add the following after the `using System.IO;` block of code at the top of the file
+```csharp
+...
+using Pulumi.Aws.S3.Inputs;
+...
+```
 
-```cs
+Then, your bucket needs a website property that sets the default index document to `index.html`:
+
+```csharp
 ...
 var bucket = new Aws.S3.Bucket("my-bucket", new BucketArgs
 {
@@ -92,6 +106,8 @@ var bucket = new Aws.S3.Bucket("my-bucket", new BucketArgs
 });
 ...
 ```
+
+Notice, we replaced the `()` at the end of `BucketArgs`
 
 Next, your `index.html` object will need two changes: an ACL of `public-read` so that it can be accessed anonymously over the Internet, and a content type so that it is served as HTML:
 
@@ -114,7 +130,7 @@ Finally, export the resulting bucket's endpoint URL so we can easily access it. 
 [Output] public Output<string> WebsiteEndpoint { get; set; }
 ```
 
-Then set the property from within MyStack
+Then set the property from within MyStack below the `this.BucketName`
 
 ```cs
 ...
