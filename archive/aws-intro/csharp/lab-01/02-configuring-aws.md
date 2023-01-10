@@ -7,7 +7,7 @@ Now that you have a basic project, let's configure AWS support for it.
 To install the AWS package, run the following command:
 
 ```bash
-dotnet add package Pulumi.Aws --version 1.28.0-preview
+dotnet add package Pulumi.Aws
 ```
 
 ## Step 2 &mdash; Import the AWS Package
