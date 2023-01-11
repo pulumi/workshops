@@ -76,6 +76,7 @@ Topic | Language | Provider | Link
 ---|---|---|---
 Confluent Cloud | TypeScript | Confluent Cloud | [confluent/](./confluent)
 Advanced Networking in AWS | Python | AWS | [aws-advanced-networking/](./aws-advanced-networking)
+Building Virtual Networks with Pulumi and Tailscale | Python | Tailscale (et al) | [tailscale/](./tailscale)
 
 <details>
 <summary><h2>Stale or Deprecated Workshops</h2></summary>
