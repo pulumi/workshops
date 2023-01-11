@@ -79,6 +79,8 @@ Then inside your `MyStack` class, we can set the output variable:
 this.AccountName =  storageAccount.Name;
 ```    
 
+> :white_check_mark: After these changes, your `MyStack.cs` should [look like this](./code/04-updating-your-infrastructure/step2.cs).
+
 Now deploy the changes:
 
 ```bash
@@ -116,23 +118,23 @@ az storage container list --account-name $(pulumi stack output AccountName)
 
 Note that the account is currently empty. This is **EXPECTED**
 
-## Step 4 &mdash; Add a Container to Your Storage Account
+## Step 4 &mdash; Add a BlobContainer to Your Storage Account
 
 Add these lines to `MyStack.cs` right after creating the storage account itself:
 
 ```csharp
 ...
-var container = new Azure.Storage.Container("mycontainer", new Azure.Storage.ContainerArgs
-{
-    Name = "files",
-    StorageAccountName = storageAccount.Name
-});
+// Create a Blob Container
+        var blobContainer = new BlobContainer("mycontainer", new BlobContainerArgs
+        {
+            ResourceGroupName= resourceGroup.Name,
+            AccountName = storageAccount.Name,   
+            ContainerName = "files",
+        });
 ...
 ```
 
 > :white_check_mark: After these changes, your `MyStack.cs` should [look like this](./code/04-updating-your-infrastructure/step4.cs).
-
-Note that I want to give an explicit name to the storage container instead of an auto-generated one, so I used the property `Name` to set it.
 
 Deploy the changes:
 
@@ -145,9 +147,9 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev):
 
-     Type                        Name              Status
-     pulumi:pulumi:Stack         iac-workshop-dev
- +   └─ azure:storage:Container  mycontainer       created
+     Type                                    Name              Status
+     pulumi:pulumi:Stack                    iac-workshop-dev
+ +   └─ azure-native:storage:BlobContainer  mycontainer         created (1s)
 
 Resources:
     + 1 created
@@ -155,7 +157,35 @@ Resources:
 
 Duration: 9s
 
-Permalink: https://app.pulumi.com/myuser/iac-workshop/dev/updates/4
+More information at:: https://app.pulumi.com/myuser/iac-workshop/dev/updates/4
+```
+## Step 5 &mdash; Export Your BlobContainer Name
+
+Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your blob container's name by adding this output to `MyStack.cs` after the `{}` from the `public MyStack()`:
+
+```csharp
+...
+// Add Outputs here
+[Output("ContainerName")] public Output<string> ContainerName { get; set; }
+...
+```
+
+Then inside your `MyStack` class, we can set the output variable:
+
+```csharp
+...
+// Export the BlobContainer Name
+this.ContainerName = blobContainer.Name;
+...
+```
+
+> :white_check_mark: After this change, your `MyStack.cs` should [look like this](./code/03-provisioning-infrastructure/step5.cs).
+
+Now deploy the changes:
+
+```bash
+pulumi up
+```
 
 Finally, relist the contents of your account:
 
