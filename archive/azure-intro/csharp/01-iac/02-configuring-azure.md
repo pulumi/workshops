@@ -7,18 +7,18 @@ Now that you have a basic project, let's configure Azure support for it.
 Run the following command to install the Azure package:
 
 ```bash
-dotnet add package Pulumi.Azure
+dotnet add package Pulumi.AzureNative
 ```
 
 The package will be added to `csproj` and the binaries will be restored.
 
-## Step 2 &mdash; Use the Azure Package
+## Step 2 &mdash; Use the AzureNative Package
 
-Now that the Azure package is installed, add the following line to `MyStack.cs` to import it:
+Now that the AzureNative package is installed, add the following line to `MyStack.cs` to import it:
 
 ```cs
 ...
-using Azure = Pulumi.Azure;
+using Azure = Pulumi.AzureNative;
 ...
 ```
 
