@@ -193,7 +193,7 @@ Finally, relist the contents of your account:
 az storage container list --account-name $(pulumi stack output AccountName) -o table
 Name    Lease Status    Last Modified
 ------  --------------  -------------------------
-files   unlocked        2020-02-10T12:51:16+00:00
+files                   2023-01-11T20:43:35+00:00
 ```
 
 Notice that your `files` container has been added.
