@@ -6,16 +6,28 @@ This demonstrates how declarative infrastructure as code tools can be used not j
 
 ## Step 1 &mdash; Add a Storage Account
 
+Edit your `MyStack.cs` file to add a new `using` at the top of file under `using Pulumi.AzureNative.Resources;`:
+
+```csharp
+...
+using Pulumi.AzureNative.Storage;
+using Pulumi.AzureNative.Storage.Inputs; // This is needed for the SkuArgs
+```
+
 And then add these lines to `MyStack.cs` right after creating the resource group:
 
 ```csharp
 ...
-var storageAccount = new Azure.Storage.Account("mystorage", new Azure.Storage.AccountArgs
-{
-    ResourceGroupName = resourceGroup.Name,
-    AccountReplicationType = "LRS",
-    AccountTier = "Standard"
-});
+// Create an Azure resource (Storage Account)
+    var storageAccount = new StorageAccount("mystorageact", new StorageAccountArgs
+    {
+        ResourceGroupName = resourceGroup.Name,
+        Sku = new SkuArgs
+        {
+            Name = SkuName.Standard_LRS
+        },
+        Kind = Kind.StorageV2
+    });
 ...
 ```
 
@@ -32,9 +44,9 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev):
 
-     Type                      Name              Status
-     pulumi:pulumi:Stack       iac-workshop-dev
- +   └─ azure:storage:Account  mystorage         created
+     Type                                       Name              Status
+     pulumi:pulumi:Stack                     iac-workshop-dev
+ +   └─ azure-native:storage:StorageAccount  mystorageact         created
 
 Resources:
     + 1 created
@@ -51,35 +63,21 @@ A single resource is added and the 2 existing resources are left unchanged. This
 
 To inspect your new storage account, you will need its physical Azure name. Pulumi records a logical name, `mystorage`, however the resulting Azure name will be different.
 
-Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your account's name by changing `MyStack.cs` to:
+Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your storage account's name by by adding this output under the `Outputs` section in `MyStack.cs`:
 
 ```csharp
-using Pulumi;
-using Pulumi.Serialization;
-using Azure = Pulumi.Azure;
-
-class MyStack : Stack
-{
-    public MyStack()
-    {
-        var resourceGroup = new Azure.Core.ResourceGroup("my-group");
-
-        var storageAccount = new Azure.Storage.Account("mystorage", new Azure.Storage.AccountArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            AccountReplicationType = "LRS",
-            AccountTier = "Standard"
-        });
-
-        this.AccountName =  storageAccount.Name;
-    }
-
-    [Output]
-    public Output<string> AccountName { get; set; }
-}
+...
+// Storage Account Name Output
+[Output("AccountName")] public Output<string> AccountName { get; set; }
+...
 ```
 
-Note an extra `using` statement, the property declaration and assignment.
+Then inside your `MyStack` class, we can set the output variable:
+
+```csharp
+// Export the Storage Account Name
+this.AccountName =  storageAccount.Name;
+```    
 
 Now deploy the changes:
 
@@ -116,7 +114,7 @@ az storage container list --account-name $(pulumi stack output AccountName)
 []
 ```
 
-Note that the account is currently empty.
+Note that the account is currently empty. This is **EXPECTED**
 
 ## Step 4 &mdash; Add a Container to Your Storage Account
 
