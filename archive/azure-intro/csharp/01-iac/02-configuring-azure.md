@@ -29,7 +29,7 @@ using Azure = Pulumi.AzureNative;
 Configure the Azure region you would like to deploy to:
 
 ```bash
-pulumi config set azure:location westus2
+pulumi config set azure-native:location westus2
 ```
 
 Feel free to choose any Azure region that supports the services used in these labs ([see this infographic](https://azure.microsoft.com/en-us/global-infrastructure/regions/) for a list of available regions).
