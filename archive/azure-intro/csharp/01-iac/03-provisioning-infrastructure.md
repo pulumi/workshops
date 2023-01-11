@@ -4,13 +4,22 @@ Now that you have a project configured to use Azure, you'll create some basic in
 
 ## Step 1 &mdash; Declare a New Resource Group
 
+Edit your `MyStack.cs` file to add a new `using` at the top of file under `using Azure=...`:
+
+```csharp
+...
+using Pulumi.AzureNative.Resources;
+```
+
 Edit your `MyStack.cs` file to add a new resource definition inside `MyStack` constructor:
 
 ```csharp
 ...
 public MyStack()
-{
-    var resourceGroup = new Azure.Core.ResourceGroup("my-group");
+{   
+    // Add your resources here
+    // Create an Azure Resource Group
+    var resourceGroup = new ResourceGroup("myrgroup");
 }
 ```
 
