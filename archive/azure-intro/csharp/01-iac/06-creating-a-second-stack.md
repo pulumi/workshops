@@ -13,8 +13,8 @@ pulumi stack init prod
 Next, configure its two required variables:
 
 ```bash
-pulumi config set azure:location westeurope
-pulumi config set iac-workshop:container htmlprod
+pulumi config set azure-native:location westeurope
+pulumi config set container htmlprod
 ```
 
 If you are ever curious to see the list of stacks for your current project, run this command:
@@ -46,19 +46,42 @@ Updating (prod):
 
      Type                         Name               Status
  +   pulumi:pulumi:Stack          iac-workshop-prod  created
- +   ├─ azure:core:ResourceGroup  my-group           created     
- +   ├─ azure:storage:Account     mystorage          created     
- +   └─ azure:storage:Container   mycontainer        created 
+ +   ├─ azure-native:resources:ResourceGroup  myrgroup                              create     
+ +   ├─ azure-native:storage:StorageAccount   mystorageact                          create     
+ +   └─ azure-native:storage:BlobContainer    mycontainer                           create     
+
 
 Outputs:
-    AccountName: "mystorage4a3f2830"
+    AccountName       : output<string>
+    ContainerName     : output<string>
+    resourcegroup_name: output<string>
+
+Resources:
+    + 4 to create
+
+Do you want to perform this update? yes
+Updating (prod)
+
+View Live: https://app.pulumi.com/shaht/my-iac-lab1-azure-csharp-friday/prod/updates/1
+
+     Type                                     Name                                  Status              
+ +   pulumi:pulumi:Stack                      my-iac-lab1-azure-csharp-friday-prod  created (26s)       
+ +   ├─ azure-native:resources:ResourceGroup  myrgroup                              created (1s)        
+ +   ├─ azure-native:storage:StorageAccount   mystorageact                          created (20s)       
+ +   └─ azure-native:storage:BlobContainer    mycontainer                           created (0.68s)     
+
+
+Outputs:
+    AccountName       : "mystorageact99257ce4"
+    ContainerName     : "htmlwww"
+    resourcegroup_name: "myrgroupe48fba8e"
 
 Resources:
     + 4 created
 
-Duration: 30s
+Duration: 28s
 
-Permalink: https://app.pulumi.com/myuser/iac-workshop/prod/updates/1
+More information at: https://app.pulumi.com/myuser/iac-workshop/prod/updates/1
 ```
 
 A new set of resources has been created for the `prod` stack.

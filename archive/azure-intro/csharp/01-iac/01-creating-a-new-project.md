@@ -45,7 +45,7 @@ Our project is comprised of multiple files:
 * **`Pulumi.yaml`**: your project's metadata, containing its name and language
 * **`bin/`** and **`obj/`**: directories containing your project's build artifacts
 
-Open `MyStack.cs` to see the contents of the empty program of your infrastructure stack:
+Create a `MyStack.cs` and make the contents of your project's program look like the following:
 
 ```csharp
 using Pulumi;
@@ -56,6 +56,17 @@ class MyStack : Stack
     {
         // Add your resources here
     }
+}
+```
+
+Replace the contents of the `Program.cs` file to make it look like the following:
+```csharp
+using System.Threading.Tasks;
+using Pulumi;
+
+class Program
+{
+    static Task<int> Main() => Deployment.RunAsync<MyStack>();
 }
 ```
 

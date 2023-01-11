@@ -64,7 +64,7 @@ using Pulumi;
 
 class Program
 {
-    static Task<int> Main() => Deployment.RunAsync<WebsiteStack>();
+    static Task<int> Main() => Deployment.RunAsync<MyStack>();
 }
 ```
 Feel free to explore the other files, although we won't be editing any of them by hand.

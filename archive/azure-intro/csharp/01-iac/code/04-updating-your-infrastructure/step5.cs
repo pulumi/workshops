@@ -7,8 +7,6 @@ class MyStack : Stack
 {
     public MyStack()
     {
-        var config = new Pulumi.Config();
-        var myContainerName = config.Require("container");
         // Add your resources here
         // Create an Azure Resource Group
         var resourceGroup = new ResourceGroup("myrgroup");
@@ -33,7 +31,7 @@ class MyStack : Stack
         {
             ResourceGroupName= resourceGroup.Name,
             AccountName = storageAccount.Name,   
-            ContainerName = myContainerName, //ContainerName = "files",
+            ContainerName = "files",
         });
         // Export the BlobContainer Name
         this.ContainerName = blobContainer.Name;

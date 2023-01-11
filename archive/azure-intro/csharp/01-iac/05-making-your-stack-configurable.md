@@ -9,30 +9,28 @@ Instead of hard-coding the `"files"` container, we will use configuration to mak
 Create a file `Config.cs` and add this to it:
 
 ```csharp
-using Pulumi;
-
-static class Settings
-{
-    static Settings()
-    {
+...
         var config = new Config();
-        ContainerName = config.Require("container");
-    }
-
-    public static string ContainerName { get; }
-}
+        var myContainerName = config.Require("container");
+...
 ```
 
 ## Step 2 &mdash; Populating the Container Based on Config
 
-Replace the hard-coded `"Name"` property value with the one from configuration:
+Replace the hard-coded `"Name"` property value within the following resource `var blobContainer = new BlobContainer...`:
 
+From
 ```csharp
-var container = new Azure.Storage.Container("mycontainer", new Azure.Storage.ContainerArgs
-{
-    Name = Settings.ContainerName,
-    StorageAccountName = storageAccount.Name
-});
+...
+ContainerName = "files",
+...
+```
+
+To
+```csharp
+...
+ContainerName = myContainerName,
+...
 ```
 
 > :white_check_mark: After these changes, your `MyStack.cs` should [look like this](./code/05-making-your-stack-configurable/step2.cs).
@@ -54,10 +52,10 @@ ConfigMissingException: Missing Required configuration variable 'iac-workshop:co
 ...
 ```
 
-Configure the `iac-workshop:container` variable very much like the `azure:location` variable:
+Configure the `iac-workshop:container` variable very much like the `azure-native:location` variable:
 
 ```bash
-pulumi config set iac-workshop:container html
+pulumi config set container html
 ```
 
 To make things interesting, I set the name to `html` which is different from the previously hard-coded value `files`.
@@ -67,12 +65,12 @@ Run `pulumi up` again. This detects that the container has changed and will perf
 ```
 Updating (dev):
 
-     Type                        Name              Status      Info
-     pulumi:pulumi:Stack         iac-workshop-dev
-  +- └─ azure:storage:Container  mycontainer       replaced    [diff: ~name]
+     Type                                       Name              Status      Info
+     pulumi:pulumi:Stack                        iac-workshop-dev
+  +- └─  azure-native:storage:BlobContainer     mycontainer       replaced    [diff: ~containerName]
 
 Outputs:
-    AccountName: "mystorage872202e1"
+  ~ ContainerName     : "files" => output<string>
 
 Resources:
     +-1 replaced
@@ -80,7 +78,7 @@ Resources:
 
 Duration: 10s
 
-Permalink: https://app.pulumi.com/myuser/iac-workshop/dev/updates/5
+More information at: https://app.pulumi.com/myuser/iac-workshop/dev/updates/5
 ```
 
 And you will see the contents added above.

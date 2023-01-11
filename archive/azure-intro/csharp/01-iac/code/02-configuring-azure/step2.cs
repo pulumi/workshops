@@ -1,5 +1,5 @@
 using Pulumi;
-using Azure = Pulumi.Azure;
+using Azure = Pulumi.AzureNative;
 
 class MyStack : Stack
 {

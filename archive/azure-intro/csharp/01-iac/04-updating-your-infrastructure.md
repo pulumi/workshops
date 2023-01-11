@@ -6,16 +6,28 @@ This demonstrates how declarative infrastructure as code tools can be used not j
 
 ## Step 1 &mdash; Add a Storage Account
 
+Edit your `MyStack.cs` file to add a new `using` at the top of file under `using Pulumi.AzureNative.Resources;`:
+
+```csharp
+...
+using Pulumi.AzureNative.Storage;
+using Pulumi.AzureNative.Storage.Inputs; // This is needed for the SkuArgs
+```
+
 And then add these lines to `MyStack.cs` right after creating the resource group:
 
 ```csharp
 ...
-var storageAccount = new Azure.Storage.Account("mystorage", new Azure.Storage.AccountArgs
-{
-    ResourceGroupName = resourceGroup.Name,
-    AccountReplicationType = "LRS",
-    AccountTier = "Standard"
-});
+// Create an Azure resource (Storage Account)
+    var storageAccount = new StorageAccount("mystorageact", new StorageAccountArgs
+    {
+        ResourceGroupName = resourceGroup.Name,
+        Sku = new SkuArgs
+        {
+            Name = SkuName.Standard_LRS
+        },
+        Kind = Kind.StorageV2
+    });
 ...
 ```
 
@@ -32,9 +44,9 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev):
 
-     Type                      Name              Status
-     pulumi:pulumi:Stack       iac-workshop-dev
- +   └─ azure:storage:Account  mystorage         created
+     Type                                       Name              Status
+     pulumi:pulumi:Stack                     iac-workshop-dev
+ +   └─ azure-native:storage:StorageAccount  mystorageact         created
 
 Resources:
     + 1 created
@@ -51,35 +63,23 @@ A single resource is added and the 2 existing resources are left unchanged. This
 
 To inspect your new storage account, you will need its physical Azure name. Pulumi records a logical name, `mystorage`, however the resulting Azure name will be different.
 
-Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your account's name by changing `MyStack.cs` to:
+Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your storage account's name by by adding this output under the `Outputs` section in `MyStack.cs`:
 
 ```csharp
-using Pulumi;
-using Pulumi.Serialization;
-using Azure = Pulumi.Azure;
-
-class MyStack : Stack
-{
-    public MyStack()
-    {
-        var resourceGroup = new Azure.Core.ResourceGroup("my-group");
-
-        var storageAccount = new Azure.Storage.Account("mystorage", new Azure.Storage.AccountArgs
-        {
-            ResourceGroupName = resourceGroup.Name,
-            AccountReplicationType = "LRS",
-            AccountTier = "Standard"
-        });
-
-        this.AccountName =  storageAccount.Name;
-    }
-
-    [Output]
-    public Output<string> AccountName { get; set; }
-}
+...
+// Storage Account Name Output
+[Output("AccountName")] public Output<string> AccountName { get; set; }
+...
 ```
 
-Note an extra `using` statement, the property declaration and assignment.
+Then inside your `MyStack` class, we can set the output variable:
+
+```csharp
+// Export the Storage Account Name
+this.AccountName =  storageAccount.Name;
+```    
+
+> :white_check_mark: After these changes, your `MyStack.cs` should [look like this](./code/04-updating-your-infrastructure/step2.cs).
 
 Now deploy the changes:
 
@@ -116,25 +116,25 @@ az storage container list --account-name $(pulumi stack output AccountName)
 []
 ```
 
-Note that the account is currently empty.
+Note that the account is currently empty. This is **EXPECTED**
 
-## Step 4 &mdash; Add a Container to Your Storage Account
+## Step 4 &mdash; Add a BlobContainer to Your Storage Account
 
 Add these lines to `MyStack.cs` right after creating the storage account itself:
 
 ```csharp
 ...
-var container = new Azure.Storage.Container("mycontainer", new Azure.Storage.ContainerArgs
-{
-    Name = "files",
-    StorageAccountName = storageAccount.Name
-});
+// Create a Blob Container
+        var blobContainer = new BlobContainer("mycontainer", new BlobContainerArgs
+        {
+            ResourceGroupName= resourceGroup.Name,
+            AccountName = storageAccount.Name,   
+            ContainerName = "files",
+        });
 ...
 ```
 
 > :white_check_mark: After these changes, your `MyStack.cs` should [look like this](./code/04-updating-your-infrastructure/step4.cs).
-
-Note that I want to give an explicit name to the storage container instead of an auto-generated one, so I used the property `Name` to set it.
 
 Deploy the changes:
 
@@ -147,9 +147,9 @@ This will give you a preview and selecting `yes` will apply the changes:
 ```
 Updating (dev):
 
-     Type                        Name              Status
-     pulumi:pulumi:Stack         iac-workshop-dev
- +   └─ azure:storage:Container  mycontainer       created
+     Type                                    Name              Status
+     pulumi:pulumi:Stack                    iac-workshop-dev
+ +   └─ azure-native:storage:BlobContainer  mycontainer         created (1s)
 
 Resources:
     + 1 created
@@ -157,7 +157,35 @@ Resources:
 
 Duration: 9s
 
-Permalink: https://app.pulumi.com/myuser/iac-workshop/dev/updates/4
+More information at:: https://app.pulumi.com/myuser/iac-workshop/dev/updates/4
+```
+## Step 5 &mdash; Export Your BlobContainer Name
+
+Programs can export variables which will be shown in the CLI and recorded for each deployment. Export your blob container's name by adding this output to `MyStack.cs` after the `{}` from the `public MyStack()`:
+
+```csharp
+...
+// Add Outputs here
+[Output("ContainerName")] public Output<string> ContainerName { get; set; }
+...
+```
+
+Then inside your `MyStack` class, we can set the output variable:
+
+```csharp
+...
+// Export the BlobContainer Name
+this.ContainerName = blobContainer.Name;
+...
+```
+
+> :white_check_mark: After this change, your `MyStack.cs` should [look like this](./code/04-updating-your-infrastructure/step5.cs).
+
+Now deploy the changes:
+
+```bash
+pulumi up
+```
 
 Finally, relist the contents of your account:
 
@@ -165,7 +193,7 @@ Finally, relist the contents of your account:
 az storage container list --account-name $(pulumi stack output AccountName) -o table
 Name    Lease Status    Last Modified
 ------  --------------  -------------------------
-files   unlocked        2020-02-10T12:51:16+00:00
+files                   2023-01-11T20:43:35+00:00
 ```
 
 Notice that your `files` container has been added.
