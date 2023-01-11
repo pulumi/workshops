@@ -179,7 +179,7 @@ this.ContainerName = blobContainer.Name;
 ...
 ```
 
-> :white_check_mark: After this change, your `MyStack.cs` should [look like this](./code/03-provisioning-infrastructure/step5.cs).
+> :white_check_mark: After this change, your `MyStack.cs` should [look like this](./code/04-updating-your-infrastructure/step5.cs).
 
 Now deploy the changes:
 
