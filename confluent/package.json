@@ -5,6 +5,7 @@
         "@types/node": "^14"
     },
     "dependencies": {
+        "@pulumi/confluent": "^0.2.2",
         "@pulumi/confluentcloud": "^1.6.0",
         "@pulumi/pulumi": "^3.0.0"
     }

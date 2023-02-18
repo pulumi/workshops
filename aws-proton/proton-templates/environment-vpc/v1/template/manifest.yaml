@@ -1,0 +1,45 @@
+infrastructure:
+  templates:
+    - rendering_engine: codebuild
+      settings:
+        image: aws/codebuild/amazonlinux2-x86_64-standard:4.0
+        runtimes:
+          nodejs: 16
+        env:
+          variables:
+            PULUMI_ORG: jkodrofftest
+            # PULUMI_PROJECT: proton-<service or environment>
+          secrets_manager:
+            # Create secret in Secrets Manager following this format
+            PULUMI_ACCESS_TOKEN: "aws-proton-workshop/pulumi-access-token:Secret"
+        provision:
+          # Steps to be run when an environment is deployed or updated
+          # Download Pulumi binary and install dependencies
+          - curl -fsSL https://get.pulumi.com | sh
+          - export PATH=$PATH:$HOME/.pulumi/bin
+          - npm install
+          # Setting stack name from the name of the environment and setting up pulumi config
+          - export STACK_NAME=$(cat proton-inputs.json | jq -r '.environment.name')
+          - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi config set aws:region $AWS_DEFAULT_REGION
+          - pulumi config set org $PULUMI_ORG
+          # Deploying stack
+          - pulumi up --yes --stack $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          # Running script to convert pulumi outputs for Proton to injest and update Proton on deployment status
+          - chmod +x ./pulumi-to-proton-outputs.sh
+          - pulumi stack output --json | ./pulumi-to-proton-outputs.sh > outputs.json
+          - aws proton notify-resource-deployment-status-change --resource-arn $RESOURCE_ARN --status IN_PROGRESS --outputs file://./outputs.json
+        deprovision:
+          # Steps to be ran when an environment is deleted
+          # Download Pulumi binary and install dependencies
+          - curl -fsSL https://get.pulumi.com | sh
+          - export PATH=$PATH:$HOME/.pulumi/bin
+          - npm install
+          # Setting stack name from the name of the environment and setting up pulumi config
+          - export STACK_NAME=$(cat proton-inputs.json | jq -r '.environment.name')
+          - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi config set aws:region $AWS_DEFAULT_REGION
+          - pulumi config set org $PULUMI_ORG
+          # Destroying Stack
+          - pulumi destroy -s $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi stack rm proton-vpc-ecs-cluster
