@@ -41,17 +41,12 @@ new aws.secretsmanager.SecretVersion("pulumi-access-token-value", {
 
 const bucket = new aws.s3.Bucket("proton-templates-bucket");
 
+export const vpcTemplateFileKey = "environment-vpc.tar.gz";
 
-const rmNodeModules = new command.local.Command("rm-node-modules", {
-  create: "rm -rf ../environment-vpc/v1/template/node_modules",
-});
-
-const folderSync = new syncedFolder.S3BucketFolder("proton-templates", {
-  acl: aws.s3.PublicReadAcl,
-  bucketName: bucket.bucket,
-  path: "../proton-templates",
-}, {
-  dependsOn: rmNodeModules,
+const vpcTemplateFile = new aws.s3.BucketObject("environment-template-v1", {
+  bucket: bucket.bucket,
+  key: vpcTemplateFileKey,
+  source: new pulumi.asset.FileAsset("../.templates/environment-vpc.tar.gz")
 });
 
 const createEnvTemplate = new command.local.Command("create-env-template", {
@@ -59,9 +54,10 @@ const createEnvTemplate = new command.local.Command("create-env-template", {
 });
 
 const createEnvTemplateVersion = new command.local.Command("create-env-template-version", {
-  create: pulumi.interpolate`aws proton create-environment-template-version --template-name vpc --source "s3={bucket=${bucket.bucket},key=environment-vpc}"`
+  create: pulumi.interpolate`aws proton create-environment-template-version --template-name vpc --source "s3={bucket=${bucket.bucket},key=${vpcTemplateFileKey}}"`,
+  triggers: [Date.now],
 }, {
-  dependsOn: [folderSync, createEnvTemplate]
+  dependsOn: [vpcTemplateFile, createEnvTemplate]
 });
 
 export const bucketName = bucket.bucket;

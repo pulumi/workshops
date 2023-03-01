@@ -25,7 +25,7 @@ infrastructure:
           - pulumi config set org $PULUMI_ORG
           # Deploying stack
           - pulumi up --yes --stack $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
-          # Running script to convert pulumi outputs for Proton to injest and update Proton on deployment status
+          # Running script to convert pulumi outputs for Proton to ingest and update Proton on deployment status
           - chmod +x ./pulumi-to-proton-outputs.sh
           - pulumi stack output --json | ./pulumi-to-proton-outputs.sh > outputs.json
           - aws proton notify-resource-deployment-status-change --resource-arn $RESOURCE_ARN --status IN_PROGRESS --outputs file://./outputs.json

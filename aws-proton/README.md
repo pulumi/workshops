@@ -25,3 +25,9 @@ TODO: Add a config var to point to the templates repo (with a default).
 The repo contains the following directories:
 
 - `proton/` contains a Pulumi program to manage resources within AWS Proton itself, including CodeBuild provisioning, needed IAM roles, etc. This stack should be deployed first.
+
+## Stuff
+
+```bash
+aws proton create-environment-template-version --template-name vpc --source "s3={bucket=$(pulumi stack output bucketName),key=$(pulumi stack output )}"
+```
