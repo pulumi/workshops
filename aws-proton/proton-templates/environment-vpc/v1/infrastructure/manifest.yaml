@@ -10,8 +10,7 @@ infrastructure:
             PULUMI_ORG: jkodrofftest
             # PULUMI_PROJECT: proton-<service or environment>
           secrets_manager:
-            # Create secret in Secrets Manager following this format
-            PULUMI_ACCESS_TOKEN: "aws-proton-workshop/pulumi-access-token:Secret"
+            PULUMI_ACCESS_TOKEN: "aws-proton/pulumi-access-token"
         provision:
           # Steps to be run when an environment is deployed or updated
           # Download Pulumi binary and install dependencies

@@ -1,7 +1,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as command from "@pulumi/command";
-import * as syncedFolder from "@pulumi/synced-folder";
 
 const assumeRolePolicy = {
   "Version": "2012-10-17",
@@ -30,7 +29,7 @@ const config = new pulumi.Config();
 const accessToken = config.requireSecret("pulumiAccessToken");
 
 const secret = new aws.secretsmanager.Secret("pulumi-access-token", {
-  name: "aws-proton-workshop/pulumi-access-token",
+  name: "aws-proton/pulumi-access-token",
   description: "A Pulumi access token",
 });
 
@@ -50,14 +49,29 @@ const vpcTemplateFile = new aws.s3.BucketObject("environment-template-v1", {
 });
 
 const createEnvTemplate = new command.local.Command("create-env-template", {
-  create: "aws proton create-environment-template --name vpc"
+  create: "aws proton create-environment-template --name vpc",
+  triggers: [vpcTemplateFile.versionId],
 });
 
 const createEnvTemplateVersion = new command.local.Command("create-env-template-version", {
   create: pulumi.interpolate`aws proton create-environment-template-version --template-name vpc --source "s3={bucket=${bucket.bucket},key=${vpcTemplateFileKey}}"`,
-  triggers: [Date.now],
+  triggers: [Date.now()],
 }, {
   dependsOn: [vpcTemplateFile, createEnvTemplate]
+});
+
+createEnvTemplateVersion.stdout.apply(x => {
+  const cliOutput = JSON.parse(x);
+  const majorVersion = cliOutput.environmentTemplateVersion.majorVersion;
+  const minorVersion = cliOutput.environmentTemplateVersion.minorVersion;
+
+  new command.local.Command("publish-env-template-version", {
+    // We need to wait a few seconds for the Proton service to do initial
+    // validation and change the status to DRAFT.
+    create: `sleep 3 && aws proton update-environment-template-version --template-name vpc --major-version ${majorVersion} --minor-version ${minorVersion} --status PUBLISHED`,
+  }, {
+    dependsOn: createEnvTemplateVersion,
+  });
 });
 
 export const bucketName = bucket.bucket;

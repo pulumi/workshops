@@ -29,5 +29,9 @@ The repo contains the following directories:
 ## Stuff
 
 ```bash
-aws proton create-environment-template-version --template-name vpc --source "s3={bucket=$(pulumi stack output bucketName),key=$(pulumi stack output )}"
+aws proton create-environment-template-version --template-name vpc --source "s3={bucket=$(pulumi stack output bucketName),key=$(pulumi stack output vpcTemplateFileKey)}"
+```
+
+```bash
+aws proton create-environment --name my-environment 
 ```
