@@ -1,0 +1,3 @@
+name: workshop-aws-proton-env-template
+runtime: nodejs
+description: Environment template for AWS Proton workshop demo

@@ -1,0 +1,12 @@
+{
+    "name": "workshop-aws-proton-svc-template",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^5.31.0",
+        "@pulumi/command": "0.6.*",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

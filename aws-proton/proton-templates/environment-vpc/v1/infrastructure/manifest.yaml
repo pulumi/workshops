@@ -8,7 +8,6 @@ infrastructure:
         env:
           variables:
             PULUMI_ORG: jkodrofftest
-            # PULUMI_PROJECT: proton-<service or environment>
           secrets_manager:
             PULUMI_ACCESS_TOKEN: "aws-proton/pulumi-access-token"
         provision:
@@ -48,5 +47,5 @@ infrastructure:
           - pulumi config set aws:region $AWS_DEFAULT_REGION
           - pulumi config set org $PULUMI_ORG
           # Destroying Stack
-          - pulumi destroy -s $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
-          - pulumi stack rm $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi destroy -s $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME -y
+          - pulumi stack rm $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME -y

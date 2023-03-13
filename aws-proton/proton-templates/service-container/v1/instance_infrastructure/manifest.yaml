@@ -24,6 +24,12 @@ infrastructure:
 
           # Setting stack name from the name of the environment and setting up pulumi config
           - export STACK_NAME=$(cat proton-inputs.json | jq -r '.environment.name')
+
+          # Debugging:
+          - echo "PULUMI_ORG = ${PULUMI_ORG}"
+          - echo "PULUMI_PROJECT = ${PULUMI_PROJECT}"
+          - echo "STACK_NAME = ${STACK_NAME}"
+
           - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
           - pulumi config set aws:region $AWS_DEFAULT_REGION
           - pulumi config set org $PULUMI_ORG
@@ -41,9 +47,15 @@ infrastructure:
           - npm install
           # Setting stack name from the name of the environment and setting up pulumi config
           - export STACK_NAME=$(cat proton-inputs.json | jq -r '.environment.name')
+
+          # Debugging:
+          - echo "PULUMI_ORG = ${PULUMI_ORG}"
+          - echo "PULUMI_PROJECT = ${PULUMI_PROJECT}"
+          - echo "STACK_NAME = ${STACK_NAME}"
+
           - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
           - pulumi config set aws:region $AWS_DEFAULT_REGION
           - pulumi config set org $PULUMI_ORG
           # Destroying Stack
-          - pulumi destroy -s $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi destroy -s $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME -y
           - pulumi stack rm $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME -y

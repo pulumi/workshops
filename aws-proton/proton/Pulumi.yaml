@@ -1,3 +1,0 @@
-name: workshop-aws-proton-proton
-runtime: nodejs
-description: A minimal TypeScript Pulumi program

@@ -8,7 +8,12 @@ const vpcCidr = config.require("vpcCidrBlock");
 const vpcName = config.require("vpcName");
 
 const vpc = new awsx.ec2.Vpc(vpcName, {
-  cidrBlock: vpcCidr
+  cidrBlock: vpcCidr,
+  // In a more prod-ready scenario, this should be "OnePerAz", but we do this
+  // here to avoid incurring too much cost or hitting annoying EIP limits.
+  natGateways: {
+    strategy: "Single",
+  }
 });
 
 const cluster = new aws.ecs.Cluster("cluster");

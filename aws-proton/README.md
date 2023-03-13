@@ -16,9 +16,12 @@ pulumi config set pulumiAccessToken $(echo $PULUMI_ACCESS_TOKEN) --secret
 
 ## Repo Structure
 
-The repo contains the following directories:
+The repo contains the following elements:
 
-- `proton/` contains a Pulumi program to manage resources within AWS Proton itself, including CodeBuild provisioning, needed IAM roles, etc.
+- `proton/` contains a Pulumi programs to manage resources within AWS Proton itself, including CodeBuild provisioning, needed IAM roles, etc.
+  - `base-infra/` contains the basic resources for AWS Proton: buckets, IAM roles, secrets, etc. This stack must be deployed first.
+  - `environment-template/` contains resources to create a Proton environment template. This stack must be deployed second.
+  - `service-template/` contains resources to create a Proton service template. This stack must be deployed third.
 - `proton-templates/environment-vpc/v1` contains a Proton environment template which in turn contains a  Pulumi program to create a VPC and a shared EKS cluster.
 - `proton-templates/service-container/v1` contains a Proton service template which in turn contains a  Pulumi program to create an EKS Fargate service and an associated load balancer.
 - `util/delete_environment_template.py` uses boto3 to fully delete all instances and versions of an environment template.
@@ -47,9 +50,9 @@ This will run `pulumi deploy`.
 
 If a Proton template gets stuck in a bad state and cannot be torn down smoothly, log into the [Pulumi Service](https://app.pulumi.com), locate the stack, go to Settings, and follow the instructions there to delete the stack's resources (including generating a `Pulumi.yaml` and stack config file).
 
-## Future Improvements
+## Potential Improvements
 
-- Write a script that that fully converts `proton-inputs.json` to `Pulumi.$STACK.yaml`
+- Write a script that that fully maps `proton-inputs.json` to `Pulumi.$STACK.yaml` so we don't have to add a line for each input to `manifest.yaml`.
 
 ## Stuff
 

@@ -1,0 +1,3 @@
+config:
+  workshop-aws-proton-base-infra:pulumiAccessToken:
+    secure: AAABAANehQvont71q7DfF6rxny4JAobPAHxk1OWU18jmo7MdH+JA3LdeJ/COWvWDtdIrxGpHC9hpQkJjLyAw34WYGsJY5nOBkSFSCw==
