@@ -40,37 +40,73 @@ new aws.secretsmanager.SecretVersion("pulumi-access-token-value", {
 
 const bucket = new aws.s3.Bucket("proton-templates-bucket");
 
-export const vpcTemplateFileKey = "environment-vpc.tar.gz";
+export const envTemplateFileKey = "environment-vpc.tar.gz";
+const envTemplateName = "fargate-env";
 
-const vpcTemplateFile = new aws.s3.BucketObject("environment-template-v1", {
+const envTemplateFile = new aws.s3.BucketObject("environment-template-v1", {
   bucket: bucket.bucket,
-  key: vpcTemplateFileKey,
+  key: envTemplateFileKey,
   source: new pulumi.asset.FileAsset("../.templates/environment-vpc.tar.gz")
 });
 
+
 const createEnvTemplate = new command.local.Command("create-env-template", {
-  create: "aws proton create-environment-template --name vpc",
-  triggers: [vpcTemplateFile.versionId],
+  create: `aws proton create-environment-template --name ${envTemplateName}`,
+  triggers: [envTemplateFile.versionId],
 });
 
 const createEnvTemplateVersion = new command.local.Command("create-env-template-version", {
-  create: pulumi.interpolate`aws proton create-environment-template-version --template-name vpc --source "s3={bucket=${bucket.bucket},key=${vpcTemplateFileKey}}"`,
+  create: pulumi.interpolate`aws proton create-environment-template-version --template-name ${envTemplateName} --source "s3={bucket=${bucket.bucket},key=${envTemplateFileKey}}"`,
   triggers: [Date.now()],
 }, {
-  dependsOn: [vpcTemplateFile, createEnvTemplate]
+  dependsOn: [envTemplateFile, createEnvTemplate]
+});
+
+export const svcTemplateFileKey = "service-container.tar.gz";
+
+const svcTemplateFile = new aws.s3.BucketObject("service-template-v1", {
+  bucket: bucket.bucket,
+  key: svcTemplateFileKey,
+  source: new pulumi.asset.FileAsset("../.templates/service-container.tar.gz")
+});
+
+const createSvcTemplate = new command.local.Command("create-svc-template", {
+  create: "aws proton create-service-template --name fargate-service",
+  triggers: [svcTemplateFile.versionId],
 });
 
 createEnvTemplateVersion.stdout.apply(x => {
-  const cliOutput = JSON.parse(x);
-  const majorVersion = cliOutput.environmentTemplateVersion.majorVersion;
-  const minorVersion = cliOutput.environmentTemplateVersion.minorVersion;
+  const envCliOutput = JSON.parse(x);
+  const envMajorVersion = envCliOutput.environmentTemplateVersion.majorVersion;
+  const envMinorVersion = envCliOutput.environmentTemplateVersion.minorVersion;
 
   new command.local.Command("publish-env-template-version", {
     // We need to wait a few seconds for the Proton service to do initial
     // validation and change the status to DRAFT.
-    create: `sleep 3 && aws proton update-environment-template-version --template-name vpc --major-version ${majorVersion} --minor-version ${minorVersion} --status PUBLISHED`,
+    create: `sleep 3 && aws proton update-environment-template-version --template-name ${envTemplateName} --major-version ${envMajorVersion} --minor-version ${envMinorVersion} --status PUBLISHED`,
   }, {
     dependsOn: createEnvTemplateVersion,
+  });
+
+  const createSvcTemplateVersion = new command.local.Command("create-svc-template-version", {
+    create: pulumi.interpolate`aws proton create-service-template-version --template-name fargate-service --compatible-environment-templates majorVersion=${envMajorVersion},templateName=${envTemplateName} --source "s3={bucket=${bucket.bucket},key=${svcTemplateFileKey}}"`,
+    triggers: [Date.now()],
+  }, {
+    dependsOn: [svcTemplateFile, createSvcTemplate]
+  });
+
+  createSvcTemplateVersion.stdout.apply(y => {
+    const svcCliOutput = JSON.parse(y);
+    const svcMajorVersion = svcCliOutput.serviceTemplateVersion.majorVersion;
+    const svcMinorVersion = svcCliOutput.serviceTemplateVersion.minorVersion;
+
+    new command.local.Command("publish-svc-template-version", {
+      // We need to wait a few seconds for the Proton service to do initial
+      // validation and change the status to DRAFT.
+      create: `sleep 3 && aws proton update-service-template-version --template-name fargate-service --major-version ${svcMajorVersion} --minor-version ${svcMinorVersion} --status PUBLISHED`,
+    }, {
+      dependsOn: createEnvTemplateVersion,
+    });
   });
 });
 

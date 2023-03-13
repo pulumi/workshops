@@ -13,7 +13,8 @@ const vpc = new awsx.ec2.Vpc(vpcName, {
 
 const cluster = new aws.ecs.Cluster("cluster");
 
-// TODO: Add ALB, remove export of public subnet ids.
+// TODO: Add ALB, remove export of public subnet ids so that we can only deploy
+// services into private subnets.
 
 export const vpcId = vpc.vpcId;
 export const publicSubnetIds = vpc.publicSubnetIds;
