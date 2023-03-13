@@ -1,0 +1,9 @@
+{
+  "environment": {
+    "name": "env3",
+    "inputs": {
+      "vpcName": "env3-vpc",
+      "vpcCidrBlock": "10.1.0.0/16"
+    }
+  }
+}

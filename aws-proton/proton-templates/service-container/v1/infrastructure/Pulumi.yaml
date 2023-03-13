@@ -1,0 +1,3 @@
+name: aws-proton-workshop-service-container
+runtime: nodejs
+description: A minimal TypeScript Pulumi program
