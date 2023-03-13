@@ -6,7 +6,7 @@ default: templates deploy
 .templates/environment-vpc.tar.gz: .templates proton-templates/environment-vpc/v1/infrastructure/* .templates proton-templates/environment-vpc/v1/schema/* delete_node_modules
 	tar -czvf .templates/environment-vpc.tar.gz -C proton-templates/environment-vpc/v1 .
 
-.templates/service-container-vpc.tar.gz: .templates proton-templates/service-container/v1/infrastructure/* .templates proton-templates/service-container/v1/schema/* delete_node_modules
+.templates/service-container-vpc.tar.gz: .templates proton-templates/service-container/v1/instance_infrastructure/* .templates proton-templates/service-container/v1/schema/* delete_node_modules
 	tar -czvf .templates/service-container.tar.gz -C proton-templates/service-container/v1 .
 
 # node_modules should not be included with the template bundles - they are

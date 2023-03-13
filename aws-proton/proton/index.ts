@@ -49,7 +49,6 @@ const envTemplateFile = new aws.s3.BucketObject("environment-template-v1", {
   source: new pulumi.asset.FileAsset("../.templates/environment-vpc.tar.gz")
 });
 
-
 const createEnvTemplate = new command.local.Command("create-env-template", {
   create: `aws proton create-environment-template --name ${envTemplateName}`,
   triggers: [envTemplateFile.versionId],
@@ -71,7 +70,7 @@ const svcTemplateFile = new aws.s3.BucketObject("service-template-v1", {
 });
 
 const createSvcTemplate = new command.local.Command("create-svc-template", {
-  create: "aws proton create-service-template --name fargate-service",
+  create: "aws proton create-service-template --name fargate-service --pipeline-provisioning CUSTOMER_MANAGED",
   triggers: [svcTemplateFile.versionId],
 });
 

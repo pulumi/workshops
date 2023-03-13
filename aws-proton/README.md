@@ -21,6 +21,7 @@ The repo contains the following directories:
 - `proton/` contains a Pulumi program to manage resources within AWS Proton itself, including CodeBuild provisioning, needed IAM roles, etc.
 - `proton-templates/environment-vpc/v1` contains a Proton environment template which in turn contains a  Pulumi program to create a VPC and a shared EKS cluster.
 - `proton-templates/service-container/v1` contains a Proton service template which in turn contains a  Pulumi program to create an EKS Fargate service and an associated load balancer.
+- `util/delete_environment_template.py` uses boto3 to fully delete all instances and versions of an environment template.
 
 ## Templates
 

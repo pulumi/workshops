@@ -12,11 +12,16 @@ infrastructure:
           secrets_manager:
             PULUMI_ACCESS_TOKEN: "aws-proton/pulumi-access-token"
         provision:
+          # Debugging:
+          - echo "proton-inputs.json:"
+          - cat proton-inputs.json
+
           # Steps to be run when an environment is deployed or updated
           # Download Pulumi binary and install dependencies
           - curl -fsSL https://get.pulumi.com | sh
           - export PATH=$PATH:$HOME/.pulumi/bin
           - npm install
+
           # Setting stack name from the name of the environment and setting up pulumi config
           - export STACK_NAME=$(cat proton-inputs.json | jq -r '.environment.name')
           - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
@@ -41,4 +46,4 @@ infrastructure:
           - pulumi config set org $PULUMI_ORG
           # Destroying Stack
           - pulumi destroy -s $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
-          - pulumi stack rm $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi stack rm $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME -y

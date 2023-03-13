@@ -1,0 +1,12 @@
+schema:
+  format:
+    openapi: "3.0.0"
+  service_input_type: "ServiceInputs"
+  types:
+    ServiceInputs:
+      type: object
+      description: "Service inputs"
+      properties:
+        dummy:
+          title: "Dummy"
+          type: string
