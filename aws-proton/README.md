@@ -2,6 +2,19 @@
 
 This repo contains code for the Platform Engineering with AWS Proton and Pulumi workshop.
 
+## Quick Deployment instructions
+
+1. Bundle the Proton templates: `make templates`
+1. Deploy the base infra: `cd proton/base-infra && pulumi up -y` (You'll get prompted for any missing config values.)
+1. Deploy the environment template: `cd proton/environment-template && pulumi up -y`
+1. Deploy the service template: `cd proton/environment-template && pulumi up -y`
+
+Then, in the AWS Proton console, to demonstrate Proton's capabilities:
+
+1. Deploy an environment using the deployed environment template.
+1. Deploy a service into the environment using the deployed service template.
+1. Open the web browser to the deployed service's URI.
+
 ## Access Token
 
 Proton requires a Pulumi access token in order to run Pulumi commands to deploy the templates.
@@ -24,10 +37,11 @@ The repo contains the following elements:
   - `base-infra/` contains the basic resources for AWS Proton: buckets, IAM roles, secrets, etc. This stack must be deployed first.
   - `environment-template/` contains resources to create a Proton environment template. This stack must be deployed second.
   - `service-template/` contains resources to create a Proton service template. This stack must be deployed third.
-- `proton-templates/environment-vpc/v1` contains a Proton environment template which in turn contains a  Pulumi program to create a VPC and a shared EKS cluster.
-- `proton-templates/service-container/v1` contains a Proton service template which in turn contains a  Pulumi program to create an EKS Fargate service and an associated load balancer.
-- `util/delete_environment_template.py` uses boto3 to fully delete all instances and versions of an environment template.
-- `doc` contains sample JSON files that Proton passes to CodeBuild. They are included to speed up testing without having to run through CodeBuild.
+- `proton-templates/` contains the templates that are tar/gzipped, uploaded to S3, and deployed to Proton. Platform engineers would deploy the environment template and application teams would deploy the service template.
+  - `environment-vpc/v1` contains a Proton environment template which in turn contains a Pulumi program to create a VPC, a shared EKS cluster, and a shared Application Load Balancer.
+  - `service-container/v1` contains a Proton service template which in turn contains a Pulumi program to create an EKS Fargate service and the associated load balancing resources.
+- `util/` contains Python scripts that use boto3 to fully delete all instances and versions of an environment template, as well as the template itself.
+- `doc` contains sample JSON files that Proton passes to CodeBuild. They are included to enable local testing that emulates the way inputs are passed via Proton.
 
 ## Templates
 
