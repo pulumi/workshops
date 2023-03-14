@@ -39,8 +39,13 @@ infrastructure:
           - pulumi config set albArn $(cat proton-inputs.json | jq -r .environment.outputs.albArn)
           - pulumi config set albDnsName $(cat proton-inputs.json | jq -r .environment.outputs.albDnsName)
           - pulumi config set clusterArn $(cat proton-inputs.json | jq -r .environment.outputs.clusterArn)
-          # This should not have the raw (-r) flag because it's an array. We JSON.parse in the Pulumi program:
-          - pulumi config set privateSubnetIds $(cat proton-inputs.json | jq .environment.outputs.privateSubnetIds)
+          # TODO: Verify that this actually behaves differently in zsh (where it
+          # should have no -r flag) than the shell running in the CodeBuild
+          # container (where it should have the -r flag)
+          - pulumi config set privateSubnetIds $(cat proton-inputs.json | jq -r .environment.outputs.privateSubnetIds)
+
+          # Debugging:
+          - pulumi config get privateSubnetIds
 
           # Deploy stack
           - pulumi update --yes --stack $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
