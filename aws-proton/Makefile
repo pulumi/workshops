@@ -15,7 +15,7 @@ default: templates deploy
 .PHONY: delete_node_modules
 delete_node_modules:
 	rm -rf proton-templates/environment-vpc/v1/infrastructure/node_modules && \
-	rm -rf proton-templates/service-container/v1/infrastructure/node_modules
+	rm -rf proton-templates/service-container/v1/instance_infrastructure/node_modules
 
 .PHONY: templates
 templates: .templates/environment-vpc.tar.gz .templates/service-container-vpc.tar.gz

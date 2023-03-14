@@ -1,0 +1,25 @@
+{
+  "environment": {
+    "account_id": "886783038127",
+    "name": "env6",
+    "outputs": {
+      "albDnsName": "env6-alb-67bda4a-267822759.us-west-2.elb.amazonaws.com",
+      "clusterArn": "arn:aws:ecs:us-west-2:886783038127:cluster/cluster-8cedd17",
+      "albArn": "arn:aws:elasticloadbalancing:us-west-2:886783038127:loadbalancer/app/env6-alb-67bda4a/28932bfcbad14b8c",
+      "privateSubnetIds": "[\"subnet-0bd7a117d6bfea5de\",\"subnet-020077b1e1a71da32\",\"subnet-0a92bde7c5a0e5665\"]",
+      "vpcId": "vpc-01d70fcbb322758f7"
+    }
+  },
+  "service": {
+    "name": "svc7",
+    "repository_connection_arn": "",
+    "repository_id": "",
+    "branch_name": ""
+  },
+  "service_instance": {
+    "name": "svcinst7",
+    "inputs": {
+      "port": 80
+    }
+  }
+}

@@ -7,6 +7,9 @@ schema:
       type: object
       description: "Service inputs"
       properties:
-        dummy:
-          title: "Dummy"
-          type: string
+        port:
+          title: "Service Port"
+          type: number
+          description: "The internal port on which the service will listen. This must be unique among all services in the environment."
+      required:
+        - port

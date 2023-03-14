@@ -18,6 +18,8 @@ pulumi config set pulumiAccessToken $(echo $PULUMI_ACCESS_TOKEN) --secret
 
 The repo contains the following elements:
 
+- `Makefile` with the following notable targets:
+  - `make templates` will bundle the Proton templates for distribution to an S3 bucket. This target must be run before deploying the Proton template Pulumi programs (see below).
 - `proton/` contains a Pulumi programs to manage resources within AWS Proton itself, including CodeBuild provisioning, needed IAM roles, etc.
   - `base-infra/` contains the basic resources for AWS Proton: buckets, IAM roles, secrets, etc. This stack must be deployed first.
   - `environment-template/` contains resources to create a Proton environment template. This stack must be deployed second.
@@ -25,6 +27,7 @@ The repo contains the following elements:
 - `proton-templates/environment-vpc/v1` contains a Proton environment template which in turn contains a  Pulumi program to create a VPC and a shared EKS cluster.
 - `proton-templates/service-container/v1` contains a Proton service template which in turn contains a  Pulumi program to create an EKS Fargate service and an associated load balancer.
 - `util/delete_environment_template.py` uses boto3 to fully delete all instances and versions of an environment template.
+- `doc` contains sample JSON files that Proton passes to CodeBuild. They are included to speed up testing without having to run through CodeBuild.
 
 ## Templates
 
@@ -50,16 +53,7 @@ This will run `pulumi deploy`.
 
 If a Proton template gets stuck in a bad state and cannot be torn down smoothly, log into the [Pulumi Service](https://app.pulumi.com), locate the stack, go to Settings, and follow the instructions there to delete the stack's resources (including generating a `Pulumi.yaml` and stack config file).
 
-## Potential Improvements
+## Limitations/Potential Improvements
 
+- We currently only support launching a single service per environment due to time constraints.
 - Write a script that that fully maps `proton-inputs.json` to `Pulumi.$STACK.yaml` so we don't have to add a line for each input to `manifest.yaml`.
-
-## Stuff
-
-```bash
-aws proton create-environment-template-version --template-name vpc --source "s3={bucket=$(pulumi stack output bucketName),key=$(pulumi stack output vpcTemplateFileKey)}"
-```
-
-```bash
-aws proton create-environment --name my-environment 
-```

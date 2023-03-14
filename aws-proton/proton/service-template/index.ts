@@ -30,7 +30,7 @@ const createSvcTemplateVersion = new command.local.Command("create-svc-template-
   dependsOn: [svcTemplateFile, createSvcTemplate]
 });
 
-createSvcTemplateVersion.stdout.apply(y => {
+const version = createSvcTemplateVersion.stdout.apply(y => {
   const svcCliOutput = JSON.parse(y);
   const svcMajorVersion = svcCliOutput.serviceTemplateVersion.majorVersion;
   const svcMinorVersion = svcCliOutput.serviceTemplateVersion.minorVersion;
@@ -42,4 +42,12 @@ createSvcTemplateVersion.stdout.apply(y => {
   }, {
     dependsOn: createSvcTemplateVersion,
   });
+
+  return {
+    major: svcMajorVersion,
+    minor: svcMinorVersion
+  };
 });
+
+export const majorVersion = version.major;
+export const minorVersion = version.minor;

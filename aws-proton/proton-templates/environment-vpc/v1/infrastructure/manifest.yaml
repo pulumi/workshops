@@ -14,19 +14,22 @@ infrastructure:
           # Debugging:
           - echo "proton-inputs.json:"
           - cat proton-inputs.json
+          - ls -al
+
           # Steps to be run when an environment is deployed or updated
           # Download Pulumi binary and install dependencies
           - curl -fsSL https://get.pulumi.com | sh
           - export PATH=$PATH:$HOME/.pulumi/bin
           - npm install
-          # Setting stack name from the name of the environment and setting up pulumi config
+
+          # Set pulumi context and provider config values:
           - export STACK_NAME=$(cat proton-inputs.json | jq -r '.environment.name')
           - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
           - pulumi config set aws:region $AWS_DEFAULT_REGION
           - pulumi config set org $PULUMI_ORG
 
           # Set stack-specific config values:
-          - pulumi config set vpcName $(cat proton-inputs.json | jq -r .environment.inputs.vpcName)
+          - pulumi config set name $(cat proton-inputs.json | jq -r .environment.name)
           - pulumi config set vpcCidrBlock $(cat proton-inputs.json | jq -r .environment.inputs.vpcCidrBlock)
 
           # Deploying stack

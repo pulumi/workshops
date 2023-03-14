@@ -7,12 +7,7 @@ schema:
       type: object
       description: "Environment inputs"
       properties:
-        vpcName:
-          title: "VPC Name"
-          type: string
         vpcCidrBlock:
           title: "VPC CIDR block"
           type: string
           default: "10.0.0.0/16"
-      required:
-        - vpcName
