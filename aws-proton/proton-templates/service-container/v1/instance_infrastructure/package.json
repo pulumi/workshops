@@ -1,0 +1,11 @@
+{
+    "name": "aws-proton-workshop-app-container",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^5.31.0",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

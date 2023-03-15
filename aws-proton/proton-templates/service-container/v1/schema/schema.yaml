@@ -1,0 +1,15 @@
+schema:
+  format:
+    openapi: "3.0.0"
+  service_input_type: "ServiceInputs"
+  types:
+    ServiceInputs:
+      type: object
+      description: "Service inputs"
+      properties:
+        port:
+          title: "Service Port"
+          type: number
+          description: "The internal port on which the service will listen. This must be unique among all services in the environment."
+      required:
+        - port

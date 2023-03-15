@@ -1,0 +1,3 @@
+name: workshop-aws-proton-base-infra
+runtime: nodejs
+description: Base infrastructure for the AWS Proton workshop demo (IAM, S3 bucket, etc.)

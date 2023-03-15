@@ -1,0 +1,75 @@
+infrastructure:
+  templates:
+    - rendering_engine: codebuild
+      settings:
+        image: aws/codebuild/amazonlinux2-x86_64-standard:4.0
+        runtimes:
+          nodejs: 16
+        env:
+          variables:
+            PULUMI_ORG: jkodrofftest
+            # PULUMI_PROJECT: proton-<service or environment>
+          secrets_manager:
+            PULUMI_ACCESS_TOKEN: "aws-proton/pulumi-access-token"
+        provision:
+          # Debugging:
+          - echo "proton-inputs.json:"
+          - cat proton-inputs.json
+
+          # Install Pulumi and program dependencies:
+          - curl -fsSL https://get.pulumi.com | sh
+          - export PATH=$PATH:$HOME/.pulumi/bin
+          - npm install
+
+          - export STACK_NAME=$(cat proton-inputs.json | jq -r '.service_instance.name')
+
+          # Debugging:
+          - echo "PULUMI_ORG = ${PULUMI_ORG}"
+          - echo "PULUMI_PROJECT = ${PULUMI_PROJECT}"
+          - echo "STACK_NAME = ${STACK_NAME}"
+
+          # Set pulumi context and provider config values:
+          - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi config set aws:region $AWS_DEFAULT_REGION
+          - pulumi config set org $PULUMI_ORG
+
+          # Set stack-specific config values:
+          - pulumi config set port $(cat proton-inputs.json | jq -r .service_instance.inputs.port)
+          - pulumi config set vpcId $(cat proton-inputs.json | jq -r .environment.outputs.vpcId)
+          - pulumi config set albArn $(cat proton-inputs.json | jq -r .environment.outputs.albArn)
+          - pulumi config set albDnsName $(cat proton-inputs.json | jq -r .environment.outputs.albDnsName)
+          - pulumi config set clusterArn $(cat proton-inputs.json | jq -r .environment.outputs.clusterArn)
+          # TODO: Verify that this actually behaves differently in zsh (where it
+          # should have no -r flag) than the shell running in the CodeBuild
+          # container (where it should have the -r flag)
+          - pulumi config set privateSubnetIds $(cat proton-inputs.json | jq -r .environment.outputs.privateSubnetIds)
+
+          # Debugging:
+          - pulumi config get privateSubnetIds
+
+          # Deploy stack
+          - pulumi update --yes --stack $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+
+          # Convert pulumi outputs for Proton to ingest and update Proton on deployment status
+          - chmod +x ./pulumi-to-proton-outputs.sh
+          - pulumi stack output --json | ./pulumi-to-proton-outputs.sh > outputs.json
+          - aws proton notify-resource-deployment-status-change --resource-arn $RESOURCE_ARN --status IN_PROGRESS --outputs file://./outputs.json
+        deprovision:
+          # Install Pulumi and program dependencies:
+          - curl -fsSL https://get.pulumi.com | sh
+          - export PATH=$PATH:$HOME/.pulumi/bin
+          - npm install
+
+          - export STACK_NAME=$(cat proton-inputs.json | jq -r '.service_instance.name')
+
+          # Debugging:
+          - echo "PULUMI_ORG = ${PULUMI_ORG}"
+          - echo "PULUMI_PROJECT = ${PULUMI_PROJECT}"
+          - echo "STACK_NAME = ${STACK_NAME}"
+
+          - pulumi stack select $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME || pulumi stack init $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME
+          - pulumi config set aws:region $AWS_DEFAULT_REGION
+          - pulumi config set org $PULUMI_ORG
+
+          - pulumi destroy -s $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME -y
+          - pulumi stack rm $PULUMI_ORG/$PULUMI_PROJECT/$STACK_NAME -y

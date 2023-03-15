@@ -1,0 +1,3 @@
+name: workshop-aws-proton-svc-template
+runtime: nodejs
+description: Service template for AWS Proton workshop demo

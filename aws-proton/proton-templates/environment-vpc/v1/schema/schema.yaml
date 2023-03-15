@@ -1,0 +1,13 @@
+schema:
+  format:
+    openapi: "3.0.0"
+  environment_input_type: "EnvironmentInputs"
+  types:
+    EnvironmentInputs:
+      type: object
+      description: "Environment inputs"
+      properties:
+        vpcCidrBlock:
+          title: "VPC CIDR block"
+          type: string
+          default: "10.0.0.0/16"

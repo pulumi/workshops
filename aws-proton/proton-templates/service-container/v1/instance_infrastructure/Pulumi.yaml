@@ -1,0 +1,3 @@
+name: aws-proton-workshop-service-container
+runtime: nodejs
+description: AWS Proton workshop service template

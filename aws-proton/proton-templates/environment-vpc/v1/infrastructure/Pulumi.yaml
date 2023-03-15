@@ -1,0 +1,3 @@
+name: aws-proton-workshop-env-vpc
+runtime: nodejs
+description: AWS Proton workshop environment template
