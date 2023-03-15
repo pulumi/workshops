@@ -4,6 +4,9 @@ This repo contains code for the Platform Engineering with AWS Proton and Pulumi 
 
 ## Quick Deployment instructions
 
+To deploy and run the same code:
+
+1. Change the hard-coded value for `PULUMI_ORG` in `proton-templates/environment-vpc/v1/infrastructure/manifest.yaml` and `proton-templates/service-container/v1/instance_infrastructure/manifest.yaml`. (This should be fixed soon to pull from an SSM parameter.)
 1. Bundle the Proton templates: `make templates`
 1. Deploy the base infra: `cd proton/base-infra && pulumi up -y` (You'll get prompted for any missing config values.)
 1. Deploy the environment template: `cd proton/environment-template && pulumi up -y`
@@ -13,7 +16,8 @@ Then, in the AWS Proton console, to demonstrate Proton's capabilities:
 
 1. Deploy an environment using the deployed environment template.
 1. Deploy a service into the environment using the deployed service template.
-1. Open the web browser to the deployed service's URI.
+1. In the Proton console, navigate to Service Instances, then the Service Instance you just deployed. Find the service's URI in the Outputs section.
+1. Open the web browser to the deployed service's URI. Note that it may give an HTTP 503 error for a minute or two minutes until the load balancer detects the service as healthy.
 
 ## Access Token
 
