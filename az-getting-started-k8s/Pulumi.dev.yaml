@@ -1,0 +1,8 @@
+config:
+  az-getting-started-k8s:kubernetesVersion: 1.26.3
+  az-getting-started-k8s:mgmtGroupId: d79b504a-3fbe-45b1-a840-a4ffcbd59986
+  az-getting-started-k8s:nodeVmSize: Standard_DS2_v2
+  az-getting-started-k8s:numWorkerNodes: "3"
+  az-getting-started-k8s:prefixForDns: pulumi
+  az-getting-started-k8s:sshPubKey: ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDQj2UGVsSAYehVwA+yTTFIljHfbNeMNHhaMhtFfkXmQH3Pu76779RMZOt2WuW18rveT0W02R2oEENwJtfQXtXIyzf8dcJYdHfm40PQlWA5Yd3SRXggOEfEcAEWIIYB0zvT3yBpuEmTwMF69K7AOOHkHKf0bZaqMnoyU0FLor5PNa7SCfp98vtjUKA+mqRBxSTxqqbHoVaRpuqI32Vbd8euIHCKepTw48CkCGTz7avZ/g1f4Cq2LoKlV9Owj3+pvUvdmTgJ1zKmoZe7d+e9Fn19kFQd2zaIwlI98kO8csFc5L0YNU3KJioBdpDo251bwSsBabLbz16GBACGBMmtSyFCqefTIVHsQNvR3R/b/TJGFng04kaM0GmYkVQvHKzYexneDMeYDFp7nFb6nE7yZK+4VxFEmu59vLammxc3NiRCPB8zDjm67RF/+rDCi8L0mOKvmobUKoME8Vn6zi2/KbEgG14cv6C9vcNMi2Z69EtH483priqKpkuf4V3UdawRIyM= jkodroff@Joshs-MBP.hsd1.pa.comcast.net
+  azure-native:location: westus2
