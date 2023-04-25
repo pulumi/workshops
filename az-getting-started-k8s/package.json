@@ -1,0 +1,12 @@
+{
+    "name": "az-getting-started-k8s",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/azure-native": "^1.0.0",
+        "@pulumi/kubernetes": "^3.25.0",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

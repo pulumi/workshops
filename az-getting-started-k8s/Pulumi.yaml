@@ -1,0 +1,3 @@
+name: az-getting-started-k8s
+runtime: nodejs
+description: A TypeScript program to deploy a Kubernetes cluster on Azure
