@@ -1,0 +1,14 @@
+{
+    "name": "aws-getting-started-k8s",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^5.37.0",
+        "@pulumi/awsx": "^1.0.0",
+        "@pulumi/eks": "^1.0.0",
+        "@pulumi/kubernetes": "^3.25.0",
+        "@pulumi/pulumi": "^3.0.0",
+        "typescript": "^4.0.0"
+    }
+}
