@@ -1,0 +1,5 @@
+/bin/
+/node_modules/
+Pulumi.backup.yaml
+kubeconfig.yml
+Pulumi.*.yaml
