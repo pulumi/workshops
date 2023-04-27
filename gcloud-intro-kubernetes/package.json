@@ -1,0 +1,12 @@
+{
+  "name": "gcloud-intro-kubernetes",
+  "devDependencies": {
+    "@types/node": "^16"
+  },
+  "dependencies": {
+    "@pulumi/gcp": "6.39.0",
+    "@pulumi/kubernetes": "^3.25.0",
+    "@pulumi/pulumi": "^3.0.0",
+    "typescript": "^4.0.0"
+  }
+}
