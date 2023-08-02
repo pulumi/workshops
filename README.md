@@ -18,7 +18,7 @@ Fundamentals | TypeScript | Docker | [fundamentals/typescript](./fundamentals/ty
 Fundamentals | YAML | Docker | [fundamentals/yaml](./fundamentals/yaml/)
  ** | | |
 Cloud Fundamentals | C# | AWS | Coming soon
-Cloud Fundamentals | Go | AWS | Coming soon
+Cloud Fundamentals | Go | AWS | [pulumi-aws-go](./pulumi-aws-go/)n
 Cloud Fundamentals | Java | AWS | [cloud-engineering-with-aws-X/java](./cloud-engineering-with-aws-X/java/)
 Cloud Fundamentals | Python | AWS | [cloud-engineering-with-aws-X/python](./cloud-engineering-with-aws-X/python/)
 Cloud Fundamentals | TypeScript | AWS | [static-site-workshop/aws-typescript](./static-site-workshop/aws-typescript/)
