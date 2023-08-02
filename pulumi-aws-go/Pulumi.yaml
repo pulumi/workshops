@@ -1,5 +1,0 @@
-name: pulumi-aws-go
-runtime: go
-config:
-  aws:region:
-    value: us-west-2
