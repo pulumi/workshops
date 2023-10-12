@@ -38,7 +38,7 @@ for template_version in response['templateVersions']:
         )
     except:
         print(
-            f"Unable to delete template '{args.name}' v{major_version}.{minor_version}.")
+            f"Unable to delete template '{args.name}' v{major_version}.{minor_version}. Are there deployed services using this template?")
         error_deleting_template_version = True
 
 if not error_deleting_template_version:
