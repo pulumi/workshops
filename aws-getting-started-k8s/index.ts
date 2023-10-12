@@ -83,3 +83,6 @@ const nginxService = new k8s.core.v1.Service("nginx-service", {
 }, { provider: k8sProvider });
 
 export const nginxLoadBalancerAddress = nginxService.status.loadBalancer.ingress[0].hostname;
+
+const frontend = wordpress.getResource("v1/Service", "default/wpdev-wordpress");
+export const frontendIp = frontend.status.loadBalancer.ingress[0].ip;

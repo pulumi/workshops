@@ -10,14 +10,14 @@ To deploy and run the same code:
 1. Bundle the Proton templates: `make templates`
 1. Deploy the base infra: `cd proton/base-infra && pulumi up -y` (You'll get prompted for any missing config values.)
 1. Deploy the environment template: `cd proton/environment-template && pulumi up -y`
-1. Deploy the service template: `cd proton/environment-template && pulumi up -y`
+1. Deploy the service template: `cd proton/service-template && pulumi up -y`
 
 Then, in the AWS Proton console, to demonstrate Proton's capabilities:
 
-1. Deploy an environment using the deployed environment template.
-1. Deploy a service into the environment using the deployed service template.
+1. Deploy an environment using the deployed environment template. Be sure to specify the CodeBuild Provisioning Role, e.g.:
+1. Deploy a service into the environment using the deployed service template. (Note that a the time of writing, Proton may not correctly validate that the `port` field is required when deploying the service template via the wizard in the AWS Console.)
 1. In the Proton console, navigate to Service Instances, then the Service Instance you just deployed. Find the service's URI in the Outputs section.
-1. Open the web browser to the deployed service's URI. Note that it may give an HTTP 503 error for a minute or two minutes until the load balancer detects the service as healthy.
+1. Open the web browser to the deployed service's URI. Note that the URL may give an HTTP 503 error for a minute or two minutes until the load balancer detects the service as healthy.
 
 ## Access Token
 
@@ -26,7 +26,7 @@ Proton requires a Pulumi access token in order to run Pulumi commands to deploy 
 If you want to use your local Pulumi token, run the following command:
 
 ```bash
-pulumi config set pulumiAccessToken $(echo $PULUMI_ACCESS_TOKEN) --secret
+pulumi config set pulumiAccessToken $(echo -n $PULUMI_ACCESS_TOKEN) --secret
 ```
 
 **NOTE:** For production scenarios, you should _not_ reuse your personal token - use a separate token for Proton so that replacing your local personal token does not cause disruption in your organization's delivery pipelines.
@@ -67,9 +67,33 @@ make deploy
 
 This will run `pulumi deploy`.
 
+## Teardown
+
+Some Proton resources are not available for control via IaC and must be torn down in the AWS Console or via boto3.
+
+1. Delete any deployed services in the AWS Console.
+1. Delete any deployed environments in the AWS Console.
+1. Delete all deployed service templates:
+
+    ```bash
+    cd util && python3 delete_service_template.py --name fargate-service
+    ```
+
+1. Delete all deployed environment templates:
+
+    ```bash
+    cd util && python3 delete_environment_template.py --name fargate-env
+    ```
+
+1. Tear down the base infrastructure:
+
+    ```bash
+    cd proton/base-infra && pulumi destroy
+    ```
+
 ## Troubleshooting
 
-If a Proton template gets stuck in a bad state and cannot be torn down smoothly, log into the [Pulumi Service](https://app.pulumi.com), locate the stack, go to Settings, and follow the instructions there to delete the stack's resources (including generating a `Pulumi.yaml` and stack config file).
+If a Proton template deployment gets stuck in a bad state and cannot be torn down smoothly by the Proton service, log into the [Pulumi Service](https://app.pulumi.com), locate the stack, go to Settings, and follow the instructions there to delete the stack's resources (including generating a `Pulumi.yaml` and stack config file).
 
 ## Limitations/Potential Improvements
 

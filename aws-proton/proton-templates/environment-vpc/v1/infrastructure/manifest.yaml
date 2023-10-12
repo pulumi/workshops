@@ -7,7 +7,7 @@ infrastructure:
           nodejs: 16
         env:
           variables:
-            PULUMI_ORG: jkodrofftest
+            PULUMI_ORG: jkodrofftest # TODO: Change this to your Pulumi org!
           secrets_manager:
             PULUMI_ACCESS_TOKEN: "aws-proton/pulumi-access-token"
         provision:
