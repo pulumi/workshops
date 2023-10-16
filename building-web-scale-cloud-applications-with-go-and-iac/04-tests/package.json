@@ -1,0 +1,13 @@
+{
+  "name": "my-awesome-package",
+  "version": "1.0.0",
+  "author": "Your Name <email@example.com>",
+  "main": "k6.js",
+  "dependencies": {
+    "k6": "^0.0.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/k6": "^0.47.0"
+  }
+}
