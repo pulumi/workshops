@@ -1,0 +1,10 @@
+name: 02-eks-services
+runtime: go
+description: A minimal Kubernetes Go Pulumi program
+
+config:
+  infraStackRef: "dirien/00-aws-infrastructure/dev"
+  edaInfraStackRef: "dirien/01-eda-infrastructure/dev"
+  kedaVersion: "2.12.0"
+  daprVersion: "1.11.3"
+  daprDashboardVersion: "0.14.0"

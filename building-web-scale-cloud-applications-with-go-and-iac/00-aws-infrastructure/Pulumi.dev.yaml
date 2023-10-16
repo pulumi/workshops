@@ -1,0 +1,7 @@
+config:
+  00-aws-infrastructure:desiredClusterSize: "3"
+  00-aws-infrastructure:eksNodeInstanceType: t3.xlarge
+  00-aws-infrastructure:maxClusterSize: "6"
+  00-aws-infrastructure:minClusterSize: "3"
+  00-aws-infrastructure:vpcNetworkCidr: 10.0.0.0/16
+  aws:region: eu-central-1

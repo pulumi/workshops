@@ -1,0 +1,6 @@
+name: 01-eda-infrastructure
+runtime: go
+description: A minimal AWS Go Pulumi program
+
+config:
+  infraStackRef: "dirien/00-aws-infrastructure/dev"
