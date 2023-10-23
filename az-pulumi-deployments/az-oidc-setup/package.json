@@ -1,0 +1,13 @@
+{
+    "name": "az-oidc-setup",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/azure-native": "^2.12.0",
+        "@pulumi/azuread": "^5.42.0",
+        "@pulumi/pulumi": "^3.0.0",
+        "@pulumi/pulumiservice": "^0.14.0"
+    }
+}

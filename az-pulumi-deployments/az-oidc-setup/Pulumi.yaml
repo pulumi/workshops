@@ -1,0 +1,3 @@
+name: az-oidc-setup
+runtime: nodejs
+description: A minimal TypeScript Pulumi program
