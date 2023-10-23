@@ -1,3 +1,0 @@
-name: test-import
-runtime: nodejs
-description: A minimal TypeScript Pulumi program
