@@ -5,11 +5,12 @@ import * as pcloud from "@pulumi/pulumiservice";
 
 const config = new pulumi.Config();
 
-const org = config.require("pulumiOrg"); "jkodrofftest";
-const project = config.require("pulumiProject"); "my-az-app";
-const stack = config.get("pulumiStack") ?? "dev";
+export const org = config.get("pulumiOrg") ?? pulumi.getOrganization();
+export const project = config.require("pulumiProject");
+export const stack = config.get("pulumiStack") ?? "dev";
 
 const githubRepo = config.require("githubRepo");
+export const defaultBranch = config.get("defaultBranch") ?? "main";
 
 const appName = `pulumi-deployments-${org}`;
 const app = new azuread.Application(appName, {
@@ -68,7 +69,7 @@ for (let operation of ["preview", "update", "refresh", "destroy"]) {
   });
 }
 
-const settings = new pcloud.DeploymentSettings("deployment_settings", {
+new pcloud.DeploymentSettings("deployment_settings", {
   organization: org,
   project: project,
   stack: stack,
@@ -79,7 +80,7 @@ const settings = new pcloud.DeploymentSettings("deployment_settings", {
   },
   sourceContext: {
     git: {
-      branch: "main",
+      branch: `refs/heads/${defaultBranch}`,
     }
   },
   operationContext: {
@@ -92,4 +93,3 @@ const settings = new pcloud.DeploymentSettings("deployment_settings", {
     },
   },
 });
-
