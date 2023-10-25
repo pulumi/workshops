@@ -1,5 +1,0 @@
-config:
-  az-oidc-setup:githubRepo: jkodroff/my-az-app
-  az-oidc-setup:pulumiOrg: jkodrofftest
-  az-oidc-setup:pulumiProject: my-az-app
-  az-oidc-setup:pulumiStack: dev
