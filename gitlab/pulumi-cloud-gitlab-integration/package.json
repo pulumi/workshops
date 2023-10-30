@@ -1,0 +1,12 @@
+{
+    "name": "pulumi-cloud-gitlab-integration",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^6.6.1",
+        "@pulumi/gitlab": "^6.4.0",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

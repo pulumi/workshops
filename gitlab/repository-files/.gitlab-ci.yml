@@ -1,0 +1,58 @@
+# This sample yaml configuration file contains two stages and three jobs.
+# This configuration uses GitLab's `only`, `when`, and `except` configuration
+# options to create a pipeline that will create the `pulumi-preview` job in the pipeline,
+# for all branches except the master.
+# Only for master branch merges, the main `pulumi` job is executed automatically.
+
+default:
+  image:
+    name: "amazon/aws-cli:latest"
+    entrypoint: [""] # Without this, the image expects to be run with e.g. `s3 ls`.
+
+stages:
+  # - build
+  - infrastructure-update
+
+# This is were you might compile your application code, build a Docker
+# container, etc.:
+# complex_build_job:
+#   stage: build
+#   script:
+#     - echo "pulumi rocks!"
+
+pulumi-up:
+  stage: infrastructure-update
+  id_tokens:
+    GITLAB_OIDC_TOKEN:
+      aud: https://sts.amazonaws.com
+  before_script:
+    - chmod +x ./scripts/*.sh
+    - ./scripts/aws-auth.sh
+    - ./scripts/setup.sh
+  script:
+    - ./scripts/pulumi-up.sh
+  # Create an artifact archive with just the pulumi log file,
+  # which is created using console-redirection in pulumi-up.sh.
+  artifacts:
+    paths:
+      - pulumi-log.txt
+    # This is just a sample of how artifacts can be expired (removed) automatically in GitLab.
+    # You may choose to not set this at all based on your organization's or team's preference.
+    expire_in: 1 week
+  # This job should only be created if the pipeline is created for the master (or main) branch.
+  only:
+    - main # or master - whatever your default branch is.
+
+# pulumi-preview:
+#   stage: infrastructure-update
+#   id_tokens:
+#     GITLAB_OIDC_TOKEN:
+#       aud: https://gitlab.com
+#   before_script:
+#     - chmod +x ./scripts/*.sh
+#     - ./scripts/aws-auth.sh
+#     - ./scripts/setup.sh
+#   script:
+#     - ./scripts/pulumi-preview.sh
+#   only:
+#     - merge_requests

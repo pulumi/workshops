@@ -1,0 +1,3 @@
+name: pulumi-cloud-gitlab-integration
+runtime: nodejs
+description: A minimal TypeScript Pulumi program
