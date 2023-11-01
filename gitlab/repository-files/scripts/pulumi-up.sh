@@ -7,5 +7,8 @@ set -e -x
 export PATH=$PATH:$HOME/.pulumi/bin
 
 yarn install
+pulumi login
+pulumi org set-default $PULUMI_ORG
 pulumi stack select dev
-pulumi up --yes
+export AWS_PROFILE="oidc"
+pulumi preview

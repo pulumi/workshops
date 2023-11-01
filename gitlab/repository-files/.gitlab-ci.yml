@@ -6,8 +6,8 @@
 
 default:
   image:
-    name: "amazon/aws-cli:latest"
-    entrypoint: [""] # Without this, the image expects to be run with e.g. `s3 ls`.
+    name: "pulumi/pulumi:3.91.1"
+    entrypoint: [""]
 
 stages:
   # - build
@@ -24,11 +24,11 @@ pulumi-up:
   stage: infrastructure-update
   id_tokens:
     GITLAB_OIDC_TOKEN:
-      aud: https://sts.amazonaws.com
+      aud: https://gitlab.com
   before_script:
     - chmod +x ./scripts/*.sh
     - ./scripts/aws-auth.sh
-    - ./scripts/setup.sh
+    # - ./scripts/setup.sh
   script:
     - ./scripts/pulumi-up.sh
   # Create an artifact archive with just the pulumi log file,

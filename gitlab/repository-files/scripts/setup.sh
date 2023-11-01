@@ -3,16 +3,19 @@
 # exit if a command returns a non-zero exit code and also print the commands and their args as they are executed
 set -e -x
 
+# Make sure everything we need is installed:
+which curl tar node npm
+
+# Ensure all necessary operating system packages are in place:
+apt-get update -y
+apt-get install sudo ca-certificates curl gnupg tar -y
+
 # Download and install Pulumi:
 curl -fsSL https://get.pulumi.com/ | bash
 export PATH=$PATH:$HOME/.pulumi/bin
 
 # Login into pulumi. This will require the PULUMI_ACCESS_TOKEN environment variable:
 pulumi login
-
-# Ensure all necessary operating system packages are in place:
-apt-get update -y
-apt-get install sudo ca-certificates curl gnupg -y
 
 # Install nodejs:
 mkdir -p /etc/apt/keyrings

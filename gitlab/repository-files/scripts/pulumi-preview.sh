@@ -7,5 +7,6 @@ set -e -x
 export PATH=$PATH:$HOME/.pulumi/bin
 
 yarn install
+pulumi login
 pulumi stack select dev
 pulumi preview --yes

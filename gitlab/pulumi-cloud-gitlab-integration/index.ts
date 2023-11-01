@@ -7,7 +7,7 @@ const config = new pulumi.Config();
 // Note: In a more prod-like scenario, this should be a required config value
 // that uses an access token specifically for use with the Pulumi/GitLab
 // integration, not a user's personal access token:
-const pulumiAccessToken = config.get("pulumiAccessToken") ?? process.env["PULUMI_ACCESS_TOKEN"];
+const pulumiAccessToken = config.get("pulumiAccessToken") ?? process.env["PULUMI_ACCESS_TOKEN"] ?? "";
 
 // For a private install, this would be e.g. "https://gitlab.example.com":
 const audience = config.get("gitlabAudience") ?? "gitlab.com";
@@ -17,12 +17,18 @@ const project = new gitlab.Project("pulumi-gitlab-demo", {
   defaultBranch: "main",
 });
 
-// Define an OIDC provider for GitLab
-const AWS_OIDC_PROVIDER_THUMBPRINT = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280";
+// This value is obtained by following these instructions:
+// https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html
+// A copy of the certificate at the time of writing from which we obtained this
+// value is present in ../doc/gitlab.crt:
+const GITLAB_OIDC_PROVIDER_THUMBPRINT = "B3DD7606D2B5A8B4A13771DBECC9EE1CECAFA38A".toLowerCase();
+
 const gitlabOidcProvider = new aws.iam.OpenIdConnectProvider("gitlab-oidc-provider", {
-  clientIdLists: ["sts.amazonaws.com"], // Client ID for AWS
+  clientIdLists: [`https://${audience}`],
   url: `https://${audience}`,
-  thumbprintLists: [AWS_OIDC_PROVIDER_THUMBPRINT],
+  thumbprintLists: [GITLAB_OIDC_PROVIDER_THUMBPRINT],
+}, {
+  deleteBeforeReplace: true, // URLs are unique identifiers and cannot be auto-named, so we have to delete before replace.
 });
 
 // Define a role
@@ -37,11 +43,11 @@ const gitlabAdminRole = new aws.iam.Role("gitlabAdminRole", {
         },
         Action: "sts:AssumeRoleWithWebIdentity",
         Condition: {
-          // TODO: Attempt to make the "gitlab.com" part configurable. This
-          // might require some reflection since I don't think we can have
-          // templated keys in static objects:
-          StringEquals: {
-            "gitlab.com:sub": pulumi.interpolate`project_path:${project.pathWithNamespace}:ref_type:branch:ref:*`
+          StringLike: {
+            // Note: Square brackets around the key are what allow us to use a
+            // templated string. See:
+            // https://stackoverflow.com/questions/59791960/how-to-use-template-literal-as-key-inside-object-literal
+            [`${audience}:sub`]: pulumi.interpolate`project_path:${project.pathWithNamespace}:ref_type:branch:ref:*`
           },
         },
       },
@@ -88,5 +94,20 @@ new gitlab.ProjectVariable("role-arn", {
   key: "ROLE_ARN",
   value: gitlabAdminRole.arn,
 });
+
+new gitlab.ProjectVariable("pulumi-access-token", {
+  project: project.id,
+  key: "PULUMI_ACCESS_TOKEN",
+  value: pulumiAccessToken,
+  protected: true
+});
+
+const pulumiOrg = config.get("pulumiOrg") ?? pulumi.getOrganization();
+new gitlab.ProjectVariable("pulumi-org", {
+  project: project.id,
+  key: "PULUMI_ORG",
+  value: pulumiOrg,
+});
+
 
 export const gitCloneCommand = pulumi.interpolate`git clone ${project.sshUrlToRepo}`;
