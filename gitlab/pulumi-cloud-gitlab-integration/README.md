@@ -5,12 +5,6 @@ The repo contains a codebase to demonstrate integration between Pulumi Cloud and
 * <https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/>
 * <https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/>
 
-## TODOs
-
-* Does the build get triggered by the initial add of files?
-* Can we confirm that changes to .gitlab-ci.yml lag behind by one commit?
-* GitLab SSO for previews on the webhook
-
 ## Required Configuration
 
 Set the name of the GitLab organization in which your repository will go:
@@ -33,14 +27,15 @@ To use this codebase with a GitLab private installation (i.e. not gitlab.com):
 pulumi config set gitlabAudience "gitlab.example.com"
 ```
 
-**NOTE:** This codebase is not tested with private GitLab installs and will likely require debugging if not run against gitlab.com.
+**NOTE:** This codebase is not tested with private GitLab installs and may require debugging if not run against gitlab.com. Please submit a PR for any necessary changes.
 
 ## Demo steps
 
 1. Pre-requisites:
+    1. Ensure you have a GitLab group created.
     1. Ensure your SSH key is set up in GitLab.
     1. Ensure your have a `GITLAB_TOKEN` set in your environment.
-    1. Ensure you have a `PULUMI_ACCESS_TOKEN` set in your environment
+    1. Ensure you have Pulumi Org created which uses GitLab as its identity provider (a trial org should work), configured with your GitLab group as the identity source.
     1. Ensure you have AWS credentials per the provider setup.
 1. Deploy the AWS OIDC resources, GitLab repo, and files:
 
@@ -70,11 +65,18 @@ pulumi config set gitlabAudience "gitlab.example.com"
 1. Add a Pulumi program to the repo, e.g.:
 
     ```bash
-    pulumi new container-aws-typescript --force # The force option must be set because there are already files in the repo.
+    pulumi new static-site-aws-typescript --force # The force option must be set because there are already files in the repo.
     ```
 
-Optional:
+1. Push the branch:
 
-## Notes
+    ```bash
+    git add -A && git commit -m "Add some infra." && git push
+    ```
 
-*
+1. Create a Merge Request in the GitLab UI. This will trigger a `pulumi preview`. If the webhook is correctly configured (i.e. if the stack's Pulumi org is configured to use the corresponding GitLab org of the repo), you will see the results of the preview operation posted as a comment to your Merge Request.
+1. Merge the branch. This will trigger a `pulumi up` operation.
+
+## Troubleshooting
+
+Changes to `.gitlab-ci.yml` may lag behind by one commit. (Haven't tested in isolation to make sure, but the author seems to have observed this.)
