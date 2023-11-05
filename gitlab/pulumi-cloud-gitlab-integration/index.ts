@@ -2,8 +2,10 @@ import * as pulumi from "@pulumi/pulumi";
 import * as gitlab from "@pulumi/gitlab";
 import * as fs from "fs";
 import * as aws from "@pulumi/aws";
+import * as pulumicloud from "@pulumi/pulumiservice";
 
 const config = new pulumi.Config();
+
 // Note: In a more prod-like scenario, this should be a required config value
 // that uses an access token specifically for use with the Pulumi/GitLab
 // integration, not a user's personal access token:
@@ -12,9 +14,17 @@ const pulumiAccessToken = config.get("pulumiAccessToken") ?? process.env["PULUMI
 // For a private install, this would be e.g. "https://gitlab.example.com":
 const audience = config.get("gitlabAudience") ?? "gitlab.com";
 
+const gitlabGroup = config.require("gitlabGroup");
+
+// TODO: Make this configurable and add instructions to set up a Pulumi org.
+const group = gitlab.getGroup({
+  fullPath: gitlabGroup,
+});
+
 const project = new gitlab.Project("pulumi-gitlab-demo", {
   visibilityLevel: "public",
   defaultBranch: "main",
+  namespaceId: group.then(g => parseInt(g.id)),
 });
 
 // This value is obtained by following these instructions:
@@ -61,12 +71,13 @@ new aws.iam.RolePolicyAttachment("gitlabAdminRolePolicy", {
   role: gitlabAdminRole.name,
 });
 
-const projectHook = new gitlab.ProjectHook("project-hook", {
+new gitlab.ProjectHook("project-hook", {
   project: project.id,
   url: "https://api.pulumi.com/workflow/gitlab",
   mergeRequestsEvents: true,
   enableSslVerification: true,
   token: pulumiAccessToken,
+  pushEvents: false,
 });
 
 [
@@ -95,14 +106,22 @@ new gitlab.ProjectVariable("role-arn", {
   value: gitlabAdminRole.arn,
 });
 
-new gitlab.ProjectVariable("pulumi-access-token", {
-  project: project.id,
-  key: "PULUMI_ACCESS_TOKEN",
-  value: pulumiAccessToken,
-  protected: true
+const pulumiOrg = config.get("pulumiOrg") ?? pulumi.getOrganization();
+const pulumiOrgToken = new pulumicloud.OrgAccessToken("pulumi-org-token", {
+  name: "GitLab CI/CD",
+  organizationName: pulumiOrg,
+  admin: false,
 });
 
-const pulumiOrg = config.get("pulumiOrg") ?? pulumi.getOrganization();
+pulumiOrgToken.value.apply(x => {
+  new gitlab.ProjectVariable("pulumi-access-token", {
+    project: project.id,
+    key: "PULUMI_ACCESS_TOKEN",
+    value: x!,
+    masked: true,
+  });
+});
+
 new gitlab.ProjectVariable("pulumi-org", {
   project: project.id,
   key: "PULUMI_ORG",
