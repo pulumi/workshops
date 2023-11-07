@@ -65,7 +65,13 @@ pulumi config set gitlabAudience "gitlab.example.com"
 1. Add a Pulumi program to the repo, e.g.:
 
     ```bash
-    pulumi new static-site-aws-typescript --force # The force option must be set because there are already files in the repo.
+    pulumi new aws-typescript --force
+    ```
+
+1. Add some resources (best to make this a single resource so the demo goes fast):
+
+    ```bash
+    const myBucket = new aws.s3.Bucket("my-gitlab-demo-bucket");
     ```
 
 1. Push the branch:
@@ -80,3 +86,11 @@ pulumi config set gitlabAudience "gitlab.example.com"
 ## Troubleshooting
 
 Changes to `.gitlab-ci.yml` may lag behind by one commit. (Haven't tested in isolation to make sure, but the author seems to have observed this.)
+
+If you get this error message:
+
+```text
+Failed to create GitLab Client from provider configuration: The provider failed to create a new GitLab Client from the given configuration: invalid character '<' looking for beginning of value
+```
+
+Your GitLab token is likely invalid (even though it may not show as expired). Generate a new one and reset the `GITLAB_TOKEN` env var.

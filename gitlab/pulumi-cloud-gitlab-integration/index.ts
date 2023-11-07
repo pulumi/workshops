@@ -71,15 +71,6 @@ new aws.iam.RolePolicyAttachment("gitlabAdminRolePolicy", {
   role: gitlabAdminRole.name,
 });
 
-new gitlab.ProjectHook("project-hook", {
-  project: project.id,
-  url: "https://api.pulumi.com/workflow/gitlab",
-  mergeRequestsEvents: true,
-  enableSslVerification: true,
-  token: pulumiAccessToken,
-  pushEvents: false,
-});
-
 [
   "scripts/aws-auth.sh",
   "scripts/pulumi-preview.sh",
@@ -112,6 +103,20 @@ const pulumiOrgToken = new pulumicloud.OrgAccessToken("pulumi-org-token", {
   organizationName: pulumiOrg,
   admin: false,
 });
+
+// Note: The hook does not seem to work with a Pulumi org token. This might be
+// because the posted comment has to sync back to an individual Pulumi user,
+// which maps back to an invidual GitLab user (because the Pulumi org must map
+// to the GitLab group as its identity source).
+new gitlab.ProjectHook("project-hook-with-personal-token", {
+  project: project.id,
+  url: "https://api.pulumi.com/workflow/gitlab",
+  mergeRequestsEvents: true,
+  enableSslVerification: true,
+  token: pulumiAccessToken,
+  pushEvents: false,
+});
+
 
 pulumiOrgToken.value.apply(x => {
   new gitlab.ProjectVariable("pulumi-access-token", {
