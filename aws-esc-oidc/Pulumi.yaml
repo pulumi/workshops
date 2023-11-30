@@ -1,0 +1,3 @@
+name: aws-esc-oidc
+runtime: nodejs
+description: A minimal TypeScript Pulumi program

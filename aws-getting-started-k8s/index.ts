@@ -15,6 +15,9 @@ const vpcNetworkCidr = config.get("vpcNetworkCidr") || "10.0.0.0/16";
 const eksVpc = new awsx.ec2.Vpc("eks-vpc", {
     enableDnsHostnames: true,
     cidrBlock: vpcNetworkCidr,
+    natGateways: {
+        strategy: "None"
+    }
 });
 
 // Create the EKS cluster
@@ -70,8 +73,6 @@ const nginxDeployment = new k8s.apps.v1.Deployment("nginx-deployment", {
     },
 }, { provider: k8sProvider });
 
-export const labels = nginxDeployment.metadata.labels;
-
 // Create Nginx LoadBalancer service
 const nginxService = new k8s.core.v1.Service("nginx-service", {
     metadata: { name: "nginx-service" },
@@ -82,7 +83,4 @@ const nginxService = new k8s.core.v1.Service("nginx-service", {
     },
 }, { provider: k8sProvider });
 
-export const nginxLoadBalancerAddress = nginxService.status.loadBalancer.ingress[0].hostname;
-
-const frontend = wordpress.getResource("v1/Service", "default/wpdev-wordpress");
-export const frontendIp = frontend.status.loadBalancer.ingress[0].ip;
+export const url = nginxService.status.loadBalancer.ingress[0].hostname;
