@@ -1,0 +1,7 @@
+config:
+  aws-getting-started-k8s-py:desiredClusterSize: "3"
+  aws-getting-started-k8s-py:eksNodeInstanceType: t3.medium
+  aws-getting-started-k8s-py:maxClusterSize: "6"
+  aws-getting-started-k8s-py:minClusterSize: "3"
+  aws-getting-started-k8s-py:vpcNetworkCidr: 10.0.0.0/16
+  aws:region: us-west-2
