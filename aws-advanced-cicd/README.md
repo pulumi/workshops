@@ -5,13 +5,13 @@
 
 In this workshop, you will learn advance topics that make up a robust infrastructure ci/cd pipeline through guided exercises. You will use Pulumi tooling to take your cloud infrastructure pipeline one step closer to production.
 
-This workshop introduces users to advance DevOps best practices. You will add compliance checks, secrets management, and dedicated test environments to an existing GitHub Actions pipeline. Accelerate your AWS projects with the skeleton code provided.
+This workshop introduces users to advance DevOps best practices. You will add compliance checks via policits, drift detection, and isolated test environments to an existing GitHub Actions pipeline. Accelerate your AWS projects with the skeleton code provided.
 
 ## Learning Objectives
 
 - Learn advance components of a continuous infrastructure pipeline
 - Add policy checks to test your infrastructure for compliance
-- Use secrets management to store AWS and Pulumi credentials with Pulumi ESC
+- Introduct drift detection by adding a cron job to the pipeline
 - Configure a dedicated cloud environments with Revew Stacks
 
 ## Table of Contents 
@@ -23,7 +23,8 @@ This workshop introduces users to advance DevOps best practices. You will add co
 * [Part 1 - Set up your GitHub project](#part-1---set-up-your-github-project)
 * [Part 2 - Add compliance with Policy as Code](#part-2---add-compliance-with-policy-as-code)
     * [Modify the Repo](#modify-the-repo)
-* [Part 3 - Store secret credentials in Pulumi ESC](#part-3---store-secret-credentials-in-pulumi-esc)
+* [Part 3 - Add drift detection](#part-3---add-drift-detection) 
+<!-- * [Part 3 - Store secret credentials in Pulumi ESC](#part-3---store-secret-credentials-in-pulumi-esc) -->
 * [Part 4 - Add dedicated environments with Review Stacks](#part-4---add-dedicated-environments-with-review-stacks)
 * [Next Steps](#next-steps)
 
@@ -41,6 +42,7 @@ To go through this workshop with us, here is what you need
 
 1. A [GitHub](https://github.com/join) account.
 2. The [GitHub CLI](https://cli.github.com/), [`gh`](https://cli.github.com/), installed in your development environment.
+3. [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) installed in your development environment.
 
 ### AWS
 
@@ -69,7 +71,13 @@ Everything looks good; we're now ready to commit our changes in a PR.
 
 // Commit a new PR
 
-## Part 3 - Store secret credentials in Pulumi ESC
+## Part 3 - Add drift detection
+
+// Create a branch, 
+
+// add the cron job workflow
+
+// commit && PR
 
 ## Part 4 - Add dedicated environments with Review Stacks
 
@@ -85,3 +93,4 @@ We encourage you to modify your app or infra and watch the changes be tested pro
 
 - Deploy your application in two regions
 - Add a new AWS policy
+- Leverage Pulumi ESC to store your AWS credentials
