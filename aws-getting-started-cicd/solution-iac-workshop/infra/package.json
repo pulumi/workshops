@@ -1,0 +1,12 @@
+{
+    "name": "iac-workshop",
+    "devDependencies": {
+        "@types/node": "^18"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^6.0.2",
+        "@pulumi/pulumi": "^3.49.0",
+        "@pulumi/synced-folder": "^0.0.9",
+        "typescript": "^4.0.0"
+    }
+}

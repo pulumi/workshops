@@ -1,0 +1,3 @@
+**node_modules
+infra/Pulumi.tmp.yaml
+infra/Pulumi.local.yaml
