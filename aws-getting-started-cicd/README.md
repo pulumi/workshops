@@ -62,13 +62,18 @@ You will add cloud infrastructure to a Hello World web app so that it runs in an
 
 The Pulumi program needs an empty directory. Oftentimes, this is a subfolder within your application's repository named something along the lines of 'infra'. However, because Pulumi templates are standalone full-working solutions, you'll see the app folder nested. 
 
+✅ Create these folders:
+
 ```bash
+mkdir iac-workshop && cd iac-workshop
 mkdir infra
 ```
 
 ### Using a template
 
-We're going to use a Pulumi template to generate our program's scaffolding. Run the following command in your terminal.
+We're going to use a Pulumi template to generate our program's scaffolding. 
+
+✅ Run the following command in your terminal.
 
 ```bash
 # To walk through the prompts
@@ -112,7 +117,7 @@ For TypeScript, the tree structure is shown below:
 3 directories, 6 files
 ```
 
-Inspect your `local` stack.
+✅ Inspect your `local` stack.
 
 > [!TIP] 
 > *Stacks*: Stacks are logical environments within your Pulumi project. Each stack can have its own configuration and resources. For example, you might have a development stack and a production stack within the same project.
@@ -127,7 +132,7 @@ config:
 ```
 
 
-Inspect the `index.ts` file to identify its key elements.
+✅ Inspect the `index.ts` file to identify its key elements.
 
 > [!TIP] 
 > *Pulumi program entrypoint*: Your Pulumi program starts with an entry point, typically a function written in your chosen programming language. This function defines the infrastructure resources and configurations for your project.
@@ -148,7 +153,7 @@ $ cat -n index.ts
 
 ### First deployment
 
-Let's deploy our Pulumi program using `local` stack via the terminal.
+✅ Deploy the Pulumi program using `local` stack via the terminal by running the following commands:
 
 ```bash
 # Check you're logged into Pulumi Cloud
@@ -169,7 +174,7 @@ $ pulumi up --yes --skip-preview --non-interactive --stack dev
 
 🎉 **Congratulations**! 🎉  Your application is now up and running!
 
-Access the `url` Output to confirm your website is accessible.
+✅ Access the `url` Output to confirm your website is accessible.
 
 ```bash
 # To view all your stack outputs
@@ -181,7 +186,7 @@ $ pulumi stack output url
 $ curl $(pulumi stack output url)
 ```
 
-## Part 2 - Automating our deployment
+## Part 2 - Automating your deployment
 
 ### Overview  
 
@@ -197,27 +202,84 @@ An **Infrastructure CI/CD pipeline** is a set of automated processes and tools d
 
 ### Steps
 
-#### Add secrets to your GitHub repo
+#### Add version control
 
-Actions needs a valid Pulumi access token to run.
+✅ Add a GitHub repository to your project
 
-```ts
-todo-todo-todo
+```bash
+# Ensure you're in the `iac-workshop` directory
+cd ../iac-workshop # if currently in the infra dir.
+
+# Update these variables
+owner=desteves
+repo=iac-workshop
+
+# Initialize the repository
+git init
+git remote add origin https://github.com/${owner}/${repo}.git
+git branch -M main
+git push -u origin main
+
+# Prepare first commit
+git touch .gitignore
+echo "**node_modules" >> .gitignore
+echo "infra/Pulumi.local.yaml" >> .gitignore
+git add .gitignore
+git commit -m "Initial commit"
+git push -u origin main
 ```
 
-And let's do the same for the `aws` credentials
+#### Configure Pulumi GitHub Actions
 
-```ts
-todo-todo-todo
+With IaC, we are one step closer to defining the infrastructure pipeline. As a next step, we need to add a trigger to run the IaC automatically. We'll use the [Pulumi GitHub Actions](https://github.com/pulumi/actions), which is responsible for instantiating the infrastructure and running the application. 
+
+✅ Add a secret to store your Pulumi access token. This will be used by Actions.
+
+```bash
+# Log in
+$ gh auth login
+
+# Create the secret
+$ gh secret set PULUMI_ACCESS_TOKEN -b pl-123
+
+# Verify it's there
+$ gh secret list
 ```
 
-#### Add Pulumi GitHub Actions
+And let's do the same for the `aws` credentials.
 
-TODO-TODO-TODO
-
-```ts
-todo-todo-todo
+```bash
+$ gh secret set TODO -b pl-123
+$ gh secret set TODO -b pl-123
+$ gh secret set TODO -b pl-123
+$ gh secret list
 ```
+
+
+Below is a code snippet of the Workflow job
+
+```yaml
+  up:
+    name: pulumi-up
+    needs: docker
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: pulumi/actions@v4
+        with:
+          command: up
+          stack-name: diana-pulumi-corp/infra/cicd-demo
+          work-dir: ./infra
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+```
+
+The Workflow is triggered by changes to the main branch, e.g., a merged pull request. 
+
+
+<!--  -->
+<!-- View an example of a run after updating the Workflow contents -->
+<!-- TODO-TODO-TODO -->
 
 #### Create a PR
 
@@ -236,6 +298,7 @@ todo-todo-todo todo-todo-todo
 ```
 
 #### Merge the PR
+
 
 TODO-TODO-TODO
 
