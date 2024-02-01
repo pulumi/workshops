@@ -13,12 +13,31 @@ This workshop introduces new users to DevOps best practices. You will become fam
 - How to build your own infrastructure CI/CD pipeline
 - Configuring the Pulumi GitHub Actions to deploy AWS resources
 
-<!-- ## Table of Contents  
+## Table of Contents  
 
-TODO: Regen
-`cat tmp.md | ./gh-md-toc -` -->
+* [🧰 Prerequisites](#-prerequisites)
+* [<strong>Part 1</strong> Define infrastructure as code](#part-1-define-infrastructure-as-code)
+    * [🎯 Goal](#-goal)
+    * [📚 Concepts](#-concepts)
+    * [🎬 Steps](#-steps)
+        * [1. Set up a new directory](#1-set-up-a-new-directory)
+        * [2. Use a template](#2-use-a-template)
+        * [3. (Optional) Explore the program](#3-optional-explore-the-program)
+        * [4. Perform your first deployment](#4-perform-your-first-deployment)
+* [<strong>Part 2</strong> Automatically deploy the IaC](#part-2-automatically-deploy-the-iac)
+    * [🎯 Goal](#-goal-1)
+    * [📚 Concepts](#-concepts-1)
+    * [🎬 Steps](#-steps-1)
+        * [1. Add version control](#1-add-version-control)
+        * [2. Configure Pulumi GitHub Actions](#2-configure-pulumi-github-actions)
+        * [3. Create a Pull Request](#3-create-a-pull-request)
+* [(Optional) <strong>Part 3</strong> Make a fun PR!](#optional-part-3-make-a-fun-pr)
+    * [🎯 Goal](#-goal-2)
+    * [💡 Suggestions](#-suggestions)
+* [🚀 Next steps](#-next-steps)
 
-## ⚒️ Prerequisites
+
+## 🧰 Prerequisites
 
 To go through this workshop with us, here is what you need
 
@@ -39,7 +58,10 @@ To go through this workshop with us, here is what you need
 1. The [`aws` CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed in your development environment.
 2. [Set up your local AWS credentials](https://www.pulumi.com/registry/packages/aws/installation-configuration/#credentials).
 
-## **Part 1** Using Pulumi to deploy an app
+
+[**Click here to jump back to the Table of Contents**](#table-of-contents)
+
+## **Part 1** Define infrastructure as code
 
 ### 🎯 Goal
 
@@ -186,7 +208,9 @@ $ pulumi stack output url
 $ curl $(pulumi stack output url)
 ```
 
-## **Part 2** Automating your deployment
+[**Click here to jump back to the Table of Contents**](#table-of-contents)
+
+## **Part 2** Automatically deploy the IaC
  
 In [Part 1](TODO), you manually ran commands using the Pulumi CLI to get your application and cloud infrastructure running. In a DevOps fashion, however, you would deploy everything *programmatically*. 
 
@@ -360,7 +384,9 @@ After creating the PR, the Actions will run shortly.
 gh pr merge 1
 ```
 
-## (Optional) **Part 4** Make a fun PR!
+[**Click here to jump back to the Table of Contents**](#table-of-contents)
+
+## (Optional) **Part 3** Make a fun PR!
 
 At this point, you have 
 
