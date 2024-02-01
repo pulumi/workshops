@@ -1,22 +1,24 @@
 # Getting started with CI/CD for AWS using Pulumi and GitHub Actions
 
+## 🌐 Overview
+
 In this workshop, you will learn the fundamentals of an infrastructure ci/cd pipeline through guided exercises. You will be introduced to Pulumi, an infrastructure-as-code platform designed to provision modern cloud infrastructure using familiar programming languages.
 
 This workshop introduces new users to DevOps best practices. You will become familiar with the core concepts needed to deploy cloud resources _continuously_. Walk through configuring Pulumi GitHub Actions to deploy AWS resources programmatically and accelerate your cloud projects with the skeleton code provided.
 
-## Learning Objectives 
+## 🎯 Learning Objectives 
 
 - The basics of the Pulumi programming model
 - The key components of a continuous pipeline
 - How to build your own infrastructure CI/CD pipeline
 - Configuring the Pulumi GitHub Actions to deploy AWS resources
 
-## Table of Contents  <!-- no toc -->
+<!-- ## Table of Contents  
 
 TODO: Regen
-<!-- `cat tmp.md | ./gh-md-toc -` -->
+`cat tmp.md | ./gh-md-toc -` -->
 
-## Prerequisites
+## ⚒️ Prerequisites
 
 To go through this workshop with us, here is what you need
 
@@ -37,43 +39,41 @@ To go through this workshop with us, here is what you need
 1. The [`aws` CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) installed in your development environment.
 2. [Set up your local AWS credentials](https://www.pulumi.com/registry/packages/aws/installation-configuration/#credentials).
 
-## Part 1 - Using the Pulumi template
+## **Part 1** Using Pulumi to deploy an app
 
-### Overview  
-
-#### Goal
+### 🎯 Goal
 
 Attendees will be able to practice configuring the basics of the Pulumi programming model:
 * project; 
 * program; and
 * stack in Pulumi.
 
-#### Concepts
+### 📚 Concepts
 
 The *Pulumi programming model* is centered around defining infrastructure using familiar programming languages. 
 
 A *Pulumi template* refers to a configuration and infrastructure-as-code (IaC) project created using the Pulumi programming model so that it may be easily reused. At Pulumi, we have curated a list of 100s of out-of-the-box templates for the most popular providers at https://github.com/pulumi/templates. These are directly integrated with the CLI via `pulumi new`. Users can also create templates.
 
-### Steps
+### 🎬 Steps
 
 You will add cloud infrastructure to a Hello World web app so that it runs in an Amazon S3 bucket.
 
-#### Make a new directory
+#### 1. Set up a new directory
 
 The Pulumi program needs an empty directory. Oftentimes, this is a subfolder within your application's repository named something along the lines of 'infra'. However, because Pulumi templates are standalone full-working solutions, you'll see the app folder nested. 
 
-✅ Create these folders:
+✅ Create a project and program folders
 
 ```bash
 mkdir iac-workshop && cd iac-workshop
 mkdir infra
 ```
 
-### Using a template
+#### 2. Use a template
 
 We're going to use a Pulumi template to generate our program's scaffolding. 
 
-✅ Run the following command in your terminal.
+✅ Run the following command in your terminal
 
 ```bash
 # To walk through the prompts
@@ -92,7 +92,7 @@ $ pulumi new static-website-aws-typescript --dir infra --template-mode  --stack 
 # Note: The --dir specificed will be created, if it doesn't exist.
 ```
 
-### Explore the program
+#### 3. (Optional) Explore the program
 
 Each time you create a new Pulumi program, you'll see the following:
 
@@ -151,7 +151,7 @@ $ cat -n index.ts
 > [!IMPORTANT] 
 > *Pulumi is declarative*: Pulumi allows you to define your desired infrastructure state using code in a declarative manner. In a declarative approach to infrastructure management, you **specify what you want** the infrastructure to look like, and the underlying system (Pulumi in this case) takes care of figuring out how to achieve that desired state.
 
-### First deployment
+#### 4. Perform your first deployment
 
 ✅ Deploy the Pulumi program using `local` stack via the terminal by running the following commands:
 
@@ -170,9 +170,9 @@ $ pulumi up
 
 # Or, using advance settings to skip the preview
 $ pulumi up --yes --skip-preview --non-interactive --stack dev
-```
 
 🎉 **Congratulations**! 🎉  Your application is now up and running!
+```
 
 ✅ Access the `url` Output to confirm your website is accessible.
 
@@ -186,28 +186,28 @@ $ pulumi stack output url
 $ curl $(pulumi stack output url)
 ```
 
-## Part 2 - Automating your deployment
-
-### Overview  
-
+## **Part 2** Automating your deployment
+ 
 In [Part 1](TODO), you manually ran commands using the Pulumi CLI to get your application and cloud infrastructure running. In a DevOps fashion, however, you would deploy everything *programmatically*. 
 
-#### Goal
+### 🎯 Goal
 
-Attendees will be able to understand and configure the three stages of an infrastructure ci/cd pipeline.
+Attendees will be able to understand and configure the three stages of an infrastructure ci/cd pipeline to automatically deploy changes.
 
-#### Concepts
+![App+Infra CI/CD Pipeline](pipeline.png)
+
+### 📚 Concepts
 
 An **Infrastructure CI/CD pipeline** is a set of automated processes and tools designed to manage and deploy infrastructure as code (IaC) in a consistent, efficient, and reliable manner. It's an essential part of modern DevOps practices and is used to streamline the provisioning and maintenance of infrastructure resources, such as servers, networks, and cloud services. 
 
-### Steps
+### 🎬 Steps
 
-#### Add version control
+#### 1. Add version control
 
-✅ Add a GitHub repository to your project
+✅ Turn your Pulumi project into a GitHub repository
 
 ```bash
-# Ensure you're in the `iac-workshop` directory
+# Ensure you're in the project, `iac-workshop`, directory
 cd ../iac-workshop # if currently in the infra dir.
 
 # Update these variables
@@ -229,11 +229,11 @@ git commit -m "Initial commit"
 git push -u origin main
 ```
 
-#### Configure Pulumi GitHub Actions
+#### 2. Configure Pulumi GitHub Actions
 
-With IaC, we are one step closer to defining the infrastructure pipeline. As a next step, we need to add a trigger to run the IaC automatically. We'll use the [Pulumi GitHub Actions](https://github.com/pulumi/actions), which is responsible for instantiating the infrastructure and running the application. 
+With IaC and version control in place, we are one step closer to defining the infrastructure pipeline. As a next step, we need to add a trigger to run the IaC automatically. We'll use the [Pulumi GitHub Actions](https://github.com/pulumi/actions), which is responsible for instantiating the infrastructure and running the application. 
 
-✅ Add a secret to store your Pulumi access token. This will be used by Actions.
+✅ Add a secret to store your Pulumi access token to be used by Actions.
 
 ```bash
 # Log in
@@ -246,7 +246,7 @@ $ gh secret set PULUMI_ACCESS_TOKEN -b pl-123
 $ gh secret list
 ```
 
-And let's do the same for the `aws` credentials.
+And let's do the same for the `aws` credentials. You may have dynamic or traditional credentials. Update the names of the keys accordingly.
 
 ```bash
 $ gh secret set TODO -b pl-123
@@ -255,60 +255,112 @@ $ gh secret set TODO -b pl-123
 $ gh secret list
 ```
 
+Next, we configure a pipeline to be triggered by changes to a PR against the main branch. A commit will result in automatically:
+- Verifying the Pulumi secret is configured; and
+- Testing the IaC by creating `test` stack.
 
-Below is a code snippet of the Workflow job
+
+✅ Add a workflow
+
+```bash
+$ mkdir -p .github/workflows
+$ cd  .github/workflows
+$ vi pipeline.yml
+# paste the contents below and save the file.
+```
+
 
 ```yaml
-  up:
-    name: pulumi-up
-    needs: docker
+# Contents of pipeline.yml
+name: pr-main
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  check-secret:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: pulumi/actions@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check if secret exists
+        run: |
+            if [ -n "${{ secrets.PULUMI_ACCESS_TOKEN }}" ]; then
+            echo "Found Pulumi access token. Proceeding with workflow..."
+            else
+            echo "Pulumi access token does not exist. Aborting workflow..."
+            exit 1
+            fi
+  pulumi-up:
+    name: pulumi-up
+    needs: check-secret
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        working-directory: ./infra
+        run: npm install
+
+      - uses: pulumi/actions@v5
         with:
           command: up
-          stack-name: diana-pulumi-corp/infra/cicd-demo
+          stack-name: diana-pulumi-corp/iac-workshop/test
           work-dir: ./infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+          AWS_TODO: ${{ secrets.AWS_TODO }}
+          AWS_TODO: ${{ secrets.AWS_TODO }}
 ```
 
-The Workflow is triggered by changes to the main branch, e.g., a merged pull request. 
 
 
+TODO: Add AWS CREDS
 <!--  -->
 <!-- View an example of a run after updating the Workflow contents -->
 <!-- TODO-TODO-TODO -->
 
-#### Create a PR
 
-TODO-TODO-TODO
+#### 3. Create a Pull Request
 
-```ts
-todo-todo-todo
-```
-
-#### Review the Workflow
-
-TODO-TODO-TODO
-
-```ts
-todo-todo-todo todo-todo-todo
-```
-
-#### Merge the PR
-
-
-TODO-TODO-TODO
+✅ Commit all the changes as a PR.
 
 ```bash
-todo-todo-todo
+# Commit your changes
+git add .
+git commit -m "add cicd"
+
+# Create a new feature branch
+git checkout -b feature-cicd
+
+# Create a PR as a draft
+gh pr create --base main --head feature-cicd --title "Adds a IaC CI/CD pipeline" --body "" --draft 
+## wait a couple of minutes for Actions to run.
 ```
 
-## Part 4 - Make a fun PR!
+After creating the PR, the Actions will run shortly. 
 
-### Overview  
+✅ Navigate and inspect the Actions' results in your browser.
+
+<!-- TODO -->
+
+✅ Merge the PR 
+
+```bash
+gh pr merge 1
+```
+
+## (Optional) **Part 4** Make a fun PR!
 
 At this point, you have 
 
@@ -316,18 +368,20 @@ At this point, you have
 - AWS cloud infrastructure defined as code; and
 - a CI/CD pipeline to test any change automatically. 
 
-#### Goal
+We encourage you to modify your app or infra and watch the changes be tested programmatically.
 
-Attendees will be able to further enhance the pipeline:
+### 🎯 Goal
 
-### Suggestions
+Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
 
-We encourage you to modify your app or infra and watch the changes be tested programmatically. Possible changes:
+### 💡 Suggestions
 
-- Add a `/healthcheck` endpoint to the application and redeploy it.
-- Add a new stack, `test`, to the Pulumi program that updates upon a successful merge to `main`
-- (Advanced) Enforce an AWS policy
+Create a new PR that:
 
-## Next steps
+- Adds a `/healthcheck` endpoint to the application and redeploy it.
+- Modifies the pipeline to destroy the stack, `test` upon a successful merge to `main`.
+- (Advanced) Uses Pulumi ESC to dynamically auth against AWS via OIDC.
 
-Ready for more? Follow the [Advanced CI/CD for AWS using Pulumi and GitHub Actions](../aws-advanced-cicd/) to take your infrastructure pipeline to the next level with AWS Policies, Secrets Management, and Review Stacks.
+## 🚀 Next steps
+
+Ready for more? Follow the [Advanced CI/CD for AWS using Pulumi and GitHub Actions](../aws-advanced-cicd/) to take your infrastructure pipeline to the next level with AWS Policies, Secrets Management, Drift Detection, and Review Stacks.
