@@ -13,24 +13,8 @@ This workshop introduces new users to DevOps best practices. You will become fam
 
 ## Table of Contents  <!-- no toc -->
 
-* [Prerequisites](#prerequisites)
-    * [Pulumi](#pulumi)
-    * [GitHub](#github)
-    * [AWS](#aws)
-* [Part 1 - Set up the demo application](#part-1---set-up-the-demo-application)
-* [Part 2 - Using the Pulumi template](#part-2---using-the-pulumi-template)
-    * [Make a new directory](#make-a-new-directory)
-    * [Using a template](#using-a-template)
-    * [Explore the code](#explore-the-code)
-    * [First deployment](#first-deployment)
-* [Part 3 - Improving our deployment](#part-3---improving-our-deployment)
-    * [Add secrets to your GitHub repo](#add-secrets-to-your-github-repo)
-    * [Add Pulumi GitHub Actions](#add-pulumi-github-actions)
-    * [Create a PR](#create-a-pr)
-    * [Review the Workflow](#review-the-workflow)
-    * [Merge the PR](#merge-the-pr)
-* [Part 4 - Make a fun PR!](#part-4---make-a-fun-pr)
-* [Next Steps](#next-steps)
+TODO: Regen
+<!-- `cat tmp.md | ./gh-md-toc -` -->
 
 ## Prerequisites
 
@@ -197,21 +181,25 @@ $ pulumi stack output url
 $ curl $(pulumi stack output url)
 ```
 
-## Part 3 - Improving our deployment
+## Part 2 - Automating our deployment
 
 ### Overview  
 
+In [Part 1](TODO), you manually ran commands using the Pulumi CLI to get your application and cloud infrastructure running. In a DevOps fashion, however, you would deploy everything *programmatically*. 
+
 #### Goal
+
+Attendees will be able to understand and configure the three stages of an infrastructure ci/cd pipeline.
 
 #### Concepts
 
-### Steps
+An **Infrastructure CI/CD pipeline** is a set of automated processes and tools designed to manage and deploy infrastructure as code (IaC) in a consistent, efficient, and reliable manner. It's an essential part of modern DevOps practices and is used to streamline the provisioning and maintenance of infrastructure resources, such as servers, networks, and cloud services. 
 
-We have manually run commands to get our application's cloud infrastructure up and running. In a DevOps fashion, however, we would instantiate the infrastructure programmatically. We will add an infrastructure pipeline to our repo using GitHub Actions.
+### Steps
 
 #### Add secrets to your GitHub repo
 
-Let's add our Pulumi token.
+Actions needs a valid Pulumi access token to run.
 
 ```ts
 todo-todo-todo
@@ -223,7 +211,7 @@ And let's do the same for the `aws` credentials
 todo-todo-todo
 ```
 
-### Add Pulumi GitHub Actions
+#### Add Pulumi GitHub Actions
 
 TODO-TODO-TODO
 
@@ -231,7 +219,7 @@ TODO-TODO-TODO
 todo-todo-todo
 ```
 
-### Create a PR
+#### Create a PR
 
 TODO-TODO-TODO
 
@@ -239,7 +227,7 @@ TODO-TODO-TODO
 todo-todo-todo
 ```
 
-### Review the Workflow
+#### Review the Workflow
 
 TODO-TODO-TODO
 
@@ -247,7 +235,7 @@ TODO-TODO-TODO
 todo-todo-todo todo-todo-todo
 ```
 
-### Merge the PR
+#### Merge the PR
 
 TODO-TODO-TODO
 
@@ -259,17 +247,17 @@ todo-todo-todo
 
 ### Overview  
 
-#### Goal
-
-#### Concepts
-
-### Steps
-
 At this point, you have 
 
 - a GitHub repository with a sample application; 
 - AWS cloud infrastructure defined as code; and
 - a CI/CD pipeline to test any change automatically. 
+
+#### Goal
+
+Attendees will be able to further enhance the pipeline:
+
+### Suggestions
 
 We encourage you to modify your app or infra and watch the changes be tested programmatically. Possible changes:
 
@@ -278,7 +266,5 @@ We encourage you to modify your app or infra and watch the changes be tested pro
 - (Advanced) Enforce an AWS policy
 
 ## Next steps
-
-
 
 Ready for more? Follow the [Advanced CI/CD for AWS using Pulumi and GitHub Actions](../aws-advanced-cicd/) to take your infrastructure pipeline to the next level with AWS Policies, Secrets Management, and Review Stacks.
