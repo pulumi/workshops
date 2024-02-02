@@ -417,7 +417,7 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
 - Make an application change to print the current Unix time when visiting the index.html page.
   <details>
     <summary>🧩 Click here for a hint </summary>
-    Add the following to the `<body>` section of your `index.html` file:
+    Add the following to the body section of your index.html file:
 
     ```html
     <span id="timestamp"></span></p>
@@ -429,17 +429,19 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
 
   </details>
 
-- Make an infrastructure change to the application in another AWS region.
+- Make an infrastructure change to deploy the application in another AWS region.
   <details>
     <summary>🧩 Click here for a hint </summary>
     In the Pulumi CLI, we'd run the following:
-    `pulumi config set aws:region us-west-2`
+    ```bash
+    pulumi config set aws:region us-west-2
+    ```
   </details>
 
 - Make a pipeline change to destroy the `test` stack upon successfully merging to the `main` branch.
   <details>
     <summary>🧩 Click here for a hint </summary>
-    To set up a GitHub Action workflow that runs only when merging to the main branch, you can use the `on` configuration to specify the event triggers and the `if` condition to control when the workflow should execute. Here's an example workflow YAML file:
+    To set up a GitHub Action workflow that runs only when merging to the main branch:
 
     ```yaml
     name: on-merge
@@ -450,14 +452,44 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
     ```
 
     In the Pulumi CLI, we'd run the following:
-    `pulumi destroy -s test`
-    Now, use the Pulumi GitHub Actions to achieve the same result.
+
+    ```bash
+    pulumi destroy -s test
+    ```
+    
+    Now, use the Pulumi GitHub Actions to achieve the same result. Here is some helper code:
+
+    ```yaml
+      jobs:
+        pulumi-destroy:
+          name: pulumi-destroy
+          runs-on: ubuntu-latest
+          steps:
+            - uses: actions/checkout@v3
+
+            - name: Set up Node.js 18
+              uses: actions/setup-node@v4
+              with:
+                node-version: 18
+
+            - name: Install Dependencies
+              working-directory: ./infra
+              run: npm install
+
+            - uses: pulumi/actions@v5
+              with:
+                command:  ?????????
+                stack-name: ??????????
+                work-dir: ./infra
+              env:
+                PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+    ```
   </details>
 
-- (Advanced) Uses Pulumi ESC to dynamically auth against AWS via OIDC. 
-  > [!NOTE]
-  > The Advance workshop will cover this in more details.
+ > [!NOTE]
+> The advanced workshop will cover Pulumi ESC in a lot more detail.
 
+- (Advanced) Uses Pulumi ESC to connect to your AWS account via OIDC. 
   <details>
     <summary>🧩 Click here for a hint </summary>
     Add a reference to an ESC environment in your stack file:
@@ -467,7 +499,8 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
     - pulumi-cicd-workshop
     ```
 
-    And, ensure the `pulumi-cicd-workshop` is defined for AWS OIDC creds:
+    And, ensure the pulumi-cicd-workshop includes AWS OIDC creds:
+
     ```yaml
     values:
       aws:
@@ -486,6 +519,7 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
     ```
 
     In AWS, ensure the `roleArn` exists. Example:
+
     ```json
     {
     "Version": "2012-10-17",
@@ -508,7 +542,8 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
             ]
         }
       ```
-      The `api.pulumi.com/oidc` Identity provider must also exist with your Pulumi Cloud org as an audience.
+
+      The api.pulumi.com/oidc Identity provider must also exist with your Pulumi Cloud org as an audience.
   </details>
 
 > [!TIP]
