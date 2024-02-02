@@ -1,5 +1,5 @@
 {
-    "name": "iac-workshop",
+    "name": "cicd-workshop",
     "devDependencies": {
         "@types/node": "^18"
     },

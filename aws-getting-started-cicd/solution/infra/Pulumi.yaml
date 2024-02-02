@@ -1,4 +1,4 @@
-name: iac-workshop
+name: cicd-workshop
 runtime: nodejs
 description: A TypeScript program to deploy a static website on AWS
 config:
