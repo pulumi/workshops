@@ -9,7 +9,7 @@ This workshop introduces users to advanced DevOps best practices. You will add c
 
 ## Learning Objectives
 
-- Learn advance components of a continuous infrastructure pipeline
+- Learn how to build an advanced CI pipeline to enforce compliance and correct drift.
 - Add policy checks to test your infrastructure before each deployment.
 - Add a cron job to the pipeline to check for changes periodically (drift)
 - Configure a dedicated cloud environment with Review Stacks
