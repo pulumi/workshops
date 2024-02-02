@@ -51,7 +51,7 @@ To go through this workshop with us, here is what you need
 
 ## Part 1 - Set up your GitHub project
 
-This workshop picks up right were the Getting started left of, so we'll start with a sample application and basic infra pipeline.
+This workshop picks up right were the Getting Started workshop left off, so we'll start with a sample application and basic infra pipeline.
 
 ## Part 2 - Add compliance with Policy as Code
 
