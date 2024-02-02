@@ -1,7 +1,7 @@
 # Advanced CI/CD for AWS using Pulumi and GitHub Actions
 
 > [!IMPORTANT]  
-> This is an advanced worksop that builds upon the [Getting started worksop](../aws-getting-started-cicd/). Please ensure its completion prior proceeding.
+> This is an advanced workshop that builds upon the [Getting started worksop](../aws-getting-started-cicd/). Please ensure its completion prior to proceeding.
 
 In this workshop, you will learn advance topics that make up a robust infrastructure ci/cd pipeline through guided exercises. You will use Pulumi tooling to take your cloud infrastructure pipeline one step closer to production.
 
