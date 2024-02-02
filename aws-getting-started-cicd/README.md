@@ -68,10 +68,10 @@ To go through this workshop with us, here is what you need
 
 ### 🎯 Goal
 
-Attendees will be able to configure the basics of the Pulumi programming model:
-* project; 
-* program; and
-* stack in Pulumi.
+Attendees will be able to configure the basics of the Pulumi IaC programming model:
+* a project; 
+* a program; and
+* a stack.
 
 ### 📚 Concepts
 
@@ -87,7 +87,7 @@ You will add cloud infrastructure to a Hello World web app so that it runs in an
 
 The Pulumi program needs an empty directory. Often, this is a subfolder within your application's repository named something like 'infra'. However, because Pulumi templates are standalone full-working solutions, you'll see the app folder nested. 
 
-✅ Create a project
+✅ Create a new project
 
 ```bash
 mkdir cicd-workshop && cd cicd-workshop
@@ -105,19 +105,21 @@ $ pulumi whoami
 # Provide your access token or press <ENTER> at the prompt to connect to your Pulumi Cloud account
 
 
-# To walk through the prompts
+# To walk through the prompts **recommended for learners**
 $ mkdir infra && cd infra
 $ pulumi new
-#   Select 'template'
-#   Select `static-website-aws-typescript`
+#   Select template
+#   Select static-website-aws-typescript
 #   Project name: cicd-workshop   
 #   Description: <Enter> to select the default
-#   Stack name: local
+#   Stack name: test
 #   Select defaults for the remaining prompts
+#   Wait a few seconds while dependencies are installed
 
 
-# Or, using advance settings
-$ pulumi new static-website-aws-typescript --dir infra --template-mode  --stack local  --name cicd-workshop --yes --non-interactive
+# Or, using advanced settings
+$ pulumi new static-website-aws-typescript --dir infra --template-mode  --stack test  --name cicd-workshop --yes --non-interactive
+#   Wait a few seconds while dependencies are installed
 # Note: The --dir specified will be created if it doesn't exist.
 $ cd infra
 ```
@@ -127,7 +129,7 @@ $ cd infra
 Each time you create a new Pulumi program, you'll see the following:
 
 1. `Pulumi.yaml` contains the project and top-level configuration settings.
-2. A `Pulumi.<stackName>.yaml` file for each stack within your program. This is the stack configuration file, e.g., `Pulumi.local.yaml`
+2. A `Pulumi.<stackName>.yaml` file for each stack within your program. This is the stack configuration file, e.g., `Pulumi.test.yaml`
 3. A language-specific Pulumi program entry point. This is `index.ts` in our example.
 4. Other language-specific package and dependency files. 
 
@@ -135,7 +137,7 @@ For TypeScript, the tree structure is shown below:
 
 ```bash
 .
-├── Pulumi.local.yaml
+├── Pulumi.test.yaml
 ├── Pulumi.yaml
 ├── index.ts
 ├── node_modules
@@ -147,20 +149,20 @@ For TypeScript, the tree structure is shown below:
 3 directories, 6 files
 ```
 
-✅ Inspect your `local` stack.
+✅ Inspect your `test` stack.
 
 > [!TIP] 
 > *Stacks*: Stacks are logical environments within your Pulumi project. Each stack can have its own configuration and resources. For example, you might have a development stack and a production stack within the same project.
 
 ```bash
-$ cat Pulumi.local.yaml        
+$ cat Pulumi.test.yaml        
 config:
   aws:region: us-west-2
   cicd-workshop:errorDocument: error.html
   cicd-workshop:indexDocument: index.html
   cicd-workshop:path: ./www
 ```
-
+Note the custom config settings we were prompted during the `pulumi new` are stored in the stack file.
 
 ✅ Inspect the `index.ts` file to identify its key elements.
 
@@ -170,7 +172,7 @@ config:
 The key elements in the Pulumi program entry point file are defined below.
 
 * **Providers** are a crucial part of Pulumi's infrastructure as code (IaC) framework, as they enable you to define and deploy resources in your target environment using familiar programming languages. There are over [150+ providers available](https://www.pulumi.com/registry/) that allow you to interact with and manage resources in a specific cloud or infrastructure environment, such as AWS, Azure, or Google Cloud. 
-* **Configurations**. Pulumi allows you to configure your infrastructure by setting variables. These variables can be set via command-line arguments, environment variables, configuration files (e.g., `Pulumi.local.yaml`), or secrets. This flexibility makes it easy to manage different configurations for different environments.
+* **Configurations**. Pulumi allows you to configure your infrastructure by setting variables. These variables can be set via command-line arguments, environment variables, configuration files (e.g., `Pulumi.test.yaml`), or secrets. This flexibility makes it easy to manage different configurations for different environments.
 * **Resources** represent cloud infrastructure components, like virtual machines, databases, networks, etc. You define resources using constructors specific to the cloud provider you're working with. For instance, in AWS, you might create an S3 bucket resource.
 * **Outputs**  You can define outputs in your Pulumi program to expose information about your infrastructure. These outputs can be used for debugging, integration with other services, or to provide information to other parts of your application. 
 
@@ -184,24 +186,33 @@ $ cat -n index.ts
 
 #### 4. Perform your first deployment
 
-✅ Deploy the Pulumi program using the `local` stack via the terminal:
+✅ Deploy the Pulumi program using the `test` stack via the terminal:
 
 ```bash
 # Check your AWS Creds are correctly configured
 $ aws configure list
+#       Name                    Value             Type    Location
+#       ----                    -----             ----    --------
+#    profile                <not set>             None    None
+# access_key     ****************ZLSR              env    
+# secret_key     ****************if9v              env    
+#     region                <not set>             None    None
 
-# A preview of the changes will be printed on the screen
+
+# A preview of the changes will be printed on the screen **recommended for learners**
 $ pulumi up
-# Select 'yes' to confirm the changes and wait a few seconds
+# Give it a couple of seconds, then
+# Select 'yes' to confirm the changes
+# Wait a few more seconds for the changes to occur
 
 # Or, using advanced settings to skip the preview
-$ pulumi up --yes --skip-preview --non-interactive --stack local
+$ pulumi up --yes --skip-preview --non-interactive --stack test
 # Wait a few seconds
 
 🎉 Congratulations 🎉  Your application is now up and running!
 ```
 
-✅ Access the `originURL` Output to confirm your website is accessible.
+✅ Access the `originURL` Output to confirm your website is reachable.
 
 ```bash
 # To view all your stack outputs
@@ -213,7 +224,7 @@ $ pulumi stack output originURL
 $ curl $(pulumi stack output originURL)
 ```
 
-✅ Clean up the resources
+✅ Clean up the resources we checked things work manually.
 
 ```bash
 $ pulumi destroy --yes
@@ -225,6 +236,8 @@ $ pulumi destroy --yes
 ## **Part 2** Automatically deploy the IaC
  
 In [Part 1](#part-1-define-infrastructure-as-code), you manually ran commands using the Pulumi CLI to get your application and cloud infrastructure running. In a DevOps fashion, however, you would deploy everything *programmatically*. 
+
+![alt text](pipeline-example.png)
 
 ### 🎯 Goal
 
@@ -250,25 +263,38 @@ An **infrastructure CI/CD pipeline** is a set of automated processes and tools d
 
 ```bash
 # Ensure you're in the project, `cicd-workshop`, directory
-$ cd ../cicd-workshop # if currently in the infra dir.
+$ cd ../ # if currently in the infra dir.
 
-# Update these variables
-$ owner=desteves
+# Update the owner value to your GitHub handle
+$ owner=desteves 
 $ repo=cicd-workshop
 
-# Initialize the repository
+# Initialize the repository locally
 $ git init
-$ git remote add origin https://github.com/${owner}/${repo}.git
-$ git branch -M main
-$ git push -u origin main
+# Initialized empty Git repository in .....
 
-# Prepare first commit
-$ git touch .gitignore
+# Add your remote repo
+$ git remote add origin "https://github.com/${owner}/${repo}.git"
+# Verify the values
+$ git remote -v 
+# origin  https://github.com/desteves/cicd-workshop.git (fetch)
+# origin  https://github.com/desteves/cicd-workshop.git (push)
+
+# Add the main branch
+$ git branch -M main
+
+# Prepare your first commit
+$ touch .gitignore
 $ echo "**node_modules" >> .gitignore
-$ echo "infra/Pulumi.local.yaml" >> .gitignore
 $ git add .gitignore
 $ git commit -m "Initial commit"
-$ git push -u origin main
+
+# Login to GitHub, if necessary
+$ gh auth login
+
+# Create the repo and push the changes
+$ gh repo create "${repo}" --public  --push --source .
+# $ git push -u origin main
 ```
 
 #### 2. Configure Pulumi GitHub Actions
@@ -278,122 +304,99 @@ With IaC and version control in place, we are one step closer to defining the in
 ✅ Add a secret to store your Pulumi access token to be used by Actions.
 
 ```bash
-# Login to GitHub
+# Login to GitHub, if necessary
 $ gh auth login
 
 # Create the secret
 $ gh secret set PULUMI_ACCESS_TOKEN -b pul-abcdef1234567890abcdef1234567890abcdef12
+# ✓ Set Actions secret PULUMI_ACCESS_TOKEN ...
 
 # Verify it's there
 $ gh secret list
+# Press 'q' to exit
 ```
 
-And let's do the same for the `aws` credentials. If you have short-term credentials, add the session token.
+And let's do the same for the `aws` credentials. 
 
 ```bash
 $ gh secret set AWS_ACCESS_KEY_ID -b abc123
 $ gh secret set AWS_SECRET_ACCESS_KEY -b abc123
-$ gh secret list
+
+# For short-term credentials, add the session token.
+$ gh secret set AWS_SESSION_TOKEN -b abc123
 ```
 
-Next, configure the pipeline to be triggered by changes to a PR against the main branch. A commit will automatically:
+Next, you will configure the pipeline so it is triggered by commits to PR against the `main` branch. For each commit, the pipeline will automatically:
 - Verify the Pulumi secret is configured; and
-- Test the IaC by creating a `test` stack.
+- Test the IaC by running the `up` command.
 
-✅ Add a workflow
+✅ Add a workflow file
 
 ```bash
 # Ensure you're in the project, `cicd-workshop`, directory
-$ cd ../cicd-workshop # if currently in the infra dir.
+$ cd ../ # if currently in the infra dir.
 
 $ mkdir -p .github/workflows
 $ cd .github/workflows
 $ vi pipeline.yml
-# paste the contents below
-# update `stack-name`
-# save the file.
+#   paste the contents below
+#   update `stack-name`
+#   save the file.
 ```
 
 ```yaml
 # Contents of pipeline.yml
-name: pipeline
 
-on:
-  pull_request:
-    branches: [ "main" ]
-
-  workflow_dispatch:
-
-jobs:
-  check-secret:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check if secret exists
-        run: |
-            if [ -n "${{ secrets.PULUMI_ACCESS_TOKEN }}" ]; then
-            echo "Found Pulumi access token. Proceeding with workflow..."
-            else
-            echo "Pulumi access token does not exist. Aborting workflow..."
-            exit 1
-            fi
-  pulumi-up:
-    name: pulumi-up
-    needs: check-secret
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: Install Dependencies
-        working-directory: ./infra
-        run: npm install
-
-      - uses: pulumi/actions@v5
-        with:
-          command: up
-          stack-name: diana-pulumi-corp/cicd-workshop/test # UPDATE THIS
-          work-dir: ./infra
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 ```
+
 
 #### 3. Create a Pull Request
 
 ✅ Commit all the changes as a PR:
 
 ```bash
+# Ensure you're in the project, `cicd-workshop`, directory
+
 # Commit your changes
 $ git add .
+$ git status
+        # new file:   .github/workflows/pipeline.yml
+        # new file:   infra/.gitignore
+        # new file:   infra/Pulumi.yaml
+        # new file:   infra/index.ts
+        # new file:   infra/package-lock.json
+        # new file:   infra/package.json
+        # new file:   infra/tsconfig.json
+        # new file:   infra/www/error.html
+        # new file:   infra/www/index.html
 $ git commit -m "add cicd"
 
 # Create a new feature branch
 $ git checkout -b feature-cicd
 
-# Create a PR as a draft
-$ gh pr create --base main --head feature-cicd --title "Adds a IaC CI/CD pipeline" --body "" --draft 
-## wait a couple of minutes for Actions to run.
+# Push the changes
+$ git push --set-upstream origin feature-cicd
+
+# Create a PR 
+$ gh pr create --base main --head feature-cicd --title "Adds IaC + pipeline" --body ""
+# Follow the link to see the Actions
 ```
 
 After creating the PR, the Actions will run shortly. 
-
 ✅ Navigate and inspect the Actions' results in your browser.
 
-TODO: Add a screenshot
+When Actions is running, you see the following in progress message in the PR:
+![PR Actions running](pipeline-running.png)
+
+Click on the "Details" link to see the progress. It is usual for this phase to a couple of take minutes.
+
+Once completed, notice all the checks have passed:
+![PR Actions completed successfully](checks-passed.png)
 
 ✅ Merge the PR 
 
 ```bash
-$ gh pr merge 1
+$ gh pr merge 1 --squash
 ```
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
@@ -434,7 +437,7 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
     <summary>🧩 Click here for a hint </summary>
     In the Pulumi CLI, we'd run the following:
     ```bash
-    pulumi config set aws:region us-west-2
+    pulumi config set aws:region us-east-1
     ```
   </details>
 
@@ -515,7 +518,7 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
         AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
         AWS_SESSION_TOKEN: ${aws.login.sessionToken}
       pulumiConfig:
-        aws:region: "us-west-2"
+        aws:region: "us-east-1"
     ```
 
     In AWS, ensure the `roleArn` exists. Example:
