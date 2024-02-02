@@ -3,18 +3,18 @@
 Last revision: February 2024.
 
 > [!IMPORTANT]  
-> This is an advanced worksop that builds upon the [Getting started worksop](../aws-getting-started-cicd/). Please ensure its completion prior proceeding.
+> This is an advanced workshop that builds upon the [Getting started worksop](../aws-getting-started-cicd/). Please ensure its completion prior to proceeding.
 
-In this workshop, you will learn advance topics that make up a robust infrastructure ci/cd pipeline through guided exercises. You will use Pulumi tooling to take your cloud infrastructure pipeline one step closer to production.
+In this workshop, you will learn advanced topics that make up a robust infrastructure CI/CD pipeline through guided exercises. You will use Pulumi tooling to take your cloud infrastructure pipeline one step closer to production.
 
-This workshop introduces users to advance DevOps best practices. You will add compliance checks via policits, drift detection, and isolated test environments to an existing GitHub Actions pipeline. Accelerate your AWS projects with the skeleton code provided.
+This workshop introduces users to advanced DevOps best practices. You will add compliance checks via policies, drift detection, and isolated test environments to an existing GitHub Actions pipeline. This will help accelerate your AWS projects with the code examples provided.
 
 ## Learning Objectives
 
-- Learn advance components of a continuous infrastructure pipeline
-- Add policy checks to test your infrastructure for compliance
-- Introduct drift detection by adding a cron job to the pipeline
-- Configure a dedicated cloud environments with Revew Stacks
+- Learn how to build an advanced CI pipeline to enforce compliance and correct drift.
+- Add policy checks to test your infrastructure before each deployment.
+- Add a cron job to the pipeline to check for changes periodically (drift)
+- Configure a dedicated cloud environment with Review Stacks
 
 ## Table of Contents 
 
@@ -26,7 +26,7 @@ To go through this workshop with us, here is what you need
 
 ### Pulumi
 
-1. A Pulumi Cloud account, head to [app.pulumi.com](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) and follow the sign-up process.
+1. Get a free Pulumi Cloud account at [app.pulumi.com](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) and follow the sign-up process.
 2. An [access token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) from your Pulumi Cloud account.
 3. The [Pulumi CLI]((https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)) installed in your development environment.
 
@@ -43,7 +43,7 @@ To go through this workshop with us, here is what you need
 
 ## Part 1 - Set up your GitHub project
 
-This workshop picks up right were the [Getting started](../aws-getting-started-cicd/) left of, so we'll start with a sample application and basic infra pipeline.
+This workshop picks up right were the [Getting Started](../aws-getting-started-cicd/) workshop left off, so we'll start with a sample application and basic infra pipeline.
 
 In your terminal, run
 
