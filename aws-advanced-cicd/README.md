@@ -1,5 +1,7 @@
 # Advanced CI/CD for AWS using Pulumi and GitHub Actions
 
+Last revision: February 2024.
+
 > [!IMPORTANT]  
 > This is an advanced worksop that builds upon the [Getting started worksop](../aws-getting-started-cicd/). Please ensure its completion prior proceeding.
 
@@ -16,17 +18,7 @@ This workshop introduces users to advance DevOps best practices. You will add co
 
 ## Table of Contents 
 
-* [Prerequisites](#prerequisites)
-    * [Pulumi](#pulumi)
-    * [GitHub](#github)
-    * [AWS](#aws)
-* [Part 1 - Set up your GitHub project](#part-1---set-up-your-github-project)
-* [Part 2 - Add compliance with Policy as Code](#part-2---add-compliance-with-policy-as-code)
-    * [Modify the Repo](#modify-the-repo)
-* [Part 3 - Add drift detection](#part-3---add-drift-detection) 
-<!-- * [Part 3 - Store secret credentials in Pulumi ESC](#part-3---store-secret-credentials-in-pulumi-esc) -->
-* [Part 4 - Add dedicated environments with Review Stacks](#part-4---add-dedicated-environments-with-review-stacks)
-* [Next Steps](#next-steps)
+TODO
 
 ## Prerequisites
 
@@ -51,43 +43,115 @@ To go through this workshop with us, here is what you need
 
 ## Part 1 - Set up your GitHub project
 
-This workshop picks up right were the Getting started left of, so we'll start with a sample application and basic infra pipeline.
+This workshop picks up right were the [Getting started](../aws-getting-started-cicd/) left of, so we'll start with a sample application and basic infra pipeline.
+
+In your terminal, run
+
+```bash
+# Clone the repo
+
+
+# Configure your secrets
+
+# Show ESC
+
+```
 
 ## Part 2 - Add compliance with Policy as Code
 
+### 🎯 Goal
+
+Attendees will be able to add compliance checks to the CI/CD pipeline using Pulumi CrossGuad.
+
+### 📚 Concepts
+
+*Policy as Code*
+
+*Built-in packs*
+
+### 🎬 Steps
+
 By adding a default policy pack, our workflow will automatically ensure we're not violating any cloud infrastructure best practices.
 
-### Modify the Repo
 
-// Create a branch, add the policy.
+In your terminal, run
 
-// Modify the workflow file.
+```bash
+# Create a branch, 
 
-// Test locally && clean up
+# Add the policy.
 
-Let's review our changes.
+# Modify the workflow file.
 
-Everything looks good; we're now ready to commit our changes in a PR.
+# Test locally 
 
-// Commit a new PR
+# Commit the changes
+
+# Merge the PR
+
+```
 
 ## Part 3 - Add drift detection
 
-// Create a branch, 
+### 🎯 Goal
 
-// add the cron job workflow
+TODO
 
-// commit && PR
+### 📚 Concepts
+
+*Drift detection*
+
+*Reconciling the infrastructure* 
+
+### 🎬 Steps
+
+In your terminal, run
+
+```bash
+#  Create a branch, 
+
+#  Add the cron job workflow
+
+# Commit & Merge PR
+
+```
 
 ## Part 4 - Add dedicated environments with Review Stacks
 
+### 🎯 Goal
+
+TODO
+
+### 📚 Concepts
+
+*Test in isolation*
+
+### 🎬 Steps
+
+In your terminal, run
+
+```bash
+#  Create a branch, 
+
+#  Add the cron job workflow
+
+# Commit & Merge PR
+
+```
+
+## Summary
+
+You introduced advance elements to your continuous infrastructure pipeline to make it more robust. In particuar, you:
+- Added policy checks to test your infrastructure for compliance;
+- Added a drift detection cron job to the pipeline; and
+- Configured dedicated cloud environments with Revew Stacks.
 
 ## Next Steps
 
 At this point, you have completed this workshop. You have 
 - a GitHub repository with a sample application; 
 - AWS cloud infrastructure defined as code; and
-- a robust clodu infrastructire CI/CD pipeline to test any change automatically. 
+- a robust cloud infrastructure CI/CD pipeline to test any change automatically. 
 
 We encourage you to modify your app or infra and watch the changes be tested programmatically. Possible changes:
 

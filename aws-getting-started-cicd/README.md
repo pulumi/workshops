@@ -88,7 +88,7 @@ The Pulumi program needs an empty directory. Oftentimes, this is a subfolder wit
 ✅ Create a project
 
 ```bash
-mkdir iac-workshop && cd iac-workshop
+mkdir cicd-workshop && cd cicd-workshop
 ```
 
 #### 2. Use a template
@@ -108,14 +108,14 @@ $ mkdir infra && cd infra
 $ pulumi new
 #   Select 'template'
 #   Select `static-website-aws-typescript`
-#   Project name: iac-workshop   
+#   Project name: cicd-workshop   
 #   Description: <Enter> to select the default
 #   Stack name: local
 #   Select defaults for the remaining prompts
 
 
 # Or, using advance settings
-$ pulumi new static-website-aws-typescript --dir infra --template-mode  --stack local  --name iac-workshop --yes --non-interactive
+$ pulumi new static-website-aws-typescript --dir infra --template-mode  --stack local  --name cicd-workshop --yes --non-interactive
 # Note: The --dir specificed will be created, if it doesn't exist.
 $ cd infra
 ```
@@ -154,9 +154,9 @@ For TypeScript, the tree structure is shown below:
 $ cat Pulumi.local.yaml        
 config:
   aws:region: us-west-2
-  iac-workshop:errorDocument: error.html
-  iac-workshop:indexDocument: index.html
-  iac-workshop:path: ./www
+  cicd-workshop:errorDocument: error.html
+  cicd-workshop:indexDocument: index.html
+  cicd-workshop:path: ./www
 ```
 
 
@@ -241,12 +241,12 @@ An **infrastructure CI/CD pipeline** is a set of automated processes and tools d
 ✅ Turn your Pulumi project into a GitHub repository
 
 ```bash
-# Ensure you're in the project, `iac-workshop`, directory
-$ cd ../iac-workshop # if currently in the infra dir.
+# Ensure you're in the project, `cicd-workshop`, directory
+$ cd ../cicd-workshop # if currently in the infra dir.
 
 # Update these variables
 $ owner=desteves
-$ repo=iac-workshop
+$ repo=cicd-workshop
 
 # Initialize the repository
 $ git init
@@ -295,8 +295,8 @@ Next, configure the pipeline to be triggered by changes to a PR against the main
 ✅ Add a workflow
 
 ```bash
-# Ensure you're in the project, `iac-workshop`, directory
-$ cd ../iac-workshop # if currently in the infra dir.
+# Ensure you're in the project, `cicd-workshop`, directory
+$ cd ../cicd-workshop # if currently in the infra dir.
 
 $ mkdir -p .github/workflows
 $ cd .github/workflows
@@ -351,7 +351,7 @@ jobs:
       - uses: pulumi/actions@v5
         with:
           command: up
-          stack-name: diana-pulumi-corp/iac-workshop/test # UPDATE THIS
+          stack-name: diana-pulumi-corp/cicd-workshop/test # UPDATE THIS
           work-dir: ./infra
         env:
           PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
