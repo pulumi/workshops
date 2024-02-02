@@ -12,7 +12,7 @@ This workshop introduces users to advanced DevOps best practices. You will add c
 - Learn advance components of a continuous infrastructure pipeline
 - Add policy checks to test your infrastructure before each deployment.
 - Introduct drift detection by adding a cron job to the pipeline
-- Configure a dedicated cloud environments with Revew Stacks
+- Configure a dedicated cloud environment with Review Stacks
 
 ## Table of Contents 
 
