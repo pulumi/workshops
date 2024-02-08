@@ -7,23 +7,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  check-secret:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Check if secret exists
-        run: |
-            if [ -n "${{ secrets.PULUMI_ACCESS_TOKEN }}" ]; then
-            echo "Found Pulumi access token. Proceeding with workflow..."
-            else
-            echo "Pulumi access token does not exist. Aborting workflow..."
-            exit 1
-            fi
   pulumi-up:
     name: pulumi-up
-    needs: check-secret
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

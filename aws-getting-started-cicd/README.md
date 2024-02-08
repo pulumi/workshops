@@ -338,14 +338,14 @@ $ cd ../ # if currently in the infra dir.
 
 $ mkdir -p .github/workflows
 $ cd .github/workflows
-$ vi pipeline.yml
+$ vi branch.yml
 #   paste the contents below
 #   update `stack-name`
 #   save the file.
 ```
 
 ```yaml
-# Contents of pipeline.yml
+# Contents of branch.yml
 
 ```
 
@@ -360,7 +360,7 @@ $ vi pipeline.yml
 # Commit your changes
 $ git add .
 $ git status
-        # new file:   .github/workflows/pipeline.yml
+        # new file:   .github/workflows/branch.yml
         # new file:   infra/.gitignore
         # new file:   infra/Pulumi.yaml
         # new file:   infra/index.ts
@@ -441,13 +441,13 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
     ```
   </details>
 
-- Make a pipeline change to destroy the `test` stack upon successfully merging to the `main` branch.
+- Make a pipeline change to destroy the `dev` stack upon successfully merging to the `main` branch.
   <details>
     <summary>🧩 Click here for a hint </summary>
     To set up a GitHub Action workflow that runs only when merging to the main branch:
 
     ```yaml
-    name: on-merge
+    name: main
     on:
       push:
         branches:

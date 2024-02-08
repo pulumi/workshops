@@ -12,13 +12,14 @@ This workshop introduces users to advanced DevOps best practices. You will add c
 ## Learning Objectives
 
 - Learn how to build an advanced CI pipeline to enforce compliance and correct drift.
+- Add dynamic credentials to your stack by configuring Pulumi ESC.
 - Add policy checks to test your infrastructure before each deployment.
 - Add a cron job to the pipeline to check for changes periodically (drift)
 - Configure a dedicated cloud environment with Review Stacks
 
 ## Table of Contents 
 
-TODO
+TODO - auto-generate at the end.
 
 ## 🧰 Prerequisites
 
@@ -44,21 +45,97 @@ To go through this workshop with us, here is what you need:
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
 
-## Part 1 - Set up your GitHub project
+## Part 1 - Set up your GitHub project with Pulumi ESC
 
 This workshop picks up right where the [Getting Started](../aws-getting-started-cicd/) workshop left off, so we'll start with a sample application and a basic pipeline.
 
-In your terminal, run:
+### 🎯 Goal
+
+Attendees will be able to authenticate using Dynamic Credentials by adding a Pulumi ESC Environment with an AWS OIDC configuration.
+
+### 📚 Concepts
+
+*Dynamic Credentials* TODO
+
+*Pulumi ESC* TODO
+
+### 🎬 Steps
+
+✅ Clone the Getting Started workshop solution
 
 ```bash
 # Clone the repo
+$ gh repo clone desteves/cicd-workshop
 
+# Login to GitHub, if necessary
+$ gh auth login
 
-# Configure your secrets
+# Create your own repo
+$ gh repo create cicd-workshop --public
 
-# Show ESC
+# Nav to the cloned repo
+$ cd cicd-workshop
+
+#
+# Update the owner value to your GitHub handle
+$ owner=desteves 
+$ repo=cicd-workshop
+
+# Add your remote repo
+$ git remote set-url origin "https://github.com/${owner}/${repo}.git"
+
+# Push your clone
+$ git push -u origin master
+```
+
+✅ Add a secret to store your Pulumi access token to be used by Actions.
+
+```bash
+# Login to GitHub, if necessary
+$ gh auth login
+
+# Create the secret
+$ gh secret set PULUMI_ACCESS_TOKEN -b pul-abcdef1234567890abcdef1234567890abcdef12
+# ✓ Set Actions secret PULUMI_ACCESS_TOKEN ...
+
+# Verify it's there
+$ gh secret list
+# Press 'q' to exit
+```
+
+✅ Modify the stack file to add a Pulumi ESC Environment
+
+```bash
+
+echo "environments" >> Pulumi.test.yaml
+echo "  - cicd-workshop-env" >> Pulumi.test.yaml\
+
 
 ```
+
+✅ Add AWS OIDC Resources via the Pulumi Template
+
+```bash
+$ mkdir esc && cd esc
+$ pulumi whoami
+$ pulumi new aws-oidc // TODO build this
+$ pulumi up --yes
+$ cd ..
+```
+
+✅ Create the Pulumi ESC Environment
+
+```bash
+$ pulumi esc env init diana-pulumi-corp/cicd-workshop-env
+
+
+
+# --editor="code" 
+$ pulumi esc env edit 
+$ curl 
+$
+```
+
 
 ## Part 2 - Add compliance with Policy as Code
 
@@ -74,9 +151,9 @@ Attendees will be able to add compliance checks to the CI/CD pipeline using Pulu
 
 ### 🎬 Steps
 
-By adding a default policy pack, our workflow will automatically ensure we're not violating any cloud infrastructure best practices.
+By adding a default policy pack, your workflow will automatically ensure your stack is not violating any cloud infrastructure best practices.
 
-
+✅ 
 In your terminal, run
 
 ```bash
@@ -102,9 +179,9 @@ TODO
 
 ### 📚 Concepts
 
-*Drift detection*
+*Drift detection* TODO 
 
-*Reconciling the infrastructure* 
+*Reconciling the infrastructure* TODO
 
 ### 🎬 Steps
 
@@ -145,6 +222,7 @@ In your terminal, run
 ## Summary
 
 You introduced advanced elements to your continuous infrastructure pipeline to make it more robust. In particular, you:
+- Added a Pulumi ESC environment to retrieve dynamic credentials for AWS;
 - Added policy checks to test your infrastructure for compliance;
 - Added a drift detection cron job to the pipeline; and
 - Configured dedicated cloud environments with Review Stacks.
@@ -160,4 +238,3 @@ We encourage you to modify your app or infra and watch the changes be tested pro
 
 - Deploy your application in two regions
 - Add a new AWS policy
-- Leverage Pulumi ESC to store your AWS credentials
