@@ -5,5 +5,5 @@ config:
   iac-workshop:path: ./www
 
 # Pulumi ESC
-environment:
-  - pulumi-cicd-workshop
+# environment:
+#   - pulumi-cicd-workshop
