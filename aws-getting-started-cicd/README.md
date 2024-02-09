@@ -339,16 +339,16 @@ $ cd ../ # if currently in the infra dir.
 $ mkdir -p .github/workflows
 $ cd .github/workflows
 $ vi branch.yml
-#   paste the contents below
+#   paste the contents of branch.yml shown below
 #   update `stack-name`
 #   save the file.
 ```
 
-```yaml
-# Contents of branch.yml
-
+```liquid
+{% include ./solution/.github/workflows/branch.yml %}
 ```
 
+Alternatively, navigate to the [branch.yml](./solution/.github/workflows/branch.yml) file to copy its contents.
 
 #### 3. Create a Pull Request
 

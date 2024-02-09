@@ -19,7 +19,7 @@ This workshop introduces users to advanced DevOps best practices. You will add c
 
 ## Table of Contents 
 
-TODO - auto-generate at the end.
+TODO - auto-generate at the very end.
 
 ## 🧰 Prerequisites
 
@@ -45,7 +45,7 @@ To go through this workshop with us, here is what you need:
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
 
-## Part 1 - Set up your GitHub project with Pulumi ESC
+## **Part 1** Set up your GitHub project with Pulumi ESC
 
 This workshop picks up right where the [Getting Started](../aws-getting-started-cicd/) workshop left off, so we'll start with a sample application and a basic pipeline.
 
@@ -64,22 +64,19 @@ Attendees will be able to authenticate using Dynamic Credentials by adding a Pul
 ✅ Clone the Getting Started workshop solution
 
 ```bash
-# Clone the repo
-$ gh repo clone desteves/cicd-workshop
+# Update the owner value to your GitHub handle
+$ owner=desteves 
+$ repo=cicd-workshop-advanced
 
 # Login to GitHub, if necessary
 $ gh auth login
 
+# Clone the Getting Started repo to ${repo}
+$ gh repo clone desteves/cicd-workshop "${repo}"
+
 # Create your own repo
-$ gh repo create cicd-workshop --public
-
-# Nav to the cloned repo
-$ cd cicd-workshop
-
-#
-# Update the owner value to your GitHub handle
-$ owner=desteves 
-$ repo=cicd-workshop
+$ gh repo create "${repo}" --public
+$ cd "${repo}"
 
 # Add your remote repo
 $ git remote set-url origin "https://github.com/${owner}/${repo}.git"
@@ -103,47 +100,64 @@ $ gh secret list
 # Press 'q' to exit
 ```
 
-✅ Modify the stack file to add a Pulumi ESC Environment
+✅ Use a Pulumi ESC Environment to configure AWS Dynamic Credentials
 
 ```bash
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
 
-echo "environments" >> Pulumi.test.yaml
-echo "  - cicd-workshop-env" >> Pulumi.test.yaml\
+# Use a Pulumi template to create AWS OIDC Resources
+$ pulumi new https://github.com/desteves/aws-oidc-typescript/infra --dir esc
+$ pulumi up --yes --cwd esc
+# wait for the resources to get created; this can take a couple of minutes
 
+# Obtain the name of the ESC Environment
+$ e=$(pulumi stack output esc --cwd esc)
 
+# Add the ESC Environment to your Stack
+$ echo "environment:" >> Pulumi.test.yaml
+$ echo "  - ${e}" >> Pulumi.test.yaml
+
+# Test the changes locally
+$ pulumi refresh
 ```
 
-✅ Add AWS OIDC Resources via the Pulumi Template
+✅ Commit the changes 
 
 ```bash
-$ mkdir esc && cd esc
-$ pulumi whoami
-$ pulumi new aws-oidc // TODO build this
-$ pulumi up --yes
-$ cd ..
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
+
+# Commit your changes
+$ git add .
+$ git commit -m "add esc"
+
+# Create a new feature branch
+$ git checkout -b feature-esc
+
+# Push the changes
+$ git push --set-upstream origin feature-esc
+
+# Create a PR 
+$ gh pr create --base main --head feature-esc --title "Adds Pulumi ESC for AWS OIDC" --body ""
+# Follow the link to see the Actions
+# It can take a few minutes for the GHA Runner to complete
+
+# Merge the PR 
+# Update the PR merge number as needed
+$ m=2 #  
+$ gh pr merge $m --squash
 ```
 
-✅ Create the Pulumi ESC Environment
+[**Click here to jump back to the Table of Contents**](#table-of-contents)
 
-```bash
-$ pulumi esc env init diana-pulumi-corp/cicd-workshop-env
-
-
-
-# --editor="code" 
-$ pulumi esc env edit 
-$ curl 
-$
-```
-
-
-## Part 2 - Add compliance with Policy as Code
+## **Part 2** Add compliance with Policy as Code
 
 ### 🎯 Goal
 
-Attendees will be able to add compliance checks to the CI/CD pipeline using Pulumi CrossGuad.
+Attendees will be able to add compliance checks to the CI/CD pipeline using [Pulumi CrossGuard](https://www.pulumi.com/crossguard/).
 
 ### 📚 Concepts
+
+*Cloud compliance* 
 
 *Policy as Code*
 
@@ -153,31 +167,70 @@ Attendees will be able to add compliance checks to the CI/CD pipeline using Pulu
 
 By adding a default policy pack, your workflow will automatically ensure your stack is not violating any cloud infrastructure best practices.
 
-✅ 
-In your terminal, run
+✅ Add the CIS compliance framework
 
 ```bash
-# Create a branch, 
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
 
-# Add the policy.
-
-# Modify the workflow file.
+# Add the policy under the policypack/ folder
+pulumi policy new aws-cis-compliance-policies-typescript  --dir policypack
 
 # Test locally 
+pulumi up  --policy-pack policypack 
 
-# Commit the changes
-
-# Merge the PR
-
+# Modify the workflow file to test programmatically
+$ vi .github/workflows/branch.yml
+#   edit the  the "Create the resources" step as shown below
+#   save the file.
 ```
 
-## Part 3 - Add drift detection
+```yaml
+      - name: Create the resources
+        uses: pulumi/actions@v5
+        with:
+          command: up
+          stack-name: diana-pulumi-corp/cicd-workshop/test
+          work-dir: ./infra
+          policyPacks: policypack
+```
+
+✅ Commit the changes 
+
+```bash
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
+
+# Commit your changes
+$ git add .
+$ git commit -m "add pac"
+
+# Create a new feature branch
+$ git checkout -b feature-pac
+
+# Push the changes
+$ git push --set-upstream origin feature-pac
+
+# Create a PR 
+$ gh pr create --base main --head feature-pac --title "Adds Policy as Code" --body ""
+# Follow the link to see the Actions
+# It can take a few minutes for the GHA Runner to complete
+
+# Merge the PR 
+# Update the PR merge number as needed
+$ m=3 #  
+$ gh pr merge $m --squash
+```
+
+[**Click here to jump back to the Table of Contents**](#table-of-contents)
+
+## **Part 3** Add drift detection
 
 ### 🎯 Goal
 
 TODO
 
 ### 📚 Concepts
+
+*Drift* TODO 
 
 *Drift detection* TODO 
 
@@ -185,22 +238,54 @@ TODO
 
 ### 🎬 Steps
 
-In your terminal, run
+✅  Add a cronjob to your workflow
 
 ```bash
-#  Create a branch, 
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
 
-#  Add the cron job workflow
+$ vi .github/workflows/drift.yml
+#   paste the contents of drift.yml shown below
+#   update `stack-name`
+#   save the file.
+```
 
-# Commit & Merge PR
+```liquid
+{% include ./solution/.github/workflows/drift.yml %}
+```
 
+Alternatively, navigate to the [drift.yml](./solution/.github/workflows/drift.yml) file to copy its contents.
+
+✅ Commit the changes 
+
+```bash
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
+
+# Commit your changes
+$ git add .
+$ git commit -m "add dd"
+
+# Create a new feature branch
+$ git checkout -b feature-dd
+
+# Push the changes
+$ git push --set-upstream origin feature-dd
+
+# Create a PR 
+$ gh pr create --base main --head feature-dd --title "Adds Drift Detection" --body ""
+# Follow the link to see the Actions
+# It can take a few minutes for the GHA Runner to complete
+
+# Merge the PR 
+# Update the PR merge number as needed
+$ m=4 #  
+$ gh pr merge $m --squash
 ```
 
 ## Part 4 - Add dedicated environments with Review Stacks
 
 ### 🎯 Goal
 
-TODO
+Attendees will be able to configure ephemeral dedicated cloud environments to deploy the infrastructure using Pulumi Deployments Review Stacks.
 
 ### 📚 Concepts
 
@@ -208,18 +293,59 @@ TODO
 
 ### 🎬 Steps
 
-In your terminal, run
 
-```bash
-#  Create a branch, 
+✅ [Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/)
 
-#  Add the cron job workflow
+✅ Add Review Stacks
 
-# Commit & Merge PR
+```bash 
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
 
+# Use a Pulumi template to create AWS OIDC Resources
+$ pulumi new https://github.com/desteves/TODOTODOTODO/infra --dir test
+$ pulumi up --yes --cwd test
+# wait for the resources to get created; this can take a couple of minutes
+
+# Obtain the name of the ESC Environment
+$ e=$(pulumi stack output esc --cwd test)
+
+# Add the ESC Environment to your Stack
+$ echo "environment:" >> Pulumi.test.yaml
+$ echo "  - ${e}" >> Pulumi.test.yaml
+
+# Test the changes locally
+$ pulumi refresh
 ```
 
-## Summary
+✅ Commit the changes 
+
+```bash
+# Ensure you're in the project, `cicd-workshop-advanced`, directory
+
+# Commit your changes
+$ git add .
+$ git commit -m "add rs"
+
+# Create a new feature branch
+$ git checkout -b feature-rs
+
+# Push the changes
+$ git push --set-upstream origin feature-rs
+
+# Create a PR 
+$ gh pr create --base main --head feature-rs --title "Adds Review Stacks" --body ""
+# Follow the link to see the Actions
+# It can take a few minutes for the GHA Runner to complete
+
+# Merge the PR 
+# Update the PR merge number as needed
+$ m=5 #  
+$ gh pr merge $m --squash
+```
+
+[**Click here to jump back to the Table of Contents**](#table-of-contents)
+
+## ✨ Summary
 
 You introduced advanced elements to your continuous infrastructure pipeline to make it more robust. In particular, you:
 - Added a Pulumi ESC environment to retrieve dynamic credentials for AWS;
@@ -227,7 +353,7 @@ You introduced advanced elements to your continuous infrastructure pipeline to m
 - Added a drift detection cron job to the pipeline; and
 - Configured dedicated cloud environments with Review Stacks.
 
-## Next Steps
+## 🚀 Next steps
 
 At this point, you have completed this workshop. You have 
 - a GitHub repository with a sample application; 
@@ -238,3 +364,5 @@ We encourage you to modify your app or infra and watch the changes be tested pro
 
 - Deploy your application in two regions
 - Add a new AWS policy
+
+[**Click here to jump back to the Table of Contents**](#table-of-contents)

@@ -23,7 +23,8 @@ jobs:
         working-directory: ./infra
         run: npm install
 
-      - uses: pulumi/actions@v5
+      - name: Create the resources
+        uses: pulumi/actions@v5
         with:
           command: up
           stack-name: diana-pulumi-corp/cicd-workshop/test
