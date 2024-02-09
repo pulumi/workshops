@@ -19,7 +19,26 @@ This workshop introduces users to advanced DevOps best practices. You will add c
 
 ## Table of Contents 
 
-TODO - auto-generate at the very end.
+<!-- https://derlin.github.io/bitdowntoc/ -->
+* [🧰 Prerequisites](#-prerequisites)
+* [**Part 1** Set up your GitHub project with Pulumi ESC](#part-1-set-up-your-github-project-with-pulumi-esc)
+  + [🎯 Goal](#-goal)
+  + [📚 Concepts](#-concepts)
+  + [🎬 Steps](#-steps)
+* [**Part 2** Add compliance with Policy as Code](#part-2-add-compliance-with-policy-as-code)
+  + [🎯 Goal](#-goal-1)
+  + [📚 Concepts](#-concepts-1)
+  + [🎬 Steps](#-steps-1)
+* [**Part 3** Add drift detection](#part-3-add-drift-detection)
+  + [🎯 Goal](#-goal-2)
+  + [📚 Concepts](#-concepts-2)
+  + [🎬 Steps](#-steps-2)
+* [**Part 4** Add dedicated environments with Review Stacks](#part-4-add-dedicated-environments-with-review-stacks)
+  + [🎯 Goal](#-goal-3)
+  + [📚 Concepts](#-concepts-3)
+  + [🎬 Steps](#-steps-3)
+* [✨ Summary](#-summary)
+* [🚀 Next steps](#-next-steps)
 
 ## 🧰 Prerequisites
 
@@ -55,9 +74,12 @@ Attendees will be able to authenticate using Dynamic Credentials by adding a Pul
 
 ### 📚 Concepts
 
-*Dynamic Credentials* TODO
+*Dynamic Credentials* Unlike static credentials, which remain constant over time, dynamic credentials are generated on-the-fly and have a short validity period, enhancing security by reducing the risk of unauthorized access from credential theft or misuse. It also eliminates the need for developers to manage the lifecycle of individual access keys for instances.
 
-*Pulumi ESC* TODO
+*OIDC* OpenID Connect (OIDC) is an authentication protocol built on top of the OAuth 2.0 framework. enables clients to authenticate users with a high degree of confidence while supporting single sign-on (SSO) and other identity-related functionalities such 
+
+*Pulumi ESC* Pulumi ESC enables you to define environments, which contain collections of secrets and configuration. Each environment can be composed from multiple environments. An environment may be used to store dynamic credentials from an OIDC IdP such as Pulumi Cloud to connect to your AWS.
+
 
 ### 🎬 Steps
 
@@ -184,6 +206,7 @@ $ vi .github/workflows/branch.yml
 #   save the file.
 ```
 
+`branch.yml` code snippet:
 ```yaml
       - name: Create the resources
         uses: pulumi/actions@v5
@@ -226,7 +249,7 @@ $ gh pr merge $m --squash
 
 ### 🎯 Goal
 
-TODO
+Attendees will be able to programmatically identify when a drift has occurred in their infrastructure via an Actions cronjob.
 
 ### 📚 Concepts
 
@@ -281,7 +304,7 @@ $ m=4 # 
 $ gh pr merge $m --squash
 ```
 
-## Part 4 - Add dedicated environments with Review Stacks
+## **Part 4** Add dedicated environments with Review Stacks
 
 ### 🎯 Goal
 
@@ -291,30 +314,36 @@ Attendees will be able to configure ephemeral dedicated cloud environments to de
 
 *Test in isolation*
 
+*Pulumi Deployments Review Stacks*
+
 ### 🎬 Steps
 
-
-✅ [Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/)
+✅ [Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/#installation-and-configuration)
 
 ✅ Add Review Stacks
 
 ```bash 
 # Ensure you're in the project, `cicd-workshop-advanced`, directory
 
-# Use a Pulumi template to create AWS OIDC Resources
-$ pulumi new https://github.com/desteves/TODOTODOTODO/infra --dir test
+# Re-use these values from Part 1
+$ owner=desteves 
+$ repo=cicd-workshop-advanced
+
+# Use a Pulumi template to configure your Review Stacks
+$ pulumi new https://github.com/desteves/reviewstacks-typescript/infra --dir test
+# project name: cicd-workshop-advanced
+# project description: (default)
+# stack: deployment-settings
+#
+# repository: $owner/$repo
+# branch: (default)
+# repoDir: infra
+# projectRef: cicd-workshop
+# stackRef: test
+
+# Create the Pulumi Deployments Review Stacks configuration
 $ pulumi up --yes --cwd test
-# wait for the resources to get created; this can take a couple of minutes
-
-# Obtain the name of the ESC Environment
-$ e=$(pulumi stack output esc --cwd test)
-
-# Add the ESC Environment to your Stack
-$ echo "environment:" >> Pulumi.test.yaml
-$ echo "  - ${e}" >> Pulumi.test.yaml
-
-# Test the changes locally
-$ pulumi refresh
+# wait for the resource to get created; this can take a couple of seconds
 ```
 
 ✅ Commit the changes 
@@ -335,7 +364,7 @@ $ git push --set-upstream origin feature-rs
 # Create a PR 
 $ gh pr create --base main --head feature-rs --title "Adds Review Stacks" --body ""
 # Follow the link to see the Actions
-# It can take a few minutes for the GHA Runner to complete
+# It can take a few minutes for the GHA Runners to complete
 
 # Merge the PR 
 # Update the PR merge number as needed
