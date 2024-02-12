@@ -104,7 +104,7 @@ $ cd "${repo}"
 $ git remote set-url origin "https://github.com/${owner}/${repo}.git"
 
 # Push your clone
-$ git push -u origin master
+$ git push -u origin main
 ```
 
 ✅ Add a secret to store your Pulumi access token to be used by Actions.
@@ -125,23 +125,27 @@ $ gh secret list
 ✅ Use a Pulumi ESC Environment to configure AWS Dynamic Credentials
 
 ```bash
-# Ensure you're in the project, `cicd-workshop-advanced`, directory
+# Ensure you're in the project, `cicd-workshop-advanced/infra`, directory
 
 # Use a Pulumi template to create AWS OIDC Resources
-$ pulumi new https://github.com/desteves/aws-oidc-typescript/infra --dir esc
-$ pulumi up --yes --cwd esc
+$ pulumi new https://github.com/desteves/aws-oidc-typescript/infra --dir aws-oidc
+# Go through the wizard and update the defaults as necessary
+
+$ pulumi up --yes --cwd aws-oidc
 # wait for the resources to get created; this can take a couple of minutes
 
 # Obtain the name of the ESC Environment
-$ e=$(pulumi stack output esc --cwd esc)
+$ e=$(pulumi stack output escEnv --cwd aws-oidc)
 
 # Add the ESC Environment to your Stack
 $ echo "environment:" >> Pulumi.test.yaml
 $ echo "  - ${e}" >> Pulumi.test.yaml
 
 # Test the changes locally
-$ pulumi refresh
+$ pulumi preview
 ```
+
+<!-- Note to presenter: run pulumi up ahead to save time. -->
 
 ✅ Commit the changes 
 
@@ -165,9 +169,12 @@ $ gh pr create --base main --head feature-esc --title "Adds Pulumi ESC for AWS O
 
 # Merge the PR 
 # Update the PR merge number as needed
-$ m=2 #  
+$ m=1  
 $ gh pr merge $m --squash
+
+$ git checkout main
 ```
+<!-- EXAMPLE https://github.com/desteves/cicd-workshop-advanced/pull/1 -->
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
 
@@ -192,30 +199,46 @@ By adding a default policy pack, your workflow will automatically ensure your st
 ✅ Add the CIS compliance framework
 
 ```bash
-# Ensure you're in the project, `cicd-workshop-advanced`, directory
+# Ensure you're in the project, `cicd-workshop-advanced/infra`, directory
 
 # Add the policy under the policypack/ folder
-pulumi policy new aws-cis-compliance-policies-typescript  --dir policypack
+$ pulumi policy new aws-cis-compliance-policies-typescript  --dir policypack
+
+# Add deps for GHA
+$ cd policypack
+$ npm install @pulumi/policy @pulumi/compliance-policy-manager @pulumi/aws-compliance-policies
+$ pulumi up
+$ cd ../
 
 # Test locally 
-pulumi up  --policy-pack policypack 
+$ pulumi up  --policy-pack policypack 
+# Policies:
+#    ✅ aws-cis-compliance-ready-policies-typescript@v0.0.1 (local: policypack)
 
 # Modify the workflow file to test programmatically
 $ vi .github/workflows/branch.yml
-#   edit the  the "Create the resources" step as shown below
+#   edit the last step as shown below
 #   save the file.
 ```
 
 `branch.yml` code snippet:
 ```yaml
+      - name: Install PaC Dependencies
+        working-directory: ./infra/policypack
+        run: npm install
+
       - name: Create the resources
         uses: pulumi/actions@v5
         with:
           command: up
-          stack-name: diana-pulumi-corp/cicd-workshop/test
+          stack-name: zephyr/cicd-workshop/test # UPDATE THIS
           work-dir: ./infra
           policyPacks: policypack
+        env:
+          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
 ```
+
+<!-- Note to presenter: run pulumi up ahead to save time. -->
 
 ✅ Commit the changes 
 
@@ -239,8 +262,9 @@ $ gh pr create --base main --head feature-pac --title "Adds Policy as Code" --bo
 
 # Merge the PR 
 # Update the PR merge number as needed
-$ m=3 #  
+$ m=2 #  
 $ gh pr merge $m --squash
+# ✓ Squashed and merged pull request #2 (Adds Policy as Code)
 ```
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
@@ -266,14 +290,55 @@ Attendees will be able to programmatically identify when a drift has occurred in
 ```bash
 # Ensure you're in the project, `cicd-workshop-advanced`, directory
 
+$ git checkout main
+
 $ vi .github/workflows/drift.yml
 #   paste the contents of drift.yml shown below
 #   update `stack-name`
 #   save the file.
 ```
 
-```liquid
-{% include ./solution/.github/workflows/drift.yml %}
+```yaml
+name: drift
+on:
+  schedule:
+    # Runs at 06:00
+    # Actions schedules run at most every 5 minutes.
+    - cron: '0 6 * * *'
+  workflow_dispatch: {}
+
+env:
+  PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    name: Drift Detection
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+            
+      - name: setup node 18
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        working-directory: ./infra
+        run: npm install
+        
+      - name: Install PaC Dependencies
+        working-directory: ./infra/policypack
+        run: npm install
+        
+      - name: pulumi preview
+        uses: pulumi/actions@v5
+        with:
+          command: preview
+          refresh: true
+          stack-name: zephyr/cicd-workshop/test ## Update this
+          expect-no-changes: true
+          work-dir: ./infra
 ```
 
 Alternatively, navigate to the [drift.yml](./solution/.github/workflows/drift.yml) file to copy its contents.
@@ -300,9 +365,13 @@ $ gh pr create --base main --head feature-dd --title "Adds Drift Detection" --bo
 
 # Merge the PR 
 # Update the PR merge number as needed
-$ m=4 #  
+$ m=3 #  
 $ gh pr merge $m --squash
 ```
+
+✅ Run the drift detection action from the browser
+
+<!-- https://github.com/desteves/cicd-workshop-advanced/actions/workflows/drift.yml-->
 
 ## **Part 4** Add dedicated environments with Review Stacks
 
@@ -320,29 +389,31 @@ Attendees will be able to configure ephemeral dedicated cloud environments to de
 
 ✅ [Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/#installation-and-configuration)
 
+Check your repository has been added to the access list https://github.com/settings/installations/46735415
+
 ✅ Add Review Stacks
 
 ```bash 
-# Ensure you're in the project, `cicd-workshop-advanced`, directory
+# Ensure you're in the project, `cicd-workshop-advanced/infra`, directory
 
 # Re-use these values from Part 1
 $ owner=desteves 
 $ repo=cicd-workshop-advanced
 
 # Use a Pulumi template to configure your Review Stacks
-$ pulumi new https://github.com/desteves/reviewstacks-typescript/infra --dir test
+$ pulumi new https://github.com/desteves/reviewstacks-typescript/infra --dir deployment-settings
 # project name: cicd-workshop-advanced
 # project description: (default)
 # stack: deployment-settings
 #
 # repository: $owner/$repo
-# branch: (default)
+# branch: /refs/heads/feature-rs
 # repoDir: infra
 # projectRef: cicd-workshop
 # stackRef: test
 
 # Create the Pulumi Deployments Review Stacks configuration
-$ pulumi up --yes --cwd test
+$ pulumi up --yes --cwd deployment-settings
 # wait for the resource to get created; this can take a couple of seconds
 ```
 
