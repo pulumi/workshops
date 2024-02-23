@@ -186,11 +186,11 @@ Attendees will be able to add compliance checks to the CI/CD pipeline using [Pul
 
 ### 📚 Concepts
 
-*Cloud compliance* 
+*Cloud compliance* refers to the process of ensuring that cloud-based systems, services, and data storage adhere to relevant laws, regulations, standards, and best practices governing security, privacy, and data protection. 
 
-*Policy as Code*
+*Policy as Code* involves codifying policy definitions, which allows for their automated enforcement and evaluation within various stages of IT operations and development pipelines. This method leverages version control systems, automation tools, and continuous integration/continuous deployment (CI/CD) pipelines to ensure that policies governing security, compliance, resource usage, and access controls are consistently applied across the entire ecosystem.
 
-*Built-in packs*
+*Built-in packs* bundle compliance policies that are easily extendable with the aim to speed up development and ensure best practices from day one.
 
 ### 🎬 Steps
 
@@ -277,11 +277,13 @@ Attendees will be able to programmatically identify when a drift has occurred in
 
 ### 📚 Concepts
 
-*Drift* TODO 
+*Drift* refers to the phenomenon where the actual state of your infrastructure diverges from the expected or declared state as defined in your code. This can occur for a variety of reasons, such as manual changes made directly to the infrastructure (outside of the IaC processes), external processes modifying the environment, or discrepancies in the execution of IaC scripts.
 
-*Drift detection* TODO 
+*Drift detection* refers to the process of identifying discrepancies between the actual state of your infrastructure and its expected state as defined by your IaC configurations. This process is crucial for maintaining consistency, reliability, and security in cloud environments, where infrastructure components are dynamically provisioned and managed through code.
 
-*Reconciling the infrastructure* TODO
+*Reconciling the infrastructure* Once drift is detected, the next step is to reconcile the infrastructure, which means resolving the differences between the actual state and the intended state. Reconciliation can be approached in different ways but two common approaches are to update the infrastructure to match the code or update the code to reflect the detected changes.
+
+Both drift detection and infrastructure reconciliation are fundamental to the practice of infrastructure as code, allowing teams to maintain control over their environments and ensure that their infrastructure remains in a known, good state.
 
 ### 🎬 Steps
 
@@ -381,9 +383,9 @@ Attendees will be able to configure ephemeral dedicated cloud environments to de
 
 ### 📚 Concepts
 
-*Test in isolation*
+*Test in isolation* refers to the practice of testing components or units of an application without the interference from other parts of the system.
 
-*Pulumi Deployments Review Stacks*
+*Pulumi Deployments Review Stacks* An ephemeral isolated Pulumi Stack to test your IaC via a number of configurations.
 
 ### 🎬 Steps
 
