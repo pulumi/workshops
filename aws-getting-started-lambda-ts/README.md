@@ -321,7 +321,7 @@ const apiGatewayRestApi = new aws.apigateway.RestApi("myapi", {
 
 const apiGatewayResource = new aws.apigateway.Resource("myapiresource", {
     parentId: apiGatewayRestApi.rootResourceId,
-    pathPart: "mylambda",
+    pathPart: "dad-joke",
     restApi: apiGatewayRestApi.id,
 });
 
@@ -344,13 +344,16 @@ const apiGatewayIntegration = new aws.apigateway.Integration("myapiintegration",
 const apiGatewayDeployment = new aws.apigateway.Deployment("myapideployment", {
     restApi: apiGatewayRestApi.id,
     stageName: "v1",
+    triggers: {
+        "repoDigest": image.repoDigest,
+    }
 }, {
     dependsOn: [
         apiGatewayIntegration
     ]
 });
 
-export const url = apiGatewayDeployment.invokeUrl;
+export const url = pulumi.interpolate`${apiGatewayDeployment.invokeUrl}/${apiGatewayResource.pathPart}`;
 ```
 
 Run `pulumi up` to create the Lambda function and the API Gateway.
