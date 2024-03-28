@@ -112,13 +112,13 @@ $ pulumi new
 #   Select static-website-aws-typescript
 #   Project name: cicd-workshop   
 #   Description: <Enter> to select the default
-#   Stack name: test
+#   Stack name: dev
 #   Select defaults for the remaining prompts
 #   Wait a few seconds while dependencies are installed
 
 
 # Or, using advanced settings
-$ pulumi new static-website-aws-typescript --dir infra --template-mode  --stack test  --name cicd-workshop --yes --non-interactive
+$ pulumi new static-website-aws-typescript --dir infra --template-mode  --stack dev  --name cicd-workshop --yes --non-interactive
 #   Wait a few seconds while dependencies are installed
 # Note: The --dir specified will be created if it doesn't exist.
 $ cd infra
@@ -129,7 +129,7 @@ $ cd infra
 Each time you create a new Pulumi program, you'll see the following:
 
 1. `Pulumi.yaml` contains the project and top-level configuration settings.
-2. A `Pulumi.<stackName>.yaml` file for each stack within your program. This is the stack configuration file, e.g., `Pulumi.test.yaml`
+2. A `Pulumi.<stackName>.yaml` file for each stack within your program. This is the stack configuration file, e.g., `Pulumi.dev.yaml`
 3. A language-specific Pulumi program entry point. This is `index.ts` in our example.
 4. Other language-specific package and dependency files. 
 
@@ -137,7 +137,7 @@ For TypeScript, the tree structure is shown below:
 
 ```bash
 .
-├── Pulumi.test.yaml
+├── Pulumi.dev.yaml
 ├── Pulumi.yaml
 ├── index.ts
 ├── node_modules
@@ -149,13 +149,13 @@ For TypeScript, the tree structure is shown below:
 3 directories, 6 files
 ```
 
-✅ Inspect your `test` stack.
+✅ Inspect your `dev` stack.
 
 > [!TIP] 
 > *Stacks*: Stacks are logical environments within your Pulumi project. Each stack can have its own configuration and resources. For example, you might have a development stack and a production stack within the same project.
 
 ```bash
-$ cat Pulumi.test.yaml        
+$ cat Pulumi.dev.yaml        
 config:
   aws:region: us-west-2
   cicd-workshop:errorDocument: error.html
@@ -172,7 +172,7 @@ Note the custom config settings we were prompted during the `pulumi new` are sto
 The key elements in the Pulumi program entry point file are defined below.
 
 * **Providers** are a crucial part of Pulumi's infrastructure as code (IaC) framework, as they enable you to define and deploy resources in your target environment using familiar programming languages. There are over [150+ providers available](https://www.pulumi.com/registry/) that allow you to interact with and manage resources in a specific cloud or infrastructure environment, such as AWS, Azure, or Google Cloud. 
-* **Configurations**. Pulumi allows you to configure your infrastructure by setting variables. These variables can be set via command-line arguments, environment variables, configuration files (e.g., `Pulumi.test.yaml`), or secrets. This flexibility makes it easy to manage different configurations for different environments.
+* **Configurations**. Pulumi allows you to configure your infrastructure by setting variables. These variables can be set via command-line arguments, environment variables, configuration files (e.g., `Pulumi.dev.yaml`), or secrets. This flexibility makes it easy to manage different configurations for different environments.
 * **Resources** represent cloud infrastructure components, like virtual machines, databases, networks, etc. You define resources using constructors specific to the cloud provider you're working with. For instance, in AWS, you might create an S3 bucket resource.
 * **Outputs**  You can define outputs in your Pulumi program to expose information about your infrastructure. These outputs can be used for debugging, integration with other services, or to provide information to other parts of your application. 
 
@@ -186,7 +186,7 @@ $ cat -n index.ts
 
 #### 4. Perform your first deployment
 
-✅ Deploy the Pulumi program using the `test` stack via the terminal:
+✅ Deploy the Pulumi program using the `dev` stack via the terminal:
 
 ```bash
 # Check your AWS Creds are correctly configured
@@ -206,7 +206,7 @@ $ pulumi up
 # Wait a few more seconds for the changes to occur
 
 # Or, using advanced settings to skip the preview
-$ pulumi up --yes --skip-preview --non-interactive --stack test
+$ pulumi up --yes --skip-preview --non-interactive --stack dev
 # Wait a few seconds
 
 🎉 Congratulations 🎉  Your application is now up and running!
@@ -457,7 +457,7 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
     In the Pulumi CLI, we'd run the following:
 
     ```bash
-    pulumi destroy -s test
+    pulumi destroy -s dev
     ```
     
     Now, use the Pulumi GitHub Actions to achieve the same result. Here is some helper code:
@@ -554,7 +554,7 @@ Attendees will be able to practice enhancing the infrastructure CI/CD pipeline.
 
 ## ✨ Summary
 
-In this workshop, you incrementally worked through creating an infrastructure CI/CD pipeline. In Part 1, you learned the Pulumi IaC programming model basics by developing and deploying a Pulumi template containing Amazon S3 and CloudFront resources. In Part 2, you added version control and a continuous test that deploys your infrastructure. You built your pipeline using GitHub Actions and modified it to validate commits using a Pulumi `test` stack. You had hands-on experience across the three major elements of an infrastructure CI/CD pipeline. Lastly, Part 3 encouraged you to introduce a change to the application, infrastructure, or pipeline and watch changes be automatically applied.
+In this workshop, you incrementally worked through creating an infrastructure CI/CD pipeline. In Part 1, you learned the Pulumi IaC programming model basics by developing and deploying a Pulumi template containing Amazon S3 and CloudFront resources. In Part 2, you added version control and a continuous test that deploys your infrastructure. You built your pipeline using GitHub Actions and modified it to validate commits using a Pulumi `dev` stack. You had hands-on experience across the three major elements of an infrastructure CI/CD pipeline. Lastly, Part 3 encouraged you to introduce a change to the application, infrastructure, or pipeline and watch changes be automatically applied.
 
 ## 🚀 Next steps
 
