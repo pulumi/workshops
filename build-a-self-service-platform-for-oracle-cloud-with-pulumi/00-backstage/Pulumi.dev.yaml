@@ -1,0 +1,5 @@
+config:
+  00-backstage:auth-token:
+    secure: AAABAAarBQ/DsFNHepsHdVHVVFEyqKGJYUxephEwE2Sp5KGGVkQpEPgiVe3SX1ufM/Mz/g==
+  00-backstage:username: engin.diri@ediri.de
+  oci:region: fra

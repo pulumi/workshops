@@ -1,0 +1,139 @@
+name: 00-backstage
+runtime: yaml
+description: "Run Backstage on Oracle Cloud Container Instance"
+
+
+resources:
+  backstageBuild:
+    type: command:local:Command
+    properties:
+      dir: "./backstage"
+      create: "yarn install && yarn tsc && yarn build:backend"
+      update: "yarn install && yarn tsc && yarn build:backend"
+
+  backstageImage:
+    options:
+      version: v4.5.3
+      dependsOn:
+      - ${backstageBuild}
+    properties:
+      build:
+        context: ./backstage
+        platform: linux/amd64
+        builderVersion: BuilderBuildKit
+        dockerfile: ./backstage/packages/backend/Dockerfile
+      imageName: ${oci:region}.ocir.io/${backstageContainerRepository.namespace}/${backstageContainerRepository.displayName}
+      registry:
+        server: ${oci:region}.ocir.io
+        username: ${backstageContainerRepository.namespace}/${username}
+        password: ${auth-token}
+    type: docker:Image
+
+  backstageCompartment:
+    properties:
+      description: "Compartment for Backstage"
+      enableDelete: true
+      name: backstage-compartment
+    type: oci:Identity:Compartment
+
+  backstageVcn:
+    type: oci:Core:Vcn
+    properties:
+      compartmentId: ${backstageCompartment.id}
+      cidrBlock: "10.0.0.0/16"
+      displayName: "Backstage VCN"
+      dnsLabel: "backstage-vcn"
+
+  backstageContainerRepository:
+    type: oci:Artifacts:ContainerRepository
+    properties:
+      compartmentId: ${backstageCompartment.id}
+      displayName: "backstage"
+      isPublic: true
+
+  backstageSecurityList:
+    type: oci:Core:SecurityList
+    properties:
+      compartmentId: ${backstageCompartment.id}
+      vcnId: ${backstageVcn.id}
+      displayName: "backstage-security-list"
+      ingressSecurityRules:
+      - protocol: "6"
+        sourceType: "CIDR_BLOCK"
+        source: "0.0.0.0/0"
+        tcpOptions:
+          max: 7007
+          min: 7007
+      egressSecurityRules:
+      - protocol: "6"
+        destinationType: "CIDR_BLOCK"
+        destination: "0.0.0.0/0"
+        description: "Allow access to container registry via HTTPS"
+        tcpOptions:
+          max: 443
+          min: 443
+
+  backstageSubnet:
+    type: oci:Core:Subnet
+    properties:
+      cidrBlock: "10.0.0.0/24"
+      compartmentId: ${backstageCompartment.id}
+      vcnId: ${backstageVcn.id}
+      displayName: "backstage-subnet"
+      dnsLabel: "containers"
+      securityListIds:
+      - ${backstageSecurityList.id}
+      routeTableId: ${backstageRouteTable.id}
+
+  backstageInternetGateway:
+    type: oci:Core:InternetGateway
+    properties:
+      compartmentId: ${backstageCompartment.id}
+      vcnId: ${backstageVcn.id}
+      displayName: "backstage-internet-gateway"
+      enabled: true
+
+  backstageRouteTable:
+    type: oci:Core:RouteTable
+    properties:
+      compartmentId: ${backstageCompartment.id}
+      vcnId: ${backstageVcn.id}
+      displayName: "backstage-route-table"
+      routeRules:
+      - destination: "0.0.0.0/0"
+        networkEntityId: ${backstageInternetGateway.id}
+
+  backstageContainerInstance:
+    type: oci:ContainerEngine:ContainerInstance
+    properties:
+      availabilityDomain: ${backstageAvailabilityDomains.availabilityDomains[0].name}
+      compartmentId: ${backstageCompartment.id}
+      displayName: "backstage-container-instance"
+      containerRestartPolicy: "ALWAYS"
+      shape: "CI.Standard.E4.Flex"
+      shapeConfig:
+        ocpus: 2
+        memoryInGbs: 16
+      vnics:
+      - subnetId: ${backstageSubnet.id}
+        displayName: "test-vnic"
+        isPublicIpAssigned: true
+        nsgIds: []
+      containers:
+      - imageUrl: ${backstageImage.repoDigest}
+        displayName: "backstage"
+        commands:
+        - "node"
+        arguments:
+        - "packages/backend"
+        - "--config"
+        - "app-config.yaml"
+
+outputs:
+  image:
+    value: ${backstageImage.repoDigest}
+
+variables:
+  backstageAvailabilityDomains:
+    fn::oci:Identity/getAvailabilityDomains:getAvailabilityDomains:
+      compartmentId: ${backstageCompartment.compartmentId}
