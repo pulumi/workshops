@@ -1,0 +1,5 @@
+environment:
+- langchain-flowise-aws-chatbot
+
+config:
+  aws:region: eu-central-1
