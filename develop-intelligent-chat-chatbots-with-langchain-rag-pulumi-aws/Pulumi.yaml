@@ -16,10 +16,12 @@ name: aws-yaml-langchain
 runtime: yaml
 description: A minimal Flowise / Langchain AWS YAML Pulumi program
 
-outputs:
-  url: http://${langchain-load-balancer.dnsName}
-
 resources:
+
+  langchain-log-group:
+    properties:
+      retentionInDays: 7
+    type: aws:cloudwatch:LogGroup
 
   langchain-vpc:
     type: awsx:ec2:Vpc
@@ -65,6 +67,81 @@ resources:
       multiAz: false
       vpcSecurityGroupIds:
       - ${langchain-sg.id}
+
+  langchain-key:
+    properties:
+      description: "Key for encrypting secrets"
+      enableKeyRotation: true
+      policy:
+        fn::toJSON:
+          Statement:
+          - Action:
+            - kms:Create*
+            - kms:Describe*
+            - kms:Enable*
+            - kms:List*
+            - kms:Put*
+            - kms:Update*
+            - kms:Revoke*
+            - kms:Disable*
+            - kms:Get*
+            - kms:Delete*
+            - kms:ScheduleKeyDeletion
+            - kms:CancelKeyDeletion
+            - kms:Tag*
+            - kms:UntagResource
+            Effect: Allow
+            Principal:
+              AWS: arn:aws:iam::${accountId}:root
+            Resource: "*"
+          - Action:
+            - kms:Encrypt
+            - kms:Decrypt
+            - kms:ReEncrypt*
+            - kms:GenerateDataKey*
+            - kms:DescribeKey
+            Effect: Allow
+            Principal:
+              AWS: arn:aws:iam::${accountId}:root
+            Resource: "*"
+          Version: '2012-10-17'
+      tags:
+        pulumi-application: ${pulumi-project}
+        pulumi-environment: ${pulumi-stack}
+    type: aws:kms:Key
+
+  langchain-db-password-parameter:
+    properties:
+      keyId: ${langchain-key.keyId}
+      name: /pulumi/${pulumi-project}/${pulumi-stack}/DATABASE_PASSWORD
+      tags:
+        pulumi-application: ${pulumi-project}
+        pulumi-environment: ${pulumi-stack}
+      type: SecureString
+      value: ${db-password}
+    type: aws:ssm:Parameter
+
+  langchain-flowise-parameter:
+    properties:
+      keyId: ${langchain-key.keyId}
+      name: /pulumi/${pulumi-project}/${pulumi-stack}/FLOWISE_PASSWORD
+      tags:
+        pulumi-application: ${pulumi-project}
+        pulumi-environment: ${pulumi-stack}
+      type: SecureString
+      value: ${flowise-password}
+    type: aws:ssm:Parameter
+
+  langchain-chroma-token-parameter:
+    properties:
+      keyId: ${langchain-key.keyId}
+      name: /pulumi/${pulumi-project}/${pulumi-stack}/CHROMA_SERVER_AUTH_CREDENTIALS
+      tags:
+        pulumi-application: ${pulumi-project}
+        pulumi-environment: ${pulumi-stack}
+      type: SecureString
+      value: "test-token"
+    type: aws:ssm:Parameter
 
   langchain-cluster-capacity-providers:
     properties:
@@ -149,48 +226,6 @@ resources:
       - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
     type: aws:iam:Role
 
-  langchain-key:
-    properties:
-      description: "Key for encrypting secrets"
-      enableKeyRotation: true
-      policy:
-        fn::toJSON:
-          Statement:
-          - Action:
-            - kms:Create*
-            - kms:Describe*
-            - kms:Enable*
-            - kms:List*
-            - kms:Put*
-            - kms:Update*
-            - kms:Revoke*
-            - kms:Disable*
-            - kms:Get*
-            - kms:Delete*
-            - kms:ScheduleKeyDeletion
-            - kms:CancelKeyDeletion
-            - kms:Tag*
-            - kms:UntagResource
-            Effect: Allow
-            Principal:
-              AWS: arn:aws:iam::${accountId}:root
-            Resource: "*"
-          - Action:
-            - kms:Encrypt
-            - kms:Decrypt
-            - kms:ReEncrypt*
-            - kms:GenerateDataKey*
-            - kms:DescribeKey
-            Effect: Allow
-            Principal:
-              AWS: arn:aws:iam::${accountId}:root
-            Resource: "*"
-          Version: '2012-10-17'
-      tags:
-        pulumi-application: ${pulumi-project}
-        pulumi-environment: ${pulumi-stack}
-    type: aws:kms:Key
-
   langchain-target-group:
     properties:
       port: 80
@@ -233,10 +268,6 @@ resources:
       - ${langchain-security-group.id}
       subnets: ${langchain-vpc.publicSubnetIds}
     type: aws:lb:LoadBalancer
-  langchain-log-group:
-    properties:
-      retentionInDays: 7
-    type: aws:cloudwatch:LogGroup
 
   langchain-service:
     properties:
@@ -266,40 +297,6 @@ resources:
       name: ${pulumi-stack}.${pulumi-project}.local
       vpc: ${langchain-vpc.vpcId}
     type: aws:servicediscovery:PrivateDnsNamespace
-
-  langchain-db-password-parameter:
-    properties:
-      keyId: ${langchain-key.keyId}
-      name: /pulumi/${pulumi-project}/${pulumi-stack}/DATABASE_PASSWORD
-      tags:
-        pulumi-application: ${pulumi-project}
-        pulumi-environment: ${pulumi-stack}
-      type: SecureString
-      value: ${db-password}
-    type: aws:ssm:Parameter
-
-  langchain-flowise-parameter:
-    properties:
-      keyId: ${langchain-key.keyId}
-      name: /pulumi/${pulumi-project}/${pulumi-stack}/FLOWISE_PASSWORD
-      tags:
-        pulumi-application: ${pulumi-project}
-        pulumi-environment: ${pulumi-stack}
-      type: SecureString
-      value: ${flowise-password}
-    type: aws:ssm:Parameter
-
-  langchain-chroma-token-parameter:
-    properties:
-      keyId: ${langchain-key.keyId}
-      name: /pulumi/${pulumi-project}/${pulumi-stack}/CHROMA_SERVER_AUTH_CREDENTIALS
-      tags:
-        pulumi-application: ${pulumi-project}
-        pulumi-environment: ${pulumi-stack}
-      type: SecureString
-      value: "test-token"
-    type: aws:ssm:Parameter
-
 
   langchain-task-definition:
     properties:
@@ -428,3 +425,6 @@ variables:
       function: aws:getCallerIdentity
   pulumi-project: ${pulumi.project}
   pulumi-stack: ${pulumi.stack}
+
+outputs:
+  url: http://${langchain-load-balancer.dnsName}
