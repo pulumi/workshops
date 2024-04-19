@@ -73,14 +73,20 @@ pulumi login # provide the team access token
 
 cd solution/infra
 
+esc open  pulumi-sandbox-diana/oidc-gcp
+esc open  pulumi-sandbox-diana/pulumi-esc-prod
+# Ensure all these are granted access by adding each to the service account subject
+
 pulumi:environments:org:pulumi-sandbox-diana:env:pulumi-esc-prod
 pulumi:environments:org:pulumi-sandbox-diana:env:oidc-gcp
+pulumi:environments:org:pulumi-sandbox-diana:env:pulumi-esc-prod:<yaml>
+pulumi:environments:org:pulumi-sandbox-diana:env:oidc-gcp:<yaml>
 pulumi:deploy:org:pulumi-sandbox-diana:project:buzz:stack:prod:operation:preview:scope:write
 pulumi:deploy:org:pulumi-sandbox-diana:project:buzz:stack:prod:operation:update:scope:write
 pulumi:deploy:org:pulumi-sandbox-diana:project:buzz:stack:prod:operation:refresh:scope:write
 pulumi:deploy:org:pulumi-sandbox-diana:project:buzz:stack:prod:operation:destroy:scope:write
 
-ulumi stack init pulumi-sandbox-diana/buzz/prod
+pulumi stack init pulumi-sandbox-diana/buzz/prod
 pulumi stack select pulumi-sandbox-diana/buzz/prod
 
 ```
