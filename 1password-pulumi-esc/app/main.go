@@ -38,12 +38,23 @@ func New() http.Handler {
 	return mux
 }
 
+func getEnvOrDefault(envVarName, defaultValue string) string {
+	value := os.Getenv(envVarName)
+	if value == "" {
+		log.Printf("Environment variable %s not set, using default value %s", envVarName, defaultValue)
+		return defaultValue
+	}
+	return value
+}
+
 const (
 	PORT      = "8000"
 	ADDR      = ":" + PORT
-	REDIRECT  = "http://localhost" + ADDR + "/auth/google/callback"
 	OAUTH_API = "https://www.googleapis.com/oauth2/v2/userinfo?access_token="
 )
+
+var HOST = getEnvOrDefault("REDIR", "http://localhost:8000")
+var REDIRECT = HOST  + "/auth/google/callback"
 
 func parseResponse(resp *genai.GenerateContentResponse) (string, error) {
 
@@ -63,14 +74,14 @@ func parseResponse(resp *genai.GenerateContentResponse) (string, error) {
 
 func cleanInput(input string) string {
 	// Define a regex pattern to match non-alphanumeric characters and diacritics
-	pattern := regexp.MustCompile(`[^a-zA-Z0-9\\s]+`)
+	pattern := regexp.MustCompile(`[^a-zA-Z\\s]+`)
 
 	// Replace non-alphanumeric characters and diacritics with an empty string
 	cleaned := pattern.ReplaceAllStringFunc(input, func(s string) string {
 		var result []rune
 		for _, r := range s {
 			// Check if the rune is alphanumeric or whitespace
-			if unicode.IsLetter(r) || unicode.IsDigit(r) || unicode.IsSpace(r) {
+			if unicode.IsLetter(r) || unicode.IsSpace(r) {
 				result = append(result, r)
 			}
 		}

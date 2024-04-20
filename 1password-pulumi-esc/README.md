@@ -81,6 +81,7 @@ pulumi:environments:org:pulumi-sandbox-diana:env:pulumi-esc-prod
 pulumi:environments:org:pulumi-sandbox-diana:env:oidc-gcp
 pulumi:environments:org:pulumi-sandbox-diana:env:pulumi-esc-prod:<yaml>
 pulumi:environments:org:pulumi-sandbox-diana:env:oidc-gcp:<yaml>
+pulumi:environments:org:pulumi-sandbox-diana:env:<yaml>
 pulumi:deploy:org:pulumi-sandbox-diana:project:buzz:stack:prod:operation:preview:scope:write
 pulumi:deploy:org:pulumi-sandbox-diana:project:buzz:stack:prod:operation:update:scope:write
 pulumi:deploy:org:pulumi-sandbox-diana:project:buzz:stack:prod:operation:refresh:scope:write
