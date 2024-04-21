@@ -1,0 +1,244 @@
+name: deploying-llamaindex-applications-on-aws-with-pulumi
+runtime: yaml
+description: A minimal AWS Pulumi YAML program
+
+variables:
+  authToken:
+    fn::aws:ecr:getAuthorizationToken:
+      registryId: ${ecr-llamaindex-repo.registryId}
+
+outputs:
+  llamaindex-app: ${llamaindex-app.repoDigest}
+  url: ${llamaindex-load-balancer.dnsName}
+
+resources:
+  ecr-llamaindex-repo:
+    type: aws:ecr:Repository
+    properties:
+      forceDelete: true
+      name: "llamaindex-chatbot"
+
+  llamaindex-app:
+    type: docker:Image
+    properties:
+      build:
+        context: app/
+        dockerfile: app/Dockerfile
+        platform: linux/amd64
+        builderVersion: "BuilderBuildKit"
+      imageName: ${ecr-llamaindex-repo.repositoryUrl}:latest
+      registry:
+        password: ${authToken.password}
+        username: ${authToken.userName}
+        server: ${ecr-llamaindex-repo.repositoryUrl}
+
+
+  llamaindex-vpc:
+    type: awsx:ec2:Vpc
+    properties:
+      numberOfAvailabilityZones: 2
+      enableDnsSupport: true
+      enableDnsHostnames: true
+
+  llamaindex-cluster-capacity-providers:
+    properties:
+      capacityProviders:
+      - FARGATE
+      - FARGATE_SPOT
+      clusterName: ${llamaindex-ecs-cluster.name}
+    type: aws:ecs:ClusterCapacityProviders
+
+  llamaindex-ecs-cluster:
+    properties:
+      configuration:
+        executeCommandConfiguration:
+          logging: DEFAULT
+      settings:
+      - name: containerInsights
+        value: disabled
+    type: aws:ecs:Cluster
+
+  llamaindex-ecs-security-group:
+    properties:
+      egress:
+      - cidrBlocks:
+        - 0.0.0.0/0
+        fromPort: 0
+        protocol: -1
+        toPort: 0
+      ingress:
+      - cidrBlocks:
+        - 0.0.0.0/0
+        fromPort: 0
+        protocol: -1
+        toPort: 0
+      vpcId: ${llamaindex-vpc.vpcId}
+    type: aws:ec2:SecurityGroup
+
+  llamaindex-execution-role:
+    properties:
+      assumeRolePolicy:
+        fn::toJSON:
+          Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+          Version: '2012-10-17'
+      managedPolicyArns:
+      - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+    type: aws:iam:Role
+
+  llamaindex-target-group:
+    properties:
+      port: 80
+      protocol: HTTP
+      targetType: ip
+      vpcId: ${llamaindex-vpc.vpcId}
+    type: aws:lb:TargetGroup
+
+  llamaindex-listener:
+    properties:
+      defaultActions:
+      - targetGroupArn: ${llamaindex-target-group.arn}
+        type: forward
+      loadBalancerArn: ${llamaindex-load-balancer.arn}
+      port: 80
+      protocol: HTTP
+    type: aws:lb:Listener
+
+  llamaindex-security-group:
+    properties:
+      egress:
+      - cidrBlocks:
+        - 0.0.0.0/0
+        fromPort: 0
+        protocol: -1
+        toPort: 0
+      ingress:
+      - cidrBlocks:
+        - 0.0.0.0/0
+        fromPort: 80
+        protocol: tcp
+        toPort: 80
+      vpcId: ${llamaindex-vpc.vpcId}
+    type: aws:ec2:SecurityGroup
+
+  llamaindex-load-balancer:
+    properties:
+      loadBalancerType: application
+      securityGroups:
+      - ${llamaindex-security-group.id}
+      subnets: ${llamaindex-vpc.publicSubnetIds}
+    type: aws:lb:LoadBalancer
+
+  llamaindex-service:
+    properties:
+      cluster: ${llamaindex-ecs-cluster.arn}
+      desiredCount: 1
+      launchType: FARGATE
+      loadBalancers:
+      - containerName: llamaindex-app
+        containerPort: 8000
+        targetGroupArn: ${llamaindex-target-group.arn}
+      networkConfiguration:
+        assignPublicIp: true
+        securityGroups:
+        - ${llamaindex-ecs-security-group.id}
+        subnets: ${llamaindex-vpc.publicSubnetIds}
+      schedulingStrategy: REPLICA
+      serviceConnectConfiguration:
+        enabled: true
+        namespace: ${llamaindex-service-discovery-namespace.arn}
+      taskDefinition: ${llamaindex-task-definition.arn}
+    type: aws:ecs:Service
+
+  llamaindex-service-discovery-namespace:
+    properties:
+      name: llamaindex.local
+      vpc: ${llamaindex-vpc.vpcId}
+    type: aws:servicediscovery:PrivateDnsNamespace
+
+  llamaindex-task-definition:
+    properties:
+      containerDefinitions:
+        fn::toJSON:
+        - essential: true
+          image: ${llamaindex-app.repoDigest}
+          logConfiguration:
+            logDriver: awslogs
+            options:
+              awslogs-group: ${llamaindex-log-group.name}
+              awslogs-region: eu-central-1
+              awslogs-stream-prefix: chroma
+          name: llamaindex-app
+          portMappings:
+          - containerPort: 8000
+            hostPort: 8000
+            name: chroma
+            protocol: tcp
+      cpu: 256
+      executionRoleArn: ${llamaindex-execution-role.arn}
+      family: llamaindex-task
+      memory: 512
+      networkMode: awsvpc
+      requiresCompatibilities:
+      - FARGATE
+      taskRoleArn: ${llamaindex-task-role.arn}
+    type: aws:ecs:TaskDefinition
+
+  llamaindex-task-role:
+    properties:
+      assumeRolePolicy:
+        fn::toJSON:
+          Statement:
+          - Action: sts:AssumeRole
+            Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+          Version: '2012-10-17'
+      inlinePolicies:
+      - name: bedrock-policy
+        policy:
+          fn::toJSON:
+            Statement:
+            - Action:
+              - bedrock:InvokeModel
+              Effect: Allow
+              Resource:
+              - "arn:aws:bedrock:*::foundation-model/*"
+            Version: '2012-10-17'
+      - name: ExecuteCommand
+        policy:
+          fn::toJSON:
+            Statement:
+            - Action:
+              - ssmmessages:CreateControlChannel
+              - ssmmessages:OpenControlChannel
+              - ssmmessages:CreateDataChannel
+              - ssmmessages:OpenDataChannel
+              Effect: Allow
+              Resource: "*"
+            - Action:
+              - logs:CreateLogStream
+              - logs:DescribeLogGroups
+              - logs:DescribeLogStreams
+              - logs:PutLogEvents
+              Effect: Allow
+              Resource: "*"
+            Version: '2012-10-17'
+      - name: DenyIAM
+        policy:
+          fn::toJSON:
+            Statement:
+            - Action: iam:*
+              Effect: Deny
+              Resource: "*"
+            Version: '2012-10-17'
+    type: aws:iam:Role
+
+
+  llamaindex-log-group:
+    properties:
+      retentionInDays: 7
+    type: aws:cloudwatch:LogGroup

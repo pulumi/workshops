@@ -1,0 +1,8 @@
+streamlit>=1.33.0
+streamlit-chat>=0.1.1
+python-dotenv>=1.0.1
+langchain>=0.1.16
+openai>=1.23.2
+llama-index>=0.10.30
+llama-index-llms-bedrock>=0.1.6
+st-chat-message>=0.3.8
