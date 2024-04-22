@@ -11,11 +11,10 @@
 
 FROM node:18-bookworm-slim
 
-RUN <<EOF
-## Install pulumi and set to PATH
-curl -fsSL https://get.pulumi.com | sh
-PATH="/root/.pulumi/bin:${PATH}"
-EOF
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt,sharing=locked \
+    apt-get update && \
+    apt-get install -y --no-install-recommends curl apt-transport-https ca-certificates
 
 # Install isolate-vm dependencies, these are needed by the @backstage/plugin-scaffolder-backend.
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
@@ -33,6 +32,13 @@ RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
 
 # From here on we use the least-privileged `node` user to run the backend.
 USER node
+
+RUN <<EOF
+## Install pulumi and set to PATH
+curl -fsSL https://get.pulumi.com | sh
+EOF
+
+ENV PATH="/home/node/.pulumi/bin:${PATH}"
 
 # This should create the app dir as `node`.
 # If it is instead created as `root` then the `tar` command below will fail: `can't create directory 'packages/': Permission denied`.
