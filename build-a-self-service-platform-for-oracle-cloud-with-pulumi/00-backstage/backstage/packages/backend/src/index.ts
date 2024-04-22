@@ -39,5 +39,6 @@ backend.add(import('@backstage/plugin-search-backend-module-catalog/alpha'));
 backend.add(import('@backstage/plugin-search-backend-module-techdocs/alpha'));
 
 backend.add(import('@pulumi/backstage-scaffolder-backend-pulumi'));
+backend.add(import('@backstage/plugin-scaffolder-backend-module-github'));
 
 backend.start();

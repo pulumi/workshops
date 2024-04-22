@@ -125,6 +125,7 @@ spec:
       outputs:
       - bucketURL
       stack: ${{ parameters.stack }}
+      suppressProgress: true
 
   - id: publish
     name: Publish to GitHub
