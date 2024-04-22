@@ -58,6 +58,21 @@ import {
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
 
+import {
+    isPulumiAvailable,
+    EntityPulumiCard,
+    EntityPulumiMetdataCard,
+    PulumiComponent
+} from '@pulumi/backstage-plugin-pulumi';
+
+const pulumiContent = (
+    <EntitySwitch>
+        <EntitySwitch.Case if={isPulumiAvailable}>
+            <PulumiComponent/>
+        </EntitySwitch.Case>
+    </EntitySwitch>
+);
+
 const techdocsContent = (
   <EntityTechdocsContent>
     <TechDocsAddons>
@@ -137,6 +152,13 @@ const overviewContent = (
     <Grid item md={8} xs={12}>
       <EntityHasSubcomponentsCard variant="gridItem" />
     </Grid>
+    <EntitySwitch>
+      <EntitySwitch.Case if={isPulumiAvailable}>
+          <Grid item md={6}>
+              <EntityPulumiCard />
+          </Grid>
+      </EntitySwitch.Case>
+    </EntitySwitch>
   </Grid>
 );
 
@@ -174,6 +196,9 @@ const serviceEntityPage = (
 
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
+    </EntityLayout.Route>
+    <EntityLayout.Route path="/pulumi" title="Pulumi" if={isPulumiAvailable}>
+        {pulumiContent}
     </EntityLayout.Route>
   </EntityLayout>
 );
@@ -334,6 +359,11 @@ const systemPage = (
         <Grid item md={6}>
           <EntityHasResourcesCard variant="gridItem" />
         </Grid>
+        <EntitySwitch.Case if={isPulumiAvailable}>
+          <Grid item md={6}>
+              <EntityPulumiMetdataCard/>
+          </Grid>
+        </EntitySwitch.Case>
       </Grid>
     </EntityLayout.Route>
     <EntityLayout.Route path="/diagram" title="Diagram">

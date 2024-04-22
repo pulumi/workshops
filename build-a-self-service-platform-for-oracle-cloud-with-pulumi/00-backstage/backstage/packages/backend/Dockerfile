@@ -11,6 +11,12 @@
 
 FROM node:18-bookworm-slim
 
+RUN <<EOF
+## Install pulumi and set to PATH
+curl -fsSL https://get.pulumi.com | sh
+PATH="/root/.pulumi/bin:${PATH}"
+EOF
+
 # Install isolate-vm dependencies, these are needed by the @backstage/plugin-scaffolder-backend.
 RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
     --mount=type=cache,target=/var/lib/apt,sharing=locked \

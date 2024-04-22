@@ -1,0 +1,36 @@
+name: ${{ values.name }}
+runtime: yaml
+description: A minimal Pulumi YAML program
+
+resources:
+  backstageCompartment:
+    properties:
+      description: "Compartment for Demo"
+      enableDelete: true
+      name: ${{values.name }}-compartment
+    type: oci:Identity:Compartment
+
+  testBucket:
+    type: oci:ObjectStorage:Bucket
+    properties:
+      compartmentId: ${backstageCompartment.id}
+      namespace: ${compartmentNamespace.namespace}
+      accessType: "ObjectReadWithoutList"
+
+  testObject:
+    type: oci:ObjectStorage:StorageObject
+    properties:
+      bucket: ${testBucket.name}
+      namespace: ${compartmentNamespace.namespace}
+      object: "index.html"
+      content: |
+        ${{values.content}}
+      contentType: "text/html"
+
+variables:
+  compartmentNamespace:
+    fn::oci:ObjectStorage/getNamespace:getNamespace:
+      compartmentId: ${backstageCompartment.id}
+
+outputs:
+  bucketURL: https://${testBucket.namespace}.objectstorage.${oci:region}.oci.customer-oci.com/n/${testBucket.namespace}/b/${testBucket.name}/o/${testObject.object}

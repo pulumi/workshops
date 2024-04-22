@@ -42,7 +42,7 @@ resources:
       compartmentId: ${backstageCompartment.id}
       cidrBlock: "10.0.0.0/16"
       displayName: "Backstage VCN"
-      dnsLabel: "backstage-vcn"
+      dnsLabel: "backstage"
 
   backstageContainerRepository:
     type: oci:Artifacts:ContainerRepository
@@ -122,6 +122,8 @@ resources:
       containers:
       - imageUrl: ${backstageImage.repoDigest}
         displayName: "backstage"
+        environmentVariables:
+          PULUMI_ACCESS_TOKEN: ${pulumi-pat}
         commands:
         - "node"
         arguments:
