@@ -124,6 +124,7 @@ resources:
         displayName: "backstage"
         environmentVariables:
           PULUMI_ACCESS_TOKEN: ${pulumi-pat}
+          GITHUB_TOKEN: ${github-token}
         commands:
         - "node"
         arguments:

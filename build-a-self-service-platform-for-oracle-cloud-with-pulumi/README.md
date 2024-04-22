@@ -8,5 +8,4 @@ npx @backstage/create-app@latest
 
 ```
 pulumi new oci-yaml --force 
-
 ```

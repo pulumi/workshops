@@ -4,7 +4,7 @@ metadata:
   name: ${{values.name }}
   description: Stack for ${{values.name }}
   annotations:
-    pulumi.com/project-slug: ${{values.stack}}
+    pulumi.com/project-slug: ${{values.organization + "/" + values.name + "/" + values.stack}}
 spec:
   owner: ${{values.owner}}
   type: service
