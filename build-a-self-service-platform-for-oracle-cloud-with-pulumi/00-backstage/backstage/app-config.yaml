@@ -1,6 +1,6 @@
 app:
   title: Scaffolded Backstage App
-  baseUrl: http://localhost:7007
+  baseUrl: http://localhost:3000
 
 organization:
   name: My Company
