@@ -1,0 +1,163 @@
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: oci-static-website
+  title: Create a new OCI Static Website
+  description: |
+    This template creates a new OCI Static Website using Pulumi.
+  tags:
+  - pulumi
+  - oci
+  - static-website
+  - serverless
+spec:
+  owner: group:infrastructure
+  type: serverless
+  parameters:
+  - title: Provide project information
+    required:
+    - name
+    - owner
+    properties:
+      name:
+        title: Name
+        type: string
+        description: Unique name of the Pulumi project.
+        ui:
+          field: EntityNamePicker
+      description:
+        title: Description
+        type: string
+        description: Tell us more about this project.
+      owner:
+        title: Owner
+        type: string
+        description: Owner of the component
+        ui:field: OwnerPicker
+        ui:options:
+          catalogFilter:
+          - kind: Group,User
+
+  - title: Configure Pulumi template
+    required:
+    - stack
+    - organization
+    - esc
+    - content
+    properties:
+      organization:
+        title: Organization
+        type: string
+        description: The Pulumi organization to use for the Pulumi project
+      esc:
+        title: Pulumi ESC
+        type: string
+        enum:
+        - oracle-backstage-demo
+        default: oracle-backstage-demo
+        description: |
+          The Pulumi ESC to use for the Pulumi project
+      stack:
+        title: Select stack
+        type: string
+        enum:
+        - dev
+        - staging
+        - prod
+        enumNames:
+        - Development
+        - Staging
+        - Production
+        description: The pulumi stack to use
+      content:
+        title: Website Content
+        type: string
+        ui:widget: textarea
+        ui:options:
+          rows: 10
+        description: |
+          The content of the website
+          This will be written to the index.html file
+          You can use html tags here
+  - title: Choose a GitHub repository location
+    required:
+    - repoUrl
+    properties:
+      repoUrl:
+        title: Repository Location
+        type: string
+        ui:field: RepoUrlPicker
+        ui:options:
+          allowedHosts:
+          - github.com
+  steps:
+  - id: fetch-base
+    name: Fetch Base
+    action: fetch:template
+    input:
+      url: ./template
+      values:
+        name: ${{parameters.name}}
+        description: ${{ parameters.description }}
+        destination: ${{ parameters.repoUrl | parseRepoUrl }}
+        organization: ${{parameters.organization}}
+        stack: ${{ parameters.stack }}
+        owner: ${{ parameters.owner }}
+        system: ${{ parameters.system }}
+        esc: ${{parameters.esc}}
+        content: ${{parameters.content}}
+
+  - id: wait
+    name: Wait for template to be fetched
+    action: debug:wait
+    input:
+      seconds: 10
+
+  - id: pulumi-deploy-infrastructure
+    name: Deploy the infrastructure using Pulumi CLI
+    action: pulumi:up
+    input:
+      deployment: false
+      name: ${{ parameters.name }}
+      repoUrl: "https://github.com/${{ (parameters.repoUrl | parseRepoUrl)['owner'] }}/${{ (parameters.repoUrl | parseRepoUrl)['repo'] }}"
+      repoProjectPath: .
+      organization: ${{parameters.organization}}
+      outputs:
+      - bucketURL
+      stack: ${{ parameters.stack }}
+      suppressProgress: true
+
+  - id: publish
+    name: Publish to GitHub
+    action: publish:github
+    input:
+      allowedHosts: ["github.com"]
+      repoVisibility: public
+      description: "This repository contains the infrastructure code for the ${{ parameters.name }} component"
+      repoUrl: ${{ parameters.repoUrl }}
+      defaultBranch: main
+      requiredApprovingReviewCount: 0
+      protectDefaultBranch: false
+
+  - id: wait-again
+    name: Wait for the repository to be created
+    action: debug:wait
+    input:
+      seconds: 15
+
+  - id: register
+    name: Registering the Catalog Info Component
+    action: catalog:register
+    input:
+      repoContentsUrl: ${{ steps['publish'].output.repoContentsUrl }}
+      catalogInfoPath: '/catalog-info.yaml'
+
+  output:
+    links:
+    - title: Open the Source Code Repository
+      url: ${{ steps['publish'].output.repoContentsUrl }}
+    - title: Open the Catalog Info Component
+      icon: catalog
+      entityRef: ${{ steps['register'].output.entityRef }}
+    - title: URL
+      url: ${{ steps['pulumi-deploy-infrastructure'].frontendURL.url }}
