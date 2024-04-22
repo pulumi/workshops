@@ -64,12 +64,6 @@ resources:
         tcpOptions:
           max: 7007
           min: 7007
-      - protocol: "6"
-        sourceType: "CIDR_BLOCK"
-        source: "0.0.0.0/0"
-        tcpOptions:
-          max: 3000
-          min: 3000
       egressSecurityRules:
       - protocol: "6"
         destinationType: "CIDR_BLOCK"
