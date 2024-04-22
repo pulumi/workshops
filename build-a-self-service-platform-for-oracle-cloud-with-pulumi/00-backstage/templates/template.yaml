@@ -44,13 +44,13 @@ spec:
         ui:field: OwnerPicker
         ui:options:
           catalogFilter:
-          - kind: Group
+          - kind: Group,User
 
   - title: Configure Pulumi template
     required:
     - stack
     - organization
-    - region
+    - esc
     properties:
       organization:
         title: Organization
