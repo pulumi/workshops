@@ -147,6 +147,7 @@ resources:
         - ${llamaindex-ecs-security-group.id}
         subnets: ${llamaindex-vpc.publicSubnetIds}
       schedulingStrategy: REPLICA
+      healthCheckGracePeriodSeconds: 180
       serviceConnectConfiguration:
         enabled: true
         namespace: ${llamaindex-service-discovery-namespace.arn}
@@ -169,7 +170,7 @@ resources:
             logDriver: awslogs
             options:
               awslogs-group: ${llamaindex-log-group.name}
-              awslogs-region: eu-central-1
+              awslogs-region: ${aws:region}
               awslogs-stream-prefix: chroma
           name: llamaindex-app
           portMappings:
