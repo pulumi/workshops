@@ -308,7 +308,7 @@ resources:
             logDriver: awslogs
             options:
               awslogs-group: ${langchain-log-group.name}
-              awslogs-region: eu-central-1
+              awslogs-region: ${aws:region}
               awslogs-stream-prefix: chroma
           name: ${pulumi-project}-${pulumi-stack}-chroma
           portMappings:
@@ -336,7 +336,7 @@ resources:
             logDriver: awslogs
             options:
               awslogs-group: ${langchain-log-group.name}
-              awslogs-region: eu-central-1
+              awslogs-region: ${aws:region}
               awslogs-stream-prefix: flowise
           name: ${pulumi-project}-${pulumi-stack}-service
           portMappings:
