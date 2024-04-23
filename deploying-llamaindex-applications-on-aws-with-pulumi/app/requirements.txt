@@ -6,3 +6,5 @@ openai>=1.23.2
 llama-index>=0.10.30
 llama-index-llms-bedrock>=0.1.6
 st-chat-message>=0.3.8
+llama-index-vector-stores-chroma>=0.1.6
+llama-index-embeddings-bedrock>=0.1.4
