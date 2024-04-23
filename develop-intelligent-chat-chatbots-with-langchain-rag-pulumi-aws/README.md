@@ -55,6 +55,12 @@ To perform an initial deployment, run `pulumi up`
 
 ### Step 3 - Configure the Pulumi stack
 
+Set the AWS region in the Pulumi stack configuration.
+
+```bash
+pulumi config set aws:region <your region>
+```
+
 Set the Flowise and AWS RDS password as configuration in the Pulumi stack.
 
 ```bash
@@ -440,7 +446,7 @@ resources:
             logDriver: awslogs
             options:
               awslogs-group: ${langchain-log-group.name}
-              awslogs-region: eu-central-1
+              awslogs-region: ${aws:region}
               awslogs-stream-prefix: chroma
           name: ${pulumi-project}-${pulumi-stack}-chroma
           portMappings:
@@ -468,7 +474,7 @@ resources:
             logDriver: awslogs
             options:
               awslogs-group: ${langchain-log-group.name}
-              awslogs-region: eu-central-1
+              awslogs-region: ${aws:region}
               awslogs-stream-prefix: flowise
           name: ${pulumi-project}-${pulumi-stack}-service
           portMappings:
