@@ -1,16 +1,22 @@
-# Deploy a Static Website
+# Build and deploy a Static Website in Google Cloud Storage using Python
 
 In the second lab of this workshop, we're going to deploy some static HTML files to a GCP Storage bucket.
+
+1. Activate your virtual env: `source venv/bin/activate`
 
 ## Step 1 &mdash; Create a Bucket
 
 We'll first create the GCP storage bucket that will store our HTML files. Before we do that, we need to import the GCP provider
 
-Add the following to the top of `__main__.py`, with the other `import` directive:
+1. Add the following to the top of `__main__.py`, with the other `import` directive:
 
 ```python
 import pulumi_gcp as gcp
 ```
+
+2. Append to you your `requirements.txt` the `pulumi_gcp`
+3. Run `pip3pip3 install -r requirements.txt`
+
 
 Now that we've imported our GCP provider, we can create our bucket.
 
@@ -39,7 +45,7 @@ bucket = gcp.storage.Bucket(
 
 ## Step 2 &mdash; Create Website Files
 
-Create a directory as a subdirectory of your project:
+1. Create a directory as a subdirectory of your project:
 
 ```bash
 mkdir www
@@ -58,18 +64,19 @@ Create a file `www/index.html` with the following contents:
 <body>
   <p>Hello, S3!</p>
   <p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a> and Python</p>
-  <p>Hosted with ❤️ by GCP!</p>
-  <img src="python.png" />
+  <p>Hosted with ❤️ by GCP!</p> </br>
+  <!-- IMAGE NEEDED, SEE NEXT STEP -->
+  <img src="pulumipus.png" />
 </body>
-
 </html>
 ```
 
-Next, download a Python image to the `www` directory:
+Next, download an image to the `www` directory:
 
 ```bash
-curl https://raw.githubusercontent.com/pulumi/examples/ec43670866809bfd64d3a39f68451f957d3c1e1d/aws-py-s3-folder/www/python.png -o www/python.png
+curl https://www.pulumi.com/logos/brand/pulumipus-8bit.png -o www/pulumipus.png
 ```
+
 
 ## Step 3 &mdash; Configure the ACLs for the Bucket Object
 
@@ -135,6 +142,46 @@ for file in os.listdir(content_dir):
 ```
 
 Notice the use of `depends_on`. This tells Pulumi that our `BucketObjects` should not be created until our `DefaultObjectAccessControl` has been fully provisioned. The `depends_on` is necessary because there's no _explicit_ dependency between the files and the ACL (i.e., there's no output from the `DefaultObjectAccessControl` resource passed to the `BucketObject` inputs). If we didn't explicitly specify `depends_on`, our files may get uploaded before the default ACL is applied, and our files would not get created with the right default permissions.
+
+
+**OPTIONAL** Show [Authenticating with GCP Provider](https://www.pulumi.com/registry/packages/gcp/installation-configuration/#authentication-methods)
+
+There are multiple ways of configuring the GCP Provider with credentials. While most folks will configure the `gcloud` CLI as a getting started solution; a more secure way is to fetch dynamic credentials from an external secrets manager solution. I'm going to use Pulumi ESC to do OIDC. In your sandbox environment, I've copied reference code on how to configure this and if there's any questions here, please post them in the Q&A tab.
+
+Presenter: Please add the following to an `oidc-gcp` ESC Environment:
+```yaml
+# NOTE THIS IS HERE JUST FOR REFERENCE.
+# 
+# I HAVE **NOT** AUTHORIZED THIS PULUMI ORGANIZATION
+# TO USE MY GOOGLE CLOUD OIDC
+# TO DO SO, I'D HAVE TO UPDATE MY AUDIENCE LIST ON GCP
+# 
+# ALSO, NOTE THE GCP PROJECT NEEDS TO BE NUMERICAL VALUE
+values:
+  gcp:
+    login:
+      fn::open::gcp-login:
+        project: 5631433690
+        oidc:
+          workloadPoolId: prod-pool
+          providerId: pulumi-cloud-oidc
+          serviceAccount: pulumi-cloud@pulumi-workshops-project.iam.gserviceaccount.com
+  environmentVariables:
+    GOOGLE_PROJECT: ${gcp.login.project}
+    CLOUDSDK_AUTH_ACCESS_TOKEN: ${gcp.login.accessToken}
+    GOOGLE_REGION: us-central1
+    PULUMI_GCP_SKIP_REGION_VALIDATION: true
+  pulumiConfig:
+    gcp:accessToken: ${gcp.login.accessToken}
+    gcp:region: us-central1
+    gcp:project: pulumi-workshops-project
+```
+
+We're going to [add a reference to GCP OIDC config environment in my Dev stack via the Pulumi CLI](https://www.pulumi.com/docs/cli/commands/pulumi_config_env_add/)
+
+```bash
+pulumi config env add oidc-gcp
+```
 
 ## Step 5 &mdash; Run `pulumi up`
 

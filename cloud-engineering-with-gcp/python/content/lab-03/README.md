@@ -1,4 +1,4 @@
-# Build and Deploy a Container on Google Cloud Run
+# Build and deploy a Container on Google Cloud Run using Python
 
 In our last lab, we deployed some static HTML files to a Google Cloud Storage bucket. In the third lab of this workshop, we will create a Docker image to run our website on NGINX and deploy it to run on [Google Cloud Run](https://cloud.google.com/run/).
 
@@ -37,7 +37,7 @@ mkdir docker
 
 Create a file `docker/Dockerfile` with the following contents:
 
-```docker
+```dockerfile
 FROM nginx:mainline-alpine
 RUN rm /etc/nginx/conf.d/*
 ADD hello.conf /etc/nginx/conf.d/
@@ -68,19 +68,50 @@ Create a file `docker/index.html` with the following contents:
 </head>
 
 <body>
-  <p>Hello, S3!</p>
+  <p>Hello, CloudRun!</p>
   <p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a> and Python</p>
   <p>Hosted with ❤️ by GCP!</p>
-  <img src="python.png" />
 </body>
-
 </html>
 ```
 
-And finally, download a Python image:
+**OPTIONAL** Show [Authenticating with GCP Provider](https://www.pulumi.com/registry/packages/gcp/installation-configuration/#authentication-methods)
+
+There are multiple ways of configuring the GCP Provider with credentials. While most folks will configure the `gcloud` CLI as a getting started solution; a more secure way is to fetch dynamic credentials from an external secrets manager solution. I'm going to use Pulumi ESC to do OIDC. In your sandbox environment, I've copied reference code on how to configure this and if there's any questions here, please post them in the Q&A tab.
+
+Presenter: Please add the following to an `oidc-gcp` ESC Environment:
+```yaml
+# NOTE THIS IS HERE JUST FOR REFERENCE.
+# 
+# I HAVE **NOT** AUTHORIZED THIS PULUMI ORGANIZATION
+# TO USE MY GOOGLE CLOUD OIDC
+# TO DO SO, I'D HAVE TO UPDATE MY AUDIENCE LIST ON GCP
+# 
+# ALSO, NOTE THE GCP PROJECT NEEDS TO BE NUMERICAL VALUE
+values:
+  gcp:
+    login:
+      fn::open::gcp-login:
+        project: 5631433690
+        oidc:
+          workloadPoolId: prod-pool
+          providerId: pulumi-cloud-oidc
+          serviceAccount: pulumi-cloud@pulumi-workshops-project.iam.gserviceaccount.com
+  environmentVariables:
+    GOOGLE_PROJECT: ${gcp.login.project}
+    CLOUDSDK_AUTH_ACCESS_TOKEN: ${gcp.login.accessToken}
+    GOOGLE_REGION: us-central1
+    PULUMI_GCP_SKIP_REGION_VALIDATION: true
+  pulumiConfig:
+    gcp:accessToken: ${gcp.login.accessToken}
+    gcp:region: us-central1
+    gcp:project: pulumi-workshops-project
+```
+
+We're going to [add a reference to GCP OIDC config environment in my Dev stack via the Pulumi CLI](https://www.pulumi.com/docs/cli/commands/pulumi_config_env_add/)
 
 ```bash
-curl https://raw.githubusercontent.com/pulumi/examples/ec43670866809bfd64d3a39f68451f957d3c1e1d/aws-py-s3-folder/www/python.png -o docker/python.png
+pulumi config env add oidc-gcp
 ```
 
 ## Step 3 &mdash; Create an Artifact Registry and Docker Image
@@ -91,19 +122,20 @@ Before we add anything to our Pulumi program, let's make sure we configure the D
 gcloud auth configure-docker us-central1-docker.pkg.dev
 ```
 
+
 In addition to the GCP provider, we'll also need to install the [Pulumi Docker provider](https://www.pulumi.com/registry/packages/docker/) so we can build our image. We can do this using `pip`.
 
 Add the following to your `requirements.txt`:
 
 ```text
-pulumi_gcp>=6.0.0,<7.0.0
-pulumi_docker>=3.0.0,<4.0.0
+pulumi_gcp
+pulumi_docker
 ```
 
 Install your dependencies using pip:
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Next, we need to import the GCP and Docker provider SDKs.
@@ -203,7 +235,14 @@ image = docker.Image(
 
 Now we've built our Docker image, we'll need to configure CloudRun to run it.
 
-Add the following code to your `__main__.py`:
+1. Deploy current changes as it may take a bit of time:
+
+```bash
+pulumi up
+```
+
+
+2. Add the following code to your `__main__.py`:
 
 ```python
 service = gcp.cloudrun.Service(
@@ -220,13 +259,13 @@ service = gcp.cloudrun.Service(
                             container_port=80,
                         ),
                     ],
-                    resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
-                        requests={"memory": "64Mi", "cpu": "200m"},
-                        limits={"memory": "265Mi", "cpu": "1000m"},
-                    ),
+                    # resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
+                    #     requests={"memory": "64Mi", "cpu": "200m"},
+                    #     limits={"memory": "265Mi", "cpu": "1000m"},
+                    # ),
                 ),
             ],
-            container_concurrency=80,
+            container_concurrency=3,
         ),
     ),
 )
@@ -288,13 +327,13 @@ service = gcp.cloudrun.Service(
                             container_port=80,
                         ),
                     ],
-                    resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
-                        requests={"memory": "64Mi", "cpu": "200m"},
-                        limits={"memory": "265Mi", "cpu": "1000m"},
-                    ),
+                    # resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
+                    #     requests={"memory": "64Mi", "cpu": "200m"},
+                    #     limits={"memory": "265Mi", "cpu": "1000m"},
+                    # ),
                 ),
             ],
-            container_concurrency=80,
+            container_concurrency=3,
         ),
     ),
 )
