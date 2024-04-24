@@ -133,10 +133,15 @@ resources:
         - "app-config.yaml"
 
 outputs:
-  image:
-    value: ${backstageImage.repoDigest}
+  image: ${backstageImage.repoDigest}
+  backstageUrl: http://${backstageContainerInstancePublicIp.publicIpAddress}:7007
+
 
 variables:
   backstageAvailabilityDomains:
     fn::oci:Identity/getAvailabilityDomains:getAvailabilityDomains:
       compartmentId: ${backstageCompartment.compartmentId}
+
+  backstageContainerInstancePublicIp:
+    fn::oci:Core/getVnic:getVnic:
+      vnicId: ${backstageContainerInstance.vnics[0].vnicId}
