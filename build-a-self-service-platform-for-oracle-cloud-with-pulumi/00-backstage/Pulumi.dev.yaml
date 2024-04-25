@@ -1,9 +1,0 @@
-config:
-  00-backstage:auth-token:
-    secure: AAABAAarBQ/DsFNHepsHdVHVVFEyqKGJYUxephEwE2Sp5KGGVkQpEPgiVe3SX1ufM/Mz/g==
-  00-backstage:github-token:
-    secure: AAABAPGZ2SHgkWOiuLmRsizGGUQwg5wraVRj3VwmcOnYFd5qp4vNLCWm1CDuFfIfdHTjo9wZaYzavc927OEipmnX1RfPflOzC3/ZvJbPnI5f3uNWixYAkCONzP2VyGNk9qads3BCwsoqfLIz8AX0zGpZJBAmPscdT5nCSlc=
-  00-backstage:pulumi-pat:
-    secure: AAABAMdmGfokWBZc3+kaCBwjGF/NK9ZvEF00Iir4rwi7wZagjhRwtF7Ark6+Npdy4MdSPfEZ8Q+0b6+9x2qZB6V/8g1JHQIntliQNg==
-  00-backstage:username: engin.diri@ediri.de
-  oci:region: eu-frankfurt-1

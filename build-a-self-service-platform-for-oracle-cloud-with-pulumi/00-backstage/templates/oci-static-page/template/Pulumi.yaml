@@ -3,25 +3,12 @@ runtime: yaml
 description: A minimal Pulumi YAML program
 
 resources:
-  compartment:
-    properties:
-      description: "Compartment for ${{ values.name }}"
-      enableDelete: true
-      name: ${{values.name }}-compartment
-    type: oci:Identity:Compartment
-
   bucket:
     type: oci:ObjectStorage:Bucket
     properties:
-      compartmentId: ${compartment.id}
+      compartmentId: ${compartmentId}
       namespace: ${namespace.namespace}
       accessType: "ObjectReadWithoutList"
-
-  waitForBucket:
-    type: command:local:Command
-    properties:
-      create: "sleep 3m"
-      update: "sleep 3m"
 
   object:
     type: oci:ObjectStorage:StorageObject
@@ -32,14 +19,11 @@ resources:
       content: |
         ${{values.content}}
       contentType: "text/html"
-    options:
-      dependsOn:
-      - ${waitForBucket}
 
 variables:
+  compartmentId: ocid1.compartment.oc1..aaaaaaaavt4axn32mx65ryw7cnnh6hctn3rwosbrudrovfpdah5diluehb5a
   namespace:
     fn::oci:ObjectStorage/getNamespace:getNamespace:
-      #compartmentId: ${backstageCompartment.id}
 
 outputs:
   bucketURL: https://${bucket.namespace}.objectstorage.${oci:region}.oci.customer-oci.com/n/${bucket.namespace}/b/${bucket.name}/o/${object.object}
