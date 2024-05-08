@@ -14,6 +14,7 @@ from llama_index.embeddings.bedrock import BedrockEmbedding
 from llama_index.core.text_splitter import SentenceSplitter
 from llama_index.vector_stores.chroma import ChromaVectorStore
 from llama_index.core.storage.storage_context import StorageContext
+from llama_index.core.chat_engine.types import ChatMode
 
 load_dotenv()
 
@@ -98,8 +99,8 @@ def build_message_list():
 
 def generate_response():
     zipped_messages = build_message_list()
-    chat_engine = vector_index.as_chat_engine(chat_mode="condense_question")
-    ai_response = chat_engine.chat(zipped_messages)
+    chat_engine = vector_index.as_chat_engine(chat_mode=ChatMode.CONDENSE_QUESTION)
+    ai_response = chat_engine.chat(st.session_state.entered_prompt,zipped_messages)
     return ai_response
 
 
