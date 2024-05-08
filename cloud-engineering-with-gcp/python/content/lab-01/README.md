@@ -68,7 +68,7 @@ Pulumi created a `virtualenv` for us when we created our `my-first-gcp-app` proj
 source venv/bin/activate
 ```
 
-In order to interact with GCP, we need to install the GCP provider. We can do this using `pi3`.
+In order to interact with GCP, we need to install the GCP provider. We can do this using `pip3`.
 
 Add the following line to `requirements.txt`:
 
