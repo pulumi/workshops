@@ -1,4 +1,4 @@
-# Build and Deploy a Container on Google Cloud Run
+# Build and deploy a Container on Google Cloud Run using Python
 
 In our last lab, we deployed some static HTML files to a Google Cloud Storage bucket. In the third lab of this workshop, we will create a Docker image to run our website on NGINX and deploy it to run on [Google Cloud Run](https://cloud.google.com/run/).
 
@@ -37,7 +37,7 @@ mkdir docker
 
 Create a file `docker/Dockerfile` with the following contents:
 
-```docker
+```dockerfile
 FROM nginx:mainline-alpine
 RUN rm /etc/nginx/conf.d/*
 ADD hello.conf /etc/nginx/conf.d/
@@ -68,19 +68,11 @@ Create a file `docker/index.html` with the following contents:
 </head>
 
 <body>
-  <p>Hello, S3!</p>
+  <p>Hello, CloudRun!</p>
   <p>Made with ❤️ with <a href="https://pulumi.com">Pulumi</a> and Python</p>
   <p>Hosted with ❤️ by GCP!</p>
-  <img src="python.png" />
 </body>
-
 </html>
-```
-
-And finally, download a Python image:
-
-```bash
-curl https://raw.githubusercontent.com/pulumi/examples/ec43670866809bfd64d3a39f68451f957d3c1e1d/aws-py-s3-folder/www/python.png -o docker/python.png
 ```
 
 ## Step 3 &mdash; Create an Artifact Registry and Docker Image
@@ -91,19 +83,19 @@ Before we add anything to our Pulumi program, let's make sure we configure the D
 gcloud auth configure-docker us-central1-docker.pkg.dev
 ```
 
-In addition to the GCP provider, we'll also need to install the [Pulumi Docker provider](https://www.pulumi.com/registry/packages/docker/) so we can build our image. We can do this using `pip`.
+In addition to the GCP provider, we'll also need to install the [Pulumi Docker provider](https://www.pulumi.com/registry/packages/docker/) so we can build our image. We can do this using `pip3`.
 
 Add the following to your `requirements.txt`:
 
 ```text
 pulumi_gcp>=6.0.0,<7.0.0
-pulumi_docker>=3.0.0,<4.0.0
+pulumi_docker>=4.0.0,<5.0.0
 ```
 
 Install your dependencies using pip:
 
 ```bash
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 Next, we need to import the GCP and Docker provider SDKs.
@@ -156,7 +148,10 @@ image = docker.Image(
 )
 ```
 
-At this stage, your `__main__.py` file should look like this:
+<details>
+<summary>🕵️ Code Check. Expand to see the full `__main.py__` contents so far </summary>
+
+At this stage, your `__main__.py` file should match the following code:
 
 ```python
 """A Python Pulumi program"""
@@ -198,41 +193,51 @@ image = docker.Image(
     ),
 )
 ```
+
+</details>
 
 ## Step 4 &mdash; Configure your CloudRun Service
 
 Now we've built our Docker image, we'll need to configure CloudRun to run it.
 
-Add the following code to your `__main__.py`:
+1. Deploy current changes as it may take a bit of time:
 
-```python
-service = gcp.cloudrun.Service(
-    "temp-app",
-    name="temp-app",
-    location=repo.location,
-    template=gcp.cloudrun.ServiceTemplateArgs(
-        spec=gcp.cloudrun.ServiceTemplateSpecArgs(
-            containers=[
-                gcp.cloudrun.ServiceTemplateSpecContainerArgs(
-                    image=image.base_image_name,
-                    ports=[
-                        gcp.cloudrun.ServiceTemplateSpecContainerPortArgs(
-                            container_port=80,
-                        ),
-                    ],
-                    resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
-                        requests={"memory": "64Mi", "cpu": "200m"},
-                        limits={"memory": "265Mi", "cpu": "1000m"},
+    ```bash
+    pulumi up
+    ```
+
+2. Add the following code to your `__main__.py`:
+
+    ```python
+    service = gcp.cloudrun.Service(
+        "temp-app",
+        name="temp-app",
+        location=repo.location,
+        template=gcp.cloudrun.ServiceTemplateArgs(
+            spec=gcp.cloudrun.ServiceTemplateSpecArgs(
+                containers=[
+                    gcp.cloudrun.ServiceTemplateSpecContainerArgs(
+                        image=image.base_image_name,
+                        ports=[
+                            gcp.cloudrun.ServiceTemplateSpecContainerPortArgs(
+                                container_port=80,
+                            ),
+                        ],
+                        # resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
+                        #     requests={"memory": "64Mi", "cpu": "200m"},
+                        #     limits={"memory": "265Mi", "cpu": "1000m"},
+                        # ),
                     ),
-                ),
-            ],
-            container_concurrency=80,
+                ],
+                container_concurrency=3,
+            ),
         ),
-    ),
-)
-```
+    )
+    ```
 
-At this stage, your `__main__.py` file should match this code:
+<details>
+    <summary>🕵️ Code Check. Expand to see the full `__main.py__` contents so far </summary>
+At this stage, your `__main__.py` file should match the following code:
 
 ```python
 """A Python Pulumi program"""
@@ -288,17 +293,19 @@ service = gcp.cloudrun.Service(
                             container_port=80,
                         ),
                     ],
-                    resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
-                        requests={"memory": "64Mi", "cpu": "200m"},
-                        limits={"memory": "265Mi", "cpu": "1000m"},
-                    ),
+                    # resources=gcp.cloudrun.ServiceTemplateSpecContainerResourcesArgs(
+                    #     requests={"memory": "64Mi", "cpu": "200m"},
+                    #     limits={"memory": "265Mi", "cpu": "1000m"},
+                    # ),
                 ),
             ],
-            container_concurrency=80,
+            container_concurrency=3,
         ),
     ),
 )
 ```
+
+</details>
 
 ## Step 5 &mdash; Set up public access
 
@@ -327,7 +334,10 @@ Our final step is to build our container URL. Add the following to the end of yo
 pulumi.export("cloud_run_service_url", service.statuses[0].url)
 ```
 
-At this point, your `__main__.py` should look like this:
+<details>
+<summary>🕵️ Code Check. Expand to see the full `__main.py__` contents so far </summary>
+
+At this stage, your `__main__.py` file should match the following code:
 
 ```python
 """A Python Pulumi program"""
@@ -407,6 +417,8 @@ gcp.cloudrun.IamMember(
 
 pulumi.export("cloud_run_service_url", service.statuses[0].url)
 ```
+
+</details>
 
 ## Step 6 &mdash; Run `pulumi up`
 
