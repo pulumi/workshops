@@ -72,7 +72,7 @@ To go through this workshop with us, here is what you need:
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
 
-## **Part I** Set up your Pulumi project with Pulumi ESC
+## **Part I**. Set up your Pulumi project with Pulumi ESC
 
 This workshop picks up right where the [Getting Started](../aws-getting-started-cicd/) workshop left off, so we'll start with a sample application and a basic pipeline already in hand.
 
@@ -82,16 +82,18 @@ Attendees will be able to authenticate using Dynamic Credentials by adding a Pul
 
 ### 📚 I. Concepts
 
-**Dynamic Credentials** Unlike static credentials, which remain constant over time, dynamic credentials are generated on-the-fly and have a short validity period, enhancing security by reducing the risk of unauthorized access from credential theft or misuse. It also eliminates the need for developers to manage the lifecycle of individual access keys for instances.
+**Dynamic Credentials**: Unlike static credentials, which remain constant over time, dynamic credentials are generated on the fly and have a short validity period, enhancing security by reducing the risk of unauthorized access from credential theft or misuse. It also eliminates the need for developers to manage the lifecycle of individual access keys for instances.
 
-**OID*C** OpenID Connect (OIDC) is an authentication protocol built on top of the OAuth 2.0 framework. enables clients to authenticate users with a high degree of confidence while supporting single sign-on (SSO) and other identity-related functionalities such.
+**OIDC**:  OpenID Connect (OIDC) is an authentication protocol built on top of the OAuth 2.0 framework. enables clients to authenticate users with a high degree of confidence while supporting single sign-on (SSO) and other identity-related functionalities.
 
-**Pulumi ESC** Pulumi ESC enables you to define Environments, which contain collections of secrets and configuration. Each Environment can be composed from multiple environments. An Environment may be used to store dynamic credentials from an OIDC IdP such as Pulumi Cloud to connect to your AWS.
+**Pulumi ESC**: Pulumi ESC enables you to define Environments, which contain collections of secrets and configurations. Each Environment can be composed of multiple environments. An Environment may be used to store dynamic credentials from an OIDC IdP such as Pulumi Cloud to connect to your AWS.
 
 ### 🎬 I. Steps
 
 <details>
 <summary> ✅ Clone the Getting Started workshop solution </summary>
+
+Presenter: Do this step beforehand and go over what you have in the repo.
 
 ```bash
 # !!! Update the owner value to your GitHub handle
@@ -120,6 +122,8 @@ $ git push -u origin main
 <details>
 <summary> ✅ Add a GitHub secret to store your Pulumi access token to be used by Actions. </summary>
 
+Presenter: Have a token already created and ready to paste.
+
 ```bash
 # Login to GitHub, if necessary
 $ gh auth login
@@ -138,9 +142,11 @@ $ gh secret list
 <details>
 <summary> ✅ Use a Pulumi ESC Environment to configure AWS Dynamic Credentials in your Pulumi Stack </summary>
 
-NOTE: If your AWS Account already has an OIDC IdP for Pulumi Cloud, this will **not** work. Instead, just update your exiating one's audience for the AWS IAM Identity Provider and also add the name of your Pulumi Org to the Trust Relationship JSON in the corresponding AWS IAM Role.
+Presenter Notes:
 
-NOTE 2: The reference Pulumi template will change in the very near future so it's much better. Keep an eye on [this GitHub Issue](https://github.com/pulumi/pulumi-pulumiservice/issues/225)
+ - If your AWS Account already has an OIDC IDP for Pulumi Cloud, this will **not** work. Instead, just update your existing one's audience for the AWS IAM Identity Provider and also add the name of your Pulumi Org to the Trust Relationship JSON in the corresponding AWS IAM Role.
+- The reference Pulumi template will change in the very near future, once [this GitHub Issue](https://github.com/pulumi/pulumi-pulumiservice/issues/225) is resolved.
+- Complete this step beforehand.
 
 ```bash
 # Ensure you're in ./infra
@@ -149,7 +155,7 @@ NOTE 2: The reference Pulumi template will change in the very near future so it'
 $ pulumi new https://github.com/desteves/aws-oidc-typescript/infra --dir aws-oidc
 # Go through the wizard and update the defaults as necessary
 
-$ pulumi up --yes --cwd aws-oidc
+$ pulumi up --yes --cwd aws-oidc  --stack dev
 # wait for the resources to get created; this can take a couple of minutes
 
 # Obtain the name of the ESC Environment
@@ -164,14 +170,10 @@ $ pulumi preview
 
 </details>
 
-<!-- Note to presenter: run pulumi up ahead to save time. -->
-
 <details>
 <summary> ✅ Commit the changes </summary>
 
 ```bash
-# Ensure you're in the project, `cicd-workshop-advanced`.
-
 # Commit your changes
 $ git add .
 $ git commit -m "add esc"
@@ -199,7 +201,7 @@ $ git checkout main
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
 
-## **Part II** Add CIS compliance with Policy as Code
+## **Part II**. Add CIS compliance with Policy as Code
 
 ### 🎯 II. Goal
 
@@ -207,11 +209,11 @@ Attendees will be able to add compliance checks to the CI/CD pipeline using [Pul
 
 ### 📚 II. Concepts
 
-**Cloud compliance** refers to the process of ensuring that cloud-based systems, services, and data storage adhere to relevant laws, regulations, standards, and best practices governing security, privacy, and data protection.
+**Cloud compliance**: refers to the process of ensuring that cloud-based systems, services, and data storage adhere to relevant laws, regulations, standards, and best practices governing security, privacy, and data protection.
 
-**Policy as Code** involves codifying policy definitions, which allows for their automated enforcement and evaluation within various stages of IT operations and development pipelines. This method leverages version control systems, automation tools, and continuous integration/continuous deployment (CI/CD) pipelines to ensure that policies governing security, compliance, resource usage, and access controls are consistently applied across the entire ecosystem.
+**Policy as Code**: involves codifying policy definitions, which allows for their automated enforcement and evaluation within various stages of IT operations and development pipelines. This method leverages version control systems, automation tools, and continuous integration/continuous deployment (CI/CD) pipelines to ensure that policies governing security, compliance, resource usage, and access controls are consistently applied across the entire ecosystem.
 
-**Built-in packs** bundle compliance policies that are easily extendable with the aim to speed up development and ensure best practices from day one.
+**Built-in packs**: bundle compliance policies that are easily extendable to speed up development and ensure best practices from day one.
 
 ### 🎬 II. Steps
 
@@ -300,7 +302,7 @@ $ gh pr merge $m --squash
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
 
-## **Part III** Add drift detection
+## **Part III**. Add drift detection
 
 ### 🎯 III. Goal
 
@@ -312,7 +314,7 @@ Attendees will be able to programmatically identify when a drift has occurred in
 
 **Drift detection** refers to the process of identifying discrepancies between the actual state of your infrastructure and its expected state as defined by your IaC configurations. This process is crucial for maintaining consistency, reliability, and security in cloud environments, where infrastructure components are dynamically provisioned and managed through code.
 
-**Reconciling the infrastructure** Once drift is detected, the next step is to reconcile the infrastructure, which means resolving the differences between the actual state and the intended state. Reconciliation can be approached in different ways but two common approaches are to update the infrastructure to match the code or update the code to reflect the detected changes.
+**Reconciling the infrastructure** Once a drift is detected, the next step is to reconcile the infrastructure, which means resolving the differences between the actual state and the intended state. Reconciliation can be approached in different ways but two common approaches are to update the infrastructure to match the code or update the code to reflect the detected changes.
 
 Both drift detection and infrastructure reconciliation are fundamental to the practice of infrastructure as code, allowing teams to maintain control over their environments and ensure that their infrastructure remains in a known, good state.
 
@@ -424,7 +426,7 @@ Attendees will be able to configure ephemeral cloud environments to deploy the i
 
 ### 📚 IV. Concepts
 
-**Test in isolation** refers to the practice of testing components or units of an application without the interference from other parts of the system.
+**Test in isolation** refers to the practice of testing components or units of an application without interference from other parts of the system.
 
 **Pulumi Deployments Review Stacks** An ephemeral isolated Pulumi Stack to test your IaC via a number of configurations.
 
@@ -464,7 +466,7 @@ pulumi new https://github.com/desteves/reviewstacks-typescript/tree/main/infra -
 # Create the Pulumi Deployments Review Stacks configuration
 cd deployment-settings
 pulumi config env add aws-oidc-env-done
-pulumi up --yes
+pulumi up --yes  --stack dev
 # wait for the resource to get created; this can take a couple of seconds
 ```
 
