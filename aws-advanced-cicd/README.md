@@ -366,9 +366,9 @@ jobs:
         uses: pulumi/actions@v5
         with:
           command: preview
-          refresh: true
           stack-name: pulumi-sandbox-diana/workshop/dev ## !!!! Update this
           expect-no-changes: true
+          refresh: true
           work-dir: ./infra
 ```
 
@@ -406,15 +406,9 @@ $ gh pr merge $m --squash
 <details>
 <summary> ✅ Test the drift detection action </summary>
 
-- Run from the broswer
-- Make a change:
-
-```bash
-aws sso login --profile work
-aws s3api put-bucket-tagging --bucket bucket-fe728d3 --tagging 'TagSet=[{Key=drift,Value=away}]' --region us-west-2
-```
-
-- Re-run from the broswer
+- Run the [Drift Action in the browser](https://github.com/desteves/live-workshop/actions).
+- [Make a change](https://us-west-2.console.aws.amazon.com/s3/buckets/bucket-ba7ee56?region=us-west-2&bucketType=general&tab=properties) by renaming the `error.html` to `404.html`
+- Re-run the [Drift Action in the browser](https://github.com/desteves/live-workshop/actions).
 
 </details>
 
@@ -432,15 +426,25 @@ Attendees will be able to configure ephemeral cloud environments to deploy the i
 
 ### 🎬 IV. Steps
 
+<details>
+<summary> ✅ Install the Pulumi GitHub App and Configure Pulumi Deployments </summary>
 
-✅ [Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/#installation-and-configuration)
+[Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/#installation-and-configuration)
 
-Check your repository has been added to the [access list](https://github.com/settings/installations/46735415)
+Check your repository has been added to the access list.
 
-[Link to Pulumi ORG](https://app.pulumi.com/pulumi-sandbox-diana/settings/integrations)
+[Link to Pulumi Sandbox Diana ORG](https://app.pulumi.com/pulumi-sandbox-diana/settings/integrations)
+[Link to Pulumi Deployment Config Settings](https://app.pulumi.com/pulumi-sandbox-diana/workshop/dev/settings/deploy)
+
+</details>
 
 <details>
+
+**!!! REMEMBER TO UNPAUSE DEPLOYMENTS IF PREVIOUSLY PAUSED !!!**
+
 <summary> ✅ Add Review Stacks by using a Pulumi template </summary>
+
+Presenter: For the live demo, just use the UI as it's far more presentable.
 
 ```bash
 # Ensure you're in `./infra`.
