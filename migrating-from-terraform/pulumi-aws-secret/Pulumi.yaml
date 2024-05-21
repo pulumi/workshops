@@ -1,0 +1,7 @@
+name: pulumi-aws-secret
+runtime: nodejs
+description: create a secret in AWS secrets manager and give its value as a required secret from the stack config file
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://www.pulumi.com/ai/api/project/35fbb167-1a6a-4fc4-90cf-dcafa3850e47.zip

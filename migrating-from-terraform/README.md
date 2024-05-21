@@ -1,16 +1,46 @@
 # migrating-from-terraform
 
+## Quick Demo: Secrets Handling in TF vs. Pulumi
+
+This quick demo illustrates the differences in handling sensitive values between Pulumi and Terraform:
+
+1. Run the Terraform config that creates an AWS Secrets Manager secret:
+
+    ```bash
+    cd terraform-aws-secret
+    terraform init && terraform apply --auto-approve
+    ```
+
+1. Open `terraform.tfstate` and note that the value for `secret_string` is in plaintext in the TF state file.
+
+    Also, Terraform does not have an out-of-the-box solution for handling secrets in config files - it requires using TF Cloud or TF Enterprise.
+
+1. Now, run the comparable Pulumi program, starting with setting a secret in the stack config file:
+
+    ```bash
+    cd ../pulumi-aws-secret
+    pulumi config set mySecretValue password123 --secret
+    ```
+
+    Show the contents of `Pulumi.dev.yaml`: The value is stored only as ciphertext.
+
+1. Run the Pulumi program and dump the stack file:
+
+    ```bash
+    pulumi stack output > pulumi-stack.json
+    ```
+
+    Note again that the value of the secret is only stored in ciphertext in the Pulumi state file.
+
 ## Demo: Coexist with Terraform by consuming Terraform state file outputs
 
 In this exercise, you'll learn how organizations with existing Terraform codebases can consume Terraform outputs to create new infrastructure using Pulumi.
 
-1. Deploy the Terraform config:
+1. Deploy the Terraform config that contains a VPC:
 
     ```bash
     cd terraform-vpc
     terraform init && terraform apply -auto-approve
-    # Wait for the resource creation
-    cd ..
     ```
 
 1. Create a new Pulumi program:

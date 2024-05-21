@@ -1,0 +1,13 @@
+{
+  "name": "pulumi-aws-secret",
+  "description": "create a secret in AWS secrets manager and give its value as a required secret from the stack config file",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "@pulumi/pulumi": "*",
+    "@pulumi/aws": "6.13.3"
+  }
+}
