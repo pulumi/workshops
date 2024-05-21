@@ -1,0 +1,11 @@
+{
+	"name": "terraform-vpc",
+	"devDependencies": {
+		"@types/node": "^14"
+	},
+	"dependencies": {
+		"typescript": "^4.0.0",
+		"@pulumi/pulumi": "^3.0.0",
+		"@pulumi/aws": "6.36.0"
+	}
+}

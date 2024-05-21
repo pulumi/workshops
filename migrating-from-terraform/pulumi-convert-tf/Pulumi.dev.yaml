@@ -1,0 +1,5 @@
+config:
+  aws:
+    defaultTags:
+      tags:
+        Name: "convert-tf"
