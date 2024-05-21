@@ -68,7 +68,7 @@ Hint: Ensure the US region used in the Pulumi Stack matches that of the VPC.
     pulumi stack rm dev --force
     ```
 
-## Exercise 4: Replace Terraform by converting from Terraform to Pulumi
+## Demo: Replace Terraform via `pulumi convert` and `pulumi import`
 
 In this exercise, you will take a Terraform program containing a VPC and convert it to Pulumi code in the language of your choice:
 
@@ -95,23 +95,17 @@ In this exercise, you will take a Terraform program containing a VPC and convert
 1. Convert the Terraform code to Pulumi
 
     ```bash
-    pulumi convert --from terraform --out ../pulumi-convert-tf-ts --language typescript
+    pulumi convert --from terraform --out ../pulumi-convert-tf --language typescript
     ```
 
-    or
-
-    ```bash
-    pulumi convert --from terraform --out ../pulumi-convert-tf-py --language python
-    ```
-
-    This command will generate code, but the resources will not yet be under Pulumi management because they have not been imported to your Pulumi state.
+    This command will generate code, but the resources will not yet be under Pulumi management because they have not been imported to your Pulumi state. Note that the output of `pulumi import` does not contain the symbols (e.g. subnets have raw VPC IDs rather than the output `vpc.id`). This is why `pulumi convert` is generally preferred over `pulumi import` (when available).
 
 1. Import the resources from your TF state file into your Pulumi state file:
 
     ```bash
     cd ../pulumi-convert-tf-ts # or cd ../pulumi-convert-tf-py
     pulumi stack init dev
-    pulumi import --from terraform ../terraform/terraform.tfstate --protect=false --generate-code=false
+    pulumi import --from terraform ../terraform/terraform.tfstate --protect=false --generate-code=false # Because we already have the code
     ```
 
 1. Check to see whether there any additional massaging is necessary. For example, you may need to change the tags from `name` to `Name`. (Loss of case-sensitivity for tag names in conversion from Terraform [is a known issue](https://github.com/pulumi/pulumi-converter-terraform/issues/100).)
@@ -143,12 +137,5 @@ In this exercise, you will take a Terraform program containing a VPC and convert
     Resources:
         29 unchanged
     ```
-
-1. Reformat and refactor the generated Pulumi code for improved readability:
-
-    - Fix whitespacing to make the code more readable.
-    - Refactor to use 2 loops: one for the public subnets (based of the list of public subnet CIDRs), and a similar loop for the private subnets.
-
-    Throughout the process, you should continuously run `pulumi preview` to make sure you have not accidentally created drift.
 
 At this point, your resources are under Pulumi control and in a production scenario the Terraform state file should be archived to avoid any confusion as to the source of truth for your the state of your resources.
