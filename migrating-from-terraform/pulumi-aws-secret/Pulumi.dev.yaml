@@ -1,0 +1,3 @@
+config:
+  pulumi-aws-secret:mySecretValue:
+    secure: AAABADY15ItBBitUAk3OytY8iFrNmtLX9TSQKT0wCgQjG+rQCsnCPoxwkaZgs6G0YO5sWByv

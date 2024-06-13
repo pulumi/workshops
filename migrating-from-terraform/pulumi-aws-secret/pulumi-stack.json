@@ -1,0 +1,147 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2024-05-21T12:59:57.977984-04:00",
+            "magic": "48b2cc90b770e8e0d16272e1748907818eb6a7cb89163981ecb8d12f701c5592",
+            "version": "v3.116.1"
+        },
+        "secrets_providers": {
+            "type": "service",
+            "state": {
+                "url": "https://api.pulumi.com",
+                "owner": "jkodrofftest",
+                "project": "pulumi-aws-secret",
+                "stack": "dev"
+            }
+        },
+        "resources": [
+            {
+                "urn": "urn:pulumi:dev::pulumi-aws-secret::pulumi:pulumi:Stack::pulumi-aws-secret-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "outputs": {
+                    "secretArn": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV",
+                    "secretName": "mySecretNameAppeaseDemoGods"
+                },
+                "created": "2024-05-21T16:58:38.91536Z",
+                "modified": "2024-05-21T16:58:38.91536Z",
+                "sourcePosition": "project:///node_modules/@pulumi/runtime/stack.ts#36,23"
+            },
+            {
+                "urn": "urn:pulumi:dev::pulumi-aws-secret::pulumi:providers:aws::default_6_13_3",
+                "custom": true,
+                "id": "67d411c6-0c02-4d06-8a41-5fdb200f6cac",
+                "type": "pulumi:providers:aws",
+                "inputs": {
+                    "region": "us-west-2",
+                    "skipCredentialsValidation": "false",
+                    "skipMetadataApiCheck": "true",
+                    "skipRegionValidation": "true",
+                    "version": "6.13.3"
+                },
+                "outputs": {
+                    "region": "us-west-2",
+                    "skipCredentialsValidation": "false",
+                    "skipMetadataApiCheck": "true",
+                    "skipRegionValidation": "true",
+                    "version": "6.13.3"
+                },
+                "created": "2024-05-21T16:58:41.105606Z",
+                "modified": "2024-05-21T16:58:41.105606Z"
+            },
+            {
+                "urn": "urn:pulumi:dev::pulumi-aws-secret::aws:secretsmanager/secret:Secret::mySecret",
+                "custom": true,
+                "id": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV",
+                "type": "aws:secretsmanager/secret:Secret",
+                "inputs": {
+                    "__defaults": [
+                        "forceOverwriteReplicaSecret",
+                        "recoveryWindowInDays"
+                    ],
+                    "forceOverwriteReplicaSecret": false,
+                    "name": "mySecretNameAppeaseDemoGods",
+                    "recoveryWindowInDays": 30
+                },
+                "outputs": {
+                    "arn": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV",
+                    "description": "",
+                    "forceOverwriteReplicaSecret": false,
+                    "id": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV",
+                    "kmsKeyId": "",
+                    "name": "mySecretNameAppeaseDemoGods",
+                    "namePrefix": "",
+                    "policy": "",
+                    "recoveryWindowInDays": 30,
+                    "replicas": [],
+                    "tags": {},
+                    "tagsAll": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "ciphertext": "AAABAA6xgkBsmHaEwFBMLNtpK5pCKYGMh4njOE0X52GA7w=="
+                    }
+                },
+                "parent": "urn:pulumi:dev::pulumi-aws-secret::pulumi:pulumi:Stack::pulumi-aws-secret-dev",
+                "provider": "urn:pulumi:dev::pulumi-aws-secret::pulumi:providers:aws::default_6_13_3::67d411c6-0c02-4d06-8a41-5fdb200f6cac",
+                "propertyDependencies": {
+                    "name": []
+                },
+                "additionalSecretOutputs": [
+                    "tagsAll"
+                ],
+                "created": "2024-05-21T16:59:56.803298Z",
+                "modified": "2024-05-21T16:59:56.803298Z",
+                "sourcePosition": "project:///index.ts#7,16"
+            },
+            {
+                "urn": "urn:pulumi:dev::pulumi-aws-secret::aws:secretsmanager/secretVersion:SecretVersion::mySecretVersion",
+                "custom": true,
+                "id": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV|7F7BBD02-2841-4CA0-9F6E-54DDDE4B3081",
+                "type": "aws:secretsmanager/secretVersion:SecretVersion",
+                "inputs": {
+                    "__defaults": [],
+                    "secretId": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV",
+                    "secretString": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "ciphertext": "AAABAIdXvXAs4GZc4uoJxMQd2aPaJfGR81DRWGFRA0k9oJrHq83srEev6XswrikEtjwWNnwQpPg="
+                    }
+                },
+                "outputs": {
+                    "arn": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV",
+                    "id": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV|7F7BBD02-2841-4CA0-9F6E-54DDDE4B3081",
+                    "secretBinary": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "ciphertext": "AAABAL75+tIvndGsN0MgBIyZxcN7hezHCHFq4fYCWxRkjg=="
+                    },
+                    "secretId": "arn:aws:secretsmanager:us-west-2:886783038127:secret:mySecretNameAppeaseDemoGods-vX0weV",
+                    "secretString": {
+                        "4dabf18193072939515e22adb298388d": "1b47061264138c4ac30d75fd1eb44270",
+                        "ciphertext": "AAABAN6LJFDDtOKyTIPp6okIQnmO77Dro44/XsP+f3hpWxcQY5szRLjjM0IzTwuL3F6zBP4/npk="
+                    },
+                    "versionId": "7F7BBD02-2841-4CA0-9F6E-54DDDE4B3081",
+                    "versionStages": [
+                        "AWSCURRENT"
+                    ]
+                },
+                "parent": "urn:pulumi:dev::pulumi-aws-secret::pulumi:pulumi:Stack::pulumi-aws-secret-dev",
+                "dependencies": [
+                    "urn:pulumi:dev::pulumi-aws-secret::aws:secretsmanager/secret:Secret::mySecret"
+                ],
+                "provider": "urn:pulumi:dev::pulumi-aws-secret::pulumi:providers:aws::default_6_13_3::67d411c6-0c02-4d06-8a41-5fdb200f6cac",
+                "propertyDependencies": {
+                    "secretId": [
+                        "urn:pulumi:dev::pulumi-aws-secret::aws:secretsmanager/secret:Secret::mySecret"
+                    ],
+                    "secretString": []
+                },
+                "additionalSecretOutputs": [
+                    "secretBinary",
+                    "secretString"
+                ],
+                "created": "2024-05-21T16:59:57.571739Z",
+                "modified": "2024-05-21T16:59:57.571739Z",
+                "sourcePosition": "project:///index.ts#10,23"
+            }
+        ]
+    }
+}
