@@ -4,6 +4,8 @@ This document contains the sample code for the Policy as Code on AWS workshop.
 
 ## Compliance-Ready Policies Demo Script
 
+The `compliance-ready-policies/infra` directory contains a very simple Pulumi program that contains an EC2 instance that has a PCI-DSS violation (a public IP address on an EC2 instance, which is insecure in most use cases). Note that the stack is not intended to be actually deployed - we only run `pulumi preview` operations during the demo. During this demo, we'll show how Compliance Ready Policies will catch this condition and show how to change the attributes of the instance to get the policy to pass.
+
 1. Initialize a Compliance Ready policy pack:
 
     ```bash
@@ -59,6 +61,8 @@ Demo steps:
 1. Run the policy and watch it pass.
 
 ## Server-side Policy Enforcement
+
+The `snyk-policy-scanning/infra` directory contains a simple Pulumi program with a simple `docker.Image` resource that uses an obsolete and insecure version of Alpine Linux that contains critical CVEs. In this demo, we'll show how the Snyk container scanning policy template can be used to catch these issues.
 
 Note: This demo requires a Pulumi organization on the Business Critical SKU. You can create a trial organization to get access to these features.
 
