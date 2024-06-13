@@ -1,0 +1,3 @@
+config:
+  compliance-ready-policies-infra:subnetId: subnet-72e2e639
+  compliance-ready-policies-infra:vpcId: vpc-aefe77d6
