@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://github.com/Azure/deployment-environments/releases/download/2022-11-11-preview/manifest.schema.json
+name: PulumiWorkshop
+version: 1.0.0
+summary: Pulumi C# Environment for Workshop
+description: Deploys a Container Application using Pulumi
+runner: pulumi/azure-deployment-environments:0.1.0
+templatePath: Pulumi.yaml
+
+parameters:
+  - id: image
+    name: Container Image
+    description: Application Container Image.
+    type: string
+    required: true
