@@ -1,0 +1,7 @@
+name: ade-pulumi-csharp
+runtime: dotnet
+config:
+  resource-group-name:
+    type: string
+  image:
+    type: string
