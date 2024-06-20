@@ -70,18 +70,21 @@ pulumi up --yes
 # 🎉 ta da!
 ```
 
-- Show output and usage of DBC
-- Switch to the Fargate demo and go over the newly defined AWS Resources and Docker Build Image resource options.
+- Show output and usage of DBC (in Docker Desktop)
+- Switch to the prepared Fargate demo and go over the newly defined AWS Resources and Docker Build Image resource options.
+- Take any Q&A
 
 ## **Demo 2**: CI Build on every commit
 
 ### **Demo 2**: Overview
 
+- Partner presenter discusses Docker Build Cloud CI options
 - Show creating a Pulumi program from a Pulumi template
-- Show IaC Pulumi program with ESC configuration
+- Show IaC with ESC configuration
 - Show adding Pulumi Deployments settings
 - Show pushing code on GH and Pulumi Deployments to build the image on DBC
-- Show adding multi-platform and re-run
+- Partner presenter adds a multi-platform and re-runs (can do it directly in the GitHub browser)
+- Partner presenter shows DBC logs on Docker Desktop
 
 ### **Demo 2**: Presenter Prep
 
@@ -182,10 +185,75 @@ pulumi up --yes
   # 🎉 ta-da!
   ```
 
-Time-permitting additional functionality to showcase:
+Additional functionality to showcase:
 
--✅ Add push to DockerHub registry details
--✅ Add multi-platform
+<details>
+  <summary>✅ Add multi-platform</summary>
+
+```typescript
+import * as dockerBuild from "@pulumi/docker-build";
+import * as pulumi from "@pulumi/pulumi";
+const config = new pulumi.Config();
+const builder = config.require("builder");
+
+new dockerBuild.Image("image", {
+    exec: true,
+    builder: {
+        name: builder,
+    },
+    push: true,
+    ///////////////////////////
+    // MULTI-PLATFORM SUPPORT
+    ///////////////////////////
+    platforms: [
+        dockerBuild.Platform.Linux_amd64,
+        dockerBuild.Platform.Linux_arm64,
+    ],
+    tags: ["jan:latest"],
+    context: {
+        location: "../",
+    },
+});
+```
+
+</details>
+
+<details>
+  <summary>✅ Add push to DockerHub registry details</summary>
+
+```typescript
+import * as dockerBuild from "@pulumi/docker-build";
+import * as pulumi from "@pulumi/pulumi";
+
+const config = new pulumi.Config();
+const builder = config.require("builder");
+const dockerUsr = config.require("DOCKER_USR");
+const registryAddress = "docker.io";
+const tag = registryAddress+"/"+dockerUsr+"/jan:latest";
+
+new dockerBuild.Image("image", {
+    exec: true,
+    builder: {
+        name: builder,
+    },
+    push: true,
+    platforms: [
+        dockerBuild.Platform.Linux_amd64,
+        dockerBuild.Platform.Linux_arm64,
+    ],
+    registries: [{
+        address: registryAddress,
+        username: dockerUsr,
+        password: config.require("DOCKER_PAT"),
+    }],
+    tags: [tag],
+    context: {
+        location: "../",
+    },
+});
+```
+
+</details>
 
 ## Future Work (research required)
 
