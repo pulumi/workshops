@@ -1,0 +1,5 @@
+config:
+  aws-dbc-done:builder: cloud-pulumidockerdemo-my-cool-builder
+  aws:region: us-west-2
+environment:
+  - aws-dbc-env-done

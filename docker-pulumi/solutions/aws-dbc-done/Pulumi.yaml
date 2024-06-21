@@ -1,0 +1,7 @@
+name: aws-dbc-done
+runtime: nodejs
+description: An example that builds a Docker image in DBC and deploys a container to AWS Fargate.
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://github.com/pulumi/examples/tree/master/aws-ts-containers-dockerbuildcloud
