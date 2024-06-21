@@ -43,32 +43,56 @@ In this workshop, you will learn how to automate your Docker build process by le
   ```bash
   # use your business-critical org
   docker login
+  docker buildx create --driver cloud pulumidockerdemo/my-cool-builder
+
   pulumi login
+  ```
+
+- Pulumi ESC Environment, `aws-dbc-env-done`. Update all the values as necessary.
+
+  ```yaml
+  imports:
+  - aws-oidc-env  # AWS OIDC Creds
+  values:
+    pulumiConfig:
+      DOCKER_USR: nullstring
+      DOCKER_PAT:
+        fn::secret: dckr_pat_123
+      DOCKER_DBC_ORG: "pulumidockerdemo"
+      DOCKER_DBC_BUILDER_NAME: "my-cool-builder"
   ```
 
 - Have the AWS Fargate template version already deployed to illustrate a more advanced version of the NGINX demo.
 
   ```bash
-  pulumi new  https://github.com/pulumi/examples/tree/master/aws-ts-containers-dockerbuildcloud --dir aws-dbc
-  cd aws-dbc
-  npm install
+  pulumi new  https://github.com/pulumi/examples/tree/master/aws-ts-containers-dockerbuildcloud --dir aws-dbc-done
+  cd aws-dbc-done
+  npm install -g npm-check-updates && ncu -u && npm install
+  pulumi config env add aws-dbc-env-done --yes --non-interactive
   pulumi up --yes
+  curl $(pulumi stack output url)
   ```
 
 ### **Demo 1**: Live Commands
 
 - Explain the Pulumi program, resources, and Docker Build options
 
-```bash
-# Ensure to use 'dev' as your Stack name
-pulumi new https://github.com/pulumi/examples/tree/master/dockerbuildcloud-ts --dir hello-dbc
-cd hello-dbc
-npm install
+  ```bash
+  # Ensure to use 'dev' as your Stack name
+  pulumi new https://github.com/pulumi/examples/tree/master/dockerbuildcloud-ts --dir hello-dbc
+  # project name : hello-dbc
+  # project description: <default>
+  # stack name: dev
+  $ builder: cloud-pulumidockerdemo-my-cool-builder
 
-# build nginx
-pulumi up --yes
-# 🎉 ta da!
-```
+  # wait for the deps to be installed
+  cd hello-dbc
+  npm install -g npm-check-updates && ncu -u && npm install
+
+  # build nginx
+  pulumi up --yes --stack dev
+  # 🎉 ta da!
+  ```
 
 - Show output and usage of DBC (in Docker Desktop)
 - Switch to the prepared Fargate demo and go over the newly defined AWS Resources and Docker Build Image resource options.
@@ -92,19 +116,17 @@ pulumi up --yes
 
   ```yaml
   values:
-  pulumiConfig:
-    DOCKER_USR: nullstring
-    DOCKER_PAT:
-      fn::secret:
-        ciphertext: ...
-    profile: cpu-fs
-    DOCKER_DBC_ORG: "pulumidockerdemo"
-    DOCKER_DBC_BUILDER_NAME: "my-cool-builder"
-  environmentVariables:
-    DOCKER_USR: ${pulumiConfig.DOCKER_USR}
-    DOCKER_PAT: ${pulumiConfig.DOCKER_PAT}
-    DOCKER_DBC_ENDPOINT: "${pulumiConfig.DOCKER_DBC_ORG}/${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
-    DOCKER_DBC_BUILDER_INSTANCE: "cloud-${pulumiConfig.DOCKER_DBC_ORG}-${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
+    pulumiConfig:
+        DOCKER_USR: nullstring
+        DOCKER_PAT:
+          fn::secret: dckr_pat_123
+        DOCKER_DBC_ORG: "pulumidockerdemo"
+        DOCKER_DBC_BUILDER_NAME: "my-cool-builder"
+      environmentVariables:
+        DOCKER_USR: ${pulumiConfig.DOCKER_USR}
+        DOCKER_PAT: ${pulumiConfig.DOCKER_PAT}
+        DOCKER_DBC_ENDPOINT: "${pulumiConfig.DOCKER_DBC_ORG}/${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
+        DOCKER_DBC_BUILDER_INSTANCE: "cloud-${pulumiConfig.DOCKER_DBC_ORG}-${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
   ```
 
 - Fork Repo & Prepare a PR
@@ -144,11 +166,10 @@ pulumi up --yes
   # ✅ stack name: dev
   # ✅ builder: cloud-pulumidockerdemo-my-cool-builder
   cd infra
-  npm install
+  npm install -g npm-check-updates && ncu -u && npm install
 
-  # remotely managed settings
-  E=jan-dev # Showing an already configured Pulumi ESC
-  pulumi config env add $E --stack dev --yes --non-interactive
+  # remotely managed settings already configured in Pulumi ESC
+  pulumi config env add jan-dev --stack dev --yes --non-interactive
 
   ## modify :
   # ✅ delete infra/app folder
@@ -236,11 +257,11 @@ new dockerBuild.Image("image", {
     builder: {
         name: builder,
     },
-    push: true,
     platforms: [
-        dockerBuild.Platform.Linux_amd64,
+      dockerBuild.Platform.Linux_amd64,
         dockerBuild.Platform.Linux_arm64,
     ],
+    push: true,
     registries: [{
         address: registryAddress,
         username: dockerUsr,
