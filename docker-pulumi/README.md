@@ -41,7 +41,6 @@ In this workshop, you will learn how to automate your Docker build process by le
 - Ensure you have a [Docker Personal Access Token (PAT)](https://docs.docker.com/security/for-developers/access-tokens/)
 
   ```bash
-  # use your business-critical org
   docker login
   docker buildx create --driver cloud pulumidockerdemo/my-cool-builder
 
@@ -79,18 +78,18 @@ In this workshop, you will learn how to automate your Docker build process by le
 
   ```bash
   # Ensure to use 'dev' as your Stack name
-  pulumi new https://github.com/pulumi/examples/tree/master/dockerbuildcloud-ts --dir hello-dbc
-  # project name : hello-dbc
-  # project description: <default>
-  # stack name: dev
-  $ builder: cloud-pulumidockerdemo-my-cool-builder
+  $ pulumi new https://github.com/pulumi/examples/tree/master/dockerbuildcloud-ts --dir hello-dbc
+  # ✅ project name : hello-dbc
+  # ✅ project description: <default>
+  # ✅ stack name: dev
+  $ ✅ builder: cloud-pulumidockerdemo-my-cool-builder
 
   # wait for the deps to be installed
-  cd hello-dbc
-  npm install -g npm-check-updates && ncu -u && npm install
+  $ cd hello-dbc
+  $ npm install -g npm-check-updates && ncu -u && npm install
 
   # build nginx
-  pulumi up --yes --stack dev
+  $ pulumi up --yes --stack dev
   # 🎉 ta da!
   ```
 
@@ -109,38 +108,35 @@ In this workshop, you will learn how to automate your Docker build process by le
 - Show pushing code on GH and Pulumi Deployments to build the image on DBC
 - Partner presenter adds a multi-platform and re-runs (can do it directly in the GitHub browser)
 - Partner presenter shows DBC logs on Docker Desktop
+- Take any Q&A
 
 ### **Demo 2**: Presenter Prep
 
-- Create ESC Environment `jan-dev` to match:
+- Create ESC Environment `docker-dev` to match:
 
   ```yaml
   values:
     pulumiConfig:
-        DOCKER_USR: nullstring
-        DOCKER_PAT:
-          fn::secret: dckr_pat_123
-        DOCKER_DBC_ORG: "pulumidockerdemo"
-        DOCKER_DBC_BUILDER_NAME: "my-cool-builder"
-      environmentVariables:
-        DOCKER_USR: ${pulumiConfig.DOCKER_USR}
-        DOCKER_PAT: ${pulumiConfig.DOCKER_PAT}
-        DOCKER_DBC_ENDPOINT: "${pulumiConfig.DOCKER_DBC_ORG}/${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
-        DOCKER_DBC_BUILDER_INSTANCE: "cloud-${pulumiConfig.DOCKER_DBC_ORG}-${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
+      DOCKER_PAT:
+        fn::secret: dckr_pat_ABC123
+      DOCKER_DBC_ORG: "pulumidockerdemo"
+      DOCKER_DBC_BUILDER_NAME: "my-cool-builder"
+      DOCKER_TAG: "madlib-chatbot:latest"
+      DOCKER_USR: "nullstring"
+      DOCKERFILE_REPO: "http://github.com/mikesir87/madlib-chatbot.git"
+    environmentVariables:
+      DOCKER_PAT: ${pulumiConfig.DOCKER_PAT}
+      DOCKER_USR: ${pulumiConfig.DOCKER_USR}
+      DOCKER_DBC_ENDPOINT: "${pulumiConfig.DOCKER_DBC_ORG}/${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
+      DOCKER_DBC_BUILDER_INSTANCE: "cloud-${pulumiConfig.DOCKER_DBC_ORG}-${pulumiConfig.DOCKER_DBC_BUILDER_NAME}"
   ```
 
-- Fork Repo & Prepare a PR
+- Prepare a PR
 
   ```bash
-  # fork the repo to your gh, then
-  # ( run these before the live demo)
-  GH_USER=desteves
-  gh repo fork janhq/jan --default-branch-only  --fork-name jan-fork
-  cd jan-fork
-  gh repo set-default
-  git checkout -b pulumi+dbc
+  git checkout -b test
   git commit --allow-empty -m "noop"
-  gh pr create --title "pulumi+dbc " --body "" --draft
+  gh pr create --title "test" --body "" --draft
   git push -f
   ```
 
@@ -158,31 +154,25 @@ In this workshop, you will learn how to automate your Docker build process by le
 - Start from a Pulumi template
 
   ```bash
-  # ✅ use your business-critical org
-  # ✅ ensure you are in the jan-fork folder
-  pulumi new https://github.com/pulumi/examples/tree/master/dockerbuildcloud-ts --dir infra
+  # ✅ ensure you are in a new empty folder
+  pulumi new https://github.com/desteves/pulumi-docker/tree/main/template
   ## complete the prompts:
-  # ✅ project name: jan-fork
-  # ✅ stack name: dev
-  # ✅ builder: cloud-pulumidockerdemo-my-cool-builder
-  cd infra
+  # ✅ project name: ci-demo
+  # ✅ stack name: live
+
   npm install -g npm-check-updates && ncu -u && npm install
 
   # remotely managed settings already configured in Pulumi ESC
-  pulumi config env add jan-dev --stack dev --yes --non-interactive
-
-  ## modify :
-  # ✅ delete infra/app folder
-  # ✅ update the tags to "jan:latest"
-  # ✅ update context / location  to "../"
+  pulumi config env add docker-env --stack live --yes --non-interactive
+  
 
   # ✅ CONFIGURE PULUMI DEPLOYMENTS VIA THE BROWSER:
-  # ✅ Add deployments to your jan-fork/dev stack
-  #  - Stacks -> jan-fork/dev -> Settings -> Deploy
+  # ✅ Add deployments to your pulumi-docker/live stack
+  #  - Stacks -> pulumi-docker/live -> Settings -> Deploy
   #   - Source Control: GitHub
-  #   - Repo: desteves/jan-fork
-  #   - Branch: pulumi+dbc
-  #   - Folder: infra
+  #   - Repo: desteves/pulumi-docker
+  #   - Branch: live
+  #   - Folder: example
   #   - GH Settings: ALL ON
   #   - Pre-run commands (COPY FROM BELOW)
   #   - "Save deployment configuration"
@@ -195,14 +185,14 @@ In this workshop, you will learn how to automate your Docker build process by le
   mkdir -vp ~/.docker/cli-plugins/
   curl --silent -L --output ~/.docker/cli-plugins/docker-buildx https://github.com/docker/buildx-desktop/releases/download/v0.14.1-desktop.1/buildx-v0.14.1-desktop.1.linux-amd64
   chmod a+x ~/.docker/cli-plugins/docker-buildx
-  pulumi login && pulumi env run  pulumi-sandbox-diana/jan-dev   -- bash -c 'echo "$DOCKER_PAT" | docker login -u $DOCKER_USR --password-stdin'
+  pulumi login && pulumi env run  pulumi-sandbox-diana/docker-env   -- bash -c 'echo "$DOCKER_PAT" | docker login -u $DOCKER_USR --password-stdin'
   docker buildx create --use --driver cloud $DOCKER_DBC_ENDPOINT
   ```
 
 - Trigger the Review Stacks
 
   ```bash
-  git add . && git commit --allow-empty -m "noop" && git push -f
+  $ git add . && git commit --allow-empty -m "noop" && git push -f
   # 🎉 ta-da!
   ```
 
@@ -212,29 +202,7 @@ Additional functionality to showcase:
   <summary>✅ Add multi-platform</summary>
 
 ```typescript
-import * as dockerBuild from "@pulumi/docker-build";
-import * as pulumi from "@pulumi/pulumi";
-const config = new pulumi.Config();
-const builder = config.require("builder");
-
-new dockerBuild.Image("image", {
-    exec: true,
-    builder: {
-        name: builder,
-    },
-    push: true,
-    ///////////////////////////
-    // MULTI-PLATFORM SUPPORT
-    ///////////////////////////
-    platforms: [
-        dockerBuild.Platform.Linux_amd64,
-        dockerBuild.Platform.Linux_arm64,
-    ],
-    tags: ["jan:latest"],
-    context: {
-        location: "../",
-    },
-});
+TODO
 ```
 
 </details>
@@ -243,35 +211,7 @@ new dockerBuild.Image("image", {
   <summary>✅ Add push to DockerHub registry details</summary>
 
 ```typescript
-import * as dockerBuild from "@pulumi/docker-build";
-import * as pulumi from "@pulumi/pulumi";
-
-const config = new pulumi.Config();
-const builder = config.require("builder");
-const dockerUsr = config.require("DOCKER_USR");
-const registryAddress = "docker.io";
-const tag = registryAddress+"/"+dockerUsr+"/jan:latest";
-
-new dockerBuild.Image("image", {
-    exec: true,
-    builder: {
-        name: builder,
-    },
-    platforms: [
-      dockerBuild.Platform.Linux_amd64,
-        dockerBuild.Platform.Linux_arm64,
-    ],
-    push: true,
-    registries: [{
-        address: registryAddress,
-        username: dockerUsr,
-        password: config.require("DOCKER_PAT"),
-    }],
-    tags: [tag],
-    context: {
-        location: "../",
-    },
-});
+TODO
 ```
 
 </details>

@@ -1,8 +1,0 @@
-# Configure project names and descriptions with values obtained from `pulumi new`
-name: jan-fork-done
-runtime: nodejs
-description: An example that builds a Dockerfile in Docker Build Cloud.
-config:
-  pulumi:tags:
-    value:
-      pulumi:template: https://github.com/pulumi/examples/tree/master/dockerbuildcloud-ts

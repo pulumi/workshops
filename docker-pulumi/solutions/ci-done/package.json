@@ -1,0 +1,13 @@
+{
+    "name": "ci-demo",
+    "main": "src/index.ts",
+    "devDependencies": {
+        "@types/node": "^20.14.8"
+    },
+    "dependencies": {
+        "@pulumi/docker-build": "^0.0.3",
+        "@pulumi/esc-sdk": "^0.9.1",
+        "@pulumi/pulumi": "^3.121.0",
+        "@pulumi/pulumiservice": "^0.21.3"
+    }
+}

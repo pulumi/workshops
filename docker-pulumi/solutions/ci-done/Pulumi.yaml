@@ -1,0 +1,8 @@
+# Configure project names and descriptions with values obtained from `pulumi new`
+name: ci-done
+runtime: nodejs
+description: Builds a remote Dockerfile using Docker Build Cloud and pushes to DockerHub.
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://github.com/desteves/pulumi-docker/tree/main/template
