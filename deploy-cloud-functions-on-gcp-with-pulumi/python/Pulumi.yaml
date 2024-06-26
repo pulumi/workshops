@@ -1,0 +1,3 @@
+name: deploy-cloud-functions-on-gcp-with-pulumi
+runtime: python
+description: Example of deploying a Cloud Function on GCP with Pulumi

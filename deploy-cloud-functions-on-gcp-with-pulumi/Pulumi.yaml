@@ -1,0 +1,116 @@
+name: deploy-cloud-functions-on-gcp-with-pulumi
+runtime: yaml
+description: Example of deploying a Cloud Function on GCP with Pulumi
+
+variables:
+  region: europe-west2
+  project:
+    fn::invoke:
+      function: gcp:projects/getProject:getProject
+      arguments:
+        filter: "name:${gcp:project}"
+  functionCode:
+    fn::fileArchive: src/
+
+outputs:
+  function_url: ${cloudFunction.url}
+
+resources:
+  cloudFunctionBucket:
+    type: gcp:storage:Bucket
+    properties:
+      name: "cloud-function-${project.projects[0].projectId}"
+      location: ${region}
+      project: ${project.projects[0].projectId}
+      forceDestroy: true
+      uniformBucketLevelAccess: true
+
+  inputBucket:
+    type: gcp:storage:Bucket
+    properties:
+      name: "input-${project.projects[0].projectId}"
+      location: ${region}
+      project: ${project.projects[0].projectId}
+      forceDestroy: true
+      uniformBucketLevelAccess: true
+
+  functionSourceZip:
+    type: gcp:storage:BucketObject
+    properties:
+      name: "src-code.zip"
+      bucket: ${cloudFunctionBucket.name}
+      source: ${functionCode}
+      contentType: "application/zip"
+    options:
+      dependsOn:
+      - ${cloudFunctionBucket}
+
+  account:
+    type: gcp:serviceaccount:Account
+    properties:
+      accountId: pulumi-workshop
+      project: ${project.projects[0].projectId}
+      displayName: Test Service Account
+
+  invoking:
+    type: gcp:projects:IAMMember
+    properties:
+      project: ${project.projects[0].projectId}
+      role: roles/run.invoker
+      member: serviceAccount:${account.email}
+    options:
+      dependsOn:
+      - ${account}
+
+  eventReceiving:
+    type: gcp:projects:IAMMember
+    properties:
+      project: ${project.projects[0].projectId}
+      role: roles/eventarc.eventReceiver
+      member: serviceAccount:${account.email}
+    options:
+      dependsOn:
+      - ${account}
+
+
+  cloudFunction:
+    type: gcp:cloudfunctionsv2:Function
+    properties:
+      name: "cloud-function-trigger-using-pulumi-gen2"
+      location: ${region}
+      description: "Cloud function gen2 trigger using Pulumi"
+      project: ${project.projects[0].projectId}
+      buildConfig:
+        runtime: "python39"
+        entryPoint: "fileUpload"
+        environmentVariables:
+          BUILD_CONFIG_TEST: "build_test"
+        source:
+          storageSource:
+            bucket: ${cloudFunctionBucket.name}
+            object: ${functionSourceZip.name}
+      serviceConfig:
+        maxInstanceCount: 3
+        minInstanceCount: 1
+        availableMemory: "256M"
+        timeoutSeconds: 60
+        environmentVariables:
+          SERVICE_CONFIG_TEST: "config_test"
+        ingressSettings: "ALLOW_INTERNAL_ONLY"
+        allTrafficOnLatestRevision: true
+        serviceAccountEmail: ${account.email}
+      eventTrigger:
+        triggerRegion: ${region}
+        eventType: "google.cloud.storage.object.v1.finalized"
+        retryPolicy: "RETRY_POLICY_RETRY"
+        serviceAccountEmail: ${account.email}
+        eventFilters:
+        - attribute: "bucket"
+          value: ${inputBucket.name}
+    options:
+      dependsOn:
+      - ${inputBucket}
+      - ${functionSourceZip}
+      - ${account}
+      - ${invoking}
+      - ${eventReceiving}
