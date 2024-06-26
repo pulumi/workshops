@@ -59,7 +59,6 @@ async function setUpPulumiProgram(payload: ServicePayload) {
 app.post('/', async (req, res) => {
     const payload: ServicePayload = req.body;
 
-    console.log(payload);
     if (!payload.name || !payload.org || !payload.project || !payload.stack || !payload.region) {
         res.status(400).send('Name, org, project, stack and region are required');
         return;
