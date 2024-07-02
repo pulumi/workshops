@@ -14,24 +14,24 @@ status: active
 
 Let’s explore more about building up a containerized microservices architecture on Azure using infrastructure as code and cloud engineering principles. We’ll use Go to build up our new architecture, and we’ll explore more about stacks, inputs and outputs, secrets, and more.
 
-### Prerequisites
+## Prerequisites
 
 You will need the following tools:
 
-* [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
-* [Pulumi FREE SaaS Account](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
+* [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+* [Pulumi FREE SaaS Account](https://app.pulumi.com/signup/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
   * Pulumi state storage is FREE for developers, you can use this account for all your personal Pulumi projects and you never need to worry about where to store your state 😃
-* [Go 1.19.x](https://www.pulumi.com/docs/intro/languages/go/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
-* An [Azure account](https://www.pulumi.com/registry/packages/azure-native/installation-configuration/#credentials?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops). The free tier should be all we need, but any costs accrued will be minimal if any appear at all.
+* [Go 1.19.x](https://www.pulumi.com/docs/intro/languages/go/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+* An [Azure account](https://www.pulumi.com/registry/packages/azure-native/installation-configuration/#credentials?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops). The free tier should be all we need, but any costs accrued will be minimal if any appear at all.
 * [Docker](https://docs.docker.com/get-docker/) set up on your machine to build the container.
 
-### About this workshop
+## About this workshop
 
 In this workshop, we will explore secrets, stacks, inputs and outputs, and more.
 
 ## Lab 1 - Setup
 
-Let's set up our sandbox application using a [Pulumi template for containers on Azure with Go](https://www.pulumi.com/templates/container-service/azure/). First, make a new directory, and change into it.
+Let's set up our sandbox application using a [Pulumi template for containers on Azure with Go](https://www.pulumi.com/templates/container-service/azure/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops). First, make a new directory, and change into it.
 
 ```bash
 mkdir build-with-containers && cd build-with-containers
@@ -96,6 +96,7 @@ Speaking of stacks, what do we know about them?
 First, let's modify our code to add the stack name to the various resource names.
 
 _New lines 46-47 in ./main.go:_
+
 ```go
 		// Add the stack details
 		stack := ctx.Stack()
@@ -104,6 +105,7 @@ _New lines 46-47 in ./main.go:_
 And then modify all of the various names like the following code from new line 50:
 
 _New line 50 in ./main.go:_
+
 ```go
 		resourceGroup, err := resources.NewResourceGroup(ctx, fmt.Sprintf("resource-group-%v-", stack), nil)
 ```
@@ -113,6 +115,7 @@ Note that the registry name can't have dashes, so use a `0` instead for now if y
 Let's also modify our app to have the return show which stack we're in.
 
 _New line 19 in ./app/main.go:_
+
 ```go
 			Message: fmt.Sprintf("Hello, world, from the %s stack!", os.Getenv("STACK")),
 ```
@@ -120,6 +123,7 @@ _New line 19 in ./app/main.go:_
 and
 
 _New lines 130-133 in ./main.go:_
+
 ```go
 						containerinstance.EnvironmentVariableArgs{
 							Name:  pulumi.String("STACK"),
@@ -175,6 +179,7 @@ What if we wanted to call a stack output from another stack, say call something 
 Let's call the URL of the dev stack in the staging stack. Add the following code just before the exports, replacing the `<org>` placeholder with your username:
 
 _New lines 155-159 in ./main.go:_
+
 ```go
 		devStackUrl, err := pulumi.NewStackReference(ctx, "<org>/build-with-containers/dev", nil)
 		if err != nil {
@@ -186,6 +191,7 @@ _New lines 155-159 in ./main.go:_
 And add this export, just for fun:
 
 _New line 165 in ./main.go:_
+
 ```go
 		ctx.Export("devUrl", devStackUrlOutput)
 ```

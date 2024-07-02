@@ -18,8 +18,8 @@ We will cover the following topics in this workshop:
 
 You will need to install these tools in order to complete this workshop:
 
-- [Pulumi](https://www.pulumi.com/docs/get-started/install/)
-- [Pulumi Account](https://app.pulumi.com/signup) - this optional, but convenient to handle the state of the different
+- [Pulumi](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+- [Pulumi Account](https://app.pulumi.com/signup?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) - this optional, but convenient to handle the state of the different
   stacks.
 - [Go](https://golang.org/doc/install)
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
@@ -43,9 +43,8 @@ If you get stuck during the workshops, you can try the following things in order
 
 1. You can reach out for me anytime! Happy to help you on track again.
 2. Google the error! Honestly you will learn the most with this way.
-3. Reach out the community in the Pulumi Community Slack. You can join the Slack [here](https://slack.pulumi.com/).
+3. Reach out the community in the Pulumi Community Slack. You can join the Slack [here](https://slack.pulumi.com/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 ### Want to know more?
 
-If you enjoyed this workshop, please some of Pulumi's other [learning materials](https://www.pulumi.com/learn/)
-
+If you enjoyed this workshop, please some of Pulumi's other [learning materials](https://www.pulumi.com/learn/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)

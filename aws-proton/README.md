@@ -49,7 +49,7 @@ The repo contains the following elements:
 
 ## Templates
 
-For this demo, we bundle our environment and service templates locally and upload them to an S3 bucket provisioned in the Pulumi stack in the `proton` directory via the Pulumi [Synced Folder](https://www.pulumi.com/registry/packages/synced-folder/) component. For production scenarios, you should strongly consider using the [template repo sync](https://docs.aws.amazon.com/proton/latest/userguide/ag-template-sync-configs.html) feature of AWS Proton instead. (We use S3 sync here because it allows all of the code to be versioned in a single repo, which simplifies running the demo.)
+For this demo, we bundle our environment and service templates locally and upload them to an S3 bucket provisioned in the Pulumi stack in the `proton` directory via the Pulumi [Synced Folder](https://www.pulumi.com/registry/packages/synced-folder/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) component. For production scenarios, you should strongly consider using the [template repo sync](https://docs.aws.amazon.com/proton/latest/userguide/ag-template-sync-configs.html) feature of AWS Proton instead. (We use S3 sync here because it allows all of the code to be versioned in a single repo, which simplifies running the demo.)
 
 To bundle the templates, run the following command at the repo root:
 

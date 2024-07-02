@@ -6,8 +6,8 @@ Follow along with us! This workshop repo is for the Oracle Cloud/Pulumi workshop
 
 You will need the following tools:
 
-* [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=laura&utm_medium=referral&utm_campaign=workshops&utm_content=github-embedding-pulumi)
-* [Pulumi FREE SaaS Account](https://app.pulumi.com/signup/?utm_source=laura&utm_medium=referral&utm_campaign=workshops&utm_content=github-embedding-pulumi)
+* [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+* [Pulumi FREE SaaS Account](https://app.pulumi.com/signup/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
   * Pulumi state storage is FREE for developers, you can use this account for all your personal Pulumi projects and you never need to worry about where to store your state 😃
 * Python 3.9.x (Pulumi does not yet support Python 3.10)
 * An Oracle Cloud account. The free tier plus the free credits should be all we need, but any costs accrued will be minimal if any appear at all.
@@ -27,4 +27,3 @@ What about new environments?
 ## Part 3
 
 How about getting some Kubernetes in the mix?
-

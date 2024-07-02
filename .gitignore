@@ -1,2 +1,5 @@
 .idea
 .DS_Store
+check-links*
+node_modules**
+.markdown-link-check.json

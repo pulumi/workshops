@@ -19,10 +19,10 @@ This is a Pulumi workshop that aims to guide you through the process of using yo
 
 You will need the following:
 
-* [Pulumi CLI](https://rawko.de/mS3XfE).
-* [Pulumi FREE SaaS Account](https://rawko.de/YWuJRJ)
+* [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
+* [Pulumi FREE SaaS Account](https://app.pulumi.com/signup/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
   * Pulumi state storage is FREE for developers, you can use this account for all your personal Pulumi projects and you never need to worry about where to store your state 😃
-* [Civo Cloud Account](https://rawko.de/6BD6mJ)
+* [Civo Cloud Account](https://www.civo.com/docs/account/signing-up)
   * Civo can provision K3s clusters in around 90 seconds, so we're going to use them for this workshop. You get 250USD FREE credit for new accounts, so it won't even cost you a thing.
 
 ## What will we learn?

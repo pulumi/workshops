@@ -4,11 +4,11 @@
 
 To go through this workshop with us, here is what you need
 
-1. A Pulumi account, head to [app.pulumi.com](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) and follow the sign-up process.
-2. An [access token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) from your Pulumi account.
-3. The Pulumi CLI installed in your development environment. Simply follow [this guide](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops).
+1. A Pulumi account, head to [app.pulumi.com](https://app.pulumi.com/signup/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) and follow the sign-up process.
+2. An [access token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) from your Pulumi account.
+3. The Pulumi CLI installed in your development environment. Simply follow [this guide](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 4. Link the CLI to your account by running `pulumi login` and using your access token.
-5. Finally, [Set up your local credentials](https://www.pulumi.com/registry/packages/aws/installation-configuration/#credentials) with the `aws` CLI.
+5. Finally, [Set up your local credentials](https://www.pulumi.com/registry/packages/aws/installation-configuration/#credentials?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) with the `aws` CLI.
 
 ## Part 1 - Using the Pulumi template
 
@@ -34,7 +34,6 @@ Each time your create a new Pulumi app, here are the files to look for
 2. `Pulumi.<stackName>.yaml` is the stack configuration file
 3. `index.ts` is your Pulumi application entrypoint
 
-
 ### First deployment
 
 Let's deploy our Pulumi application
@@ -44,7 +43,6 @@ pulumi up
 ```
 
 Access the `cdnUrl` and confirm your website is accessible
-
 
 ## Part 2 - Improving our deployment
 

@@ -8,7 +8,7 @@
 // - Docker Build Cloud (DBC)
 // - Docker Desktop / CLI
 // - Pulumi CLI (https://www.pulumi.com/docs/get-started/install/)
-// - *Recommended* Pulumi Cloud account (https://app.pulumi.com/signup)
+// - *Recommended* Pulumi Cloud account (https://app.pulumi.com/signup?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 // This Pulumi template is meant to be copied via:
 // $ pulumi new https://github.com/pulumi/examples/tree/master/aws-ts-containers-dbc

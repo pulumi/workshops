@@ -8,7 +8,7 @@ Platform engineering teams need to be able to fetch secrets at runtime, especial
 - Configuring Pulumi ESC to work with 1Password and controlling access for approved team members
 - Retrieving secrets automatically at runtime from your Infrastructure as Code deployments.
 
-[link to event](https://www.pulumi.com/resources/managing-team-secrets-1password-pulumi-esc/) 
+[link to event](https://www.pulumi.com/resources/managing-team-secrets-1password-pulumi-esc/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 ## Outline
 
@@ -29,7 +29,7 @@ Platform engineering teams need to be able to fetch secrets at runtime, especial
 - DockerHub credentials
 - Cloudflare account and configured domain
 - 1Password account
-- Pulumi Cloud account
+- [Pulumi Cloud account](https://app.pulumi.com/signup/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 - Go and Docker installed locally
 

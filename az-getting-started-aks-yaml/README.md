@@ -8,7 +8,7 @@ for Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/
 - If you don't have an Azure subscription, create an Azure free account before you begin.
 - Make sure the identity you use to create your cluster has the appropriate minimum permissions. 
 - Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
-- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/).
+- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 ## Overview
 

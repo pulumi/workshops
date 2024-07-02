@@ -44,9 +44,9 @@ like, and also override them for local development in `app-config.local.yaml`.
 
 ## Authentication
 
-We chose [Passport](http://www.passportjs.org/) as authentication platform due
+We chose [Passport](https://www.passportjs.org/) as authentication platform due
 to its comprehensive set of supported authentication
-[strategies](http://www.passportjs.org/packages/).
+[strategies](https://www.passportjs.org/packages/).
 
 Read more about the
 [auth-backend](https://github.com/backstage/backstage/blob/master/plugins/auth-backend/README.md)

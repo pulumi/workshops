@@ -1,6 +1,6 @@
 # Lab 3: Consume the component resource
 
-We completed the implementation of the component resource in lab 2. Now is the time to test it. A full multi-language component would require the generation of the client SDKs for the languages we want to support. However, for our [YAML support](https://www.pulumi.com/docs/intro/languages/yaml/), this is not needed. We can directly work with the plugin binary.
+We completed the implementation of the component resource in lab 2. Now is the time to test it. A full multi-language component would require the generation of the client SDKs for the languages we want to support. However, for our [YAML support](https://www.pulumi.com/docs/intro/languages/yaml/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops), this is not needed. We can directly work with the plugin binary.
 
 ## Initialise a Pulumi YAML project
 
@@ -105,7 +105,7 @@ Now is the time to add our component resource. From our schema and implementatio
         - ${k8sprovider}
 ```
 
-Because we set up an explicit Kubernetes provider, we pass this provider to the Pulumi [`providers` resource option](https://www.pulumi.com/docs/intro/concepts/resources/options/providers/).
+Because we set up an explicit Kubernetes provider, we pass this provider to the Pulumi [`providers` resource option](https://www.pulumi.com/docs/concepts/options/providers/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 Running `pulumi up` should now create our component resource, with the two service accounts as child resources of the component.
 

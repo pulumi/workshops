@@ -8,9 +8,9 @@ to TypeScript, you can learn more about it [here](https://www.typescriptlang.org
 Additionally, you will need to have the following tools installed:
 
 - [Node.js](https://nodejs.org/en/download/)
-- [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/)
+- [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 - [Docker](https://docs.docker.com/get-docker/)
-- [Pulumi Account](https://app.pulumi.com/signup)
+- [Pulumi Account](https://app.pulumi.com/signup?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 Additionally, you will need to have an AWS account and have your AWS credentials configured.
 

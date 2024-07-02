@@ -55,9 +55,9 @@ To go through this workshop with us, here is what you need:
 
 ### Pulumi
 
-- A Pulumi Cloud account, head to [app.pulumi.com](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) and follow the sign-up process.
-- An [access token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) from your Pulumi Cloud account.
-- The [Pulumi CLI]((https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)) is installed in your development environment.
+- A Pulumi Cloud account, head to [app.pulumi.com](https://app.pulumi.com/signup/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) and follow the sign-up process.
+- An [access token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) from your Pulumi Cloud account.
+- The [Pulumi CLI]((https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)) is installed in your development environment.
 
 ### GitHub
 
@@ -68,7 +68,7 @@ To go through this workshop with us, here is what you need:
 ### AWS
 
 - The [`aws` CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is installed in your development environment.
-- [Set up your local AWS credentials](https://www.pulumi.com/registry/packages/aws/installation-configuration/#credentials).
+- [Set up your local AWS credentials](https://www.pulumi.com/registry/packages/aws/installation-configuration/#credentials?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 [**Click here to jump back to the Table of Contents**](#table-of-contents)
 
@@ -205,7 +205,7 @@ $ git checkout main
 
 ### 🎯 II. Goal
 
-Attendees will be able to add compliance checks to the CI/CD pipeline using [Pulumi CrossGuard](https://www.pulumi.com/crossguard/).
+Attendees will be able to add compliance checks to the CI/CD pipeline using [Pulumi CrossGuard](https://www.pulumi.com/crossguard/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 ### 📚 II. Concepts
 
@@ -406,9 +406,9 @@ $ gh pr merge $m --squash
 <details>
 <summary> ✅ Test the drift detection action </summary>
 
-- Run the [Drift Action in the browser](https://github.com/desteves/live-workshop/actions).
+- Run the Drift Action in the browser.
 - [Make a change](https://us-west-2.console.aws.amazon.com/s3/buckets/bucket-ba7ee56?region=us-west-2&bucketType=general&tab=properties) by renaming the `error.html` to `404.html`
-- Re-run the [Drift Action in the browser](https://github.com/desteves/live-workshop/actions).
+- Re-run the Drift Action in the browser.
 
 </details>
 
@@ -429,12 +429,9 @@ Attendees will be able to configure ephemeral cloud environments to deploy the i
 <details>
 <summary> ✅ Install the Pulumi GitHub App and Configure Pulumi Deployments </summary>
 
-[Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/#installation-and-configuration)
+[Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/#installation-and-configuration?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 Check your repository has been added to the access list.
-
-[Link to Pulumi Sandbox Diana ORG](https://app.pulumi.com/pulumi-sandbox-diana/settings/integrations)
-[Link to Pulumi Deployment Config Settings](https://app.pulumi.com/pulumi-sandbox-diana/workshop/dev/settings/deploy)
 
 </details>
 

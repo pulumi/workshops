@@ -54,7 +54,7 @@ For each of the language specific ecosystems, we define the package dependencies
 
 ## Define the component resource
 
-When using Google Kubernetes Engine, the more secure way to allow your workloads to access other Google Cloud services is to use [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity). For this to work, we need a well constructed pair of a [Google Cloud Service Account](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/account/) and a [Kubernetes Service Account](https://www.pulumi.com/registry/packages/kubernetes/api-docs/core/v1/serviceaccount/).
+When using Google Kubernetes Engine, the more secure way to allow your workloads to access other Google Cloud services is to use [Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity). For this to work, we need a well constructed pair of a [Google Cloud Service Account](https://www.pulumi.com/registry/packages/gcp/api-docs/serviceaccount/account/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) and a [Kubernetes Service Account](https://www.pulumi.com/registry/packages/kubernetes/api-docs/core/v1/serviceaccount/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 We will create a `ServiceIdentity` component resource which will create the pair of service accounts with all the additional requirements that Workload Identity prescribes.
 
@@ -73,7 +73,7 @@ The `moduleName` allows for grouping resource types. It also influences the code
 * `ced:index:Dummy` will generate the NodeJS type: `ced.Dummy`
 * `ced:iam:ServiceIdentity` will generate the NodeJS type: `ced.iam.ServiceIdentity`
 
-The [Pulumi Schema](https://www.pulumi.com/docs/guides/pulumi-packages/schema/) documentation provides more information how it can influence the code generation of the client SDKs.
+The [Pulumi Schema](https://www.pulumi.com/docs/guides/pulumi-packages/schema/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) documentation provides more information how it can influence the code generation of the client SDKs.
 
 Each resource usually takes input properties and can have some output properties. Both classes of properties can have optional and mandatory properties. Our `ServiceIdentity` component will create a Kubernetes service account. We want to make it configurable in which Kubernetes namespace this service account will be created:
 

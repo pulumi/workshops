@@ -14,7 +14,7 @@ deck: unknown
 
 # Google Cloud Platform with Pulumi Workshop
 
-This workshops guides you through using Pulumi's [Google Cloud (GCP) Classic](https://www.pulumi.com/registry/packages/gcp/) provider.
+This workshops guides you through using Pulumi's [Google Cloud (GCP) Classic](https://www.pulumi.com/registry/packages/gcp/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) provider.
 
 ## Pre-requisites
 
@@ -22,9 +22,9 @@ This workshops guides you through using Pulumi's [Google Cloud (GCP) Classic](ht
 
 You will need the following to complete this workshop:
 
-* A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python)
-  * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python).
-* The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=gcp-intro-python)
+* A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+  * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
+* The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 * [Python 3.9 or later](https://www.python.org/downloads/)
 * The [gcloud CLI](https://cloud.google.com/sdk/docs/install)
 * The [Docker Engine](https://docs.docker.com/engine/install/) installed and running, and the Docker CLI on your `PATH`.
