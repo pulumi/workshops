@@ -341,6 +341,6 @@ The resources in the stack have been deleted, but the history and configuration 
 If you want to remove the stack completely, run 'pulumi stack rm dev'.
 ```
 
-Now your resources should all be deleted! That last comment you see in the output notes that the stack and all of the configuration and history will stay in your dashboard on the Pulumi Service ([app.pulumi.com](https://app.pulumi.com/)).
+Now your resources should all be deleted! That last comment you see in the output notes that the stack and all of the configuration and history will stay in your dashboard on the Pulumi Service ([app.pulumi.com](https://app.pulumi.com/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)).
 
 If you want to completely remove the project and its history, run `pulumi stack rm dev`.

@@ -42,7 +42,7 @@ Platform engineering teams need to be able to fetch secrets at runtime, especial
 
 ```bash
 # use your business-critical org
-pulumi org set-default pulumi-sandbox-diana 
+pulumi org set-default pulumi-sandbox-diana
 pulumi logout
 pulumi login # provide the team access token
 
@@ -54,7 +54,7 @@ esc run pulumi-sandbox-diana/pulumi-esc-dev go run .
 
 open http://localhost:8000/
 
-# complete the google oaut, copy token from the terminal, 
+# complete the google oaut, copy token from the terminal,
 # paste in the field along with a phrase, buzz it
 # ta da!
 ```
@@ -67,7 +67,7 @@ open http://localhost:8000/
 
 ```bash
 # use your business-critical org
-pulumi org set-default pulumi-sandbox-diana 
+pulumi org set-default pulumi-sandbox-diana
 pulumi logout
 pulumi login # provide the team access token
 
@@ -94,7 +94,7 @@ pulumi stack select pulumi-sandbox-diana/buzz/prod
 
 ## SetUp
 
-```
+```plain
 1P
 
 dev-vault
@@ -128,5 +128,5 @@ pulumi-esc-prod
 
 - Use Github Provider to create the repo w/ the Pulumi Cloud secret
 - Use the 1Password Provider (if/when GAs) to store the 1Password creds and create appropiate Service Accounts
-- Use a Dedicated Pulumi Cloud org and GCP Project 
+- Use a Dedicated Pulumi Cloud org and GCP Project
 - Create OAuth 2.0 Client ID + OAuth consent screen + OIDC GCP using a Pulumi Program with the Google Cloud provider

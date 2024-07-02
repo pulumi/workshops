@@ -243,7 +243,6 @@ return this.cluster.kubeconfig;
 
 </p></details>
 
-
 ## Complete Solution
 
 ```typescript

@@ -17,38 +17,6 @@ This workshop introduces users to advanced DevOps best practices. You will add c
 - Add a cron job to the pipeline to check for changes periodically (drift)
 - Configure a dedicated cloud environment with Review Stacks
 
-## Table of Contents
-
-<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
-
-- [Advanced CI/CD for AWS using Pulumi and GitHub Actions](#advanced-cicd-for-aws-using-pulumi-and-github-actions)
-  - [Learning Objectives](#learning-objectives)
-  - [Table of Contents](#table-of-contents)
-  - [🧰 Prerequisites](#-prerequisites)
-    - [Pulumi](#pulumi)
-    - [GitHub](#github)
-    - [AWS](#aws)
-  - [**Part I** Set up your Pulumi project with Pulumi ESC](#part-i-set-up-your-pulumi-project-with-pulumi-esc)
-    - [🎯 I. Goal](#-i-goal)
-    - [📚 I. Concepts](#-i-concepts)
-    - [🎬 I. Steps](#-i-steps)
-  - [**Part II** Add compliance with Policy as Code](#part-ii-add-compliance-with-policy-as-code)
-    - [🎯 II. Goal](#-ii-goal)
-    - [📚 II. Concepts](#-ii-concepts)
-    - [🎬 II. Steps](#-ii-steps)
-  - [**Part III** Add drift detection](#part-iii-add-drift-detection)
-    - [🎯 III. Goal](#-iii-goal)
-    - [📚 III. Concepts](#-iii-concepts)
-    - [🎬 III. Steps](#-iii-steps)
-  - [**Part IV** Add dedicated environments with Review Stacks](#part-iv-add-dedicated-environments-with-review-stacks)
-    - [🎯 IV. Goal](#-iv-goal)
-    - [📚 IV. Concepts](#-iv-concepts)
-    - [🎬 IV. Steps](#-iv-steps)
-  - [✨ Summary](#-summary)
-  - [🚀 Next steps](#-next-steps)
-
-<!-- TOC end -->
-
 ## 🧰 Prerequisites
 
 To go through this workshop with us, here is what you need:
@@ -69,8 +37,6 @@ To go through this workshop with us, here is what you need:
 
 - The [`aws` CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html) is installed in your development environment.
 - [Set up your local AWS credentials](https://www.pulumi.com/registry/packages/aws/installation-configuration/#credentials?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
-
-[**Click here to jump back to the Table of Contents**](#table-of-contents)
 
 ## **Part I**. Set up your Pulumi project with Pulumi ESC
 
@@ -144,7 +110,7 @@ $ gh secret list
 
 Presenter Notes:
 
- - If your AWS Account already has an OIDC IDP for Pulumi Cloud, this will **not** work. Instead, just update your existing one's audience for the AWS IAM Identity Provider and also add the name of your Pulumi Org to the Trust Relationship JSON in the corresponding AWS IAM Role.
+- If your AWS Account already has an OIDC IDP for Pulumi Cloud, this will **not** work. Instead, just update your existing one's audience for the AWS IAM Identity Provider and also add the name of your Pulumi Org to the Trust Relationship JSON in the corresponding AWS IAM Role.
 - The reference Pulumi template will change in the very near future, once [this GitHub Issue](https://github.com/pulumi/pulumi-pulumiservice/issues/225) is resolved.
 - Complete this step beforehand.
 
@@ -198,8 +164,6 @@ $ git checkout main
 ```
 
 </details>
-
-[**Click here to jump back to the Table of Contents**](#table-of-contents)
 
 ## **Part II**. Add CIS compliance with Policy as Code
 
@@ -299,8 +263,6 @@ $ gh pr merge $m --squash
 ```
 
 </details>
-
-[**Click here to jump back to the Table of Contents**](#table-of-contents)
 
 ## **Part III**. Add drift detection
 
@@ -501,8 +463,6 @@ $ gh pr merge $m --squash
 
 </details>
 
-[**Click here to jump back to the Table of Contents**](#table-of-contents)
-
 ## ✨ Summary
 
 You introduced advanced elements to your continuous infrastructure pipeline to make it more robust. In particular, you:
@@ -524,5 +484,3 @@ We encourage you to modify your app or infra and watch the changes be tested pro
 
 - Deploy your application in two regions
 - Add a new AWS policy
-
-[**Click here to jump back to the Table of Contents**](#table-of-contents)

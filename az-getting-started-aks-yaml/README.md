@@ -6,7 +6,7 @@ This workshop assumes a basic understanding of Kubernetes concepts. For more inf
 for Azure Kubernetes Service (AKS)](https://learn.microsoft.com/en-us/azure/aks/concepts-clusters-workloads).
 
 - If you don't have an Azure subscription, create an Azure free account before you begin.
-- Make sure the identity you use to create your cluster has the appropriate minimum permissions. 
+- Make sure the identity you use to create your cluster has the appropriate minimum permissions.
 - Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
 - Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
@@ -73,12 +73,12 @@ Enter a value or leave blank to accept the (default), and press <ENTER>.
 Press ^C at any time to quit.
 
 project name (az-getting-started-aks-yaml):
-project description (A minimal Pulumi YAML program):  
+project description (A minimal Pulumi YAML program):
 Created project 'az-getting-started-aks-yaml'
 
 Please enter your desired stack name.
 To create a stack in an organization, use the format <org-name>/<stack-name> (e.g. `acmecorp/dev`).
-stack name (dev):  
+stack name (dev):
 Created stack 'getting-started-kubernetes-aks-20240326/dev'
 
 Your new project is ready to go! ✨
@@ -137,14 +137,14 @@ Depending on your internet connection, the process may take a few minutes. Once 
 a message similar to the following.
 
 ```shell
-➜ pulumi up     
+➜ pulumi up
 Updating (dev)
 
 View in Browser (Ctrl+O): https://app.pulumi.com/dirien/az-getting-started-aks-yaml/dev/updates/1
 
-     Type                                     Name                             Status              
- +   pulumi:pulumi:Stack                      az-getting-started-aks-yaml-dev  created (0.94s)     
- +   └─ azure-native:resources:ResourceGroup  myAKSClusterResourceGroup        created (0.88s)     
+     Type                                     Name                             Status
+ +   pulumi:pulumi:Stack                      az-getting-started-aks-yaml-dev  created (0.94s)
+ +   └─ azure-native:resources:ResourceGroup  myAKSClusterResourceGroup        created (0.88s)
 
 Resources:
     + 2 created
@@ -191,7 +191,7 @@ resources:
         osType: Linux
         osDiskSizeGB: 30
         type: VirtualMachineScaleSets
-        mode: System 
+        mode: System
 ```
 
 Run `pulumi up` to create the AKS cluster.
@@ -249,7 +249,7 @@ variables:
         resourceGroupName: ${myAKSClusterResourceGroup.name}
         resourceName: ${myAKSCluster.name}
 
-resources: # other resources 
+resources: # other resources
   # omitted for brevity
   myk8sProvider:
     type: pulumi:providers:kubernetes
@@ -266,10 +266,10 @@ The Pulumi Kubernetes objects includes the following Kubernetes deployments and 
 
 ![arch](image/application.png)
 
-* Store front: Web application for customers to view products and place orders.
-* Product service: Shows product information.
-* Order service: Places orders.
-* Rabbit MQ: Message queue for an order queue.
+- Store front: Web application for customers to view products and place orders.
+- Product service: Shows product information.
+- Order service: Places orders.
+- Rabbit MQ: Message queue for an order queue.
 
 Add the following to the `Pulumi.yaml` file.
 

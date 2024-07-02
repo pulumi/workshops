@@ -24,6 +24,7 @@ time-auto-api/
 The `time/` directory will hold our Lambda code. Drop the `time_me.py` file from the `app` subdirectory here into the `api/time` directory.
 
 Update the requirements.txt file in `api` to include the following libraries:
+
 * falcon
 * pulumi-aws
 

@@ -13,7 +13,7 @@ make install_provider
 
 If succesful, your terminal output should contain at least the following lines. More lines are possible when the dependencies haven't been downloaded yet.
 
-```
+```bash
 rm -rf /Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/bin/pulumi-resource-ced
 cd provider/cmd/pulumi-resource-ced && VERSION=0.0.1 SCHEMA=/Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/schema.yaml go generate main.go
 cd provider/cmd/pulumi-resource-ced && go build -o /Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/bin/pulumi-resource-ced -ldflags "-X github.com/pulumi/pulumi-ced/provider/pkg/version.Version=0.0.1" .
@@ -159,6 +159,7 @@ language:
       pulumi-gcp: ">=6.0.0,<7.0.0"
       pulumi-kubernetes: ">=3.0.0,<4.0.0"
 ```
+
 </details>
 
 Let's continue with the implementation of this component resource in [lab 2](../lab2)

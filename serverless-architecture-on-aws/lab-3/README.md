@@ -13,7 +13,7 @@ In this lab we're going to show how to use Pulumi to connect the following resou
 
 ## Let's go
 
-We've got separate Lambda Function code for each resource (so we can view the logs and see what data we've got available), but the code required for each is very similar. 
+We've got separate Lambda Function code for each resource (so we can view the logs and see what data we've got available), but the code required for each is very similar.
 
 First of all, we're going to create a new folder to add our code to:
 
@@ -43,7 +43,7 @@ Replace your current role resource with this:
 const role = new aws.iam.Role("role", {
     assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(aws.iam.Principals.LambdaPrincipal),
     managedPolicyArns: [
-        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole, 
+        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
         aws.iam.ManagedPolicy.AWSLambdaSQSQueueExecutionRole
     ]
 });
@@ -125,7 +125,7 @@ import * as aws from "@pulumi/aws";
 const role = new aws.iam.Role("role", {
     assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(aws.iam.Principals.LambdaPrincipal),
     managedPolicyArns: [
-        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole, 
+        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
         aws.iam.ManagedPolicy.AWSLambdaSQSQueueExecutionRole
     ]
 });
@@ -148,6 +148,7 @@ queue.onEvent("event", fn);
 
 export const queueURL = queue.url;
 ```
+
 </details>
 
 ### SNS Topic
@@ -158,7 +159,7 @@ We'll leave some of the code in place and make some adjustments. Firstly we can 
 const role = new aws.iam.Role("role", {
     assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(aws.iam.Principals.LambdaPrincipal),
     managedPolicyArns: [
-        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole, 
+        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
     ]
 });
 ```
@@ -229,7 +230,7 @@ import * as aws from "@pulumi/aws";
 const role = new aws.iam.Role("role", {
     assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(aws.iam.Principals.LambdaPrincipal),
     managedPolicyArns: [
-        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole, 
+        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
     ]
 });
 
@@ -251,6 +252,7 @@ topic.onEvent("event", fn);
 
 export const topicArn = topic.arn;
 ```
+
 </details>
 
 ### S3 Bucket
@@ -337,7 +339,7 @@ import * as aws from "@pulumi/aws";
 const role = new aws.iam.Role("role", {
     assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(aws.iam.Principals.LambdaPrincipal),
     managedPolicyArns: [
-        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole, 
+        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
     ]
 });
 
@@ -359,6 +361,7 @@ bucket.onObjectCreated("onObjectCreated", fn);
 
 export const bucketName = bucket.bucket;
 ```
+
 </details>
 
 ### CloudWatch Schedule
@@ -423,7 +426,7 @@ import * as aws from "@pulumi/aws";
 const role = new aws.iam.Role("role", {
     assumeRolePolicy: aws.iam.assumeRolePolicyForPrincipal(aws.iam.Principals.LambdaPrincipal),
     managedPolicyArns: [
-        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole, 
+        aws.iam.ManagedPolicy.AWSLambdaBasicExecutionRole,
     ]
 });
 
@@ -446,6 +449,7 @@ const scheduler = new aws.cloudwatch.EventRule("scheduler", {
 
 scheduler.onEvent("schedulerevent", fn)
 ```
+
 </details>
 
 ## Tidying up
@@ -454,6 +458,6 @@ I think pretty much everything here is covered by the AWS Free Tier, but if you 
 
 ```zsh
 pulumi destroy
-``` 
+```
 
 to delete everything.

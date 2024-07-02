@@ -8,6 +8,7 @@ Note that some of the workshops on the stale list may be identical to other work
 
 ## 100 Level
 
+<!-- markdownlint-disable MD055 MD056 -->
 Topic | Language | Provider | Link
 ---|---|---|---
 Fundamentals | C# | Docker | [fundamentals/csharp](./fundamentals/csharp/)
@@ -69,6 +70,8 @@ Topic | Language | Provider | Link
 Pulumi Packages | Go | GCP | [packages/go-gcp](./packages/go-gcp)
 
 More to come soon
+
+<!-- markdownlint-enable MD055 MD056 -->
 
 ## Partner-Focused
 

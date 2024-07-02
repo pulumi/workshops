@@ -13,7 +13,7 @@ make install_provider
 
 If succesful, your terminal output should contain at least the following lines. More lines are possible when the dependencies haven't been downloaded yet.
 
-```
+```bash
 rm -rf /Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/bin/pulumi-resource-ced
 cd provider/cmd/pulumi-resource-ced && VERSION=0.0.1 SCHEMA=/Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/schema.yaml go generate main.go
 cd provider/cmd/pulumi-resource-ced && go build -o /Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/bin/pulumi-resource-ced -ldflags "-X github.com/pulumi/pulumi-ced/provider/pkg/version.Version=0.0.1" .
@@ -205,6 +205,7 @@ func NewServiceIdentity(ctx *pulumi.Context,
 	return component, nil
 }
 ```
+
 </details>
 
 ## Wire the component in the provider
@@ -305,6 +306,7 @@ func constructServiceIdentity(ctx *pulumi.Context, name string, inputs provider.
 	return provider.NewConstructResult(serviceIdentity)
 }
 ```
+
 </details>
 
 ## Build the component plugin

@@ -2,7 +2,7 @@
 
 ## Google Cloud Serverless Application in Python
 
-![Google Cloud Serverless Application](https://www.pulumi.com/templates/serverless-application/gcp/architecture.png)
+![Google Cloud Serverless Application](https://www.pulumi.com/templates/serverless-application/gcp/architecture.png?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 ## Pulumi Fundamentals
 

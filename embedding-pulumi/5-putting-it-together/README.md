@@ -3,6 +3,7 @@
 Now we'll run it!
 
 But first, we need to pass in the following configuration values:
+
 * `aws:profile` (if you're using sso)
 * `aws:region`
 <!-- * `burner-program2:request` () -->
