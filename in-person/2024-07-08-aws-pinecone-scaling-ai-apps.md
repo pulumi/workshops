@@ -28,6 +28,8 @@ The Pulumi DevContainer can be found at <https://github.com/pulumi/devcontainer>
 
 ### Sign up for a Pulumi Cloud Account and Configure Your Access Token
 
+**Note:** You may be able to speed up these steps by running the `pulumi login` command after installing the Pulumi CLI.
+
 If you have not already done so, sign up for a Pulumi Cloud account at <https://pulumip.us/SignUp-Pulumi>. Pulumi Cloud accounts are free for individual use forever, and we will not ask you for payment information.
 
 Once your have your Pulumi Cloud account, you will need to add your Pulumi Cloud personal token to your environment. To obtain a Pulumi Cloud token, click here in [Pulumi Cloud](https://app.pulumi.com/):
