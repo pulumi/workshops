@@ -213,7 +213,7 @@ if st.session_state['generated']:
 
 st.markdown("""
 ---
-Made with ❤️ by [Pulumi](https://www.pulumi.com/)""")
+Made with ❤️ by [Pulumi](https://www.pulumi.com/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)""")
 ```
 
 This code is a Streamlit application that uses the `llamaindex` library to create a chatbot that can answer questions.

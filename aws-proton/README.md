@@ -93,7 +93,7 @@ Some Proton resources are not available for control via IaC and must be torn dow
 
 ## Troubleshooting
 
-If a Proton template deployment gets stuck in a bad state and cannot be torn down smoothly by the Proton service, log into the [Pulumi Service](https://app.pulumi.com), locate the stack, go to Settings, and follow the instructions there to delete the stack's resources (including generating a `Pulumi.yaml` and stack config file).
+If a Proton template deployment gets stuck in a bad state and cannot be torn down smoothly by the Proton service, log into the [Pulumi Service](https://app.pulumi.com/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops), locate the stack, go to Settings, and follow the instructions there to delete the stack's resources (including generating a `Pulumi.yaml` and stack config file).
 
 ## Limitations/Potential Improvements
 

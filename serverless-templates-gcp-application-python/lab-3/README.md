@@ -17,7 +17,7 @@ import pulumi_synced_folder as synced
 
 ## Import the program's configuration settings
 We want to use what we added via `pulumi config` in this program.
-More details are at [Accessing Configuration from Code](https://www.pulumi.com/docs/intro/concepts/config/#code?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
+More details are at [Accessing Configuration from Code](https://www.pulumi.com/docs/intro/concepts/config/#code?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 Append the following to `__main__.py`
 ```python
@@ -187,7 +187,7 @@ site_config = gcp.storage.BucketObject(
 
 ## Export the URLs of the site and serverless endpoint
 
-We have to call [`apply`](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) to
+We have to call [`apply`](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/#apply?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) to
 create the URL that we need to hit.
 
 Append the following to `__main__.py`
@@ -221,9 +221,9 @@ pulumi destroy -y
 ```
 
 ## SHORTCUT - Pulumi Templates
-[Pulumi Templates](https://www.pulumi.com/templates/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) are the fastest way to deploy infrastructure to AWS, Azure, and Google Cloud. After deploying, you can easily modify the infrastructure by updating the code in TypeScript, Python, Go, Java, .NET/C#, or YAML.
+[Pulumi Templates](https://www.pulumi.com/templates/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) are the fastest way to deploy infrastructure to AWS, Azure, and Google Cloud. After deploying, you can easily modify the infrastructure by updating the code in TypeScript, Python, Go, Java, .NET/C#, or YAML.
 
-This entire workshop can be reduced by following the [Google Cloud Serverless Application](https://www.pulumi.com/templates/serverless-application/gcp/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops) template to:
+This entire workshop can be reduced by following the [Google Cloud Serverless Application](https://www.pulumi.com/templates/serverless-application/gcp/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) template to:
 
 ```bash
 mkdir my-serverless-app && cd my-serverless-app

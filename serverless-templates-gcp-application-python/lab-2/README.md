@@ -5,9 +5,9 @@ In many cases, different stacks for a single project will need differing values.
 The key-value pairs for any given stack are stored in your project’s stack settings file,which is automatically named **`Pulumi.<stack-name>.yaml`**. For example,
 `Pulumi.dev.yaml`
 
-The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops).
+The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
-More information on this can be found in [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
+More information on this can be found in [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 ## Set the configurations for the environment
 ```bash
 pulumi config

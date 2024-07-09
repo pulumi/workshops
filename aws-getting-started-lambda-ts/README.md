@@ -74,7 +74,7 @@ To perform an initial deployment, run `pulumi up`
 ```
 
 The template `aws-typescript` will create a new Pulumi project with
-the [Pulumi AWS provider](https://www.pulumi.com/registry/packages/aws/) already installed. For detailed instructions,
+the [Pulumi AWS provider](https://www.pulumi.com/registry/packages/aws/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) already installed. For detailed instructions,
 refer to the Pulumi AWS Provider documentation.
 
 We can delete the contents of the `index.ts` file.
