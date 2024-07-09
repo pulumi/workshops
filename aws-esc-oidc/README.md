@@ -1,6 +1,6 @@
 # aws-esc-oidc
 
-This example creates an OIDC provider in AWS and creates a role that is assumable via [Pulumi ESC](https://www.pulumi.com/docs/pulumi-cloud/esc/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
+This example creates an OIDC provider in AWS and creates a role that is assumable via [Pulumi ESC](https://www.pulumi.com/docs/pulumi-cloud/esc/).
 
 Demo instructions:
 

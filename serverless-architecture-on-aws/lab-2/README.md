@@ -11,7 +11,7 @@ pulumi new serverless-aws-typescript
 
 ## Writing the Lambda Function code
 
-We're going to move the function code into a separate folder within the root so that we can use things like NPM packages.
+We're going to move the function code into a separate folder within the root so that we can use things like NPM packages. 
 
 Let's create the folder, change to it and initialise a NodeJS app:
 
@@ -74,11 +74,11 @@ We could leave the API Gateway resource as it is, but I think it's useful to sho
 
 There are five resources you'll need to create:
 
-- The API Gateway itself
-- A Method (matches up with the HTTP method and is used to define the parameters and body that clients must send over)
-- An Integration (what we're connecting the API Gateway to - in this case our Lambda Function)
-- A deployment (deploys the resource to a stage so that we can call it over the internet)
-- A stage (like an environment. This also provides the URL we can call later)
+* The API Gateway itself
+* A Method (matches up with the HTTP method and is used to define the parameters and body that clients must send over)
+* An Integration (what we're connecting the API Gateway to - in this case our Lambda Function)
+* A deployment (deploys the resource to a stage so that we can call it over the internet)
+* A stage (like an environment. This also provides the URL we can call later)
 
 ```typescript
 const api = new aws.apigateway.RestApi("api");

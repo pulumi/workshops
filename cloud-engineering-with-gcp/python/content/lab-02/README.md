@@ -247,45 +247,44 @@ First, we assemble the output's value using `pulumi.Output.concat`.
   <summary>🕵️ Code Check. Expand to see the full `__main.py__` contents </summary>
    At the end of this lab, your `__main__.py` should look like this:
 
-  ```python
-  """A Python Pulumi program"""
+```python
+"""A Python Pulumi program"""
 
-  import pulumi
-  import pulumi_gcp as gcp
-  import os
+import pulumi
+import pulumi_gcp as gcp
+import os
 
-  bucket = gcp.storage.Bucket(
-      "website",
-      location="US"
-  )
+bucket = gcp.storage.Bucket(
+    "website",
+    location="US"
+)
 
-  acl = gcp.storage.DefaultObjectAccessControl(
-      'website',
-      bucket=bucket.name,
-      role="READER",
-      entity="allUsers"
-  )
+acl = gcp.storage.DefaultObjectAccessControl(
+    'website',
+    bucket=bucket.name,
+    role="READER",
+    entity="allUsers"
+)
 
-  content_dir = "www"
-  for file in os.listdir(content_dir):
-      filepath = os.path.join(content_dir, file)
-      gcp.storage.BucketObject(
-          file,
-          bucket=bucket.name,
-          name=file,
-          source=pulumi.FileAsset(filepath),
-          opts=pulumi.ResourceOptions(depends_on=[acl])
-      )
+content_dir = "www"
+for file in os.listdir(content_dir):
+    filepath = os.path.join(content_dir, file)
+    gcp.storage.BucketObject(
+        file,
+        bucket=bucket.name,
+        name=file,
+        source=pulumi.FileAsset(filepath),
+        opts=pulumi.ResourceOptions(depends_on=[acl])
+    )
 
-  static_site_url = pulumi.Output.concat(
-      "https://storage.googleapis.com/", bucket.name, "/index.html")
+static_site_url = pulumi.Output.concat(
+    "https://storage.googleapis.com/", bucket.name, "/index.html")
 
-  pulumi.export("static_site_url", static_site_url)
-  ```
+pulumi.export("static_site_url", static_site_url)
+```
 
-  </details>
+</details>
 
-<!-- markdownlint-disable MD029 -->
 3. Obtain the value of our URL by running `pulumi up` again, which will create the stack output:
 
     ```bash
@@ -299,7 +298,6 @@ First, we assemble the output's value using `pulumi.Output.concat`.
     ```
 
     You should see the contents of `index.html`.
-<!-- markdownlint-enable MD029 -->
 
 ## Step 7 &mdash; Tear Down
 

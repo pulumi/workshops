@@ -10,7 +10,7 @@ In this exercise, we're going to build a ComponentResource that will allow us to
 
 Each of these exercises can be completed for any language. If you need hints or the solutions, check in the README.md for each language.
 
-### 1. Preview! Preview! Preview
+### 1. Preview! Preview! Preview!
 
 We ran `pulumi up` in the first part of this workshop because creating a network is pretty much instantaneous. For this workshop, creating a cluster can take a couple of minutes. So instead of using `pulumi up` to ensure our dependencies are good, we're going to use `pulumi preview` to validate them without actually creating the cluster.
 
@@ -32,6 +32,7 @@ If you're missing your Civo token, ensure you:
 We've got to start somewhere 😃
 
 Run `pulumi preview` to see what you get.
+
 
 ### 2. Add a Civo `KubernetesCluster` Resource
 

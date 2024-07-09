@@ -1,2 +1,0 @@
-lint:
-	@./scripts/lint.sh

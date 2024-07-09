@@ -1,23 +1,19 @@
 # Lab 2: Configuration and Application setup for Google Cloud Serverless Function
 
 ## Configurations
-
 In many cases, different stacks for a single project will need differing values.
 The key-value pairs for any given stack are stored in your project’s stack settings file,which is automatically named **`Pulumi.<stack-name>.yaml`**. For example,
 `Pulumi.dev.yaml`
 
-The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
+The values are set via [pulumi config set](https://www.pulumi.com/docs/reference/cli/pulumi_config_set/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops).
 
-More information on this can be found in [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
-
+More information on this can be found in [setting and getting configuration values](https://www.pulumi.com/docs/intro/concepts/config/#setting-and-getting-configuration-values?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
 ## Set the configurations for the environment
-
 ```bash
 pulumi config
 ```
 
 Results
-
 ```bash
 KEY          VALUE
 gcp:project
@@ -25,7 +21,6 @@ gcp:project
 
 The value for `gcp:project` will be empty.  First, we set a bunch of variables via
 `pulumi config set` except the `gcp:project`
-
 ```bash
 pulumi config set gcp:region us-central1 # Set to any valid gcp region
 pulumi config set errorDocument  error.html
@@ -35,19 +30,16 @@ pulumi config set sitePath ./www
 ```
 
 Next, set the `gcp:project`. This has to your gcp project that you have access to. If you use **pulumi-ce-team**, your workshop will `NOT WORK!`
-
 ```bash
 pulumi config set gcp:project pulumi-ce-team
 ```
 
 Validate that all the config values are set.
-
 ```bash
 pulumi config
 ```
 
 Results
-
 ```bash
 KEY            VALUE
 gcp:project    pulumi-ce-team
@@ -61,7 +53,6 @@ sitePath       ./www
 **Note:** The *`Pulumi.dev.yaml`* contains all the updated values that we set above.
 
 ## Create the index.html and error.html file
-
 In the current location where the `Pulumi.dev.yaml` file resides we will perform the following:
 
 ```bash
@@ -73,7 +64,6 @@ cd ..
 ```
 
 Update the `index.html` with the following
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -107,7 +97,6 @@ Update the `index.html` with the following
 ```
 
 Update the `error.html` with the following:
-
 ```html
 <!DOCTYPE html>
 <html lang="en">
@@ -122,7 +111,6 @@ Update the `error.html` with the following:
 ```
 
 ## Create the App
-
 In the current location where the `Pulumi.dev.yaml` file resides we will perform the following:
 
 ```bash
@@ -134,14 +122,12 @@ cd ..
 ```
 
 Update the `requirements.txt` file that is under the `app` folder with the following:
-
 ```python
 functions-framework==3.2.0
 flask==2.1.0
 ```
 
 Update the `main.py` file that is under the `app` folder with the following:
-
 ```python
 from datetime import datetime
 from flask import jsonify

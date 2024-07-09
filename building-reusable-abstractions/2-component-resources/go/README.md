@@ -186,7 +186,6 @@ cluster.AddWorkload(ctx, "nginx", &WorkloadArgs{
     Port:     80,
 })
 ```
-
 </p></details>
 
 ### 4. Allow Exposing Workloads as a Service

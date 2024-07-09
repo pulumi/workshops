@@ -70,7 +70,7 @@ pulumi config set aws:region <your region>
 ```bash
 git https://github.com/pulumi/workshops.git
 cd workshops/deploying-llamaindex-applications-on-aws-with-pulumi
-```
+``` 
 
 > **Note**: The application need a folder called `guides` with PDF files in it. You can download the PDF files from the following link:
 > [New York City Tour Guides](https://github.com/pulumi/workshops/blob/main/deploying-llamaindex-applications-on-aws-with-pulumi/app/guides/newyork.pdf)
@@ -213,7 +213,7 @@ if st.session_state['generated']:
 
 st.markdown("""
 ---
-Made with ❤️ by [Pulumi](https://www.pulumi.com/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)""")
+Made with ❤️ by [Pulumi](https://www.pulumi.com/)""")
 ```
 
 This code is a Streamlit application that uses the `llamaindex` library to create a chatbot that can answer questions.

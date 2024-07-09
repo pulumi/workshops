@@ -194,5 +194,4 @@ resources:
       providers:
         - ${k8sprovider}
 ```
-
 </details>

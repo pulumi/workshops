@@ -25,6 +25,11 @@ npm install
 
 Once copied to your machine, feel free to edit as needed.
 
+Alternatively, click the button below to use [Pulumi Deployments](https://www.pulumi.com/docs/pulumi-cloud/deployments/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) to deploy this app:
+
+[![Deploy this example with Pulumi](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-containers-dbc)
+[![Deploy this example with Pulumi](https://get.pulumi.com/new/button-light.svg)](https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-containers-dbc)
+
 ## 🎬 How to run
 
 To deploy your infrastructure, run:

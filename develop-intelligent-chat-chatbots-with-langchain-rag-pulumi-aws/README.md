@@ -596,4 +596,6 @@ After the resources are deleted, you can remove the stack by running `pulumi sta
 
 ```shell
 pulumi stack rm dev
+
 ```
+
