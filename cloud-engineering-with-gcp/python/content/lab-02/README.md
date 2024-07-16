@@ -146,7 +146,7 @@ Notice the use of `depends_on`. This tells Pulumi that our `BucketObjects` shoul
 
 ---
 
-**⭐️ OPTIONAL ⭐️** Show [Authenticating with GCP Provider](https://www.pulumi.com/registry/packages/gcp/installation-configuration/#authentication-methods)
+**⭐️ OPTIONAL ⭐️** Show [Authenticating with GCP Provider](https://www.pulumi.com/registry/packages/gcp/installation-configuration/#authentication-methods?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 <details>
 <summary> Show how to configure GCP OIDC via Pulumi ESC </summary>
@@ -183,7 +183,7 @@ values:
     gcp:project: pulumi-workshops-project
 ```
 
-We're going to [add a reference to GCP OIDC config environment in my Dev stack via the Pulumi CLI](https://www.pulumi.com/docs/cli/commands/pulumi_config_env_add/)
+We're going to [add a reference to GCP OIDC config environment in my Dev stack via the Pulumi CLI](https://www.pulumi.com/docs/cli/commands/pulumi_config_env_add/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 ```bash
 pulumi config env add oidc-gcp
@@ -222,7 +222,7 @@ Now that we've defined our infrastructure, we can use the Pulumi CLI to create t
 
 ## Step 6 &mdash; Export the Bucket URL
 
-Our final step is to build our static site URL and add it as a [stack output](https://www.pulumi.com/learn/building-with-pulumi/stack-outputs/). Stack outputs allow us to consume values from the command line or other Pulumi programs. In this case, we will consume our output from the command line.
+Our final step is to build our static site URL and add it as a [stack output](https://www.pulumi.com/learn/building-with-pulumi/stack-outputs/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops). Stack outputs allow us to consume values from the command line or other Pulumi programs. In this case, we will consume our output from the command line.
 
 First, we assemble the output's value using `pulumi.Output.concat`.
 
@@ -233,7 +233,7 @@ First, we assemble the output's value using `pulumi.Output.concat`.
         "https://storage.googleapis.com/", bucket.name, "/index.html")
     ```
 
-    We use `pulumi.Output.concat` instead of standard Python string concatenation because `bucket.name` is a Pulumi Output&mdash;a value that isn't known until after a resource has been created. For more information on Pulumi Inputs and Outputs, reference [Inputs and Outputs](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/) in the Pulumi docs.
+    We use `pulumi.Output.concat` instead of standard Python string concatenation because `bucket.name` is a Pulumi Output&mdash;a value that isn't known until after a resource has been created. For more information on Pulumi Inputs and Outputs, reference [Inputs and Outputs](https://www.pulumi.com/docs/intro/concepts/inputs-outputs/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) in the Pulumi docs.
 
     Now we can export the value as a stack output, which will allow us to view its value from outside of our Pulumi program via the command line.
 

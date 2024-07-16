@@ -14,7 +14,7 @@ deck: unknown
 
 # Kubernetes on Azure
 
-This workshop will guide you through Pulumi's [Kubernetes Cluster in Azure](https://www.pulumi.com/templates/kubernetes/azure/) template. We'll deploy an AKS Kubernetes cluster on Azure, deploy NGINX as a Kubernetes deployment, and add a `LoadBalancer` service to expose our NGINX service for outside access.
+This workshop will guide you through Pulumi's [Kubernetes Cluster in Azure](https://www.pulumi.com/templates/kubernetes/azure/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) template. We'll deploy an AKS Kubernetes cluster on Azure, deploy NGINX as a Kubernetes deployment, and add a `LoadBalancer` service to expose our NGINX service for outside access.
 
 ## Pre-requisites
 
@@ -22,9 +22,9 @@ This workshop will guide you through Pulumi's [Kubernetes Cluster in Azure](http
 
 You will need the following to complete this workshop:
 
-* A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=template-kubernetes-azure-csharp)
-  * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=template-kubernetes-azure-csharp).
-* The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=template-kubernetes-azure-csharp)
+* A [Pulumi account and token](https://www.pulumi.com/docs/intro/pulumi-service/accounts/#access-tokens?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+  * If you don't have an account, go to the [signup page](https://app.pulumi.com/signup?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
+* The [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 * [.NET 6](https://dotnet.microsoft.com/en-us/download)
 * [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/#kubectl)
@@ -34,7 +34,7 @@ You will need the following to complete this workshop:
 
 #### Subscription
 
-You'll also need an active Azure subscription to deploy the components of the application. You may use your developer subscription, or [create a free Azure subscription](https://azure.microsoft.com/free/).
+You'll also need an active Azure subscription to deploy the components of the application. You may use your developer subscription, or [create a free Azure subscription](https://azure.microsoft.com/en-us/free/).
 
 Please be sure to have administrative access to the subscription.
 

@@ -2,8 +2,8 @@
 
 The repo contains a codebase to demonstrate integration between Pulumi Cloud and GitLab. The code in this repo is based upon the following primary sources:
 
-* <https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/>
-* <https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/>
+* <https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
+* <https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
 
 ## Required Configuration
 

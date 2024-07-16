@@ -14,7 +14,7 @@
 //   !! You *must* complete the DBC builder setup steps @ https://docs.docker.com/build/cloud/setup/#steps
 // - Docker Desktop / CLI
 // - Pulumi CLI (https://www.pulumi.com/docs/get-started/install/)
-// - *Recommended* Pulumi Cloud account (https://app.pulumi.com/signup)
+// - *Recommended* Pulumi Cloud account (https://app.pulumi.com/signup?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 // - npm (https://www.npmjs.com/get-npm)
 
 

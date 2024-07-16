@@ -9,8 +9,8 @@ Last revision: May 2024.
 - [Docker Build Cloud (DBC) builder](https://build.docker.com/)
 - 🚨 You **must** complete the [DBC builder setup steps](https://docs.docker.com/build/cloud/setup/#steps) 🚨
 - Docker Desktop / CLI
-- [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/)
-- *Recommended* [Pulumi Cloud account](https://app.pulumi.com/signup)
+- [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+- *Recommended* [Pulumi Cloud account](https://app.pulumi.com/signup?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 - [npm](https://www.npmjs.com/get-npm)
 - AWS account and local credentials configured
 
@@ -19,13 +19,13 @@ Last revision: May 2024.
 This Pulumi example is written as a template. It is meant to be copied via `pulumi new` as follows:
 
 ```bash
-$ pulumi new https://github.com/pulumi/examples/tree/master/aws-ts-containers-dbc
-$ npm install
+pulumi new https://github.com/pulumi/examples/tree/master/aws-ts-containers-dbc
+npm install
 ```
 
 Once copied to your machine, feel free to edit as needed.
 
-Alternatively, click the button below to use [Pulumi Deployments](https://www.pulumi.com/docs/pulumi-cloud/deployments/) to deploy this app:
+Alternatively, click the button below to use [Pulumi Deployments](https://www.pulumi.com/docs/pulumi-cloud/deployments/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) to deploy this app:
 
 [![Deploy this example with Pulumi](https://get.pulumi.com/new/button.svg)](https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-containers-dbc)
 [![Deploy this example with Pulumi](https://get.pulumi.com/new/button-light.svg)](https://app.pulumi.com/new?template=https://github.com/pulumi/examples/blob/master/aws-ts-containers-dbc)

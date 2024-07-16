@@ -4,7 +4,7 @@
 
 - If you don't have an Azure subscription, create an Azure free account before you begin.
 - Install the [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli).
-- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/).
+- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 - Provision an instance of Azure Deployment Environments ([sample Pulumi app](https://github.com/pulumi/azure-deployment-environments/tree/main/Provisioning/ade)), setup its catalog to point to this environment definition.
 
 ## Overview

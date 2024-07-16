@@ -9,7 +9,7 @@ In this workshop, you will learn how to automate your Docker build process by le
 - Build NGINX Dockerfile in Pulumi and DBC
 - Configure a CI pipeline to Docker build on *every* commit
 
-[Registration Link](https://www.pulumi.com/resources/automating-docker-image-builds-using-pulumi/)
+[Registration Link](https://www.pulumi.com/resources/automating-docker-image-builds-using-pulumi/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 ## Outline
 

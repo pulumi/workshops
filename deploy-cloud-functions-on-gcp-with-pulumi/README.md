@@ -11,7 +11,7 @@ specific Google Cloud Storage bucket.
 - If you don't have an GCP account, you can create one [here](https://cloud.google.com/).
 - Make sure your User has the necessary permissions to create the resources.
 - Install gcloud CLI by following the instructions [here](https://cloud.google.com/sdk/docs/install).
-- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/).
+- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 ## Instructions
 

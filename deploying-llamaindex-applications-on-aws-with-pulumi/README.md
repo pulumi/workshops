@@ -7,7 +7,7 @@ This folder contains the code for the workshop "Deploying LlamaIndex Application
 - If you don't have an AWS account, create one [here](https://aws.amazon.com/).
 - Make sure your User has the necessary permissions to create the resources.
 - Install the [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html).
-- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/).
+- Install the [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
 ## Instructions
 
@@ -213,7 +213,7 @@ if st.session_state['generated']:
 
 st.markdown("""
 ---
-Made with ❤️ by [Pulumi](https://www.pulumi.com/)""")
+Made with ❤️ by [Pulumi](https://www.pulumi.com/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)""")
 ```
 
 This code is a Streamlit application that uses the `llamaindex` library to create a chatbot that can answer questions.

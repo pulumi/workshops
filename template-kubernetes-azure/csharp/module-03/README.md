@@ -33,7 +33,7 @@ Notice how Pulumi detects that our previously deployed resources are no longer a
 
 ## Step 3 &mdash;Adding a Deployment to Our Cluster
 
-Now that we have just the needed infrastructure, let's add some Kubernetes resources to our cluster. The first thing we need to do is install the [Pulumi Kubernetes provider](https://www.pulumi.com/registry/packages/kubernetes/):
+Now that we have just the needed infrastructure, let's add some Kubernetes resources to our cluster. The first thing we need to do is install the [Pulumi Kubernetes provider](https://www.pulumi.com/registry/packages/kubernetes/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops):
 
 ```bash
 dotnet package add Pulumi.Kubernetes
@@ -90,7 +90,7 @@ var deployment = new Pulumi.Kubernetes.Apps.V1.Deployment("nginx", new Deploymen
 );
 ```
 
-Note how we provide the `CustomResourceOptions` parameter and tell the resource to use the provider we declared earlier. All Pulumi resources support this parameter. For details on all the options available for Pulumi resources, check out [Resource Options](https://www.pulumi.com/docs/intro/concepts/resources/options/) in the Pulumi docs.
+Note how we provide the `CustomResourceOptions` parameter and tell the resource to use the provider we declared earlier. All Pulumi resources support this parameter. For details on all the options available for Pulumi resources, check out [Resource Options](https://www.pulumi.com/docs/intro/concepts/resources/options/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) in the Pulumi docs.
 
 Let's deploy our changes:
 

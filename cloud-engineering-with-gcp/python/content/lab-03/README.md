@@ -83,7 +83,7 @@ Before we add anything to our Pulumi program, let's make sure we configure the D
 gcloud auth configure-docker us-central1-docker.pkg.dev
 ```
 
-In addition to the GCP provider, we'll also need to install the [Pulumi Docker provider](https://www.pulumi.com/registry/packages/docker/) so we can build our image. We can do this using `pip3`.
+In addition to the GCP provider, we'll also need to install the [Pulumi Docker provider](https://www.pulumi.com/registry/packages/docker/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) so we can build our image. We can do this using `pip3`.
 
 Add the following to your `requirements.txt`:
 

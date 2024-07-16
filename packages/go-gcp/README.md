@@ -14,14 +14,15 @@ status: active
 # Pulumi Packages in Go - Example in GCP
 
 We're going to build a Pulumi Package, with a component built for Go for Google Cloud Platform (GCP) and Google Kubernetes Engine (GKE). After that, we will demo consuming this component from a Pulumi YAML program.
+
 ## Prerequisites
 
 You will need the following tools:
 
-* [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
-* [Pulumi FREE SaaS Account](https://app.pulumi.com/signup/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
+* [Pulumi CLI](https://www.pulumi.com/docs/get-started/install/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+* [Pulumi FREE SaaS Account](https://app.pulumi.com/signup/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
   * Pulumi state storage is FREE for individuals, you can use this account for all your personal Pulumi projects and you never need to worry about where to store your state 😃
-* [Go](https://www.pulumi.com/docs/intro/languages/go/?utm_source=da&utm_medium=referral&utm_campaign=workshops&utm_content=ced-fall2022-workshops)
+* [Go](https://www.pulumi.com/docs/intro/languages/go/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 * A [GCP Account](https://cloud.google.com/) - the free trial should cover everything in this workshop but any costs accrued will be minimal
 
 ## Workshop contents

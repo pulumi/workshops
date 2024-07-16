@@ -23,14 +23,14 @@ Time: 0h:00m:06s
 
 ## Implement the component
 
-On the implementation side, the implementation of our component follows the practices defined for Pulumi [Component Resources](https://www.pulumi.com/docs/intro/concepts/resources/components/). Similar to every Pulumi resource, creating a (component) resource in Go is via a `NewXXX` function taking 4 arguments:
+On the implementation side, the implementation of our component follows the practices defined for Pulumi [Component Resources](https://www.pulumi.com/docs/intro/concepts/resources/components/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops). Similar to every Pulumi resource, creating a (component) resource in Go is via a `NewXXX` function taking 4 arguments:
 
 * `ctx`: a Pulumi context object
 * `name`: the name of the resource
 * `args`: a Go struct defining the resource specific input properties
 * `opts`: the Pulumi resources options struct.
 
-The implementation of this component is in `provider/pkg/provider/serviceIdentity.go`. Let's first create [the skeleton](https://www.pulumi.com/docs/intro/concepts/resources/components/#authoring-a-new-component-resource):
+The implementation of this component is in `provider/pkg/provider/serviceIdentity.go`. Let's first create [the skeleton](https://www.pulumi.com/docs/intro/concepts/resources/components/#authoring-a-new-component-resource?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops):
 
 ```go
 type ServiceIdentityArgs struct {

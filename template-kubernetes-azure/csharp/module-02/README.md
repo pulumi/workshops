@@ -21,7 +21,7 @@ return await Pulumi.Deployment.RunAsync(() =>
     var sshPubKey = projCfg.Require("sshPubKey");
 ```
 
-To start, we notice that .NET Pulumi programs are wrapped in the middleware call `Pulumi.Deployment.RunAsync()`. In the following lines, we access the configuration parameters we set when we initialized the project. For more information on setting and retrieving configuration values, see [Configuration](https://www.pulumi.com/docs/intro/concepts/config/) in the Pulumi docs.
+To start, we notice that .NET Pulumi programs are wrapped in the middleware call `Pulumi.Deployment.RunAsync()`. In the following lines, we access the configuration parameters we set when we initialized the project. For more information on setting and retrieving configuration values, see [Configuration](https://www.pulumi.com/docs/intro/concepts/config/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) in the Pulumi docs.
 
 ## Resources
 
@@ -75,7 +75,7 @@ var decoded = encoded.Apply(enc => {
 });
 ```
 
-Then we and return some [stack outputs](https://www.pulumi.com/learn/building-with-pulumi/stack-outputs/) which allows us to access values from this Pulumi program [from the command line](https://www.pulumi.com/docs/reference/cli/pulumi_stack_output/) or other Pulumi programs via [stack references](https://www.pulumi.com/learn/building-with-pulumi/stack-references/):
+Then we and return some [stack outputs](https://www.pulumi.com/learn/building-with-pulumi/stack-outputs/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) which allows us to access values from this Pulumi program [from the command line](https://www.pulumi.com/docs/reference/cli/pulumi_stack_output/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) or other Pulumi programs via [stack references](https://www.pulumi.com/learn/building-with-pulumi/stack-references/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops):
 
 ```csharp
 return new Dictionary<string, object?> {
