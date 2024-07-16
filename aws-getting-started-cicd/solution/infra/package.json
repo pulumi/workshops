@@ -1,12 +1,12 @@
 {
     "name": "cicd-workshop",
     "devDependencies": {
-        "@types/node": "^18.19.15"
+        "@types/node": "^20.14.10"
     },
     "dependencies": {
-        "@pulumi/aws": "^6.21.0",
-        "@pulumi/pulumi": "^3.105.0",
-        "@pulumi/synced-folder": "^0.0.9",
-        "typescript": "^4.9.5"
+        "@pulumi/aws": "^6.44.0",
+        "@pulumi/pulumi": "^3.124.0",
+        "@pulumi/synced-folder": "^0.11.1",
+        "typescript": "^5.5.3"
     }
 }
