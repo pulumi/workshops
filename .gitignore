@@ -3,3 +3,4 @@
 check-links*
 node_modules**
 .markdown-link-check.json
+workshops-readme.sln
