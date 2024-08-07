@@ -6,7 +6,7 @@
 - Develop Infrastructure as Code with Pulumi in TypeScript
 - Implement GitOps best practices
 
-Given the final solution uses GitHub Actions, the code resides a separate repository, [GitHub repo with the code](https://github.com/desteves/pulumi-cloudflare-workers-ai).
+Given the final solution uses GitHub Actions, the code resides in a separate repository, [GitHub repo with the code](https://github.com/desteves/pulumi-cloudflare-workers-ai).
 
 ## Outline
 
@@ -36,7 +36,7 @@ The goal is to become familiar with the running app and understand the various f
 
 ### **Demo 1**: Presenter Prep
 
-Deploy the `-demo` app. Follow the [GitHub repo with the code](https://github.com/desteves/pulumi-cloudflare-workers-ai) to deploy the `test` stack under `/infra/`. Note, a Pulumi ESC environment is also required.
+Deploy the `-demo` app. Follow the [GitHub repo with the code](https://github.com/desteves/pulumi-cloudflare-workers-ai) to deploy the `test` stack under `/infra/`. Note, that a Pulumi ESC environment is also required.
 
 Example of the `Environment`:
 
@@ -63,7 +63,7 @@ values:
 
 ### **Demo 1**: Live Commands
 
-For this part the live part involves opening the browser and showing the `-demo` version of the app running. Do a couple of refreshes and explain the various components needed to make the app run.
+For this part, the live part involves opening the browser and showing the `-demo` version of the app running. Do a couple of refreshes and explain the various components needed to make the app run.
 
 ## **Demo 2** Using Wrangler
 
@@ -77,7 +77,7 @@ N/A.
 
 ### **Demo 2**: Live Commands
 
-Co-presenter demostrates a hello-world application using Wrangler commands.
+Co-presenter demonstrates a hello-world application using Wrangler commands.
 
 ## **Demo 3** Scaling with Pulumi
 
@@ -89,7 +89,7 @@ Incrementally test a Serverless App by defining Cloudflare resources in Pulumi T
 
 The prod version should already be deployed as it can take a bit of time to create 2400+ KV entries.
 
-You'll go through the steps on creating a simple Pulumi program, then switch and explain the test version, one worker at a time.
+You'll go through the steps of creating a simple Pulumi program, then switch and explain the test version, one worker at a time.
 
 ### **Demo 3**: Live Commands
 
@@ -170,5 +170,5 @@ pulumi destroy
 Add GitHub Actions to deploy our infra on our behalf.
 
 - Go over the `branch.yml` and `main.yml` actions.
-- Open a PR and make a commit to trigget the pipeline.
+- Open a PR and make a commit to trigger the pipeline.
 - Merge the PR to trigger the `up` action.
