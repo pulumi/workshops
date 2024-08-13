@@ -183,17 +183,11 @@ $ pulumi preview
 <summary> ✅ [live] PR commit / merge the changes </summary>
 
 ```bash
-# Commit your changes
-$ git add .
-$ git commit -m "add oidc"
+$ git checkout main && git pull origin main
 
-# Create a new feature branch
 $ git checkout -b feature-oidc
-
-# Push the changes
+$ git add . && git commit -m "add oidc"
 $ git push --set-upstream origin feature-oidc
-
-# Create a PR
 $ gh pr create --title "adds oidc" --body ""
 # Follow the link to see the Actions
 # It can take a few minutes for the GHA Runner to complete
@@ -202,8 +196,6 @@ $ gh pr create --title "adds oidc" --body ""
 # !!! Update the PR merge number as needed
 $ m=1 
 $ gh pr merge $m --squash
-
-$ git checkout main
 ```
 
 </details>
@@ -278,17 +270,10 @@ Update `branch.yml` and `main.yml` with the following changes:
 <summary> ✅ [live] PR commit / merge the changes </summary>
 
 ```bash
-# Commit your changes
-$ git add .
-$ git commit -m "add pac"
-
-# Create a new feature branch
+$ git checkout main && git pull origin main
 $ git checkout -b feature-pac
-
-# Push the changes
+$ git add . && git commit -m "add pac"
 $ git push --set-upstream origin feature-pac
-
-# Create a PR
 $ gh pr create --title "Adds Policy as Code" --body ""
 # Follow the link to see the Actions
 # It can take a few minutes for the GHA Runner to complete
@@ -392,19 +377,10 @@ Both drift detection and infrastructure reconciliation are fundamental to the pr
 <summary> ✅ [live] PR commit / merge the changes </summary>
 
 ```bash
-# Ensure you're in the project, `cicd-workshop-advanced`.
-
-# Commit your changes
-$ git add .
-$ git commit -m "add dd"
-
-# Create a new feature branch
+$ git checkout main && git pull origin main
 $ git checkout -b feature-dd
-
-# Push the changes
+$ git add . && git commit -m "add dd"
 $ git push --set-upstream origin feature-dd
-
-# Create a PR
 $ gh pr create --title "Adds Drift Detection" --body ""
 # Follow the link to see the Actions
 # It can take a few minutes for the GHA Runner to complete
@@ -444,42 +420,38 @@ Attendees will be able to configure ephemeral cloud environments to deploy the i
 ### **Part IV** 🎬 Steps
 
 <details>
-<summary> ✅ [prep] Install the Pulumi GitHub App and Configure Pulumi Deployments </summary>
+<summary> ✅ [prep] Install the Pulumi GitHub App </summary>
 
 [Install the Pulumi GitHub App](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/github-app/#installation-and-configuration?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
-Check your repository has been added to the access list.
+Check your repository has been added to the access list:
 
-</details>
-
-<details>
-
-**!!! REMEMBER TO UNPAUSE DEPLOYMENTS IF PREVIOUSLY PAUSED !!!**
-
-<summary> ✅ [live] Add Review Stacks </summary>
-
-Presenter: For the live demo, just use the UI as it's far more presentable.
+- Settings -> Integrations -> "Pulumi GitHub App" -> "Configure repositoroy access"
+  ![alt text](image-3.png)
 
 </details>
 <details>
-<summary> ✅ [live] Commit the changes </summary>
+<summary> ✅ [live] Configure Pulumi Deployments  </summary>
+
+> [!IMPORTANT]
+> REMEMBER TO UNPAUSE DEPLOYMENTS IF PREVIOUSLY PAUSED
+
+- Open the [live stack settings](https://app.pulumi.com/pulumi-sandbox-diana/cicd/dev/settings/deploy).
+- Pulumi.yml folder: `infra`
+- Ensure you enabled "Use this stack as a template for pull request stacks"
+- Click "Save deployment configuration"
+- Use the [completed stack for reference](https://app.pulumi.com/pulumi-sandbox-diana/cicd/dev/settings/deploy).
+
+</details>
+<details>
+<summary> ✅ [live] Trigger a Review Stack via a PR commit</summary>
 
 ```bash
-# Commit your changes
-$ git add .
-$ git commit -m "add rs"
-
-# Create a new feature branch
+$ git checkout main && git pull origin main
 $ git checkout -b feature-rs
-
-# Push the changes
+$ git commit --allow-empty -m "noop"
 $ git push --set-upstream origin feature-rs
-
-# Create a PR
 $ gh pr create --title "Adds Review Stacks" --body ""
-# Follow the link to see the Actions
-# It can take a few minutes for the GHA Runners to complete
-
 # Merge the PR
 # Update the PR merge number as needed
 $ m=5 # 
@@ -492,7 +464,8 @@ $ gh pr merge $m --squash
 
 You introduced advanced elements to your continuous infrastructure pipeline to make it more robust. In particular, you:
 
-- Added a Pulumi ESC environment to retrieve dynamic credentials for AWS;
+- Added a Pulumi ESC Environment to retrieve dynamic credentials for AWS;
+- Added GitHub OIDC to effective have a secret-less pipeline;
 - Added policy checks to test your infrastructure for compliance;
 - Added a drift detection cron job to the pipeline; and
 - Configured dedicated cloud environments with Review Stacks.
