@@ -1,7 +1,0 @@
-name: cicd-workshop
-runtime: nodejs
-description: A TypeScript program to deploy a static website on AWS
-config:
-  pulumi:tags:
-    value:
-      pulumi:template: static-website-aws-typescript

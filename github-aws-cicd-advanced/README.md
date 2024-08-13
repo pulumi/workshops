@@ -20,7 +20,7 @@ This workshop introduces users to advanced best practices. You will add complian
 <!-- markdownlint-disable MD033 -->
 
 > [!NOTE]
-> **Presenter**: Any steps labeled "[prep]" should be completed prior the workshop. Any steps labeled "[live]" are meant be completed live. In addition, all steps should have a completed version with the `-done` suffix in case the live demo goes awry.
+> **Presenter**: Any step labeled "[prep]" should be completed prior the workshop. Any steps labeled "[live]" are meant be completed live. In addition, all steps should have been completed under the `./infra-done` folder.
 
 ## 🧰 Prerequisites
 
@@ -236,6 +236,7 @@ $ npm install -g npm-check-updates && ncu -u && npm install
 
 # Test locally
 $ cd ../ # from the infra folder
+$ npm install --save @pulumi/policy @pulumi/compliance-policy-manager
 $ pulumi preview --policy-pack aws-cis --stack dev
 # Policies:
 #    ✅ aws-cis-compliance-ready-policies-typescript@v0.0.1 (local: aws-cis)
@@ -313,61 +314,58 @@ Both drift detection and infrastructure reconciliation are fundamental to the pr
 - Add `.github/workflows/drift.yml`
 - Copy the following:
 
-  ```yml
-  name: drift-live
-  on:
-    schedule:
-      # Actions schedules runs every 5 minutes.
-      - cron: '*/5 * * * *'
-    workflow_dispatch: {}
-  
-  permissions:
-    contents: read
-    pull-requests: write
-    id-token: write
-  
-  jobs:
-    main:
-      name: drift detection
-      runs-on: ubuntu-latest
-      strategy:
-        matrix:
-          directory:
-            - './infra'
-            - './infra/aws-oidc'
-            - './infra/aws-cis'
-      steps:
-        - name: checkout repo
-          uses: actions/checkout@v4
-  
-        - name: setup node
-          uses: actions/setup-node@v4
-          with:
-            node-version: 20
-  
-        - name: install deps
-          working-directory: ${{ matrix.directory }}
-          run: npm install
-  
-        - name: auth pulumi cloud
-          uses: pulumi/auth-actions@v1
-          with:
-            organization: pulumi-sandbox-diana
-            requested-token-type: urn:pulumi:token-type:access_token:organization
-          
-        - name: preview resources
-          uses: pulumi/actions@v5
-          with:
-            command: preview
-            stack-name: pulumi-sandbox-diana/cicd/dev
-            work-dir: ./infra
-            # policyPacks: aws-cis optional if to check this
-            comment-on-pr: true
-            comment-on-summary: true
-            edit-pr-comment: true
-            expect-no-changes: true
-            refresh: true
-  ```
+```yml
+name: drift-live
+on:
+  schedule:
+    # Actions schedules runs every 5 minutes.
+    - cron: '*/5 * * * *'
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+  pull-requests: write
+  id-token: write
+
+jobs:
+  drift-detection:
+    runs-on: ubuntu-latest
+    env:
+      INFRA_DIR: './infra'
+      NODE_VERSION: 22
+      PULUMI_ORG: 'pulumi-sandbox-diana'
+      PULUMI_STACK: 'pulumi-sandbox-diana/cicd-live/dev'
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v4
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: install deps
+        working-directory:  ${{ env.INFRA_DIR }}
+        run: npm install
+
+      - name: auth pulumi cloud
+        uses: pulumi/auth-actions@v1
+        with:
+          organization: ${{ env.PULUMI_ORG }}
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+        
+      - name: preview resources
+        uses: pulumi/actions@v5
+        with:
+          command: preview
+          stack-name: ${{ env.PULUMI_STACK }}
+          work-dir: ${{ env.INFRA_DIR }}
+          comment-on-pr: true
+          comment-on-summary: true
+          edit-pr-comment: true
+          expect-no-changes: true
+          refresh: true
+```
   
 - See `.github/workflows/drift-done.yml` for reference.
 

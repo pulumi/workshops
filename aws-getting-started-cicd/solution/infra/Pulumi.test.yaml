@@ -1,9 +1,0 @@
-config:
-  aws:region: us-west-2
-  iac-workshop:errorDocument: error.html
-  iac-workshop:indexDocument: index.html
-  iac-workshop:path: ./www
-
-# Pulumi ESC
-# environment:
-#   - pulumi-cicd-workshop
