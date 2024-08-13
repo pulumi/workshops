@@ -20,7 +20,7 @@ This workshop introduces users to advanced best practices. You will add complian
 <!-- markdownlint-disable MD033 -->
 
 > [!NOTE]
-> **Presenter**: Any steps labeled "[prep]" should be completed prior the workshop. Any steps labeled "[live]" should be completed live. In addition, all steps should have a completed version with the `-done` suffix in case the live demo goes awry.
+> **Presenter**: Any steps labeled "[prep]" should be completed prior the workshop. Any steps labeled "[live]" are meant be completed live. In addition, all steps should have a completed version with the `-done` suffix in case the live demo goes awry.
 
 ## 🧰 Prerequisites
 
@@ -58,7 +58,7 @@ This workshop picks up right where the [Getting Started](../github-aws-cicd-gett
 
 ### **Part I** 🎯 Goal
 
-Attendees will be able to authenticate using Dynamic Credentials by adding a Pulumi ESC Environment with an AWS OIDC configuration.
+Attendees will be able to authenticate using Dynamic Credentials by adding a Pulumi ESC Environment with an AWS OIDC configuration as well as configure GitHub OIDC with your Pulumi Cloud organization. This effectively results in a secret-less pipeline.
 
 <details>
 <summary> Expand on the 📚 concepts </summary>
@@ -78,72 +78,123 @@ Attendees will be able to authenticate using Dynamic Credentials by adding a Pul
 
 ```bash
 # Clone the Getting Started repo
-$ gh repo clone desteves/pulumi-workshop-cicd pulumi-workshop-cicd-advanced
+# The name of the cloned repo
+$ newrepo=pulumi-workshop-cicd-advanced
+$ gh repo clone desteves/pulumi-workshop-cicd ${newrepo}
+$ gh repo create desteves/${newrepo} --public
+$ cd ${newrepo}
+$ git remote set-url origin https://github.com/desteves/${newrepo}.git 
+$ git push
 ```
 
 </details>
-
 <details>
-<summary> ✅ Configure AWS Dynamic Credentials </summary>
+<summary> ✅ [prep] Create AWS OIDC resources and an ESC Environment </summary>
 
-- If your AWS Account already has an OIDC IDP for Pulumi Cloud, this will **not** work. Instead, update your existing audience for the AWS IAM Identity Provider and also add the name of your Pulumi Org to the Trust Relationship JSON for the corresponding AWS IAM Role.
+> [!WARNING]
+> If your AWS Account already has an OIDC IDP for Pulumi Cloud, this will **not** work. Instead:
+> 1. Update your existing audience for the AWS IAM Identity Provider. Example: ![alt text](image.png)
+> 2. Add the name of your Pulumi Org to the Trust Relationship JSON for the corresponding AWS IAM Role. Example, ![alt text](image-1.png)
 
 ```bash
 # Ensure you're in ./infra
 $ TEMPLATE_URL=https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud
-
 # Use a Pulumi template to create AWS OIDC Resources
 $ pulumi new ${TEMPLATE_URL} --dir aws-oidc
 # Go through the wizard and update the defaults as necessary
-
+# Use SSO Token in the meantime.
+$ aws sso login --profile work
 $ pulumi up --yes --cwd aws-oidc  --stack dev --continue-on-error
 # wait for the resources to get created; this can take a couple of minutes
-
 # Obtain the name of the ESC Environment
-$ e=$(pulumi stack output escEnv --cwd aws-oidc)
+```
 
+- Check your ESC Environment should look like the following:
+
+```yml
+# EXAMPLE OF CONFIGURING AWS FOR OIDC
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: arn:aws:iam::886783038127:role/oidcProviderRole-ee46990
+          sessionName: pulumi-environments-session
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+  pulumiConfig:
+    aws:region: us-west-2
+```
+
+
+</details>
+<details>
+<summary> ✅ [live] Add the ESC Environment to your infra project. </summary>
+
+```bash
+# If using the template, obtain the ESC Environment name from the config
+# $ e=$(pulumi config get escEnv --cwd aws-oidc)
+#
+# name of the ESC Environment
+# Ensure you're in the infra folder
+$ e=aws-oidc-env
 # Add the ESC Environment to your Stack
-# [live]
-$ pulumi config env add ${e} --yes --non-interactive
-
-# TODO -- test with
-#  aws s3 ls
-
+$ pulumi config env add ${e} --yes --non-interactive --stack dev
 # Test the changes locally
 $ pulumi preview
 ```
 
 </details>
-
 <details>
-<summary> ✅ Add GitHub OIDC to Pulumi Cloud and your workflows. </summary>
+<summary> ✅ [prep] Add GitHub OIDC to your Pulumi Cloud </summary>
 
-Prep work:
+[Follow the guide](https://www.pulumi.com/docs/pulumi-cloud/oidc/client/github/) to enable the [Pulumi Auth Action](https://github.com/marketplace/actions/pulumi-auth-action). Example, ![alt text](image-2.png)
 
-Live work:
+</details>
+<details>
+<summary> ✅ [live] Update the GitHub workflows to use the Pulumi Auth action. </summary>
 
-```bash
-# TODO
-```
+- The `id-token` will now need  `write` permission.
+
+  ```yml
+  permissions:
+    id-token: write
+    # other permissions...
+  ```
+  
+- Add a step before the `pulumi/actions`:
+  
+  ```yml
+      - name: auth pulumi cloud
+        uses: pulumi/auth-actions@v1
+        with:
+          organization: pulumi-sandbox-diana
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+    ```
+
+- Remove any reference to the `PULUMI_ACCESS_TOKEN` and `AWS_...` secrets.
 
 </details>
 
 <details>
-<summary> ✅ Commit the changes </summary>
+<summary> ✅ [live] PR commit / merge the changes </summary>
 
 ```bash
 # Commit your changes
 $ git add .
-$ git commit -m "add esc"
+$ git commit -m "add oidc"
 
 # Create a new feature branch
-$ git checkout -b feature-esc
+$ git checkout -b feature-oidc
 
 # Push the changes
-$ git push --set-upstream origin feature-esc
+$ git push --set-upstream origin feature-oidc
 
 # Create a PR
-$ gh pr create --title "Adds dynamic auth" --body ""
+$ gh pr create --title "adds oidc" --body ""
 # Follow the link to see the Actions
 # It can take a few minutes for the GHA Runner to complete
 
@@ -188,48 +239,43 @@ Center for Internet Security (CIS)
 
 # Add the policy under the aws-cis/ folder
 $ pulumi policy new aws-cis-compliance-policies-typescript  --dir aws-cis
-
-# Add deps for GHA
-# $ cd aws-cis
-# # $ npm update --save
-# # $ npm install @pulumi/policy @pulumi/compliance-policy-manager @pulumi/aws-compliance-policies
-# $ pulumi up --yes
-# $ cd ../
+$ cd aws-cis
+$ npm install -g npm-check-updates && ncu -u && npm install
 
 # Test locally
+$ cd ../ # from the infra folder
 $ pulumi preview --policy-pack aws-cis --stack dev
 # Policies:
 #    ✅ aws-cis-compliance-ready-policies-typescript@v0.0.1 (local: aws-cis)
-
-# Test programmatically
-# Modify the workflow file
-$ vi .github/workflows/branch.yml
-#   edit the last step as shown below
-#   save the file.
 ```
 
-`branch.yml` code snippet:
+</details>
+<details>
+<summary> ✅ [live] Update the GitHub workflows to include policy checks </summary>
 
-```yaml
-      - name: Install PaC Dependencies
-        working-directory: ./infra/aws-cis
-        run: npm install
+Update `branch.yml` and `main.yml` with the following changes:
 
-      - name: Create the resources
-        uses: pulumi/actions@v5
-        with:
-          command: up
-          stack-name: pulumi-sandbox-diana/workshop/dev # !!! UPDATE THIS
-          work-dir: ./infra
-          policyPacks: aws-cis
-        env:
-          PULUMI_ACCESS_TOKEN: ${{ secrets.PULUMI_ACCESS_TOKEN }}
-```
+- Add the CIS folder to the `matrix.directory`
+
+  ```yaml
+      strategy:
+      matrix:
+        directory:
+          - './infra'
+          - './infra/aws-oidc'
+          - './infra/aws-cis'
+  ```
+
+- Modify the `pulumi/actions` step, below the `work-dir`, add
+
+  ```yml
+  policyPacks: aws-cis
+  ```
 
 </details>
 
 <details>
-<summary> ✅ Commit the changes as a merged PR </summary>
+<summary> ✅ [live] PR commit / merge the changes </summary>
 
 ```bash
 # Commit your changes
@@ -279,55 +325,71 @@ Both drift detection and infrastructure reconciliation are fundamental to the pr
 <details>
 <summary> ✅  [live] Add a cronjob to your workflow that detects drift </summary>
 
-```bash
-$ git checkout main
-$ vi .github/workflows/drift.yml
-#   paste the contents of drift.yml shown below
-#   update `stack-name`
-#   save the file.
-```
+- Add `.github/workflows/drift.yml`
+- Copy the following:
 
-<!-- TODO -- UPDATE -->
-
-```yaml
-name: drift
-on:
-  schedule:
-    # Actions schedules runs every 5 minutes.
-    - cron: '*/5 * * * *'
-  workflow_dispatch: {}
-
-jobs:
-  main:
-    runs-on: ubuntu-latest
-    name: Drift Detection
-    steps:
-      - name: checkout repository
-        uses: actions/checkout@v4
-
-      - name: setup node 18
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-
-      - name: install dependencies
-        working-directory: ./infra
-        run: npm install
-
-      - name: preview
-        uses: pulumi/actions@v5
-        with:
-          command: preview
-          stack-name: pulumi-sandbox-diana/workshop/dev ## !!!! Update this
-          expect-no-changes: true
-          refresh: true
-          work-dir: ./infra
-```
+  ```yml
+  name: drift-live
+  on:
+    schedule:
+      # Actions schedules runs every 5 minutes.
+      - cron: '*/5 * * * *'
+    workflow_dispatch: {}
+  
+  permissions:
+    contents: read
+    pull-requests: write
+    id-token: write
+  
+  jobs:
+    main:
+      name: drift detection
+      runs-on: ubuntu-latest
+      strategy:
+        matrix:
+          directory:
+            - './infra'
+            - './infra/aws-oidc'
+            - './infra/aws-cis'
+      steps:
+        - name: checkout repo
+          uses: actions/checkout@v4
+  
+        - name: setup node
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+  
+        - name: install deps
+          working-directory: ${{ matrix.directory }}
+          run: npm install
+  
+        - name: auth pulumi cloud
+          uses: pulumi/auth-actions@v1
+          with:
+            organization: pulumi-sandbox-diana
+            requested-token-type: urn:pulumi:token-type:access_token:organization
+          
+        - name: preview resources
+          uses: pulumi/actions@v5
+          with:
+            command: preview
+            stack-name: pulumi-sandbox-diana/cicd/dev
+            work-dir: ./infra
+            # policyPacks: aws-cis optional if to check this
+            comment-on-pr: true
+            comment-on-summary: true
+            edit-pr-comment: true
+            expect-no-changes: true
+            refresh: true
+  ```
+  
+- See `.github/workflows/drift-done.yml` for reference.
 
 </details>
 
 <details>
-<summary> ✅ Commit the changes </summary>
+<summary> ✅ [live] PR commit / merge the changes </summary>
 
 ```bash
 # Ensure you're in the project, `cicd-workshop-advanced`.
@@ -356,7 +418,7 @@ $ gh pr merge $m --squash
 </details>
 
 <details>
-<summary> ✅ Trigger the drift detection workflow </summary>
+<summary> ✅ [live] Trigger the drift detection workflow </summary>
 
 - Run the Drift Action in the browser.
 - [Make a change](https://us-west-2.console.aws.amazon.com/s3/buckets/bucket-ba7ee56?region=us-west-2&bucketType=general&tab=properties) by renaming the `error.html` to `404.html`
