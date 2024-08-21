@@ -10,5 +10,4 @@ yarn install
 pulumi login
 pulumi org set-default $PULUMI_ORG
 pulumi stack select dev
-export AWS_PROFILE="oidc"
 pulumi preview

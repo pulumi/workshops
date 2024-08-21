@@ -6,8 +6,10 @@
     },
     "dependencies": {
         "@pulumi/aws": "^6.6.1",
-        "@pulumi/gitlab": "^6.4.0",
+        "@pulumi/command": "^1.0.1",
+        "@pulumi/gitlab": "^8.3.0",
         "@pulumi/pulumi": "^3.0.0",
-        "@pulumi/pulumiservice": "^0.14.0"
+        "@pulumi/pulumiservice": "^0.23.2",
+        "@pulumi/random": "^4.16.3"
     }
 }
