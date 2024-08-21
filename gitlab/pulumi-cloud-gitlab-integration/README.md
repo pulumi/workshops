@@ -5,25 +5,9 @@ The repo contains a codebase to demonstrate the various points of integration be
 * [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci]<https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
 * [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app]<https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
 
-## Required Configuration
+The code creates a an GitLab project for use with a Pulumi IaC codebase with a GitLab CI/CD pipeline defined, along with supporting resources to allow the pipeline to use Pulumi ESC to grab temporary AWS credentials via OIDC.
 
-### GitLab Group
-
-Set the name of the GitLab Group in which your repository will go:
-
-```bash
-pulumi config set gitlabGroup <your-gitlab-group-name>
-```
-
-### Pulumi Organization
-
-```bash
-pulumi config set pulumiOrg some-other-org
-```
-
-## Demo steps
-
-Pre-requisites:
+## Prerequisites
 
 1. Ensure you have a GitLab group created.
 1. Ensure your SSH key is set up in GitLab.
@@ -32,7 +16,9 @@ Pre-requisites:
     **NOTE:** You must have a Pulumi org configured to use the GitLab Group as its identity provider or the GitLab webhook which shows preview results as Merge Request comments will not work. Since a Pulumi org can only use one source for identity, you may need to create a trial Pulumi org to run this demo.
 
 1. Ensure you have AWS credentials per the provider setup.
-1. Ensure that you have OIDC between Pulumi Cloud and AWS configured and that your Pulumi Org is set as one of the valid audiences 
+1. The codebase assumes that the AWS environment already has an OIDC provider configured for Pulumi Cloud (`https://api.pulumi.com/oidc`). If your AWS environment does not have an OIDC provider configured, see [Configuring OpenID Connect for AWS](https://www.pulumi.com/docs/pulumi-cloud/oidc/provider/aws/).
+
+    You do not need to add your Pulumi Cloud organization as a client ID (OIDC audience) - the code does that for you.
 
 1. (Optional) Create an ESC environment named `gitlab`. This will be used to deploy the demo resources to GitLab and is a simple example of how to use ESC for both static secrets and config values:
 
@@ -54,6 +40,26 @@ Pre-requisites:
     enviroment:
         - gitlab
     ```
+
+## Required Configuration
+
+### GitLab Group
+
+Set the name of the GitLab group in which your repository will go:
+
+```bash
+pulumi config set gitlabGroup <your-gitlab-group-name>
+```
+
+### Pulumi Organization
+
+Set the name of the Pulumi organization that will be used by the GitLab pipelines.
+
+```bash
+pulumi config set pulumiOrg some-other-org
+```
+
+## Demo steps
 
 1. Deploy the AWS OIDC resources, GitLab repo, and files:
 
@@ -80,26 +86,17 @@ Pre-requisites:
     git checkout -b my-branch
     ```
 
-1. Add a Pulumi program to the repo, e.g.:
-
-    ```bash
-    pulumi new aws-typescript --force
-    ```
-
-1. Add some resources (best to make this a single resource so the demo goes fast):
-
-    ```bash
-    const myBucket = new aws.s3.Bucket("my-gitlab-demo-bucket");
-    ```
-
+1. Add a Pulumi program to the repo. You can use the `pulumiNewCommand` output from the stack similar to `gitCloneCommand` above. The `aws-typescript` template creates a single S3 bucket.
 1. Push the branch:
 
     ```bash
     git add -A && git commit -m "Add some infra." && git push
     ```
 
-1. Create a Merge Request in the GitLab UI. This will trigger a `pulumi preview`. If the webhook is correctly configured (i.e. if the stack's Pulumi org is configured to use the corresponding GitLab org of the repo), you will see the results of the preview operation posted as a comment to your Merge Request.
+1. Create a Merge Request in the GitLab UI. This will trigger a `pulumi preview`. If the webhook is correctly configured (i.e. if the stack's Pulumi org is configured to use the corresponding GitLab group), you will see the results of the preview operation posted as a comment to your Merge Request.
 1. Merge the branch. This will trigger a `pulumi up` operation.
+
+From here, you may optionally want to add policy as code to the repo.
 
 ## Troubleshooting
 
