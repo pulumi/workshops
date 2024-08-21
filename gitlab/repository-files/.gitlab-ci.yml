@@ -1,6 +1,6 @@
 default:
   image:
-    name: "pulumi/pulumi:3.91.1"
+    name: "pulumi/pulumi:3.129.0"
     entrypoint: [""]
 
 stages:
@@ -8,12 +8,8 @@ stages:
 
 pulumi-up:
   stage: infrastructure-update
-  id_tokens:
-    GITLAB_OIDC_TOKEN:
-      aud: https://gitlab.com
   before_script:
     - chmod +x ./scripts/*.sh
-    - ./scripts/aws-auth.sh
   script:
     - ./scripts/pulumi-up.sh
   only:
@@ -21,12 +17,8 @@ pulumi-up:
 
 pulumi-preview:
   stage: infrastructure-update
-  id_tokens:
-    GITLAB_OIDC_TOKEN:
-      aud: https://gitlab.com
   before_script:
     - chmod +x ./scripts/*.sh
-    - ./scripts/aws-auth.sh
   script:
     - ./scripts/pulumi-preview.sh
   rules:

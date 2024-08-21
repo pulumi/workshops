@@ -3,20 +3,13 @@ import * as gitlab from "@pulumi/gitlab";
 import * as fs from "fs";
 import * as aws from "@pulumi/aws";
 import * as pulumicloud from "@pulumi/pulumiservice";
+import * as command from "@pulumi/command";
+import * as random from "@pulumi/random";
 
 const config = new pulumi.Config();
 
-// Note: In a more prod-like scenario, this should be a required config value
-// that uses an access token specifically for use with the Pulumi/GitLab
-// integration, not a user's personal access token:
-const pulumiAccessToken = config.get("pulumiAccessToken") ?? process.env["PULUMI_ACCESS_TOKEN"] ?? "";
-
-// For a private install, this would be e.g. "https://gitlab.example.com":
-const audience = config.get("gitlabAudience") ?? "gitlab.com";
-
 const gitlabGroup = config.require("gitlabGroup");
 
-// TODO: Make this configurable and add instructions to set up a Pulumi org.
 const group = gitlab.getGroup({
   fullPath: gitlabGroup,
 });
@@ -27,52 +20,75 @@ const project = new gitlab.Project("pulumi-gitlab-demo", {
   namespaceId: group.then(g => parseInt(g.id)),
 });
 
-// This value is obtained by following these instructions:
-// https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_create_oidc_verify-thumbprint.html
-// A copy of the certificate at the time of writing from which we obtained this
-// value is present in ../doc/gitlab.crt:
-const GITLAB_OIDC_PROVIDER_THUMBPRINT = "B3DD7606D2B5A8B4A13771DBECC9EE1CECAFA38A".toLowerCase();
+const pulumiOrg = config.require("pulumiOrg");
 
-const gitlabOidcProvider = new aws.iam.OpenIdConnectProvider("gitlab-oidc-provider", {
-  clientIdLists: [`https://${audience}`],
-  url: `https://${audience}`,
-  thumbprintLists: [GITLAB_OIDC_PROVIDER_THUMBPRINT],
-}, {
-  deleteBeforeReplace: true, // URLs are unique identifiers and cannot be auto-named, so we have to delete before replace.
+const pulumiCloudOidc = aws.iam.getOpenIdConnectProviderOutput({
+  url: "https://api.pulumi.com/oidc"
 });
 
-// Define a role
-const gitlabAdminRole = new aws.iam.Role("gitlabAdminRole", {
-  assumeRolePolicy: {
-    Version: "2012-10-17",
-    Statement: [
-      {
-        Effect: "Allow",
-        Principal: {
-          Federated: gitlabOidcProvider.arn,
-        },
-        Action: "sts:AssumeRoleWithWebIdentity",
-        Condition: {
-          StringLike: {
-            // Note: Square brackets around the key are what allow us to use a
-            // templated string. See:
-            // https://stackoverflow.com/questions/59791960/how-to-use-template-literal-as-key-inside-object-literal
-            [`${audience}:sub`]: pulumi.interpolate`project_path:${project.pathWithNamespace}:ref_type:branch:ref:*`
-          },
-        },
-      },
-    ],
-  },
+// In OIDC terminology, client IDs are the same thing as audiences. The name of
+// the claim is "aud".
+//
+// There's no resource for an OIDC client ID, so we have to ensure the new
+// Pulumi Org is added to the existing OIDC provider via the AWS CLI. Note that
+// the create command is idempotent per the AWS CLI docs.
+new command.local.Command("oidc-client-id", {
+  create: pulumi.interpolate`aws iam add-client-id-to-open-id-connect-provider --open-id-connect-provider-arn ${pulumiCloudOidc.arn} --client-id ${pulumiOrg}`,
+  delete: pulumi.interpolate`aws iam remove-client-id-from-open-id-connect-provider --open-id-connect-provider-arn ${pulumiCloudOidc.arn} --client-id ${pulumiOrg}`,
+});
+
+const policyDocument = pulumiCloudOidc.arn.apply(arn => aws.iam.getPolicyDocument({
+  version: "2012-10-17",
+  statements: [{
+    effect: "Allow",
+    actions: ["sts:AssumeRoleWithWebIdentity"],
+    principals: [{
+      type: "Federated",
+      identifiers: [arn],
+    }],
+    conditions: [{
+      test: "StringEquals",
+      variable: "api.pulumi.com/oidc:aud",
+      values: [pulumiOrg]
+    }]
+  }]
+}));
+
+const oidcRole = new aws.iam.Role("gitlab-cicd-admin-role", {
+  assumeRolePolicy: policyDocument.json,
 });
 
 // Attach the AWS managed policy "AdministratorAccess" to the role.
-new aws.iam.RolePolicyAttachment("gitlabAdminRolePolicy", {
+new aws.iam.RolePolicyAttachment("gitlab-cicd-admin-role", {
   policyArn: "arn:aws:iam::aws:policy/AdministratorAccess",
-  role: gitlabAdminRole.name,
+  role: oidcRole.name,
+});
+
+const environmentYaml = oidcRole.arn.apply(arn => new pulumi.asset.StringAsset(`
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: ${arn}
+          sessionName: pulumi-environments
+          subjectAttributes:
+            - currentEnvironment.name
+            - pulumi.user.login
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: \${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: \${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: \${aws.login.sessionToken}
+`));
+
+new pulumicloud.Environment("aws-oidc-admin", {
+  organization: pulumiOrg,
+  name: "aws-oidc-admin",
+  yaml: environmentYaml
 });
 
 [
-  "scripts/aws-auth.sh",
   "scripts/pulumi-preview.sh",
   "scripts/pulumi-up.sh",
   "scripts/setup.sh",
@@ -90,24 +106,29 @@ new aws.iam.RolePolicyAttachment("gitlabAdminRolePolicy", {
   });
 });
 
-// The role ARN is consumed during the CI/CD process when we authenticate to AWS.
-new gitlab.ProjectVariable("role-arn", {
-  project: project.id,
-  key: "ROLE_ARN",
-  value: gitlabAdminRole.arn,
+const randomString = new random.RandomString("org-token-suffix", {
+  length: 6,
+  lower: true,
+  numeric: true,
 });
 
-const pulumiOrg = config.get("pulumiOrg") ?? pulumi.getOrganization();
 const pulumiOrgToken = new pulumicloud.OrgAccessToken("pulumi-org-token", {
-  name: "GitLab CI/CD",
+  name: pulumi.interpolate`gitlab-ci-cd-${randomString.result}`,
   organizationName: pulumiOrg,
   admin: false,
+  description: "Used by GitLab CI/CD"
 });
 
-// Note: The hook does not seem to work with a Pulumi org token. This might be
-// because the posted comment has to sync back to an individual Pulumi user,
-// which maps back to an invidual GitLab user (because the Pulumi org must map
-// to the GitLab group as its identity source).
+// GitLab hooks do not work with a Pulumi org token. See:
+// https://github.com/pulumi/pulumi-service/issues/19501
+//
+// In a production scenario, this should be a required value and should be
+// linked to a dummy user in GitLab.
+//
+// Once the above issue is resolved, we can remove this config value entirely
+// and use the Pulumi Org token we create above.
+const pulumiAccessToken = config.get("pulumiAccessToken") ?? process.env["PULUMI_ACCESS_TOKEN"] ?? "";
+
 new gitlab.ProjectHook("project-hook-with-personal-token", {
   project: project.id,
   url: "https://api.pulumi.com/workflow/gitlab",
@@ -117,14 +138,13 @@ new gitlab.ProjectHook("project-hook-with-personal-token", {
   pushEvents: false,
 });
 
-
-pulumiOrgToken.value.apply(x => {
-  new gitlab.ProjectVariable("pulumi-access-token", {
-    project: project.id,
-    key: "PULUMI_ACCESS_TOKEN",
-    value: x!,
-    masked: true,
-  });
+// The Pulumi org token is used by GitLab CI/CD to authorize itself with Pulumi
+// Cloud in order to open a Pulumi ESC environment and run Pulumi IaC commands:
+new gitlab.ProjectVariable("pulumi-access-token", {
+  project: project.id,
+  key: "PULUMI_ACCESS_TOKEN",
+  value: pulumiOrgToken.value,
+  masked: true,
 });
 
 new gitlab.ProjectVariable("pulumi-org", {
@@ -135,3 +155,4 @@ new gitlab.ProjectVariable("pulumi-org", {
 
 
 export const gitCloneCommand = pulumi.interpolate`git clone ${project.sshUrlToRepo}`;
+export const pulumiNewCommand = pulumi.interpolate`pulumi new aws-typescript --stack ${pulumiOrg}/dev --force -y`;
