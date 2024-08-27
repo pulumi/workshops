@@ -2,8 +2,8 @@
 
 The repo contains a codebase to demonstrate the various points of integration between Pulumi Cloud and GitLab. The code in this repo is based upon the following primary sources:
 
-* [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci]<https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
-* [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app]<https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
+* [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+* [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 The code creates a an GitLab project for use with a Pulumi IaC codebase with a GitLab CI/CD pipeline defined, along with supporting resources to allow the pipeline to use Pulumi ESC to grab temporary AWS credentials via OIDC.
 
