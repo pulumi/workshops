@@ -3,7 +3,7 @@
 This is the official repo for Pulumi workshops. If a workshop is running from Pulumi, you'll likely find the code and notes here.
 
 > [!NOTE]
-> To learn more about upcoming workshops, check out our [Events Page](https://www.pulumi.com/resources/)
+> To learn more about upcoming workshops, check out our [Events Page](https://www.pulumi.com/resources/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
 
 ## Audience
 
@@ -19,16 +19,16 @@ Each workshop has a directory containing:
 You don't need to clone this repo or its parts. Instead, use the provided code as guidance and copy relevant snippets into your solution.
 
 > [!TIP]
-> Many of the workshops listed in this repo have associated [On-Demand recordings](https://www.pulumi.com/resources/#on-demand) available.
+> Many of the workshops listed in this repo have associated [On-Demand recordings](https://www.pulumi.com/resources/#on-demand?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) available.
 
 ## Other Resources
 
-- [Try Pulumi AI](https://www.pulumi.com/ai) - Use natural-language prompts to generate Pulumi infrastructure-as-code programs in any language.
-- [Get Started with Pulumi](https://www.pulumi.com/docs/get-started/): Deploy a simple application in AWS, Azure, Google Cloud, or Kubernetes using Pulumi.
-- [Registry](https://www.pulumi.com/registry/) - Search for packages and learn about the supported resources you need. Install the package directly into your project, browse the API documentation, and start building.
-- [Examples](https://github.com/pulumi/examples) - Browse several examples across many languages, clouds, and scenarios, including containers, serverless, and infrastructure.
-- [Documentation](https://www.pulumi.com/docs/) - Learn about Pulumi concepts, follow user guides, and consult the reference documentation.
-- [Pulumi Blog](https://www.pulumi.com/blog/) - Stay in the loop with our latest tech announcements, insightful articles, and updates.
+- [Try Pulumi AI](https://www.pulumi.com/ai?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) - Use natural-language prompts to generate Pulumi infrastructure-as-code programs in any language.
+- [Get Started with Pulumi](https://www.pulumi.com/docs/get-started/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops): Deploy a simple application in AWS, Azure, Google Cloud, or Kubernetes using Pulumi.
+- [Registry](https://www.pulumi.com/registry/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) - Search for packages and learn about the supported resources you need. Install the package directly into your project, browse the API documentation, and start building.
+- [Examples](https://github.com/pulumi/examples?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) - Browse several examples across many languages, clouds, and scenarios, including containers, serverless, and infrastructure.
+- [Documentation](https://www.pulumi.com/docs/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) - Learn about Pulumi concepts, follow user guides, and consult the reference documentation.
+- [Pulumi Blog](https://www.pulumi.com/blog/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) - Stay in the loop with our latest tech announcements, insightful articles, and updates.
 
 ## Staying Connected
 

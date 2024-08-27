@@ -1,10 +1,5 @@
 # pulumi-gitlab-integration
 
-The repo contains a codebase to demonstrate the various points of integration between Pulumi Cloud and GitLab. The code in this repo is based upon the following primary sources:
-
-* [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci]<https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
-* [https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app]<https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops>
-
 The code creates a an GitLab project for use with a Pulumi IaC codebase with a GitLab CI/CD pipeline defined, along with supporting resources to allow the pipeline to use Pulumi ESC to grab temporary AWS credentials via OIDC.
 
 ## Prerequisites
@@ -16,7 +11,7 @@ The code creates a an GitLab project for use with a Pulumi IaC codebase with a G
     **NOTE:** You must have a Pulumi org configured to use the GitLab Group as its identity provider or the GitLab webhook which shows preview results as Merge Request comments will not work. Since a Pulumi org can only use one source for identity, you may need to create a trial Pulumi org to run this demo.
 
 1. Ensure you have AWS credentials per the provider setup.
-1. The codebase assumes that the AWS environment already has an OIDC provider configured for Pulumi Cloud (`https://api.pulumi.com/oidc`). If your AWS environment does not have an OIDC provider configured, see [Configuring OpenID Connect for AWS](https://www.pulumi.com/docs/pulumi-cloud/oidc/provider/aws/).
+1. The codebase assumes that the AWS environment already has an OIDC provider configured for Pulumi Cloud (`https://api.pulumi.com/oidc`). If your AWS environment does not have an OIDC provider configured, see [Configuring OpenID Connect for AWS](https://www.pulumi.com/docs/pulumi-cloud/oidc/provider/aws/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops).
 
     You do not need to add your Pulumi Cloud organization as a client ID (OIDC audience) - the code does that for you.
 
@@ -109,3 +104,14 @@ Failed to create GitLab Client from provider configuration: The provider failed 
 ```
 
 Your GitLab token is likely invalid (even though it may not show as expired). Generate a new one and reset the `GITLAB_TOKEN` env var.
+
+## Additional Resources
+
+Some relevant pages in the Pulumi docs:
+
+* [Pulumi CI/CD & GitLab](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-ci/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+* [Pulumi CI/CD & GitLab integration](https://www.pulumi.com/docs/using-pulumi/continuous-delivery/gitlab-app/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops)
+
+And a blog post from the GitLab blog (note that this version of the material does not use Pulumi ESC for OIDC credentials):
+
+* [Managing GitLab Resources with Pulumi](https://about.gitlab.com/blog/2024/01/10/managing-gitlab-resources-with-pulumi/)
