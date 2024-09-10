@@ -4,7 +4,7 @@ This codebase contains a Pulumi program to spin up an Oracle Cloud Infrastructur
 
 ## Usage with ESC
 
-This example works particularly well with Pulumi ESC. You can [create a Pulumi ESC environment](https://www.pulumi.com/docs/esc/get-started/create-environment/) similar to the following:
+This example works particularly well with Pulumi ESC. You can [create a Pulumi ESC environment](https://www.pulumi.com/docs/esc/get-started/create-environment?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) similar to the following:
 
 ```yaml
 values:
