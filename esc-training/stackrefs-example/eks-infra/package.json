@@ -1,0 +1,12 @@
+{
+    "name": "eks-infra",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/eks": "^2.8.1",
+        "@pulumi/pulumi": "^3.113.0"
+    }
+}
