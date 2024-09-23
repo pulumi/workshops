@@ -1,14 +1,55 @@
 # ESC Training
 
-## Demos
+## Demo: AWS OIDC
 
-- [AWS OIDC](https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud)
+### Summary
 
+- [Pulumi Template for AWS OIDC](https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud)
   - Create the OIDC Provider, if it does not exist.
   - Add the current Pulumi org as an audience, if it does not exist.
-  - Create the Environment.
+  - Create the ESC Environment
 
-- [AWS Secrets Manager](TODO)
+### Pre-Live Steps
+
+- **Step 1a** 
+
+### Live Steps
+
+- **Step 1b** 
+
+```bash
+```
+
+- **Step 2** 
+
+```bash
+```
+
+- **Step 3**
+
+```bash
+```
+
+
+### Demo: AWS Secrets Manager
+
+### Pre-Live Steps
+
+- **Step 1a** Create the AWS Secret
+
+### Live Steps
+
+- **Step 1b** Show AWS Secret
+
+```bash
+```
+
+- **Step 2** 
+
+```bash
+```
+
+- **Step 3**
 
 ## Stack References with Pulumi ESC
 
