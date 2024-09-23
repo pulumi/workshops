@@ -5,35 +5,51 @@
 ### Summary
 
 - [Pulumi Template for AWS OIDC](https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud)
-  - Create the OIDC Provider, if it does not exist.
-  - Add the current Pulumi org as an audience, if it does not exist.
-  - Create the ESC Environment
+- Creates the OIDC Provider, if it does not exist.
+- Adds the current Pulumi org as an audience, if it does not exist.
+- Creates the ESC Environment
 
 ### Pre-Live Steps
 
-- **Step 1a** 
+- **Step 1** Deploy the Pulumi IaC Program
 
 ### Live Steps
 
-- **Step 1b** 
+- **Step 1** Review the Pulumi IaC Program 
 
 ```bash
+pulumi refresh
 ```
 
-- **Step 2** 
+- **Step 2** Test the ESC Environment
 
 ```bash
+pulumi up
 ```
 
-- **Step 3**
+  -  Test the ESC Environment created in the browser
+    - Open https://app.pulumi.com/jkodrofftest/esc/dynamic-auth/aws
+    - Click 'Open'
+    - Toggle 'Show secrets'
+
+- **Step 3** Load AWS OIDC credentials for AWS CLI commands
 
 ```bash
+aws s3 ls --region us-west-2
+
+esc run auth/aws -- aws s3 ls --region us-west-2
 ```
 
 
 ### Demo: AWS Secrets Manager
 
+### Summary
+
+- [Pulumi Example for AWS Secrets Manager](https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud)
+
 ### Pre-Live Steps
+
+- (Optional) A Slack sandbox org with a valid webhook url, all `@pulumi.com` employees should be able to join the `pulumi-sandbox` Slack org.
 
 - **Step 1a** Create the AWS Secret
 
@@ -41,15 +57,34 @@
 
 - **Step 1b** Show AWS Secret
 
-```bash
-```
+  ```bash
+  ```
 
-- **Step 2** 
+- **Step 2** Configure the ESC Environment
 
-```bash
-```
+  ```bash
+  ```
 
-- **Step 3**
+- **Step 3a** Consume the secret via the terminal
+
+  ```bash
+  esc run example/aws-ts-lambda-slack  -- sh -c 'curl -X POST -H "Content-type: application/json" --data \'{"text":"Hello, World!"}\' $SLACK_WEBHOOK_URL'
+  ```
+
+- **Step 3b** Consume the secret via a Pulumi IaC program
+  - Browse the code and show:
+  - `Pulumi.dev.yaml`
+
+    ```yaml
+    ```
+  
+  - Reference in the `index.ts` file
+  - (Optional) Deploy the Pulumi IaC program
+
+    ```bash
+    pulumi up
+    ```
+
 
 ## Stack References with Pulumi ESC
 
