@@ -1,0 +1,14 @@
+{
+    "name": "esc-training-vpc-infra",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^6.52.0",
+        "@pulumi/awsx": "^2.15.0",
+        "@pulumi/pulumi": "^3.113.0",
+        "@pulumi/pulumiservice": "^0.23.2"
+    }
+}

@@ -6,6 +6,7 @@ const pulumiOrg = config.get("pulumiOrg") ?? pulumi.getOrganization();
 
 const PULUMI_CLOUD_OIDC_THUMBPRINT = "9e99a48a9960b14926bb7f3b02e22da2b0ab7280";
 
+
 const oidcProvider = new aws.iam.OpenIdConnectProvider("pulumi-cloud-oidc-provider", {
   clientIdLists: [pulumiOrg],
   url: "https://api.pulumi.com/oidc",
