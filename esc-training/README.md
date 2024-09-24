@@ -11,80 +11,155 @@
 
 ### Pre-Live Steps
 
-- **Step 1** Deploy the Pulumi IaC Program
+- Deploy the Pulumi IaC Program
+
+  ```bash
+  mkdir dynamic-auth-aws
+  cd dynamic-auth-aws
+  pulumi new https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud
+  aws sso login --profile work  # <-- update to match yours, alternatively, load static env vars this one time.
+  pulumi org set-default jkodrofftest
+  pulumi up
+  ```
 
 ### Live Steps
 
 - **Step 1** Review the Pulumi IaC Program 
 
-```bash
-pulumi refresh
-```
+  ```bash
+  cd dynamic-auth-aws
+  pulumi org set-default jkodrofftest
+  pulumi up
+  ```
 
 - **Step 2** Test the ESC Environment
-
-```bash
-pulumi up
-```
-
-  -  Test the ESC Environment created in the browser
-    - Open https://app.pulumi.com/jkodrofftest/esc/dynamic-auth/aws
-    - Click 'Open'
-    - Toggle 'Show secrets'
+  - Open https://app.pulumi.com/jkodrofftest/esc/dynamic-auth/aws
+  - Click 'Open'
+  - Toggle 'Show secrets'
 
 - **Step 3** Load AWS OIDC credentials for AWS CLI commands
 
-```bash
-aws s3 ls --region us-west-2
+  ```bash
+  # this should fail, in a new terminal run:
+  aws s3 ls --region us-west-2
+  aws configure list
 
-esc run auth/aws -- aws s3 ls --region us-west-2
-```
+  # this works
+  ENV_NAME=jkodrofftest/dynamic-auth/aws
+  esc run ${ENV_NAME} -- aws s3 ls --region us-west-2
+  ```
 
+- **Step 4** Add your AWS OIDC credentials to __any__ Pulumi IaC program
+
+  ```bash
+  # in a new terminal, run
+  mkdir aws-test-creds
+  cd aws-test-creds
+  pulumi new aws-typescript
+
+  # this should fail, in a new terminal run:
+  pulumi preview
+  # error: ... No valid credential sources found.
+
+
+  # this works
+  vi Pulumi.dev.yaml
+  ## Add this
+
+  environment:
+    - dynamic-auth/aws
+  
+  # this now works
+  pulumi preview
+  ```
 
 ### Demo: AWS Secrets Manager
 
 ### Summary
 
-- [Pulumi Example for AWS Secrets Manager](https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud)
+- [Pulumi Example for AWS Secrets Manager](https://github.com/pulumi/examples/tree/master/aws-ts-lambda-slack)
+
 
 ### Pre-Live Steps
 
 - (Optional) A Slack sandbox org with a valid webhook url, all `@pulumi.com` employees should be able to join the `pulumi-sandbox` Slack org.
 
-- **Step 1a** Create the AWS Secret
+- Create the AWS Secret
+
+  ```bash
+  aws secretsmanager create-secret \
+  --name slack-webhook-url-plaintext \
+  --description "slack webhook url" \
+  --secret-string "https://hooks.slack.com/services/****/***"
+  ```
+
+- Prep the Pulumi IaC Program (sans ESC)
+
+  ```bash
+  mkdir dynamic-secrets-aws
+  cd dynamic-secrets-aws
+  pulumi new https://github.com/pulumi/examples/tree/master/aws-ts-lambda-slack
+
+  # without Pulumi ESC
+  aws sso login --profile work
+  AWS_PROFILE=work pulumi preview
+  ```
 
 ### Live Steps
 
 - **Step 1b** Show AWS Secret
 
   ```bash
+  ENV_NAME=jkodrofftest/dynamic-auth/aws
+  esc run ${ENV_NAME} --  aws secretsmanager get-secret-value \
+  --secret-id slack-webhook-url-plaintext --region us-west-2
   ```
 
 - **Step 2** Configure the ESC Environment
 
-  ```bash
-  ```
-
-- **Step 3a** Consume the secret via the terminal
-
-  ```bash
-  esc run example/aws-ts-lambda-slack  -- sh -c 'curl -X POST -H "Content-type: application/json" --data \'{"text":"Hello, World!"}\' $SLACK_WEBHOOK_URL'
-  ```
-
-- **Step 3b** Consume the secret via a Pulumi IaC program
-  - Browse the code and show:
-  - `Pulumi.dev.yaml`
-
-    ```yaml
-    ```
-  
-  - Reference in the `index.ts` file
-  - (Optional) Deploy the Pulumi IaC program
+  - Create a new ESC Environment via the ESC CLI:
 
     ```bash
-    pulumi up
+    ESC_ENV=jkodrofftest/dynamic-secrets/aws2
+    esc env init ${ESC_ENV}
+    esc env edit ${ESC_ENV}
     ```
 
+  - Paste the following contents:
+
+    ```yaml
+    imports:
+      - dynamic-auth/aws
+    values:
+      aws:
+        secrets:
+          fn::open::aws-secrets:
+            region: us-west-2
+            login: ${aws.login}
+            get:
+              esc-training:
+                secretId: slack-webhook-url-plaintext
+      pulumiConfig:
+        slackWebhookURL: ${aws.secrets.esc-training}
+    ```
+
+    - Test open the ESC Environment
+
+    ```bash
+    ESC_ENV=jkodrofftest/dynamic-secrets/aws
+    esc env open ${ESC_ENV}
+    ```
+
+- **Step 3** Consume the secret via a Pulumi IaC program
+
+  - Update `Pulumi.dev.yaml` (see comments in file)
+  - Update `index.ts` (see comments in file)
+  - Deploy the changes
+
+    ```bash
+    pulumi org set-default jkodrofftest
+    pulumi preview
+    ```
 
 ## Stack References with Pulumi ESC
 
