@@ -2,6 +2,6 @@ config:
   aws:region: us-west-2
 
 
-# uncomment to use Pulumi ESC
+# 🚨🚨🚨 UNCOMMENT FOR PULUMI ESC 🚨🚨🚨
 # environment:
 #   - dynamic-auth/aws

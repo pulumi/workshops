@@ -19,20 +19,24 @@
   pulumi new https://github.com/pulumi/examples/tree/master/aws-ts-oidc-provider-pulumi-cloud
   aws sso login --profile work  # <-- update to match yours, alternatively, load static env vars this one time.
   pulumi org set-default jkodrofftest
-  pulumi up
+  AWS_PROFILE=work pulumi up
   ```
 
 ### Live Steps
 
 - **Step 1** Review the Pulumi IaC Program 
 
-  ```bash
-  cd dynamic-auth-aws
-  pulumi org set-default jkodrofftest
-  pulumi up
-  ```
+  - Inspect [`dynamic-auth-aws/index.ts`](./dynamic-auth-aws/index.ts)
+  - Deploy the stack
+
+    ```bash
+    aws sso login --profile work  # <-- update to match yours, alternatively, load static env vars this one time.
+    pulumi org set-default jkodrofftest
+    AWS_PROFILE=work pulumi up
+    ```
 
 - **Step 2** Test the ESC Environment
+
   - Open https://app.pulumi.com/jkodrofftest/esc/dynamic-auth/aws
   - Click 'Open'
   - Toggle 'Show secrets'
@@ -60,7 +64,6 @@
   # this should fail, in a new terminal run:
   pulumi preview
   # error: ... No valid credential sources found.
-
 
   # this works
   vi Pulumi.dev.yaml
