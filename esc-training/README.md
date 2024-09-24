@@ -14,6 +14,7 @@
 
 - The `vpc-infra` directory contains a VPC along with Pulumi stack outputs for the VPC ID, along with the public and private subnet IDs.
 - The `eks-infra` directory contains an EKS cluster that uses the stack outputs from the VPC stack.
+- The `k8s-infra` directory contains the resources to deploy NGINX on Kubernetes.
 
 ### Pre-Live Steps
 
@@ -39,16 +40,50 @@
         privateSubnetIds: ${stackRefs.vpcInfra.privateSubnetIds}
     ```
 
-### Live Steps
+1. Spin up the EKS cluster:
 
-Because the EKS stack takes a long time to spin up, a `pulumi preview` should be sufficient here to illustrate the point.
+    ```bash
+    cd eks-infra
+    pulumi up -y
+    ```
 
-1. Highlight the lines of code that read the ids from a stack reference and run `pulumi preview`.
-1. Comment out the lines of code that read the ids from a Pulumi stack reference object and uncomment the lines of code that read those values as configuration.
-1. Run a `pulumi preview` to show that we don't have these values anymore.
-1. Add the environment to `Pulumi.dev.yaml`:
+1. Create an Environment in the Pulumi Cloud UI with the following content:
 
     ```yaml
-    environment:
-      - esc-training-vpc-stack
+    values:
+      stacks:
+        fn::open::pulumi-stacks:
+          stacks:
+            eks-cluster:
+              stack: esc-training-eks-infra/dev
+      kubeconfig: {'fn::toJSON': "${stacks.eks-cluster.kubeconfig}"}
+      pulumiConfig:
+        kubernetes:kubeconfig: ${kubeconfig}
+      files:
+        KUBECONFIG: ${kubeconfig}
     ```
+
+### Live Steps
+
+Show how stack references (between the VPC and EKS clusteR) can be replaced with ESC:
+
+1. Create a new stack for `eks-infra`. (We need to keep the dev stack because an EKS cluster takes too long to spin up live.)
+1. Do a `pulumi preview` with the stack reference code.
+1. Comment out the stack reference and uncomment the code that pulls the same values Pulumi config.
+1. Do a `pulumi preview`. This should fail.
+1. Show the environment file in Pulumi Cloud that has the VPC output.
+1. Add the environment to the stack config file.
+1. Do a `pulumi preview` again. This should pass because we have the environment plugged in.
+
+Show how we can use ESC to pass Kubeconfig:
+
+1. Do a `pulumi up -y` on the `k8s-infra` program. This should fail due to the lack of a Kubeconfig.
+1. Add the environment to the `k8s-infra` program.
+1. Do a `pulumi up -y`. This should succeed.
+1. To demo using the `esc` CLI to get a Kubeconfig:
+
+    ```bash
+    esc run esc-training-kubernetes -- k9s
+    ```
+
+    Point out the NGINX service running in the k9s TUI.

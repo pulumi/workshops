@@ -1,4 +1,4 @@
-name: esc-training-eks-infra
+name: esc-training-k8s-infra
 runtime:
   name: nodejs
   options:
