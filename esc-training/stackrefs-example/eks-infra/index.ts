@@ -2,12 +2,12 @@ import * as pulumi from "@pulumi/pulumi";
 import * as eks from "@pulumi/eks";
 
 // const stackRef = new pulumi.StackReference("vpc-stack", {
-//   name: `${pulumi.getOrganization()}/ecs-training-vpc-infra/dev`
+//   name: `jkodrofftest/esc-training-eks-infra/dev`
 // });
 
 // const vpcId = stackRef.getOutput("vpcId");
-// const publicSubnetIds = stackRef.getOutput("publicSubnetIds");
-// const privateSubnetIds = stackRef.getOutput("privateSubnetIds");
+// const publicSubnetIds = stackRef.getOutput("publicSubnetIds") as pulumi.Output<string[]>;
+// const privateSubnetIds = stackRef.getOutput("privateSubnetIds") as pulumi.Output<string[]>;
 
 const config = new pulumi.Config();
 const vpcId = config.require("vpcId");

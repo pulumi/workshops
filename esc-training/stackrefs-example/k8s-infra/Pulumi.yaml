@@ -1,10 +1,2 @@
 name: esc-training-k8s-infra
-runtime:
-  name: nodejs
-  options:
-    packagemanager: npm
-description: A minimal TypeScript Pulumi program
-config:
-  pulumi:tags:
-    value:
-      pulumi:template: typescript
+runtime: nodejs
