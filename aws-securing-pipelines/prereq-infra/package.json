@@ -1,0 +1,14 @@
+{
+    "name": "aws-securing-pipelines-vpc",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/awsx": "^2.15.0",
+        "@pulumi/github": "^6.3.0",
+        "@pulumi/pulumi": "^3.113.0",
+        "@pulumi/pulumiservice": "^0.26.0"
+    }
+}
