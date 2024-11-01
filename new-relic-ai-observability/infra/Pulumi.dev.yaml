@@ -1,0 +1,4 @@
+config:
+  aws:region: eu-west-1
+environment:
+  - demos/ai-chat-demo

@@ -1,0 +1,33 @@
+@hostNameAndPort = http://127.0.0.1:8081
+
+###
+
+# @name activities
+GET {{hostNameAndPort}}/activities/search?activity=higher&20;or&20;lower
+
+###
+
+@activityPrompt = {{activities.response.body.prompt}}
+
+###
+
+# @name chat
+POST {{hostNameAndPort}}/chat
+
+{
+    "message": "{{activityPrompt}}"
+}
+
+###
+
+@chatGuid = {{chat.response.body.guid}}
+
+###
+
+PUT {{hostNameAndPort}}/chat/{{chatGuid}}
+
+{
+    "message": "50"
+}
+
+###

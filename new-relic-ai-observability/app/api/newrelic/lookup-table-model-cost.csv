@@ -1,0 +1,5 @@
+response.model,cost-input,cost-input-tokens,cost-output,cost-output-tokens
+gpt-3.5-turbo-0125,50,1000000,150,1000000
+gpt-4-turbo-2024-04-09,1000,1000000,3000,1000000
+gpt-4o-2024-05-13,500,1000000,1500,1000000
+gpt-4o,500,1000000,1500,1000000
