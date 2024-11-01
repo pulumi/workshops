@@ -106,8 +106,8 @@ def declare_aws_resources():
     sudo chmod +x /usr/local/bin/docker-compose
 
     # Set up the repo
-    git clone https://github.com/pierskarsenbarg/ai-chat-app.git /home/ubuntu/repo
-    cd /home/ubuntu/repo/app
+    git clone https://github.com/pulumi/workshops.git /home/ubuntu/repo
+    cd /home/ubuntu/repo/new-relic-ai-observability
 
     # Set environment variables with Pulumi ESC
     curl -fsSL https://get.pulumi.com/esc/install.sh | sh
