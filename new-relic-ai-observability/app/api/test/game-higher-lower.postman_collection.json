@@ -1,0 +1,190 @@
+{
+	"info": {
+		"_postman_id": "9d3a90ef-5a29-42b2-bf8e-f4c0c55be884",
+		"name": "NewRelic-AIM-Workshop",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "11833311"
+	},
+	"item": [
+		{
+			"name": "Get all games",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostNameAndPort}}/activities",
+					"host": [
+						"{{hostNameAndPort}}"
+					],
+					"path": [
+						"activities"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get higher or lower prompt",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"tests[\"Status code is 200\"] = pm.response.code === 200;",
+							"var data = JSON.parse(pm.response.text());",
+							"if(data.prompt){",
+							"    pm.collectionVariables.set(\"gamePrompt\", data.prompt);",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{hostNameAndPort}}/activities/search?activity={{higherOrLower}}",
+					"host": [
+						"{{hostNameAndPort}}"
+					],
+					"path": [
+						"activities",
+						"search"
+					],
+					"query": [
+						{
+							"key": "activity",
+							"value": "{{higherOrLower}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Initiate game",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.code === 200;",
+							"})",
+							"var data = JSON.parse(pm.response.text());",
+							"if(data.guid) {",
+							"    pm.collectionVariables.set(\"chatGuid\", data.guid);",
+							"}",
+							"if(data.messages &&",
+							"   data.messages.length > 1 &&",
+							"   data.messages[1].role == \"assistant\"){",
+							"",
+							"    pm.test(\"prompt is received correctly\", function () {",
+							"        pm.expect(data.messages[1].content).to.include(\"random number\");",
+							"    });",
+							"}",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"{{gamePrompt}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostNameAndPort}}/chat",
+					"host": [
+						"{{hostNameAndPort}}"
+					],
+					"path": [
+						"chat"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Game interaction",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"message\": \"50\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{hostNameAndPort}}/chat/{{chatGuid}}",
+					"host": [
+						"{{hostNameAndPort}}"
+					],
+					"path": [
+						"chat",
+						"{{chatGuid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "hostNameAndPort",
+			"value": "http://127.0.0.1:8081",
+			"type": "string"
+		},
+		{
+			"key": "higherOrLower",
+			"value": "higher&20;or&20;lower",
+			"type": "string"
+		},
+		{
+			"key": "gamePrompt",
+			"value": ""
+		},
+		{
+			"key": "chatGuid",
+			"value": ""
+		}
+	]
+}

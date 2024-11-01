@@ -1,0 +1,88 @@
+@hostNameAndPort = http://127.0.0.1:8081
+
+###
+
+POST {{hostNameAndPort}}/chat
+
+{
+    "message": "what are all the different games I can play?"
+}
+
+###
+
+GET {{hostNameAndPort}}/activities
+
+###
+
+# @name activities
+GET {{hostNameAndPort}}/activities/search?activity=higher&20;or&20;lower
+
+###
+
+# @name activities
+GET {{hostNameAndPort}}/activities/search?activity=monopoly
+
+###
+
+# @name activities
+GET {{hostNameAndPort}}/activities/search?activity=chess
+
+###
+
+@activityPrompt = {{activities.response.body.prompt}}
+
+###
+
+# @name chat
+POST {{hostNameAndPort}}/chat
+
+{
+    "message": "{{activityPrompt}}"
+}
+
+###
+
+@chatGuid = {{chat.response.body.guid}}
+
+###
+
+PUT {{hostNameAndPort}}/chat/{{chatGuid}}
+
+{
+    "message": "43"
+}
+
+###
+
+# @name chat
+POST {{hostNameAndPort}}/chat
+
+{ "message": "What's the weather like in Boston today?"}
+
+###
+
+@chatGuid = {{chat.response.body.guid}}
+
+###
+
+PUT {{hostNameAndPort}}/chat/{{chatGuid}}
+
+{
+    "message": "what games do you offer?"
+}
+
+
+###
+
+{
+    name: "lookup_game_rules",
+    description:
+      "lets you look up the rules for a game that the user wants to play",
+    parameters: {
+      type: "object",
+      properties: {
+        activity: { type: "string", description: "the game to play" },
+      },
+    },
+}
+###

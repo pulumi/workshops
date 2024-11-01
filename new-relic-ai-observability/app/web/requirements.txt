@@ -1,0 +1,4 @@
+requests
+newrelic
+flask
+python-dotenv

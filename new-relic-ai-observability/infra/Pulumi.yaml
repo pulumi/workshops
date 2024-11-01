@@ -1,0 +1,3 @@
+name: ai-chat-demo
+runtime: python
+description: A pulumi program

@@ -1,0 +1,35 @@
+{
+  "name": "chat-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node --no-lazy -r ts-node/register -r newrelic --preserve-symlinks ./src/index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "compilerOptions": {
+    "target": "es2017",
+    "module": "commonjs",
+    "strict": true,
+    "esModuleInterop": true
+  },
+  "devDependencies": {
+    "@types/hapi__nes": "^11.0.7",
+    "@types/newrelic": "^9.14.4",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.3.10",
+    "@hapi/nes": "^14.0.0",
+    "@pinecone-database/pinecone": "^3.0.2",
+    "dotenv": "^16.4.5",
+    "hapi-pino": "^12.1.0",
+    "newrelic": "^12.3.1",
+    "openai": "^4.58.0",
+    "pino": "^9.4.0",
+    "redis": "^4.7.0"
+  }
+}

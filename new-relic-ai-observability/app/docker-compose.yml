@@ -1,0 +1,45 @@
+services:
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - 8888:8888
+    depends_on:
+      - api
+    networks:
+      - chat
+    env_file:
+      - .env
+    environment:
+      - BACKEND_URL=http://api:8081
+      - WEB_PORT=8888
+      - WEB_HOST=0.0.0.0
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - db
+    networks:
+      - chat
+    env_file:
+      - .env
+    environment:
+      - REDIS_BASE=redis://db:6379/0
+      - PINECONE_NAMESPACE=default
+      - PINECONE_REGION=us-east-1
+
+  db:
+    image: redis:alpine3.20
+    networks:
+      - chat
+    ports:
+      - 6379:6379
+
+networks:
+  chat:
+    driver: bridge
