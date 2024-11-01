@@ -1,12 +1,6 @@
-# Add these to your .env file
-# OPENAI_API_KEY=sk-proj-123
-# PINECONE_API_KEY=123
-# NEW_RELIC_LICENSE_KEY=123
-# See .env.example for reference
-
 services:
   web:
-    build: 
+    build:
       context: ./web
       dockerfile: Dockerfile
     ports:
@@ -23,7 +17,7 @@ services:
       - WEB_HOST=0.0.0.0
 
   api:
-    build: 
+    build:
       context: ./api
       dockerfile: Dockerfile
     ports:
