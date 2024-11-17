@@ -1,0 +1,12 @@
+{
+    "name": "k8s-better-together-workload-helm",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/kubernetes": "^4.18.3",
+        "@pulumi/pulumi": "^3.113.0"
+    }
+}

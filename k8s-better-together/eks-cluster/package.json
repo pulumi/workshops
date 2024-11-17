@@ -1,0 +1,15 @@
+{
+    "name": "k8s-better-together-eks-cluster",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^6.59.1",
+        "@pulumi/awsx": "^2.18.1",
+        "@pulumi/eks": "^3.0.2",
+        "@pulumi/pulumi": "^3.113.0",
+        "@pulumi/pulumiservice": "^0.27.0"
+    }
+}
