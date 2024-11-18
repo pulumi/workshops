@@ -14,6 +14,7 @@ const vpc = new awsx.ec2.Vpc("k8s-better-together", {
 });
 
 const eksCluster = new eks.Cluster("k8s-better-together", {
+  authenticationMode: "API",
   vpcId: vpc.vpcId,
   publicSubnetIds: vpc.publicSubnetIds,
   privateSubnetIds: vpc.privateSubnetIds,
@@ -27,33 +28,21 @@ const eksCluster = new eks.Cluster("k8s-better-together", {
   createOidcProvider: true
 });
 
-const assumeRolePolicy = eksCluster.core.oidcProvider!.apply(oidc => aws.iam.getPolicyDocumentOutput({
-  statements: [
-    {
-      sid: 'AllowAssumeRoleWithWebIdentity',
-      actions: ['sts:AssumeRoleWithWebIdentity'],
-      effect: 'Allow',
-      conditions: [
-        {
-          test: 'StringEquals',
-          variable: `${oidc!.url}:aud`,
-          values: ['sts.amazonaws.com'],
-        },
-        {
-          test: 'StringEquals',
-          variable: `${oidc!.url}:sub`,
-          values: ["system:serviceaccount:kube-system:ebs-csi-controller-sa"],
-        },
-      ],
-      principals: [
-        {
-          type: 'Federated',
-          identifiers: [oidc!.arn],
-        },
-      ],
-    },
-  ],
-}));
+const assumeRolePolicy = aws.iam.getPolicyDocumentOutput({
+  statements: [{
+    actions: ["sts:AssumeRoleWithWebIdentity"],
+    conditions: [{
+      test: "StringEquals",
+      values: ["system:serviceaccount:kube-system:ebs-csi-controller-sa"],
+      variable: pulumi.interpolate`${eksCluster.oidcIssuer}:sub`,
+    }],
+    effect: "Allow",
+    principals: [{
+      identifiers: [eksCluster.oidcProviderArn],
+      type: "Federated",
+    }],
+  }],
+});
 
 const csiRole = new aws.iam.Role("ebs-csi", {
   assumeRolePolicy: assumeRolePolicy.json,
