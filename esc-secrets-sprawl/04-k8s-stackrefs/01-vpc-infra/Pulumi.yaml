@@ -1,0 +1,22 @@
+name: ESC-K8s-Stackrefs-Net
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: A minimal TypeScript Pulumi program
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: typescript
+  namespace:
+    type: string
+    description: Namsepace for resources.
+    default: esc
+  environment:
+    type: string
+    description: Environment name.
+    default: sbx
+  name:
+    type: string
+    description: Resource name.
+    default: stackref

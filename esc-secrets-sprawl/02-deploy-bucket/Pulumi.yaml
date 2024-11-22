@@ -1,0 +1,22 @@
+name: ESC-Example-S3-Bucket
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: An minimal Pulumi program to deploy an S3 bucket to AWS
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
+  namespace:
+    type: string
+    description: Namsepace for resources.
+    default: esc
+  environment:
+    type: string
+    description: Environment name.
+    default: sbx
+  name:
+    type: string
+    description: Resource name.
+    default: oidc-auth-example

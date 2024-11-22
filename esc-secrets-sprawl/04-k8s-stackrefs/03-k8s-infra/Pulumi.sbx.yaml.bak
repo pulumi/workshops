@@ -1,0 +1,4 @@
+environment:
+  - aws/sbx
+  - esc-k8s-stackrefs/net-sbx
+  - esc-k8s-stackrefs/eks-sbx

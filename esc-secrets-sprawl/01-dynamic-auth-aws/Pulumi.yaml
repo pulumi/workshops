@@ -1,0 +1,10 @@
+name: ESC-Dynamic-Auth-AWS
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: A minimal TypeScript Pulumi program to set up AWS OIDC
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: /Users/d/github/pulumi/examples/aws-ts-oidc-provider-pulumi-cloud
