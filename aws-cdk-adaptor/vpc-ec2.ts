@@ -1,5 +1,5 @@
 import * as pulumi from "@pulumi/pulumi";
-import * as aws from '@pulumi/aws';
+import * as pulumi_aws from '@pulumi/aws';
 import * as pulumicdk from '@pulumi/cdk';
 import * as cdk_ec2 from 'aws-cdk-lib/aws-ec2';
 
@@ -26,26 +26,17 @@ const app = new pulumicdk.App('app', (scope: pulumicdk.App) => {
         'Allow HTTP access from anywhere'
     );
 
-    //// Pulumi Created Resources ////
+    //// Pulumi AWS Resources ////
 
-    const userData = `
-    #!/bin/bash
-    sudo yum update -y
-    sudo yum upgrade -y
-    sudo amazon-linux-extras install nginx1 -y
-    sudo systemctl enable nginx
-    sudo systemctl start nginx`;
-
-    const ami = aws.cdk_ec2.getAmiOutput({
+    const ami = pulumi_aws.ec2.getAmiOutput({
         filters: [{ name: "name", values: ["amzn2-ami-hvm-*"] }],
         owners: ["amazon"],
         mostRecent: true,
     });
 
-    const instance = new aws.cdk_ec2.Instance("webserver-www", {
+    const instance = new pulumi_aws.ec2.Instance("webserver-www", {
         instanceType: "t2.micro",
         ami: ami.id,
-        userData: userData,
         subnetId: stack.asOutput(vpc.publicSubnets[0].subnetId),
         vpcSecurityGroupIds: [stack.asOutput(securityGroup.securityGroupId)],
     }, { parent: scope });
