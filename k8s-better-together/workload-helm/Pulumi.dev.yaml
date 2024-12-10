@@ -1,0 +1,3 @@
+config:
+  k8s-better-together-workload-helm:mysecret:
+    secure: AAABANFvJqP22JLw5NLwEctvD/mxk5Cs5zo2q4OrVkTSRRVJmqgom9urPLDa

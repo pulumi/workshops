@@ -10,7 +10,7 @@ const vpc = new awsx.ec2.Vpc("k8s-better-together", {
   // should typically use one per AZ.
   natGateways: {
     strategy: "Single"
-  }
+  },
 });
 
 const eksCluster = new eks.Cluster("k8s-better-together", {
@@ -25,7 +25,7 @@ const eksCluster = new eks.Cluster("k8s-better-together", {
   corednsAddonOptions: {
     enabled: false,
   },
-  createOidcProvider: true
+  createOidcProvider: true,
 });
 
 const assumeRolePolicy = aws.iam.getPolicyDocumentOutput({

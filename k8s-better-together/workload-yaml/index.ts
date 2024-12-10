@@ -24,4 +24,4 @@ const service = new k8s.yaml.ConfigFile("nginx-service", {
 });
 
 // TODO: Get this working:
-export const url = pulumi.interpolate`http://${service.getResourceProperty("v1/Service", "nginx-service-yaml", "status").loadBalancer.ingress[0].hostname}`;
+//export const url = pulumi.interpolate`http://${service.getResourceProperty("v1/Service", "nginx-service-yaml", "status").loadBalancer.ingress[0].hostname}`;

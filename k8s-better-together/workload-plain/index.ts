@@ -11,6 +11,9 @@ const k8sProvider = new k8s.Provider("k8s-provider", {
   kubeconfig: kubeconfig,
 });
 
+const config = new pulumi.Config();
+const imageName = config.require("imageName");
+
 new k8s.apps.v1.Deployment("nginx-deployment", {
   metadata: {
     name: "nginx-deployment",
@@ -25,7 +28,7 @@ new k8s.apps.v1.Deployment("nginx-deployment", {
         containers: [
           {
             name: "nginx",
-            image: "nginx:1.27.2",
+            image: imageName,
             ports: [{ containerPort: 80 }],
           },
         ],

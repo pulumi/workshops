@@ -1,0 +1,2 @@
+config:
+  k8s-better-together-workload-plain:imageName: nginx:1.27.2
