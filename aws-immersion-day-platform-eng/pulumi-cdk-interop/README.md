@@ -14,5 +14,20 @@ To deploy the code for this workshop, you will need the following:
 
 ## Deployment Steps
 
-1. Clone this repo locally to your machine and navigate to the `aws-immersion-dat-platform-eng/pulumi-cdk-interop` folder.
-2. 
+1. Clone this repo locally to your machine and navigate to the `aws-immersion-day-platform-eng/pulumi-cdk-interop` folder.
+    ```
+    git clone https://github.com/pulumi/workshops.git && cd aws-immersion-day-platform-eng/pulumi-cdk-interop
+    ```
+2. Create a new Pulumi stack:
+    ```
+    $ pulumi stack init dev
+    ```
+3. Set your desired region:
+    ```
+    $ pulumi config set aws-native region us-east-1 # any valid AWS region will work
+    ```
+4. Install requirements:
+    ```
+    npm install
+    ```
+5. Run `pulumi up -y`. Once the program completes, it will have deployed a VPC and Security Group using CDK constructs and an EC2 instance using Pulumi Typescript.
