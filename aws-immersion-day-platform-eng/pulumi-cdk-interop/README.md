@@ -24,7 +24,9 @@ To deploy the code for this workshop, you will need the following:
     ```
 3. Set your desired region:
     ```
-    $ pulumi config set aws-native region us-east-1 # any valid AWS region will work
+    # any valid AWS region will work
+    $ pulumi config set aws:region us-east-1 
+    $ pulumi config set aws-native:region us-east-1 
     ```
 4. Install requirements:
     ```
