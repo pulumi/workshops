@@ -1,3 +1,6 @@
-name: aws-cdk-adaptor
-runtime: nodejs
+name: pulumi-cdk-interop
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
 description: A TypeScript program to deploy a VPC and EC2 instance on AWS.
