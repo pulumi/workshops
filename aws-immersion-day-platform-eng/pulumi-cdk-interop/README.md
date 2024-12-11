@@ -16,7 +16,7 @@ To deploy the code for this workshop, you will need the following:
 
 1. Clone this repo locally to your machine and navigate to the `aws-immersion-day-platform-eng/pulumi-cdk-interop` folder.
     ```
-    git clone https://github.com/pulumi/workshops.git && cd aws-immersion-day-platform-eng/pulumi-cdk-interop
+    git clone https://github.com/pulumi/workshops.git && cd workshops/aws-immersion-day-platform-eng/pulumi-cdk-interop
     ```
 2. Create a new Pulumi stack:
     ```
