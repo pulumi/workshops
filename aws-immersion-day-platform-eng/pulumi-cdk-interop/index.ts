@@ -5,9 +5,9 @@ import * as cdk_ec2 from 'aws-cdk-lib/aws-ec2';
 
 const app = new pulumicdk.App('app', (scope: pulumicdk.App) => {
     
-    //// CDK Adaptor Resources ////
-    
     const stack = new pulumicdk.Stack(scope, 'vpc-stack');
+
+    //// CDK Construct AWS Resources ////
 
     const vpc = new cdk_ec2.Vpc(stack, 'MainVPC', {
         maxAzs: 2,
@@ -26,7 +26,7 @@ const app = new pulumicdk.App('app', (scope: pulumicdk.App) => {
         'Allow HTTP access from anywhere'
     );
 
-    //// Pulumi AWS Resources ////
+    //// Pulumi Package AWS Resources ////
 
     const ami = pulumi_aws.ec2.getAmiOutput({
         filters: [{ name: "name", values: ["amzn2-ami-hvm-*"] }],
