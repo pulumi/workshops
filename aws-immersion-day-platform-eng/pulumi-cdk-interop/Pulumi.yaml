@@ -1,0 +1,3 @@
+name: aws-cdk-adaptor
+runtime: nodejs
+description: A TypeScript program to deploy a VPC and EC2 instance on AWS.
