@@ -1,0 +1,15 @@
+{
+    "name": "esc-workshop-eks-cluster",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^6.65.0",
+        "@pulumi/awsx": "^2.19.0",
+        "@pulumi/eks": "^3.5.0",
+        "@pulumi/pulumi": "^3.113.0",
+        "@pulumi/pulumiservice": "^0.27.3"
+    }
+}

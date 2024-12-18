@@ -1,0 +1,5 @@
+environment:
+  - aws/aws-oidc-admin
+config:
+  esc-workshop-aws-secrets-setup:githubToken:
+    secure: AAABAFXrTl0A3yBHLVHoqhmQSkOsuFM2lWw0s7vv8J3yBVcAttGHeO1iruEBvlajh0ga2/4HTyMoQoMQdgrHr+VxbOOTIdf1A7kFPuzVGSp6vXiaSwuw7w4gDzTgl8XMruFAjKGf2RhO0ZtlBHNZQdA1nyqJYIH7a/+qWB8=
