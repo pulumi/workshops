@@ -1,0 +1,10 @@
+name: esc-workshop-aws-secrets-setup
+description: A minimal TypeScript Pulumi program
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: typescript

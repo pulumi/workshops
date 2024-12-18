@@ -1,0 +1,14 @@
+{
+    "name": "esc-workshop-aws-secrets-setup",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^6.65.0",
+        "@pulumi/pulumi": "^3.113.0",
+        "@pulumi/pulumiservice": "^0.27.3",
+        "@pulumi/random": "^4.16.8"
+    }
+}

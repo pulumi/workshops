@@ -1,9 +1,9 @@
-name: aws-ts-lambda-slack
+name: esc-workshop-eks-cluster
+description: A minimal TypeScript Pulumi program
 runtime:
   name: nodejs
   options:
     packagemanager: npm
-description: A minimal TypeScript Pulumi program
 config:
   pulumi:tags:
     value:
