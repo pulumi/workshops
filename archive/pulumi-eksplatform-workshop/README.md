@@ -18,9 +18,10 @@ You'll first provision an application using Pulumi's TypeScript SDK to a Kuberne
 
 Next, you'll refactor that Pulumi program into a reusable component using Pulumi's [Component Resource](https://www.pulumi.com/docs/intro/concepts/resources/#components) mechanism.
 
-The workshop is designed to be run from within GitPod. Hit the button below to open the repo in GitPod.
+The workshop is designed to be run from within a cloud development envrionmennt. Hit the button below to open the repo in GitPod or Codeanywhere.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/jaxxstorm/pulumi-eksplatform-workshop)
+[![Open in Codeanywhere](https://codeanywhere.com/img/open-in-codeanywhere-btn.svg)](https://app.codeanywhere.com/#https://github.com/jaxxstorm/pulumi-eksplatform-workshop)
 
 ## Prerequisites
 
