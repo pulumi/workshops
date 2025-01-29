@@ -14,7 +14,9 @@ const privateSubnetIds = remoteState.getOutput("private_subnet_ids") as pulumi.O
 
 const cluster = new aws.ecs.Cluster("cluster");
 
-const group = new aws.ec2.SecurityGroup("web-secgrp", {
+const vpc = aws.ec2.Vpc.get("tf-vpc", vpcId);
+
+const albSecGroup = new aws.ec2.SecurityGroup("alb-sec-grp", {
   vpcId: vpcId,
   description: "Enable HTTP access",
   ingress: [{
@@ -27,12 +29,12 @@ const group = new aws.ec2.SecurityGroup("web-secgrp", {
     protocol: "-1",
     fromPort: 0,
     toPort: 0,
-    cidrBlocks: ["0.0.0.0/0"],
+    cidrBlocks: [vpc.cidrBlock],
   }],
 });
 
 const alb = new aws.lb.LoadBalancer("app-lb", {
-  securityGroups: [group.id],
+  securityGroups: [albSecGroup.id],
   subnets: publicSubnetIds,
 });
 
@@ -89,6 +91,25 @@ const taskDefinition = new aws.ecs.TaskDefinition("app-task", {
   }]),
 });
 
+const serviceSecGroup = new aws.ec2.SecurityGroup("service-sec-grp", {
+  vpcId: vpcId,
+  description: "NGINX service",
+  ingress: [{
+    description: "Allow HTTP from within the VPC",
+    protocol: "tcp",
+    fromPort: 80,
+    toPort: 80,
+    cidrBlocks: [vpc.cidrBlock],
+  }],
+  egress: [{
+    description: "Allow HTTPS to anywhere (to pull container images)",
+    protocol: "tcp",
+    fromPort: 443,
+    toPort: 443,
+    cidrBlocks: ["0.0.0.0/0"],
+  }],
+});
+
 const service = new aws.ecs.Service("app-svc", {
   cluster: cluster.arn,
   desiredCount: 1,
@@ -97,7 +118,7 @@ const service = new aws.ecs.Service("app-svc", {
   networkConfiguration: {
     assignPublicIp: true,
     subnets: privateSubnetIds,
-    securityGroups: [group.id],
+    securityGroups: [serviceSecGroup.id],
   },
   loadBalancers: [{
     targetGroupArn: targetGroup.arn,

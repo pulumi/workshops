@@ -34,8 +34,6 @@ This quick demo illustrates the differences in handling sensitive values between
 
 ## Demo: Coexist with Terraform by consuming Terraform state file outputs
 
-In this exercise, you'll learn how organizations with existing Terraform codebases can consume Terraform outputs to create new infrastructure using Pulumi.
-
 1. Deploy the Terraform config that contains a VPC:
 
     ```bash
@@ -98,37 +96,22 @@ In this exercise, you will take a Terraform program containing a VPC and convert
     pulumi convert --from terraform --out ../pulumi-convert-tf --language typescript
     ```
 
-    This command will generate code, but the resources will not yet be under Pulumi management because they have not been imported to your Pulumi state. Note that the output of `pulumi import` does not contain the symbols (e.g. subnets have raw VPC IDs rather than the output `vpc.id`). This is why `pulumi convert` is generally preferred over `pulumi import` (when available).
+    This command will generate code, but the resources will not yet be under Pulumi management because they have not been imported to your Pulumi state.
 
 1. Import the resources from your TF state file into your Pulumi state file:
 
     ```bash
     cd ../pulumi-convert-tf-ts # or cd ../pulumi-convert-tf-py
     pulumi stack init dev
-    pulumi import --from terraform ../terraform/terraform.tfstate --protect=false --generate-code=false # Because we already have the code
+    pulumi import --from terraform ../terraform-vpc/terraform.tfstate --protect=false --generate-code=false # Because we already have the code
     ```
 
-1. Check to see whether there any additional massaging is necessary. For example, you may need to change the tags from `name` to `Name`. (Loss of case-sensitivity for tag names in conversion from Terraform [is a known issue](https://github.com/pulumi/pulumi-converter-terraform/issues/100).)
+1. Check to see whether there any additional massaging is necessary.
 
     Run the following command to see whether there is any drift between your Pulumi state file and your resources as declared in your Pulumi program:
 
     ```bash
     pulumi preview --diff
-    ```
-
-    If you see output similar to the following, you will need to massage your Pulumi code to resolve the drift:
-
-    ```text
-      ~ tags   : {
-          - Name: "convert-tf"
-          + name: "convert-tf"
-      }
-      ~ tagsAll: {
-          - Name: "convert-tf"
-          + name: [secret]
-        }
-    Resources:
-    ~ 16 to update
     ```
 
     Once all drift is resolved, you'll see output like the following:
