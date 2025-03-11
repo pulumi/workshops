@@ -189,7 +189,7 @@ lambda_function = aws.lambda_.Function("custom-lambda",
 )
 
 
-pulumi.export("ecr_repo_url", repository.repository_url)
+pulumi.export("ecr", repository.repository_url)
 
 ```
 

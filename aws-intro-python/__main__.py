@@ -113,5 +113,5 @@ lambda_permission = aws.lambda_.Permission("lambda-permission",
 
 # ====== OUTPUTS (Information displayed after deployment) ======
 pulumi.export('bucket_name', bucket.id)
-pulumi.export("ecr_repo_url", repository.repository_url)
+pulumi.export("ecr", repository.repository_url)
 pulumi.export("api_url", api_gateway.api_endpoint)
