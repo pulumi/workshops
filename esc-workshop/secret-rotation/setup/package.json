@@ -1,0 +1,15 @@
+{
+  "name": "secret-rotation",
+  "description": "I would like an aws IAM user, and another admin aws IAM user with the  role to rotate access keys for the first user",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "dependencies": {
+    "@pulumi/pulumi": "*",
+    "@pulumi/aws": "6.13.3",
+    "@pulumi/pulumiservice": "^0.27.3",
+    "@pulumi/random": "^4.16.8"
+  }
+}

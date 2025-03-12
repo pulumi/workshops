@@ -1,0 +1,10 @@
+name: secret-rotation
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: I would like an aws IAM user, and another admin aws IAM user with the  role to rotate access keys for the first user
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://www.pulumi.com/ai/api/project/881f998e-cdb8-4812-b26a-dd4356650b3a.zip
