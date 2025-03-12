@@ -1,0 +1,10 @@
+name: secret-rotation
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: Simple secret rotation example
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: https://www.pulumi.com/ai/api/project/881f998e-cdb8-4812-b26a-dd4356650b3a.zip
