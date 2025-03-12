@@ -9,11 +9,6 @@ graph LR
     Client[Client] --> API[API Gateway]
     API --> Lambda[Lambda Function]
     Lambda --> Flask[Flask Application]
-    
-    style Client fill:#f9f9f9,stroke:#333,stroke-width:2px
-    style API fill:#f5f5f5,stroke:#333,stroke-width:2px
-    style Lambda fill:#f5f5f5,stroke:#333,stroke-width:2px
-    style Flask fill:#f5f5f5,stroke:#333,stroke-width:2px
 ```
 
 ## Prerequisites

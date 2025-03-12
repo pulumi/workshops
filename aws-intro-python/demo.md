@@ -21,7 +21,7 @@ Before starting this workshop, ensure you have:
 - Logged into AWS 
 ```
 
-## S S3 Bucket Creation
+## S3 Bucket Creation
 
 ### Create a New Pulumi Project
 
@@ -123,7 +123,7 @@ echo "aws-wsgi" >> requirements.txt
 pip install -r requirements.txt
 ```
 
-### 2.3 Create Flask Application
+### Create Flask Application
 
 Create a new file named `app.py` with the following content:
 
@@ -152,7 +152,7 @@ This Flask application:
 - Serves our text file when the route is accessed
 - Includes a Lambda handler that uses AWSGI to adapt Flask to Lambda
 
-## Section 3: Lambda Deployment
+## Lambda Deployment
 
 AWS Lambda lets us run code without provisioning servers. We'll package our Flask application in a Docker container and deploy it as a Lambda function.
 
