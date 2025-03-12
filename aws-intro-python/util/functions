@@ -3,7 +3,7 @@
 # Function to clear specified files and all YAML files
 ,clean_files() {
     echo "Cleaning up files..."
-    
+    pulumi stack rm dev --yes 
     # List of specific files to remove
     local files_to_remove=("__main__.py" "text.txt" "requirements.txt")
     
