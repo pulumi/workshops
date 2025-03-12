@@ -3,7 +3,7 @@ runtime:
   name: nodejs
   options:
     packagemanager: npm
-description: I would like an aws IAM user, and another admin aws IAM user with the  role to rotate access keys for the first user
+description: Simple secret rotation example
 config:
   pulumi:tags:
     value:
