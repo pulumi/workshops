@@ -264,3 +264,9 @@ Lambda Logs:
 ```
 aws logs filter-log-events --log-group-name /aws/lambda/custom-lambda --limit 20
 ```
+
+Demo Stack Setup:
+
+```
+pulumi stack output api_url --stack demo
+```

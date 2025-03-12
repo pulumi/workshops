@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Function to clear specified files and all YAML files
-clear() {
+,clean_files() {
     echo "Cleaning up files..."
     
     # List of specific files to remove
