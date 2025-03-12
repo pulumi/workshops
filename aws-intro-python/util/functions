@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Function to clear specified files so you can work through the demo.md
+,clean_files() {
+    echo "Cleaning up files..."
+    pulumi stack rm dev --yes 
+    # List of specific files to remove
+    local files_to_remove=("__main__.py" "text.txt" "requirements.txt")
+    
+    # Remove specific files
+    for file in "${files_to_remove[@]}"; do
+        if [ -f "$file" ]; then
+            rm -f "$file"
+            echo "$file has been removed."
+        else
+            echo "$file does not exist."
+        fi
+    done
+    
+    # Remove all YAML files
+    yaml_files=($(find . -maxdepth 1 -name "*.yaml" -o -name "*.yml"))
+    if [ ${#yaml_files[@]} -gt 0 ]; then
+        for yaml_file in "${yaml_files[@]}"; do
+            rm -f "$yaml_file"
+            echo "$yaml_file has been removed."
+        done
+    else
+        echo "No YAML files found."
+    fi
+    
+    echo "Cleanup complete."
+}
