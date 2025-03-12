@@ -123,10 +123,21 @@ Add things:
 
 ```requirements.txt
 +pulumi_awsx
++flask
++aws-wsgi
 ```
 
 ```
 >pip install -r requirements.txt
+```
+Import things:
+```
+import pulumi
+import pulumi_aws as aws
+import pulumi_awsx as awsx
+import json
+import os
+from pulumi_aws import s3
 ```
 
 Add lambda code:
