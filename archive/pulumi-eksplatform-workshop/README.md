@@ -22,6 +22,19 @@ The workshop is designed to be run from within GitPod. Hit the button below to o
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/jaxxstorm/pulumi-eksplatform-workshop)
 
+
+#### 🌏  Optional: Other Cloud IDEs
+
+Click any of the buttons below to start a new development environment to demo or contribute to the codebase without having to install anything on your machine:
+
+[![Open in VS Code](https://img.shields.io/badge/Open%20in-VS%20Code-blue?logo=visualstudiocode)](https://vscode.dev/github/jaxxstorm/pulumi-eksplatform-workshop)
+[![Open in Glitch](https://img.shields.io/badge/Open%20in-Glitch-blue?logo=glitch)](https://glitch.com/edit/#!/import/github/jaxxstorm/pulumi-eksplatform-workshop)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/jaxxstorm/pulumi-eksplatform-workshop)
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/jaxxstorm/pulumi-eksplatform-workshop)
+[![Edit in Codesandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/s/github/jaxxstorm/pulumi-eksplatform-workshop)
+[![Open in Repl.it](https://replit.com/badge/github/withastro/astro)](https://replit.com/github/jaxxstorm/pulumi-eksplatform-workshop)
+[![Open in Codeanywhere](https://codeanywhere.com/img/open-in-codeanywhere-btn.svg)](https://app.codeanywhere.com/#https://github.com/jaxxstorm/pulumi-eksplatform-workshop)
+
 ## Prerequisites
 
 Before you start with this workshop, you'll need to have the Pulumi CLI installed and be logged into the Pulumi SaaS backend to store your state.
