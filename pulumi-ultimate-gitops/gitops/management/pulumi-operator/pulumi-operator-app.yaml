@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pulumi-operator
+  namespace: argocd
+spec:
+  destination:
+    namespace: pulumi-operator
+    server: https://kubernetes.default.svc
+  project: infra
+  sources:
+  - repoURL: ghcr.io/pulumi/helm-charts
+    targetRevision: 2.0.0
+    chart: pulumi-kubernetes-operator
+    helm:
+      valueFiles:
+      - $values/gitops/management/pulumi-operator/pulumi-operator-values.yaml
+  - repoURL: https://github.com/pulumi/workshops.git
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true

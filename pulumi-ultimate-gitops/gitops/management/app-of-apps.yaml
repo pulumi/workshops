@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    repoURL: https://github.com/pulumi/workshops.git
+    targetRevision: main
+    path: gitops/management/
+    directory:
+      recurse: true
+      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml,**/provider/provider.yaml,**/config/secret.yaml}'
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true

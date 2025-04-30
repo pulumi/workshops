@@ -1,0 +1,14 @@
+extraEnv:
+- name: PULUMI_ACCESS_TOKEN
+  valueFrom:
+    secretKeyRef:
+      key: pulumi-access-token
+      name: pulumi-operator-secrets
+- name: DIGITALOCEAN_TOKEN
+  valueFrom:
+    secretKeyRef:
+      key: do-token
+      name: pulumi-operator-secrets
+
+fullnameOverride: pulumi-operator
+createClusterRole: true
