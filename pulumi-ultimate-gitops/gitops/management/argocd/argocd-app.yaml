@@ -14,7 +14,7 @@ spec:
     chart: argo-cd
     helm:
       valueFiles:
-      - $values/gitops/management/argocd/argocd-values.yaml
+      - $values/pulumi-ultimate-gitops/gitops/management/argocd/argocd-values.yaml
   - repoURL: https://github.com/pulumi/workshops.git
     targetRevision: main
     ref: values

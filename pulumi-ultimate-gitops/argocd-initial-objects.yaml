@@ -7,7 +7,7 @@ applications:
     source:
       repoURL: https://github.com/pulumi/workshops
       branch: main
-      path: gitops/management/
+      path: pulumi-ultimate-gitops/gitops/management/
     destination:
       server: https://kubernetes.default.svc
       namespace: argocd
