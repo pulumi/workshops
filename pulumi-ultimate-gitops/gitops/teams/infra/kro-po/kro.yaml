@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: vanilla-pulumi
+  name: kro-po
   namespace: argocd
 spec:
   destination:
