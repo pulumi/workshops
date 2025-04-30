@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   sources:
-  - repoURL: ghcr.io/kro-run/kro/
+  - repoURL: ghcr.io/kro-run/kro
     targetRevision: 0.2.3
     chart: kro
   syncPolicy:
