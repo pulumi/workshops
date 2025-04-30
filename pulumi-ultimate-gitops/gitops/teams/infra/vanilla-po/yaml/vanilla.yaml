@@ -17,23 +17,6 @@ subjects:
   namespace: default
   name: pulumi-dev-world-sa
 ---
-apiVersion: digitalocean.digitalocean.crossplane.io/v1alpha1
-kind: App
-metadata:
-  name: app-dev-world
-spec:
-  forProvider:
-    spec:
-    - name: app-dev-world
-      region: world
-      service:
-      - name: app-service-dev-world
-        instanceCount: 1
-        instanceSizeSlug: "apps-s-1vcpu-1gb"
-        git:
-        - repoCloneUrl: https://github.com/digitalocean/sample-golang.git
-          branch: "main"
----
 apiVersion: pulumi.com/v1
 kind: Program
 metadata:
