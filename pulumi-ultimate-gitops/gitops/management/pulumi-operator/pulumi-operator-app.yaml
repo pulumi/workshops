@@ -14,7 +14,7 @@ spec:
     chart: pulumi-kubernetes-operator
     helm:
       valueFiles:
-      - $values/gitops/management/pulumi-operator/pulumi-operator-values.yaml
+      - $values/pulumi-ultimate-gitops/gitops/management/pulumi-operator/pulumi-operator-values.yaml
   - repoURL: https://github.com/pulumi/workshops.git
     targetRevision: main
     ref: values
