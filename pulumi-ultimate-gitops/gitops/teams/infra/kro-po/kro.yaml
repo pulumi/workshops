@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vanilla-pulumi
+  namespace: argocd
+spec:
+  destination:
+    namespace: default
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    repoURL: https://github.com/pulumi/workshops.git
+    targetRevision: main
+    path: pulumi-ultimate-gitops/gitops/teams/infra/kro-po/yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true

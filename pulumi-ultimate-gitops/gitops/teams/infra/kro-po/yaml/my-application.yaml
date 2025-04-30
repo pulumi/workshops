@@ -1,0 +1,9 @@
+apiVersion: kro.run/v1alpha1
+kind: MyApplication
+metadata:
+  name: my-awsome-pko-based-app
+spec:
+  name: my-awesome-app
+  stack: ediri/my-awesome-app/dev
+  region: fra
+  gitRepo: https://github.com/digitalocean/sample-vuejs

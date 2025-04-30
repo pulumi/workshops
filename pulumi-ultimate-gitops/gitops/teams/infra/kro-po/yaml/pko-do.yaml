@@ -1,0 +1,92 @@
+apiVersion: kro.run/v1alpha1
+kind: ResourceGraphDefinition
+metadata:
+  name: my-pko-app
+spec:
+  schema:
+    apiVersion: v1alpha1
+    kind: MyApplication
+    spec:
+      name: string
+      stack: string
+      gitRepo: string
+      region: string | default="nyc"
+      instanceCount: integer | default=1
+      instanceSizeSlug: string | default="apps-s-1vcpu-1gb"
+  resources:
+  - id: pulumiWorkspaceServiceAccount
+    template:
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        namespace: default
+        name: pulumi
+  - id: pulumiWorkspaceClusterRolebinding
+    template:
+      apiVersion: rbac.authorization.k8s.io/v1
+      kind: ClusterRoleBinding
+      metadata:
+        name: default:pulumi:system:auth-delegator
+      roleRef:
+        apiGroup: rbac.authorization.k8s.io
+        kind: ClusterRole
+        name: system:auth-delegator
+      subjects:
+      - kind: ServiceAccount
+        namespace: default
+        name: pulumi
+  - id: program
+    template:
+      apiVersion: pulumi.com/v1
+      kind: Program
+      metadata:
+        name: ${schema.spec.name}
+      program:
+        outputs:
+          url: ${"$"+"{app.liveUrl}"}
+        resources:
+          project:
+            type: digitalocean:Project
+            properties:
+              name: ${schema.spec.name}-project
+              description: A project to represent development resources.
+              purpose: Web Application
+              environment: Development
+          app:
+            type: digitalocean:App
+            properties:
+              projectId: ${"$"+"{project.id}"}
+              spec:
+                name: app-${schema.spec.name}-${schema.spec.region}
+                region: ${schema.spec.region}
+                services:
+                - name: app-service-${schema.spec.name}-${schema.spec.region}
+                  instanceCount: ${schema.spec.instanceCount}
+                  instanceSizeSlug: ${schema.spec.instanceSizeSlug}
+                  git:
+                    repoCloneUrl: ${schema.spec.gitRepo}
+                    branch: "main"
+  - id: stack
+    template:
+      apiVersion: pulumi.com/v1
+      kind: Stack
+      metadata:
+        name: ${schema.spec.name}
+      spec:
+        serviceAccountName: pulumi
+        stack: ${schema.spec.stack}
+        envRefs:
+          DIGITALOCEAN_TOKEN:
+            type: Env
+            env:
+              name: DIGITALOCEAN_TOKEN
+          PULUMI_ACCESS_TOKEN:
+            type: Env
+            env:
+              name: PULUMI_ACCESS_TOKEN
+        programRef:
+          name: ${schema.spec.name}
+        destroyOnFinalize: true
+        workspaceTemplate:
+          spec:
+            image: pulumi/pulumi:3.152.0-nonroot
