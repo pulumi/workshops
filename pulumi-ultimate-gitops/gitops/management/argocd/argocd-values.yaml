@@ -1,0 +1,22 @@
+configs:
+  secret:
+    argocdServerAdminPassword: "$2a$10$RjjTokiJSaTQt8jAMOUTK.O0VIZ3.0AEs3/JxtaFKGZir93yFPEOG"
+    argocdServerAdminPasswordMtime: "2023-11-13T09:23:16Z"
+  params:
+    server.insecure: true
+
+  repositories:
+    pulumi-oci:
+      url: ghcr.io/pulumi/helm-charts
+      type: helm
+      name: pulumi-kubernetes-operator
+      enableOCI: "true"
+
+server:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1024Mi

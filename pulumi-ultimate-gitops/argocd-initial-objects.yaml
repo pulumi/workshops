@@ -1,0 +1,37 @@
+applications:
+  app-of-apps:
+    namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: infra
+    source:
+      repoURL: https://github.com/pulumi/workshops
+      branch: main
+      path: gitops/management/
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+
+projects:
+  infra:
+    namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    description: Infrastructure components on management cluster
+    sourceRepos:
+    - '*'
+    destinations:
+    - namespace: "*"
+      server: https://kubernetes.default.svc
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+    sourceNamespaces:
+    - '*'
