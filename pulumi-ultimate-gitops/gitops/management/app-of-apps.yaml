@@ -11,7 +11,7 @@ spec:
   source:
     repoURL: https://github.com/pulumi/workshops.git
     targetRevision: main
-    path: gitops/management/
+    path: pulumi-ultimate-gitops/gitops/management/
     directory:
       recurse: true
       exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml,**/provider/provider.yaml,**/config/secret.yaml}'
