@@ -31,7 +31,7 @@ program:
       properties:
         spec:
           name: app-dev-world
-          region: world
+          region: lon1
           services:
           - name: app-service-dev-world
             instanceCount: 1
