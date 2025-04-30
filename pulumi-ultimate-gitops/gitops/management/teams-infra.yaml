@@ -14,7 +14,7 @@ spec:
     targetRevision: main
     directory:
       recurse: true
-      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml}'
+      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*yaml}'
     repoURL: https://github.com/pulumi/workshops.git
   syncPolicy:
     automated:
