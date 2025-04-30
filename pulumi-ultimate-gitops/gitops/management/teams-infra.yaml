@@ -1,0 +1,25 @@
+#Root app for creating workload virtual clusters; clusters definition is in gitops/workload/clusters/vclusters
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-of-team-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: infra
+  source:
+    path: pulumi-ultimate-gitops/gitops/teams/infra
+    targetRevision: main
+    directory:
+      recurse: true
+      exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml}'
+    repoURL: https://github.com/pulumi/workshops.git
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
