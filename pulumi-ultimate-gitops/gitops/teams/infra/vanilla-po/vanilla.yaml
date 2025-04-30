@@ -13,7 +13,7 @@ spec:
     targetRevision: main
     directory:
       recurse: true
-    path: pulumi-ultimate-gitops/gitops/teams/infra/vanilla-po/yaml
+    path: pulumi-ultimate-gitops/gitops/teams/infra/vanilla-po/yml
   syncPolicy:
     automated:
       prune: true
