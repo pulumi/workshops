@@ -4,6 +4,6 @@ metadata:
   name: my-awsome-pko-based-app
 spec:
   name: my-awesome-app
-  stack: ediri/my-awesome-app/dev
+  stack: ediri/my-awesome-app/dev-2
   region: fra
   gitRepo: https://github.com/digitalocean/sample-vuejs

@@ -1,5 +1,5 @@
 applications:
-  app-of-apps:
+  app-of-apps-pe-team:
     namespace: argocd
     finalizers:
     - resources-finalizer.argocd.argoproj.io
@@ -8,6 +8,9 @@ applications:
       repoURL: https://github.com/pulumi/workshops
       branch: main
       path: pulumi-ultimate-gitops/gitops/management/
+      directory:
+        recurse: true
+        exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml,**/provider/provider.yaml,**/config/secret.yaml}'
     destination:
       server: https://kubernetes.default.svc
       namespace: argocd
