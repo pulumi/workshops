@@ -1,0 +1,1 @@
+export { RandomComponent, RandomComponentArgs } from "./randomComponent";
