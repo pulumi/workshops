@@ -12,10 +12,8 @@ You'll learn how to:
 
 Before starting this workshop, ensure you have:
 
-```
 - Pulumi CLI installed
 - [Node.js](https://nodejs.org/) 20+ installed
-```
 
 ## Create a Pulumi Component
 
@@ -248,6 +246,8 @@ pulumi new --force aws-typescript
 # Choose your package manager
 # Choose your AWS region
 
+# OPTIONAL: remove @pulumi/awsx from package.json as we won't be using it
+
 # Update dependencies
 # (npm install -g ncu)
 ncu -u
@@ -288,6 +288,8 @@ const myBucket = new bucketmod.Module('test-bucket', {
   bucket_prefix: `test-bucket-${prefix}`,
   force_destroy: true
 });
+
+export const bucketName = myBucket.s3_bucket_id;
 ```
 
 * Log into AWS however you'd like - or use ESC (see [aws-esc-oidc](../aws-esc-oidc/README.md) for easy setup!)
@@ -306,8 +308,56 @@ Looks good. One more exercise: Importing a local module.
 
 This workshop has provided a simple TF module for you to reuse.
 
-Let's install it for our program:
+Let's copy and install it for our program:
 
 ```bash
-pulumi package add terraform-module ../tf-mod-random modrandom
+cp -R ../tf-mod-random .
+
+# note this may not work due to https://github.com/pulumi/pulumi-terraform-module/issues/308
+pulumi package add terraform-module ./tf-mod-random modrandom
+
+# temp workaround (don't move your project directory as this creates an absolute file reference)
+pulumi package add terraform-module "$PWD/tf-mod-random" modrandom
+```
+
+You will now have access to the module in your Pulumi program. Let's add it to `index.ts`:
+
+```typescript
+// add this import
+import * as modrandom from "@pulumi/modrandom";
+
+// add this new Module resource at the end
+const myPet = new modrandom.Module('test-random', {
+    keeper_key: "test-random",
+});
+export const petName = myPet.pet;
+```
+
+* `pulumi up`
+
+You will now see your new randomized pet name in the outputs:
+
+```bash
+Outputs:
+    bucketName: "test-bucket-dev##########################""
+  + petName   : "grateful-thrush"
+```
+
+Clean up and congratulations on making it to the end!
+
+* `pulumi destroy`
+* `pulumi stack rm dev`
+
+----------
+
+Bonus module number example:
+
+```typescript
+const myRandom = new modrandom.Module('test-random', {
+    maxlen: 7,
+    randseed: "1337"
+});
+
+export const myRnd_p = myRandom.random_priority;
+export const myRnd_s = myRandom.random_seed;
 ```
