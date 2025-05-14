@@ -154,11 +154,10 @@ func main() {
 
 ### Package the component
 
-```bash
-mkdir 02-consume
-cd 02-consume
-cp -r ../01-create/talos-go-component .
-```
+> **Note**: Make sure to create the component in a separate repository. As we want to share it across different projects and languages, it is best to keep it isolated.
+> I use here https://github.com/dirien/pulumi-talos-go-component
+
+Copy all of the files from the `01-create/talos-go-component` directory into a new GitHub repository.
 
 Create `PulumiPlugin.yaml` to let Pulumi know this directory exports resources:
 
@@ -201,10 +200,16 @@ pulumi new --force typescript
 Add the component as a dependency:
 
 ```bash
-pulumi package add ../talos-go-component   
+pulumi package add https://github.com/dirien/pulumi-talos-go-component
 ```
 
 You can now import and use it just like any other Pulumi package.
+
+We can even publish this component to the Pulumi Private Registry for easier consumption in the future.
+
+```bash
+pulumi package publish https://github.com/dirien/pulumi-talos-go-component --publisher dirien 
+```
 
 ---
 

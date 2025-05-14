@@ -5,4 +5,4 @@ runtime:
   options:
     packagemanager: npm
 packages:
-  talos-go-component: ../talos-go-component@0.0.0
+  talos-go-component: https://github.com/dirien/pulumi-talos-go-component@0.0.0-x5ed2a9a45c6d287bd2485f4db1e8c052b164a5ef

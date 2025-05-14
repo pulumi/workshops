@@ -1,1 +1,0 @@
-# Talos Cluster on DigitalOcean
