@@ -61,7 +61,7 @@ function getVersion() {
 exports.getVersion = getVersion;
 /** @internal */
 function resourceOptsDefaults() {
-    return { version: getVersion() };
+    return { version: getVersion(), pluginDownloadURL: "git://github.com/dirien/pulumi-talos-go-component" };
 }
 exports.resourceOptsDefaults = resourceOptsDefaults;
 /** @internal */
