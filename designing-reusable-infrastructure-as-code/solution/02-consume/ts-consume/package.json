@@ -1,0 +1,12 @@
+{
+    "name": "ts-consume",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@ediri/talos-go-component": "file:sdks/ediri-talos-go-component",
+        "@pulumi/pulumi": "^3.113.0"
+    }
+}

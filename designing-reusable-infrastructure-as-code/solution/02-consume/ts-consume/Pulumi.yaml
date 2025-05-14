@@ -1,0 +1,8 @@
+name: ts-consume
+description: A minimal TypeScript Pulumi program
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+packages:
+  talos-go-component: ../talos-go-component@0.0.0
