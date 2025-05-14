@@ -1,0 +1,22 @@
+{
+    "name": "@ediri/talos-go-component",
+    "version": "0.0.0-x5ed2a9a45c6d287bd2485f4db1e8c052b164a5ef",
+    "main": "bin/index.js",
+    "scripts": {
+        "build": "tsc",
+        "postinstall": "node ./scripts/postinstall.js"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.142.0"
+    },
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^4.3.5"
+    },
+    "pulumi": {
+        "resource": true,
+        "name": "talos-go-component",
+        "version": "0.0.0-x5ed2a9a45c6d287bd2485f4db1e8c052b164a5ef",
+        "server": "git://github.com/dirien/pulumi-talos-go-component"
+    }
+}
