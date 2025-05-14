@@ -1,0 +1,24 @@
+name: 03-modules
+description: A minimal AWS TypeScript Pulumi program
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
+packages:
+  bucketmod:
+    source: terraform-module
+    version: 0.1.3
+    parameters:
+      - terraform-aws-modules/s3-bucket/aws
+      - 4.6.0
+      - bucketmod
+  modminecraft:
+    source: terraform-module
+    version: 0.1.3
+    parameters:
+      - /Users/dirien/Tools/repos/workshops/designing-reusable-infrastructure-as-code/solution/03-modules/tf-mod-minecraft
+      - modminecraft

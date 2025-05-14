@@ -1,0 +1,15 @@
+{
+    "name": "03-modules",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^4.5.43.0",
+        "@pulumi/awsx": "^2.0.2",
+        "@pulumi/bucketmod": "file:sdks/bucketmod",
+        "@pulumi/modminecraft": "file:sdks/modminecraft",
+        "@pulumi/pulumi": "^3.113.0"
+    }
+}
