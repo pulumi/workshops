@@ -1,0 +1,27 @@
+{
+    "name": "@pulumi/modrandom",
+    "version": "0.0.1",
+    "main": "bin/index.js",
+    "scripts": {
+        "build": "tsc",
+        "postinstall": "node ./scripts/postinstall.js"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.142.0",
+        "async-mutex": "^0.5.0"
+    },
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^4.3.5"
+    },
+    "pulumi": {
+        "resource": true,
+        "name": "terraform-module",
+        "version": "0.1.3",
+        "parameterization": {
+            "name": "modrandom",
+            "version": "0.0.1",
+            "value": "ewogICJtb2R1bGUiOiAiL1VzZXJzL3JzbWl0aC9EZXNrdG9wL1B1bHVtaS93b3Jrc2hvcHMvY29tcG9uZW50LWFzLWNvbXBvbmVudC8wMy1tb2R1bGVzL3RmLW1vZC1yYW5kb20iLAogICJwYWNrYWdlTmFtZSI6ICJtb2RyYW5kb20iCn0="
+        }
+    }
+}
