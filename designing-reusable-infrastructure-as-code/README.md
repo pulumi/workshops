@@ -1,6 +1,6 @@
 # Designing Reusable Infrastructure as Code 🛠️
 
-Welcome to the hands‑on workshop that shows you how to **package, publish, and reuse** your infrastructure logic with Pulumi Components. By the end, you will have:
+Welcome to the hands‑on workshop that shows you how to **package, publish, and reuse** your infrastructure logic with [Pulumi Components](https://www.pulumi.com/blog/pulumi-components/). By the end, you will have:
 
 * Written a Source‑based Component in Go and TypeScript
 * Consumed that component from another Pulumi program (in a different language!)
