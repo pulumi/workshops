@@ -84,7 +84,7 @@ values:
 
 new pulumicloud.Environment("aws-oidc-admin", {
   organization: pulumiOrg,
-  name: "aws-oidc-admin",
+  name: "aws-oidc-admin2",
   yaml: environmentYaml
 });
 
