@@ -1,4 +1,4 @@
-module go-microservice-boilerplate
+module ${PROJECT}
 
 go 1.23.0
 

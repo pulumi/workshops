@@ -28,7 +28,7 @@ func initTracer() (*sdktrace.TracerProvider, error) {
 		resource.Default(),
 		resource.NewWithAttributes(
 			semconv.SchemaURL,
-			semconv.ServiceNameKey.String("go-microservice-boilerplate"),
+			semconv.ServiceNameKey.String("${PROJECT}"),
 			semconv.ServiceVersionKey.String("1.0.0"),
 		),
 	)
@@ -54,7 +54,7 @@ func echoHandler(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, map[string]string{
 		"echo":      message,
-		"service":   "go-microservice-boilerplate",
+		"service":   "${PROJECT}",
 		"timestamp": time.Now().UTC().Format(time.RFC3339),
 	})
 }
@@ -62,7 +62,7 @@ func echoHandler(c echo.Context) error {
 func healthHandler(c echo.Context) error {
 	return c.JSON(http.StatusOK, map[string]string{
 		"status":  "healthy",
-		"service": "go-microservice-boilerplate",
+		"service": "${PROJECT}",
 	})
 }
 
@@ -93,7 +93,7 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 	e.Use(middleware.CORS())
-	e.Use(otelecho.Middleware("go-microservice-boilerplate"))
+	e.Use(otelecho.Middleware("${PROJECT}"))
 
 	e.GET("/echo", echoHandler)
 	e.GET("/health", healthHandler)
