@@ -5,6 +5,7 @@ runtime: yaml
 packages:
   component-microservice: https://github.com/smithrobs/component-microservice@v1.0.1
 
+
 resources:
   microserviceComponent:
     type: component-microservice:MicroserviceComponent
