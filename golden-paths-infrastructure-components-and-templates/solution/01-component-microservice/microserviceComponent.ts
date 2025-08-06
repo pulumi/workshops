@@ -3,9 +3,6 @@ import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 
 export class MicroserviceComponent extends pulumi.ComponentResource {
-    lb: awsx.lb.ApplicationLoadBalancer;
-    cluster: aws.ecs.Cluster;
-
     public readonly publicUrl: pulumi.Output<string>;
 
     constructor(name: string, args: MicroserviceComponentArgs, opts?: pulumi.ComponentResourceOptions) {
@@ -23,13 +20,13 @@ export class MicroserviceComponent extends pulumi.ComponentResource {
             platform: "linux/amd64",
         }, { parent: this });
 
-        this.lb = new awsx.lb.ApplicationLoadBalancer("lb", {
+        const lb = new awsx.lb.ApplicationLoadBalancer("lb", {
             defaultTargetGroup: { port: args.port }
         }, { parent: this });
-        this.cluster = new aws.ecs.Cluster("cluster", {}, { parent: this });
+        const cluster = new aws.ecs.Cluster("cluster", {}, { parent: this });
 
         const service = new awsx.ecs.FargateService("service", {
-            cluster: this.cluster.arn,
+            cluster: cluster.arn,
             assignPublicIp: true,
             desiredCount: 2,
             taskDefinitionArgs: {
@@ -42,14 +39,14 @@ export class MicroserviceComponent extends pulumi.ComponentResource {
                     portMappings: [
                         {
                             containerPort: args.port,
-                            targetGroup: this.lb.defaultTargetGroup,
+                            targetGroup: lb.defaultTargetGroup,
                         },
                     ],
                 },
             },
         }, { parent: this });
 
-        this.publicUrl = pulumi.interpolate`http://${this.lb.loadBalancer.dnsName}`;
+        this.publicUrl = pulumi.interpolate`http://${lb.loadBalancer.dnsName}`;
 
         this.registerOutputs({
             publicUrl: this.publicUrl
