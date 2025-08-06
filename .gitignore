@@ -5,3 +5,4 @@ node_modules**
 .markdown-link-check.json
 workshops-readme.sln
 /designing-reusable-infrastructure-as-code/solution/02-consume/yaml-consume/
+

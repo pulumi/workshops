@@ -62,14 +62,16 @@ spec:
         serviceAccountName: pulumi
         stack: ${schema.spec.stack}
         envRefs:
-          DIGITALOCEAN_TOKEN:
-            type: Env
-            env:
-              name: DIGITALOCEAN_TOKEN
           PULUMI_ACCESS_TOKEN:
-            type: Env
-            env:
-              name: PULUMI_ACCESS_TOKEN
+            type: Secret
+            secret:
+              name: pulumi-operator-secrets
+              key: pulumi-access-token
+          DIGITALOCEAN_TOKEN:
+            secret:
+              name: pulumi-operator-secrets
+              key: do-token
+            type: Secret
         programRef:
           name: ${schema.spec.name}
         destroyOnFinalize: true

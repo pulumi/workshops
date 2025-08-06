@@ -25,6 +25,8 @@ kind: Program
 metadata:
   name: pu-program-dev-world
 program:
+  packages:
+    talos-go-component: https://github.com/dirien/pulumi-talos-go-component@0.0.0-x5ed2a9a45c6d287bd2485f4db1e8c052b164a5ef
   resources:
     app:
       type: digitalocean:App
@@ -49,16 +51,18 @@ spec:
   destroyOnFinalize: true
   envRefs:
     PULUMI_ACCESS_TOKEN:
-      type: Env
-      env:
-        name: PULUMI_ACCESS_TOKEN
+      type: Secret
+      secret:
+        name: pulumi-operator-secrets
+        key: pulumi-access-token
     DIGITALOCEAN_TOKEN:
-      env:
-        name: DIGITALOCEAN_TOKEN
-      type: Env
+      secret:
+        name: pulumi-operator-secrets
+        key: do-token
+      type: Secret
   programRef:
     name: pu-program-dev-world
   stack: ediri/pu-program-dev-world/dev
   workspaceTemplate:
     spec:
-      image: pulumi/pulumi:3.152.0-nonroot
+      image: pulumi/pulumi:3.180.0-nonroot
