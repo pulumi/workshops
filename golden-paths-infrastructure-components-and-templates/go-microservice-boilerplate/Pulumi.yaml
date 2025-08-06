@@ -4,9 +4,7 @@ runtime: yaml
 packages:
   component-microservice: https://github.com/smithrobs/component-microservice@v1.0.1
 template:
-    description: |
-        This template deploys a Go microservice on AWS ECS with auto-scaling capabilities.
-        It includes a component for the microservice, auto-scaling policies, and CloudWatch alarms.
+    description: A template for deploying a Go microservice on AWS ECS with auto-scaling capabilities.
 resources:
   microserviceComponent:
     type: component-microservice:MicroserviceComponent
