@@ -11,7 +11,7 @@ resources:
     properties:
       appPath: ./src
       port: 8080
-      containerName: ${PROJECT}-go-microservice
+      containerName: ${PROJECT}
   ecsTarget:
     type: aws:appautoscaling:Target
     name: ecs_target
