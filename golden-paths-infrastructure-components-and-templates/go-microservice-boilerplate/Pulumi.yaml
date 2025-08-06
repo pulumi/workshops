@@ -3,7 +3,7 @@ description: ${DESCRIPTION}
 runtime: yaml
 
 packages:
-  component-microservice: https://github.com/smithrobs/component-microservice@1.0.1
+  component-microservice: https://github.com/smithrobs/component-microservice@v1.0.1
 
 resources:
   microserviceComponent:
