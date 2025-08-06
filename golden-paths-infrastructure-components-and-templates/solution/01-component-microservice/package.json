@@ -1,0 +1,14 @@
+{
+    "name": "component-microservice",
+    "version": "1.0.0",
+    "description": "Component for deploying a microservice to AWS ECS Fargate",
+    "devDependencies": {
+        "@types/node": "^24",
+        "typescript": "^5.9.2"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^7.3.0",
+        "@pulumi/awsx": "^3.0.0",
+        "@pulumi/pulumi": "^3.187.0"
+    }
+}

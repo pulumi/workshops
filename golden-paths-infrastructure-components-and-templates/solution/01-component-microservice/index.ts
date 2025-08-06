@@ -1,0 +1,1 @@
+export { MicroserviceComponent } from "./microserviceComponent";
