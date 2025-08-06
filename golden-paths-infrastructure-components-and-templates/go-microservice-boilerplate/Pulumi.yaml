@@ -1,92 +1,1 @@
-name: ${PROJECT}
-description: ${DESCRIPTION}
-runtime: yaml
-
-packages:
-  component-microservice: https://github.com/dirien/component-microservice@1.0.1
-
-resources:
-  microserviceComponent:
-    type: component-microservice:MicroserviceComponent
-    properties:
-      appPath: ./src
-      port: 8080
-      containerName: ${PROJECT}-go-microservice
-  ecsTarget:
-    type: aws:appautoscaling:Target
-    name: ecs_target
-    properties:
-      maxCapacity: 4
-      minCapacity: 1
-      resourceId: service/${microserviceComponent.clusterName}/${microserviceComponent.serviceName}
-      scalableDimension: ecs:service:DesiredCount
-      serviceNamespace: ecs
-  ecsPolicyUP:
-    type: aws:appautoscaling:Policy
-    name: ecs_policy_up
-    properties:
-      name: ecs_policy_up
-      policyType: StepScaling
-      resourceId: ${ecsTarget.resourceId}
-      scalableDimension: ${ecsTarget.scalableDimension}
-      serviceNamespace: ${ecsTarget.serviceNamespace}
-      stepScalingPolicyConfiguration:
-        adjustmentType: ChangeInCapacity
-        cooldown: 60
-        metricAggregationType: Maximum
-        stepAdjustments:
-        - metricIntervalUpperBound: 0
-          scalingAdjustment: 1
-  ecsPolicyDown:
-    type: aws:appautoscaling:Policy
-    name: ecs_policy_down
-    properties:
-      name: ecs_policy_down
-      policyType: StepScaling
-      resourceId: ${ecsTarget.resourceId}
-      scalableDimension: ${ecsTarget.scalableDimension}
-      serviceNamespace: ${ecsTarget.serviceNamespace}
-      stepScalingPolicyConfiguration:
-        adjustmentType: ChangeInCapacity
-        cooldown: 60
-        metricAggregationType: Maximum
-        stepAdjustments:
-        - metricIntervalLowerBound: 0
-          scalingAdjustment: -1
-  serviceCPUHighUtilization:
-    type: aws:cloudwatch:MetricAlarm
-    name: service_cpu_high_utilization
-    properties:
-      name: service_cpu_high_utilization
-      comparisonOperator: GreaterThanOrEqualToThreshold
-      evaluationPeriods: 2
-      metricName: CPUUtilization
-      namespace: AWS/ECS
-      period: 60
-      statistic: Average
-      threshold: 80
-      alarmActions:
-      - ${ecsPolicyUP.arn}
-      dimensions:
-        ClusterName: ${microserviceComponent.clusterName}
-        ServiceName: ${microserviceComponent.serviceName}
-  serviceCPULowUtilization:
-    type: aws:cloudwatch:MetricAlarm
-    name: service_cpu_low_utilization
-    properties:
-      name: service_cpu_low_utilization
-      comparisonOperator: LessThanOrEqualToThreshold
-      evaluationPeriods: 2
-      metricName: CPUUtilization
-      namespace: AWS/ECS
-      period: 60
-      statistic: Average
-      threshold: 10
-      alarmActions:
-      - ${ecsPolicyDown.arn}
-      dimensions:
-        ClusterName: ${microserviceComponent.clusterName}
-        ServiceName: ${microserviceComponent.serviceName}
-
-outputs:
-  publicUrl: ${microserviceComponent.publicUrl}
+name: ${PROJECT}description: ${DESCRIPTION}runtime: yamlpackages:  component-microservice: https://github.com/dirien/component-microservice@1.0.1resources:  microserviceComponent:    type: component-microservice:MicroserviceComponent    properties:      appPath: ./src      port: 8080      containerName: ${PROJECT}-go-microservice  ecsTarget:    type: aws:appautoscaling:Target    name: ecs_target    properties:      maxCapacity: 4      minCapacity: 1      resourceId: service/${microserviceComponent.clusterName}/${microserviceComponent.serviceName}      scalableDimension: ecs:service:DesiredCount      serviceNamespace: ecs  ecsPolicyUP:    type: aws:appautoscaling:Policy    name: ecs_policy_up    properties:      name: ecs_policy_up      policyType: StepScaling      resourceId: ${ecsTarget.resourceId}      scalableDimension: ${ecsTarget.scalableDimension}      serviceNamespace: ${ecsTarget.serviceNamespace}      stepScalingPolicyConfiguration:        adjustmentType: ChangeInCapacity        cooldown: 60        metricAggregationType: Maximum        stepAdjustments:        - metricIntervalUpperBound: 0          scalingAdjustment: 1  ecsPolicyDown:    type: aws:appautoscaling:Policy    name: ecs_policy_down    properties:      name: ecs_policy_down      policyType: StepScaling      resourceId: ${ecsTarget.resourceId}      scalableDimension: ${ecsTarget.scalableDimension}      serviceNamespace: ${ecsTarget.serviceNamespace}      stepScalingPolicyConfiguration:        adjustmentType: ChangeInCapacity        cooldown: 60        metricAggregationType: Maximum        stepAdjustments:        - metricIntervalLowerBound: 0          scalingAdjustment: -1  serviceCPUHighUtilization:    type: aws:cloudwatch:MetricAlarm    name: service_cpu_high_utilization    properties:      name: service_cpu_high_utilization      comparisonOperator: GreaterThanOrEqualToThreshold      evaluationPeriods: 2      metricName: CPUUtilization      namespace: AWS/ECS      period: 60      statistic: Average      threshold: 80      alarmActions:      - ${ecsPolicyUP.arn}      dimensions:        ClusterName: ${microserviceComponent.clusterName}        ServiceName: ${microserviceComponent.serviceName}  serviceCPULowUtilization:    type: aws:cloudwatch:MetricAlarm    name: service_cpu_low_utilization    properties:      name: service_cpu_low_utilization      comparisonOperator: LessThanOrEqualToThreshold      evaluationPeriods: 2      metricName: CPUUtilization      namespace: AWS/ECS      period: 60      statistic: Average      threshold: 10      alarmActions:      - ${ecsPolicyDown.arn}      dimensions:        ClusterName: ${microserviceComponent.clusterName}        ServiceName: ${microserviceComponent.serviceName}outputs:  publicUrl: ${microserviceComponent.publicUrl}
