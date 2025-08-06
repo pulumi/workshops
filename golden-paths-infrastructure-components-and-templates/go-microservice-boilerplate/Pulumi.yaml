@@ -3,7 +3,6 @@ description: ${DESCRIPTION}
 runtime: yaml
 packages:
   component-microservice: https://github.com/smithrobs/component-microservice@v1.0.1
-
 template:
     description: |
         This template deploys a Go microservice on AWS ECS with auto-scaling capabilities.
