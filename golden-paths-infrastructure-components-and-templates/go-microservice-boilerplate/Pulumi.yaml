@@ -9,7 +9,7 @@ resources:
   microserviceComponent:
     type: component-microservice:MicroserviceComponent
     properties:
-      appPath: ./${PROJECT}-microservice
+      appPath: ./src
       port: 8080
       containerName: ${PROJECT}-go-microservice
   ecsTarget:
