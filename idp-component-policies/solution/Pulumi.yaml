@@ -1,0 +1,45 @@
+name: idp-component-policies
+description: IDP Component Policies project using Go Microservice Boilerplate template
+runtime: yaml
+packages:
+  component-microservice: ../../golden-paths-infrastructure-components-and-templates/solution/01-component-microservice
+  aws: 7.3.0
+  random: 4.0.0
+resources:
+  microserviceComponent:
+    type: component-microservice:MicroserviceComponent
+    properties:
+      appPath: ./src
+      port: 22
+      cpu: 256
+      memory: 2048
+  
+  # Random suffix for unique bucket naming
+  # bucketSuffix:
+  #   type: random:RandomString
+  #   properties:
+  #     length: 8
+  #     lower: true
+  #     upper: false
+  #     numeric: true
+  #     special: false
+  
+  # S3 bucket for microservice data storage (without encryption for stack policy demo)
+  # dataBucket:
+  #   type: aws:s3:Bucket
+  #   properties:
+  #     bucket: demo-data-bucket-${bucketSuffix.result}
+
+  # dataBucketEncryption:
+  #   type: aws:s3/bucketServerSideEncryptionConfiguration:BucketServerSideEncryptionConfiguration
+  #   properties:
+  #     bucket: ${dataBucket.id}
+  #     rules:
+  #       - applyServerSideEncryptionByDefault:
+  #           sseAlgorithm: AES256
+outputs:
+  publicUrl: ${microserviceComponent.publicUrl}
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: ./../../golden-paths-infrastructure-components-and-templates/go-microservice-boilerplate
