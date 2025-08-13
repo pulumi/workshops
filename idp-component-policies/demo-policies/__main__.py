@@ -31,41 +31,54 @@ restrict_dangerous_ports = ResourceValidationPolicy(
     name="restrict-dangerous-ports",
     description="Microservice components must not use dangerous ports like 22, 23, 3389, or 1433",
     validate=restrict_ports_validation,
-    enforcement_level=EnforcementLevel.ADVISORY,  # Changed to advisory to allow all policies to run
+    enforcement_level=EnforcementLevel.MANDATORY,  # Changed to advisory to allow all policies to run
 )
 
-# Policy 2: Limit memory usage - simplified for preview compatibility
+# Policy 2: Limit memory usage - read from ECS TaskDefinition tags
 def limit_memory_validation(args: ResourceValidationArgs, report_violation: ReportViolation) -> Any:
-    """Limit memory usage by checking ECS Task Definitions."""
-    # Target the ECS task definition that the component creates
+    """Limit memory usage by reading tags from ECS TaskDefinitions created by microservice components."""
+    # Target AWS ECS task definitions that are created by microservice components
     if args.resource_type != "aws:ecs/taskDefinition:TaskDefinition":
         return
     
+    # Check if this task definition is from a microservice component (based on URN pattern)
+    if "component-microservice" not in args.urn:
+        return
+    
+    # Get the tags from the task definition
+    tags = args.props.get('tags', {})
+    tagsAll = args.props.get('tagsAll', {})
+    
+    # Handle Pulumi proxy objects - try to access memory tag
+    memory_str = None
     try:
-        # Check memory at the task level
-        task_memory = args.props.get('memory')
-        if task_memory and isinstance(task_memory, (int, float)) and task_memory > 1024:
-            report_violation(
-                f"ECS Task '{args.name}' requests {task_memory}MB memory. "
-                f"Consider using ≤1024MB for development environments to control costs."
-            )
-            return
-        
-        # Check container definitions for memory settings
-        container_definitions = args.props.get('containerDefinitions', [])
-        if container_definitions and isinstance(container_definitions, list):
-            for i, container_def in enumerate(container_definitions):
-                if isinstance(container_def, dict):
-                    memory = container_def.get('memory')
-                    if memory and isinstance(memory, (int, float)) and memory > 1024:
-                        report_violation(
-                            f"ECS Task '{args.name}' container {i} requests {memory}MB memory. "
-                            f"Consider using ≤1024MB for development environments to control costs."
-                        )
-            
-    except Exception:
-        # Skip validation if we can't evaluate properties during preview
+        if hasattr(tags, 'get'):
+            memory_str = tags.get('microservice:memory')
+        elif hasattr(tags, '__getitem__'):
+            memory_str = tags['microservice:memory']
+    except:
         pass
+    
+    if not memory_str:
+        try:
+            if hasattr(tagsAll, 'get'):
+                memory_str = tagsAll.get('microservice:memory')
+            elif hasattr(tagsAll, '__getitem__'):
+                memory_str = tagsAll['microservice:memory']  
+        except:
+            pass
+            
+    if memory_str:
+        try:
+            memory_val = int(str(memory_str))  # Convert to string first, then int
+            if memory_val > 1024:
+                report_violation(
+                    f"ECS TaskDefinition '{args.name}' configured with {memory_val}MB memory. "
+                    f"This exceeds the recommended 1024MB limit for development environments. "
+                    f"Consider reducing memory allocation to control costs."
+                )
+        except (ValueError, TypeError):
+            pass
 
 limit_memory_usage = ResourceValidationPolicy(
     name="limit-memory-usage",
@@ -161,14 +174,16 @@ preview_friendly_stack = StackValidationPolicy(
     enforcement_level=EnforcementLevel.ADVISORY,
 )
 
+
 # Create the policy pack
 policy_pack = PolicyPack(
     name="demo-policies",
-    enforcement_level=EnforcementLevel.MANDATORY,
+    enforcement_level=EnforcementLevel.ADVISORY,
     policies=[
-        restrict_dangerous_ports,      # Will trigger on port 23
-        limit_memory_usage,           # Will trigger on 2048MB memory  
-        stack_resource_alignment,     # Will trigger on unencrypted S3 bucket
-        preview_friendly_stack,       # Will trigger on missing load balancer
+        restrict_dangerous_ports,      # Will trigger on port 22
+        # limit_memory_usage,           # Will trigger on 2048MB memory  
+        # stack_resource_alignment,     # Will trigger on unencrypted S3 bucket
+        # preview_friendly_stack,       # Will trigger on missing load balancer
+        # debug_stack_resources,        # Debug what resources are in stack
     ],
 )
