@@ -43,6 +43,12 @@ export class MicroserviceComponent extends pulumi.ComponentResource {
                         },
                     ],
                 },
+                // Add tags to make memory value available to policies during preview
+                tags: {
+                    "microservice:memory": pulumi.output(args.memory || 512).apply(m => m.toString()),
+                    "microservice:cpu": pulumi.output(args.cpu || 256).apply(c => c.toString()),
+                    "microservice:component": "true"
+                },
             },
         }, { parent: this });
 

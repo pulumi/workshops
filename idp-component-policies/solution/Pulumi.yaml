@@ -10,33 +10,33 @@ resources:
     type: component-microservice:MicroserviceComponent
     properties:
       appPath: ./src
-      port: 22
+      port: 8080
       cpu: 256
       memory: 2048
   
   # Random suffix for unique bucket naming
-  # bucketSuffix:
-  #   type: random:RandomString
-  #   properties:
-  #     length: 8
-  #     lower: true
-  #     upper: false
-  #     numeric: true
-  #     special: false
+  bucketSuffix:
+    type: random:RandomString
+    properties:
+      length: 8
+      lower: true
+      upper: false
+      numeric: true
+      special: false
   
   # S3 bucket for microservice data storage (without encryption for stack policy demo)
-  # dataBucket:
-  #   type: aws:s3:Bucket
-  #   properties:
-  #     bucket: demo-data-bucket-${bucketSuffix.result}
+  dataBucket:
+    type: aws:s3:Bucket
+    properties:
+      bucket: demo-data-bucket-${bucketSuffix.result}
 
-  # dataBucketEncryption:
-  #   type: aws:s3/bucketServerSideEncryptionConfiguration:BucketServerSideEncryptionConfiguration
-  #   properties:
-  #     bucket: ${dataBucket.id}
-  #     rules:
-  #       - applyServerSideEncryptionByDefault:
-  #           sseAlgorithm: AES256
+  dataBucketEncryption:
+    type: aws:s3/bucketServerSideEncryptionConfiguration:BucketServerSideEncryptionConfiguration
+    properties:
+      bucket: ${dataBucket.id}
+      rules:
+        - applyServerSideEncryptionByDefault:
+            sseAlgorithm: AES256
 outputs:
   publicUrl: ${microserviceComponent.publicUrl}
 config:
