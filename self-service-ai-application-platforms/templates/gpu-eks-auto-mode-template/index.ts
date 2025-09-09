@@ -194,7 +194,7 @@ const environmentResource = new pulumiservice.Environment("environmentResource",
     organization: pulumi.getOrganization(),
     yaml: new pulumi.asset.StringAsset(`
 imports:
-- pulumi-ultimate-gitops/dev
+- pulumi-idp/auth
 values:
   stackRefs:
     fn::open::pulumi-stacks:
