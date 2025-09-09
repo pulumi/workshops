@@ -1,0 +1,24 @@
+name: ${PROJECT}
+description: ${DESCRIPTION}
+runtime:
+  name: nodejs
+  options:
+    packagemanager: yarn
+
+template:
+  description: A Pulumi template to create an EKS cluster with GPU instances for AI workloads
+  config:
+    clusterName:
+      description: The name of the EKS cluster to create
+    gpuInstanceGeneration:
+      description: GPU instance generation (e.g. 4, 5, 6 for G4dn, G5, G6 families)
+      default: "4"
+    gpuInstanceArch:
+      description: GPU instance architecture (amd64 or arm64)
+      default: amd64
+    huggingface-token:
+      description: Hugging Face API token for model access
+      secret: true
+    open-ai-token:
+      description: OpenAI API token for chat completions
+      secret: true

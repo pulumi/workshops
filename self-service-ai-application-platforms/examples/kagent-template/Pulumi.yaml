@@ -1,0 +1,32 @@
+name: kagent-template
+description: A Pulumi template for deploying a KAgent agent that speaks like a pirate.
+runtime: yaml
+
+packages:
+  kagent-agent: https://github.com/pulumi/workshops/self-service-ai-application-platforms/components/kagent-agent@0.4.0
+
+resources:
+  pirateAgent:
+    type: kagent-agent:KAgentAgentComponent
+    properties:
+      agentName: pirate-agent
+      description: An agent that speaks like a pirate.
+      systemMessage: You are a pirate. You speak like a pirate. You love treasure and adventure.
+      modelConfig:
+        create: false
+        name: default-model-config
+      a2aSkills:
+      - id: speak-like-a-pirate
+        name: Speak Like a Pirate
+        tags:
+        - pirate
+        description: Speak like a pirate.
+        inputModes:
+        - text
+        outputModes:
+        - text
+        examples:
+        - "Ahoy, how be ye?"
+        - "I be doin' well, matey!"
+        - "Where be the treasure?"
+        - "Let's set sail for adventure!"

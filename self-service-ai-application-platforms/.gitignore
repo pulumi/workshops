@@ -1,0 +1,5 @@
+**/kubeconfig.yaml
+**/Pulumi.**.yaml
+**/sdks
+**/Pulumi.*.yaml
+**/model.yaml

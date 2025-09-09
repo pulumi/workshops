@@ -1,0 +1,30 @@
+name: ${PROJECT}
+description: ${DESCRIPTION}
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+
+template:
+  description: A Pulumi template to create an EKS cluster with managed node groups for running AI agents
+  config:
+    clusterName:
+      description: The name of the EKS cluster to create
+    minClusterSize:
+      description: Minimum number of nodes in the EKS cluster
+      default: 3
+    maxClusterSize:
+      description: Maximum number of nodes in the EKS cluster
+      default: 6
+    desiredClusterSize:
+      description: Desired number of nodes in the EKS cluster
+      default: 3
+    eksNodeInstanceType:
+      description: EC2 instance type for EKS worker nodes
+      default: m5.4xlarge
+    vpcNetworkCidr:
+      description: CIDR block for the VPC network
+      default: 10.0.0.0/16
+    open-ai-token:
+      description: OpenAI API token for AI agent functionality
+      secret: true
