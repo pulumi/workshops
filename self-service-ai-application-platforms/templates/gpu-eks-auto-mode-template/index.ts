@@ -203,6 +203,8 @@ values:
           stack: ${pulumi.getProject()}/${pulumi.getStack()}
   pulumiConfig:
     kubernetes:kubeconfig: \${stackRefs.aws.kubeconfig}
+  files:
+    KUBECONFIG: \${stackRefs.aws.kubeconfig}    
 `),
 }, {
     dependsOn: [cluster, gpuKarpeterNodePool, lwsChart],
