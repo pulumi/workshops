@@ -75,6 +75,13 @@ export class KAgentAgentComponent extends pulumi.ComponentResource {
     }
 }
 
+export interface OpenAIConfig {
+    /**
+     * (Optional) The base URL for the OpenAI API. Defaults to "https://api.openai.com/v1".
+     */
+    baseUrl?: pulumi.Input<string>;
+}
+
 export interface ModelConfig {
     /**
      * The name of the model configuration.
@@ -114,9 +121,7 @@ export interface ModelConfig {
     /**
      * (Optional) Additional configuration specific to the provider.
      */
-    openAI?: {
-        baseUrl?: pulumi.Input<string>;
-    };
+    openAI?: OpenAIConfig;
 }
 
 export interface MCPServerTool {
@@ -132,25 +137,46 @@ export interface MCPServerTool {
 }
 
 export interface A2ASkill {
+    /**
+     * The unique identifier for the skill.
+     */
     id: pulumi.Input<string>;
+    /**
+     * The name of the skill.
+     */
     name: pulumi.Input<string>;
+    /**
+     * A brief description of the skill's functionality.
+     */
     description: pulumi.Input<string>;
+    /**
+     * The input modes supported by the skill (e.g., text, image).
+     */
     inputModes: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * The output modes supported by the skill (e.g., text, image).
+     */
     outputModes: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Tags associated with the skill for categorization and searchability.
+     */
     tags: pulumi.Input<pulumi.Input<string>[]>;
+    /**
+     * Example inputs or prompts that demonstrate the skill's capabilities.
+     */
     examples: pulumi.Input<pulumi.Input<string>[]>;
 }
 
 export interface KAgentAgentComponentArgs {
     /**
-     * (Optional) The namespace in which to deploy the KAgent agent. If not provided, defaults to "kagent".
-     */
-    namespaceName?: pulumi.Input<string>;
-
-    /**
      * The name of the KAgent agent.
      */
     agentName: pulumi.Input<string>;
+
+    /**
+     * (Optional) The namespace in which to deploy the KAgent agent. If not provided, defaults to "kagent".
+     */
+    namespaceName?: pulumi.Input<string>;
 
     /**
      * The model configuration to use for the KAgent agent.
@@ -163,7 +189,7 @@ export interface KAgentAgentComponentArgs {
     description: pulumi.Input<string>;
 
     /**
-     * (Optional) The system message to initialize the agent's behavior and context.
+     * The system message to initialize the agent's behavior and context.
      */
     systemMessage: pulumi.Input<string>;
 
@@ -177,5 +203,8 @@ export interface KAgentAgentComponentArgs {
      */
     tools?: MCPServerTool[];
 
+    /**
+     * (Optional) The A2A skills to be used by the KAgent agent. If not provided, defaults to an empty array.
+     */
     a2aSkills?: A2ASkill[];
 }
