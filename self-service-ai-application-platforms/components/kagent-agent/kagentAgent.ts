@@ -3,7 +3,7 @@ import * as k8s from "@pulumi/kubernetes";
 
 export class KAgentAgentComponent extends pulumi.ComponentResource {
     constructor(name: string, args: KAgentAgentComponentArgs, opts?: pulumi.ResourceOptions) {
-        super("custom:component:KAgentAgentComponent", name, {}, opts);
+        super("component-agent:index:KAgentAgentComponent", name, {}, opts);
 
         if (args.modelConfig.create) {
             new k8s.apiextensions.CustomResource("qwen3-coder-30b-a3b-instruct", {
