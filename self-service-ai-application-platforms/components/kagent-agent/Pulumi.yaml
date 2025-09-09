@@ -1,0 +1,10 @@
+name: kagent-agent
+description: A minimal Kubernetes TypeScript Pulumi program
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: kubernetes-typescript
