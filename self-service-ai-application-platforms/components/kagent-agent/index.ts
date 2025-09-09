@@ -1,6 +1,6 @@
-import {KAgentAgentComponent} from "./kagentAgent";
+export {KAgentAgentComponent} from "./kagentAgent";
 
-
+/*
 const pirateAgent = new KAgentAgentComponent("pirate-agent", {
     agentName: "pirate-agent",
     description: "An agent that speaks like a pirate.",
@@ -22,3 +22,4 @@ const pirateAgent = new KAgentAgentComponent("pirate-agent", {
         ],
     }],
 })
+*/

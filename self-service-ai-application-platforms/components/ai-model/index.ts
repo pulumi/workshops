@@ -13,8 +13,9 @@ const gptOSSModel = new AIModelComponent("gpt-oss-20b", {
 })
 
 */
-import {AIModelComponent} from "./aiModelComponent";
+export {AIModelComponent} from "./aiModelComponent";
 
+/*
 const qwenModel = new AIModelComponent("qwen3-coder-30b-a3b-instruct", {
     size: "small",
     modelName: "Qwen/Qwen3-Coder-30B-A3B-Instruct", //"openai/gpt-oss-20b",
@@ -22,3 +23,4 @@ const qwenModel = new AIModelComponent("qwen3-coder-30b-a3b-instruct", {
 })
 
 export const qwenModelEndpoint = qwenModel.modelInternalServiceDNS;
+*/
