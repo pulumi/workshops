@@ -6,7 +6,7 @@ template:
   description: A Pulumi template to create an AI model resource for Qwen models on a self-service AI application platform.
 
 resources:
-  qwenModel:
+  qwen3-coder-30b-a3b-instruct:
     type: ai-model:AIModelComponent
     properties:
       modelName: "Qwen/Qwen3-Coder-30B-A3B-Instruct"
