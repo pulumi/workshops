@@ -16,9 +16,3 @@ template:
     gpuInstanceArch:
       description: GPU instance architecture (amd64 or arm64)
       default: amd64
-    huggingface-token:
-      description: Hugging Face API token for model access
-      secret: true
-    open-ai-token:
-      description: OpenAI API token for chat completions
-      secret: true

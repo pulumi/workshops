@@ -25,6 +25,3 @@ template:
     vpcNetworkCidr:
       description: CIDR block for the VPC network
       default: 10.0.0.0/16
-    open-ai-token:
-      description: OpenAI API token for AI agent functionality
-      secret: true
