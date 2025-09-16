@@ -1,0 +1,12 @@
+name: minecraft-server
+description: A minimal AWS TypeScript Pulumi program
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-typescript
+packages:
+  minecraft-server: ../../components/@0.0.0
