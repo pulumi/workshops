@@ -1,0 +1,10 @@
+# Copy this file to terraform.tfvars and customize the values
+
+region            = "eu-central-1"
+name              = "minecraft"
+public_key_path   = "~/.ssh/id_rsa.pub"
+instance_type     = "t2.small"
+minecraft_version = "1.21.1"
+java_max_memory   = "1024"
+personal_ip       = "YOUR_PUBLIC_IP"
+personal_subnet   = "32"

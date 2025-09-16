@@ -1,0 +1,4 @@
+config:
+  aws:region: eu-central-1
+environment:
+- pulumi-ultimate-gitops/dev

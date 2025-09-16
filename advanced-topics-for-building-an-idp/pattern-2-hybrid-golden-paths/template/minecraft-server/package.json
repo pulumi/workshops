@@ -1,0 +1,16 @@
+{
+    "name": "minecraft-server",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^7.0.0",
+        "@pulumi/awsx": "^3.0.0",
+        "@pulumi/minecraft-server": "file:sdks/minecraft-server",
+        "@pulumi/modminecraft": "file:sdks/modminecraft",
+        "@pulumi/pattern-2": "file:sdks/pattern-2",
+        "@pulumi/pulumi": "^3.113.0"
+    }
+}
