@@ -38,14 +38,14 @@ class Program
             ? "Generate a clean, family-friendly joke. Just return the joke, nothing else."
             : $"Generate a clean, family-friendly joke about {keywords}. Just return the joke, nothing else.";
 
-        var chatClient = client.GetChatClient("gpt-4o-mini");
+        var chatClient = client.GetChatClient("gpt-4o");
 
         var response = await chatClient.CompleteChatAsync(
             [ChatMessage.CreateUserMessage(prompt)],
             new ChatCompletionOptions
             {
                 MaxOutputTokenCount = 100,
-                Temperature = 0.9f
+                Temperature = 1.3f
             });
 
         var joke = response.Value.Content[0].Text?.Trim() ?? "";
