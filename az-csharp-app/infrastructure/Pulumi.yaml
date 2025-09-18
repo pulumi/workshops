@@ -1,0 +1,4 @@
+name: c3-azure
+runtime: dotnet
+backend:
+  url: file://../.pulumi
