@@ -11,7 +11,8 @@ export interface InitialRepository {
 export interface ArgoCDArgs {
     initialObjects?: pulumi.asset.FileAsset
     namespace?: pulumi.Input<string>;
-    version?: pulumi.Input<string> | "7.9.0";
+    version?: pulumi.Input<string> | "8.6.3"
+    name?: pulumi.Input<string> | "argocd"
 }
 
 export class ArgoCD extends pulumi.ComponentResource {
@@ -25,6 +26,7 @@ export class ArgoCD extends pulumi.ComponentResource {
         const argocd = new k8s.helm.v3.Release("argocd", {
             chart: "argo-cd",
             version: args.version,
+            name: args.name,
             repositoryOpts: {
                 repo: "https://argoproj.github.io/argo-helm",
             },

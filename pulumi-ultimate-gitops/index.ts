@@ -29,6 +29,9 @@ const eksCluster = new eks.Cluster("eks-cluster", {
     nodeAssociatePublicIpAddress: false,
     endpointPrivateAccess: false,
     endpointPublicAccess: true,
+    corednsAddonOptions: {
+        enabled: false,
+    }
 });
 
 let initialObjects = new pulumi.asset.FileAsset("./argocd-initial-objects.yaml");
@@ -47,6 +50,7 @@ const argocdNS = new kubernetes.core.v1.Namespace("argocd", {
 
 const argocd = new ArgoCD("argocd", {
     initialObjects: initialObjects,
+    name: "argocd",
     version: "8.6.3",
     namespace: argocdNS.metadata.name,
 }, {
@@ -74,4 +78,4 @@ const doToken = new kubernetes.core.v1.Secret("pulumi-operator-secrets", {
     type: "Opaque",
 }, {provider: k8sProvider});
 
-export const kubeconfig = eksCluster.kubeconfig;
+export const kubeconfig = pulumi.secret(eksCluster.kubeconfig);

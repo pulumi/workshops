@@ -6,6 +6,8 @@ spec:
   schema:
     apiVersion: v1alpha1
     kind: MyApplication
+    status:
+      url: ${"${app.liveUrl}"}
     spec:
       name: string
       stack: string
@@ -29,7 +31,7 @@ spec:
         name: ${schema.spec.name}
       program:
         outputs:
-          url: ${"$"+"{app.liveUrl}"}
+          url: ${"${app.liveUrl}"}
         resources:
           project:
             type: digitalocean:Project
@@ -41,7 +43,7 @@ spec:
           app:
             type: digitalocean:App
             properties:
-              projectId: ${"$"+"{project.id}"}
+              projectId: ${"${project.id}"}
               spec:
                 name: app-${schema.spec.name}-${schema.spec.region}
                 region: ${schema.spec.region}
