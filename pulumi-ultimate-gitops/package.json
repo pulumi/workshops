@@ -6,10 +6,10 @@
         "typescript": "^5.0.0"
     },
     "dependencies": {
-        "@pulumi/aws": "^6.75.0",
-        "@pulumi/awsx": "^2.0.2",
-        "@pulumi/eks": "^3.8.1",
-        "@pulumi/kubernetes": "^4.22.1",
-        "@pulumi/pulumi": "^3.113.0"
+        "@pulumi/aws": "^7.8.0",
+        "@pulumi/awsx": "^3.0.0",
+        "@pulumi/eks": "^4.0.1",
+        "@pulumi/kubernetes": "^4.23.0",
+        "@pulumi/pulumi": "^3.202.0"
     }
 }

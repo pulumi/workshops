@@ -47,7 +47,7 @@ const argocdNS = new kubernetes.core.v1.Namespace("argocd", {
 
 const argocd = new ArgoCD("argocd", {
     initialObjects: initialObjects,
-    version: "7.9.0",
+    version: "8.6.3",
     namespace: argocdNS.metadata.name,
 }, {
     providers: {
