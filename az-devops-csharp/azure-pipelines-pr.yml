@@ -1,0 +1,87 @@
+# PR Pipeline - Runs Pulumi preview on pull requests
+# Note: For Azure Repos, PR triggers are configured via Branch Policies (Build Validation)
+# GitHub repos use pr: triggers, but Azure Repos requires branch policies
+name: PR-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger: none # Only runs on PRs via branch policy
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: pulumi-credentials  # Contains PULUMI_ACCESS_TOKEN and ESC_ENV_NAME
+  - name: DOTNET_VERSION
+    value: '8.x'
+
+stages:
+  - stage: Preview
+    displayName: 'Pulumi Preview'
+    jobs:
+      - job: RunPreview
+        displayName: 'Run Pulumi Preview'
+        steps:
+          - checkout: self
+
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 8 SDK'
+            inputs:
+              version: $(DOTNET_VERSION)
+
+          - task: Bash@3
+            displayName: 'Install Pulumi CLI'
+            inputs:
+              targetType: 'inline'
+              script: |
+                curl -fsSL https://get.pulumi.com | sh
+                echo "##vso[task.prependpath]$HOME/.pulumi/bin"
+
+          - task: Bash@3
+            displayName: 'Install ESC CLI'
+            inputs:
+              targetType: 'inline'
+              script: |
+                curl -fsSL https://get.pulumi.com/esc/install.sh | sh
+                echo "##vso[task.prependpath]$HOME/.pulumi/bin"
+
+          - task: Bash@3
+            displayName: 'Create placeholder function zip for preview'
+            inputs:
+              targetType: 'inline'
+              script: |
+                # Create placeholder zip so Pulumi can compute hash
+                # PR preview doesn't actually deploy, so content doesn't matter
+                mkdir -p function/bin
+                echo "placeholder" > function/bin/placeholder.txt
+                cd function/bin
+                zip function-app.zip placeholder.txt
+                cd ../..
+                ls -lh function/bin/function-app.zip
+
+          - task: Bash@3
+            displayName: 'Restore infrastructure project'
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'infrastructure'
+              script: |
+                dotnet restore
+
+          - task: Bash@3
+            displayName: 'Select or create Pulumi stack'
+            env:
+              PULUMI_ACCESS_TOKEN: $(PULUMI_ACCESS_TOKEN)
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'infrastructure'
+              script: |
+                # Try to select the stack, if it doesn't exist, create it
+                esc env run $(ESC_ENV_NAME) -- pulumi stack select dev || esc env run $(ESC_ENV_NAME) -- pulumi stack init dev
+
+          - task: Bash@3
+            displayName: 'Run Pulumi Preview'
+            env:
+              PULUMI_ACCESS_TOKEN: $(PULUMI_ACCESS_TOKEN)
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'infrastructure'
+              script: |
+                esc env run $(ESC_ENV_NAME) -- pulumi preview --non-interactive --diff

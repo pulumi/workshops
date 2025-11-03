@@ -1,0 +1,144 @@
+# Main Pipeline - Deploys infrastructure and function app on merge to main
+name: Deploy-$(Date:yyyyMMdd)$(Rev:.r)
+
+trigger:
+  branches:
+    include:
+      - main
+
+pr: none # This pipeline only runs on pushes to main, not PRs
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - group: pulumi-credentials  # Contains PULUMI_ACCESS_TOKEN and ESC_ENV_NAME
+  - name: DOTNET_VERSION
+    value: '8.x'
+
+stages:
+  - stage: Build
+    displayName: 'Build Function App'
+    jobs:
+      - job: BuildFunction
+        displayName: 'Build and Package Function'
+        steps:
+          - checkout: self
+
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 8 SDK'
+            inputs:
+              version: $(DOTNET_VERSION)
+
+          - task: Bash@3
+            displayName: 'Build and Package Function App'
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'function'
+              script: |
+                echo "Building function..."
+                dotnet restore
+                dotnet publish --configuration Release --output bin/publish
+
+                echo "Creating deployment package..."
+                cd bin/publish
+                zip -r ../function-app.zip .
+                cd ../..
+
+                echo "Copying to artifact staging directory..."
+                cp bin/function-app.zip $(Build.ArtifactStagingDirectory)/function-app.zip
+                echo "Package created: $(Build.ArtifactStagingDirectory)/function-app.zip"
+
+          - task: PublishBuildArtifacts@1
+            displayName: 'Publish Function Artifact'
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)/function-app.zip'
+              ArtifactName: 'function-app'
+              publishLocation: 'Container'
+
+  - stage: Deploy
+    displayName: 'Deploy Infrastructure'
+    dependsOn: Build
+    jobs:
+      - job: RunPulumiUp
+        displayName: 'Deploy with Pulumi'
+        steps:
+          - checkout: self
+
+          - task: DownloadBuildArtifacts@1
+            displayName: 'Download Function Artifact'
+            inputs:
+              buildType: 'current'
+              downloadType: 'single'
+              artifactName: 'function-app'
+              downloadPath: '$(System.ArtifactsDirectory)'
+
+          - task: Bash@3
+            displayName: 'Copy Function App to expected location'
+            inputs:
+              targetType: 'inline'
+              script: |
+                mkdir -p $(Build.SourcesDirectory)/function/bin
+                cp $(System.ArtifactsDirectory)/function-app/function-app.zip $(Build.SourcesDirectory)/function/bin/function-app.zip
+                ls -lh $(Build.SourcesDirectory)/function/bin/function-app.zip
+
+          - task: UseDotNet@2
+            displayName: 'Setup .NET 8 SDK'
+            inputs:
+              version: $(DOTNET_VERSION)
+
+          - task: Bash@3
+            displayName: 'Install Pulumi CLI'
+            inputs:
+              targetType: 'inline'
+              script: |
+                curl -fsSL https://get.pulumi.com | sh
+                echo "##vso[task.prependpath]$HOME/.pulumi/bin"
+
+          - task: Bash@3
+            displayName: 'Install ESC CLI'
+            inputs:
+              targetType: 'inline'
+              script: |
+                curl -fsSL https://get.pulumi.com/esc/install.sh | sh
+                echo "##vso[task.prependpath]$HOME/.pulumi/bin"
+
+          - task: Bash@3
+            displayName: 'Restore infrastructure project'
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'infrastructure'
+              script: |
+                dotnet restore
+
+          - task: Bash@3
+            displayName: 'Select or create Pulumi stack'
+            env:
+              PULUMI_ACCESS_TOKEN: $(PULUMI_ACCESS_TOKEN)
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'infrastructure'
+              script: |
+                # Try to select the stack, if it doesn't exist, create it
+                esc env run $(ESC_ENV_NAME) -- pulumi stack select dev || esc env run $(ESC_ENV_NAME) -- pulumi stack init dev
+
+          - task: Bash@3
+            displayName: 'Deploy with Pulumi'
+            env:
+              PULUMI_ACCESS_TOKEN: $(PULUMI_ACCESS_TOKEN)
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'infrastructure'
+              script: |
+                esc env run $(ESC_ENV_NAME) -- pulumi up --yes --non-interactive
+
+          - task: Bash@3
+            displayName: 'Export Stack Outputs'
+            env:
+              PULUMI_ACCESS_TOKEN: $(PULUMI_ACCESS_TOKEN)
+            inputs:
+              targetType: 'inline'
+              workingDirectory: 'infrastructure'
+              script: |
+                echo "Deployment complete! Stack outputs:"
+                esc env run $(ESC_ENV_NAME) -- pulumi stack output --json

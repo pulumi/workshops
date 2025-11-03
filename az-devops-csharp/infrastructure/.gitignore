@@ -352,33 +352,5 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
-# Azure Functions
-local.settings.json
-*.log
-function-app.zip
-publish/
-
-# Pulumi
-.pulumi/
-Pulumi.*.yaml
-!Pulumi.yaml
-
-# macOS
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-
-# IDE
-.vscode/
-.idea/
-
-# Temporary files
-*.tmp
-*.temp
-
-# Secrets
-docs/secrets.md
+## stuff
+/docs/secrets.md
