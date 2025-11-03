@@ -1,0 +1,87 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/adam/sandbox/workshops/az-devops-csharp/function/DadJokeFunctionApp.csproj": {}
+  },
+  "projects": {
+    "/Users/adam/sandbox/workshops/az-devops-csharp/function/DadJokeFunctionApp.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/adam/sandbox/workshops/az-devops-csharp/function/DadJokeFunctionApp.csproj",
+        "projectName": "DadJokeFunctionApp",
+        "projectPath": "/Users/adam/sandbox/workshops/az-devops-csharp/function/DadJokeFunctionApp.csproj",
+        "packagesPath": "/Users/adam/.nuget/packages/",
+        "outputPath": "/Users/adam/sandbox/workshops/az-devops-csharp/function/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/adam/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Azure.AI.OpenAI": {
+              "target": "Package",
+              "version": "[1.0.0-beta.17, )"
+            },
+            "Azure.Identity": {
+              "target": "Package",
+              "version": "[1.12.1, )"
+            },
+            "Microsoft.Azure.Functions.Worker": {
+              "target": "Package",
+              "version": "[1.20.0, )"
+            },
+            "Microsoft.Azure.Functions.Worker.Extensions.Http": {
+              "target": "Package",
+              "version": "[3.1.0, )"
+            },
+            "Microsoft.Azure.Functions.Worker.Sdk": {
+              "target": "Package",
+              "version": "[1.16.4, )"
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/opt/homebrew/Cellar/dotnet@8/8.0.120/libexec/sdk/8.0.120/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
