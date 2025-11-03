@@ -1,0 +1,7 @@
+name: meta-infrastructure
+description: Azure DevOps repository and pipeline infrastructure
+runtime: dotnet
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: csharp
