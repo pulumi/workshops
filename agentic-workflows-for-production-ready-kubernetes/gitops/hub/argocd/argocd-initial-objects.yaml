@@ -6,7 +6,7 @@ applications:
     project: infra
     source:
       repoURL: https://github.com/pulumi/workshops
-      branch: main
+      targetRevision: main
       path: agentic-workflows-for-production-ready-kubernetes/gitops/hub
       directory:
         recurse: true
