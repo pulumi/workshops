@@ -1,0 +1,13 @@
+admissionController:
+  clusterRole:
+    extraResources:
+      - apiGroups: ['']
+        resources: [secrets]
+        verbs: [get, list, watch]
+
+backgroundController:
+  clusterRole:
+    extraResources:
+      - apiGroups: ['']
+        resources: [secrets]
+        verbs: [get, list, watch, create, update, patch, delete]
