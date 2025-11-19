@@ -1,25 +1,27 @@
 admissionController:
-  clusterRole:
-    extraResources:
-      - apiGroups: ['']
-        resources: [secrets]
-        verbs: [get, list, watch]
+  rbac:
+    clusterRole:
+      extraResources:
+        - apiGroups: ['']
+          resources: [secrets]
+          verbs: [get, list, watch]
 
 backgroundController:
-  coreClusterRole:
-    extraResources:
-      - apiGroups: [networking.k8s.io]
-        resources: [ingresses, ingressclasses, networkpolicies]
-        verbs: [create, update, patch, delete]
-      - apiGroups: [rbac.authorization.k8s.io]
-        resources: [rolebindings, roles]
-        verbs: [create, update, patch, delete]
-      - apiGroups: ['']
-        resources: [configmaps, resourcequotas, limitranges]
-        verbs: [create, update, patch, delete]
-      - apiGroups: [resource.k8s.io]
-        resources: [resourceclaims, resourceclaimtemplates]
-        verbs: [create, delete, update, patch, deletecollection]
-      - apiGroups: ['']
-        resources: [secrets]
-        verbs: [get, list, watch, create, update, patch, delete]
+  rbac:
+    clusterRole:
+      extraResources:
+        - apiGroups: [networking.k8s.io]
+          resources: [ingresses, ingressclasses, networkpolicies]
+          verbs: [create, update, patch, delete]
+        - apiGroups: [rbac.authorization.k8s.io]
+          resources: [rolebindings, roles]
+          verbs: [create, update, patch, delete]
+        - apiGroups: ['']
+          resources: [configmaps, resourcequotas, limitranges]
+          verbs: [create, update, patch, delete]
+        - apiGroups: [resource.k8s.io]
+          resources: [resourceclaims, resourceclaimtemplates]
+          verbs: [create, delete, update, patch, deletecollection]
+        - apiGroups: ['']
+          resources: [secrets]
+          verbs: [get, list, watch, create, update, patch, delete]
