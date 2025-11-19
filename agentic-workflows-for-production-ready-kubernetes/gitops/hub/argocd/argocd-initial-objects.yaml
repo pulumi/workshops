@@ -7,7 +7,7 @@ applications:
     source:
       repoURL: https://github.com/pulumi/workshops
       branch: main
-      path: gitops/hub
+      path: agentic-workflows-for-production-ready-kubernetes/gitops/hub
       directory:
         recurse: true
         exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml,**/provider/provider.yaml,**/config/secret.yaml}'
