@@ -1,5 +1,5 @@
 admissionController:
-  coreClusterRole:
+  clusterRole:
     extraResources:
       - apiGroups: ['']
         resources: [secrets]
