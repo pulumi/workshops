@@ -14,7 +14,7 @@ spec:
     path: .
     helm:
       valueFiles:
-      - $values/gitops/hub/argocd/argocd-values.yaml
+      - $values/agentic-workflows-for-production-ready-kubernetes/gitops/hub/argocd/argocd-values.yaml
   - repoURL: https://github.com/pulumi/workshops
     targetRevision: main
     ref: values

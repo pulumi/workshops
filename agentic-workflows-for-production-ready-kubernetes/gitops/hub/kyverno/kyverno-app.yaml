@@ -14,7 +14,7 @@ spec:
     chart: kyverno
     helm:
       valueFiles:
-      - $values/gitops/hub/kyverno/kyverno-values.yaml
+      - $values/agentic-workflows-for-production-ready-kubernetes/gitops/hub/kyverno/kyverno-values.yaml
   - repoURL: https://github.com/pulumi/workshops
     targetRevision: main
     ref: values
@@ -39,7 +39,7 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: gitops/hub/kyverno/policies
+    path: agentic-workflows-for-production-ready-kubernetes/gitops/hub/kyverno/policies
     targetRevision: main
     directory:
       recurse: true
