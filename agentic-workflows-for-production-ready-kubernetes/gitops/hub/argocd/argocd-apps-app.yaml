@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: argo-cd
+  name: argocd-apps
   namespace: argocd
 spec:
   destination:
@@ -9,12 +9,12 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   sources:
-  - repoURL: oci://ghcr.io/argoproj/argo-helm/argo-cd
-    targetRevision: 9.1.3
+  - repoURL: oci://ghcr.io/argoproj/argo-helm/argocd-apps
+    targetRevision: 2.0.2
     path: .
     helm:
       valueFiles:
-      - $values/gitops/spoke/argocd/argocd-values.yaml
+      - $values/gitops/hub/argocd/argocd-initial-objects.yaml
   - repoURL: https://github.com/pulumi/workshops
     targetRevision: main
     ref: values

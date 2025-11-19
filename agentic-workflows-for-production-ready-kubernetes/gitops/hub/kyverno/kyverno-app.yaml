@@ -14,8 +14,8 @@ spec:
     chart: kyverno
     helm:
       valueFiles:
-      - $values/gitops/management/kyverno/kyverno-values.yaml
-  - repoURL: https://github.com/my-backstage-demo/backstage-infrastructure-provisioning-templates-workshop.git
+      - $values/gitops/hub/kyverno/kyverno-values.yaml
+  - repoURL: https://github.com/pulumi/workshops
     targetRevision: main
     ref: values
   syncPolicy:
@@ -39,11 +39,11 @@ spec:
     server: https://kubernetes.default.svc
   project: infra
   source:
-    path: "gitops/management/kyverno/policies"
+    path: gitops/hub/kyverno/policies
     targetRevision: main
     directory:
       recurse: true
-    repoURL: https://github.com/my-backstage-demo/backstage-infrastructure-provisioning-templates-workshop.git
+    repoURL: https://github.com/pulumi/workshops
   syncPolicy:
     automated:
       prune: true
