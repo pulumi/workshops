@@ -1,0 +1,88 @@
+name: "Update Helm Charts in GitOps"
+
+sources:
+  # ArgoCD Helm Chart from OCI Registry
+  argocd:
+    name: "Get latest ArgoCD Helm chart version"
+    kind: helmchart
+    spec:
+      url: oci://ghcr.io/argoproj/argo-helm
+      name: argo-cd
+    transformers:
+      - trimprefix: "v"
+
+  # ArgoCD Apps Helm Chart from OCI Registry
+  argocd-apps:
+    name: "Get latest ArgoCD Apps Helm chart version"
+    kind: helmchart
+    spec:
+      url: oci://ghcr.io/argoproj/argo-helm
+      name: argocd-apps
+    transformers:
+      - trimprefix: "v"
+
+  # Kyverno Helm Chart from Helm Repository
+  kyverno:
+    name: "Get latest Kyverno Helm chart version"
+    kind: helmchart
+    spec:
+      url: https://kyverno.github.io/kyverno/
+      name: kyverno
+    transformers:
+      - trimprefix: "v"
+
+conditions:
+  # Verify ArgoCD chart exists
+  argocd-chart-exists:
+    name: "Check if ArgoCD chart version exists"
+    kind: helmchart
+    sourceid: argocd
+    spec:
+      url: oci://ghcr.io/argoproj/argo-helm
+      name: argo-cd
+
+  # Verify ArgoCD Apps chart exists
+  argocd-apps-chart-exists:
+    name: "Check if ArgoCD Apps chart version exists"
+    kind: helmchart
+    sourceid: argocd-apps
+    spec:
+      url: oci://ghcr.io/argoproj/argo-helm
+      name: argocd-apps
+
+  # Verify Kyverno chart exists
+  kyverno-chart-exists:
+    name: "Check if Kyverno chart version exists"
+    kind: helmchart
+    sourceid: kyverno
+    spec:
+      url: https://kyverno.github.io/kyverno/
+      name: kyverno
+
+targets:
+  # Update ArgoCD chart version in spoke/argocd/argocd-app.yaml
+  argocd-spoke:
+    name: "Update ArgoCD version in spoke/argocd/argocd-app.yaml"
+    kind: yaml
+    sourceid: argocd
+    spec:
+      file: gitops/spoke/argocd/argocd-app.yaml
+      key: "$.spec.sources[0].targetRevision"
+
+  # Update ArgoCD Apps chart version in spoke/argocd/argocd-apps-app.yaml
+  argocd-apps-spoke:
+    name: "Update ArgoCD Apps version in spoke/argocd/argocd-apps-app.yaml"
+    kind: yaml
+    sourceid: argocd-apps
+    spec:
+      file: gitops/spoke/argocd/argocd-apps-app.yaml
+      key: "$.spec.sources[0].targetRevision"
+
+  # Update Kyverno chart version in spoke/kyverno/kyverno-app.yaml
+  kyverno-spoke:
+    name: "Update Kyverno version in spoke/kyverno/kyverno-app.yaml"
+    kind: yaml
+    sourceid: kyverno
+    spec:
+      file: gitops/spoke/kyverno/kyverno-app.yaml
+      key: "$.spec.sources[0].targetRevision"

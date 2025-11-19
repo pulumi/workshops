@@ -1,0 +1,40 @@
+applications:
+  app-of-apps-spoke:
+    namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    project: infra
+    source:
+      repoURL: https://github.com/pulumi/workshops
+      branch: main
+      path: gitops/spoke
+      directory:
+        recurse: true
+        exclude: '{*values.yaml,*dashboard.yaml,*policy.yaml,*resource.yaml,**/provider/provider.yaml,**/config/secret.yaml}'
+    destination:
+      server: https://kubernetes.default.svc
+      namespace: argocd
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - ServerSideApply=true
+
+projects:
+  infra:
+    namespace: argocd
+    finalizers:
+    - resources-finalizer.argocd.argoproj.io
+    description: Infrastructure components on management cluster
+    sourceRepos:
+    - '*'
+    destinations:
+    - namespace: "*"
+      server: https://kubernetes.default.svc
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+    sourceNamespaces:
+    - '*'

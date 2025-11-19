@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: infra
+  sources:
+  - repoURL: oci://ghcr.io/argoproj/argo-helm/argocd-apps
+    targetRevision: 2.0.2
+    path: .
+    helm:
+      valueFiles:
+      - $values/gitops/spoke/argocd/argocd-initial-objects.yaml
+  - repoURL: https://github.com/pulumi/workshops
+    targetRevision: main
+    ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - ServerSideApply=true

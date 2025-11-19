@@ -1,0 +1,28 @@
+configs:
+  params:
+    "hydrator.enabled": true
+  secret:
+    argocdServerAdminPassword: "$2a$10$5vm8wXaSdbuff0m9l21JdevzXBzJFPCi8sy6OOnpZMAG.fOXL7jvO"
+    argocdServerAdminPasswordMtime: "2023-11-13T09:23:16Z"
+notifications:
+  enabled: false
+dex:
+  enabled: false
+commitServer:
+  enabled: true
+server:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1024Mi
+  service:
+    type: LoadBalancer
+  extensions:
+    extensionList:
+    - name: rollout-extension
+      env:
+      - name: EXTENSION_URL
+        value: https://github.com/argoproj-labs/rollout-extension/releases/download/v0.3.7/extension.tar
