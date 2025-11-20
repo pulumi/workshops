@@ -1,0 +1,17 @@
+name: hub-and-spoke
+description: A minimal TypeScript Pulumi program
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:disable-default-providers:
+    value:
+      - aws
+      - azure-native
+  pulumi:tags:
+    value:
+      project: hub-and-spoke
+      ManagedBy: Pulumi
+packages:
+  multi-cloud-kubernetes: git://github.com/pulumi/workshops/agentic-workflows-for-production-ready-kubernetes/components/multi-cloud-kubernetes@0.5.1

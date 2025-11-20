@@ -1,0 +1,12 @@
+{
+    "name": "hub-and-spoke",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^18",
+        "typescript": "^5.0.0"
+    },
+    "dependencies": {
+        "@ediri/multi-cloud-kubernetes": "file:sdks/ediri-multi-cloud-kubernetes",
+        "@pulumi/pulumi": "^3.113.0"
+    }
+}
