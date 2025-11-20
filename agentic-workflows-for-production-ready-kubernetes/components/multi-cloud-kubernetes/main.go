@@ -9,6 +9,7 @@ import (
 func main() {
 	prov, err := infer.NewProviderBuilder().
 		WithNamespace("ediri").
+		WithDisplayName("Multi-Cloud Kubernetes").
 		WithComponents(
 			infer.ComponentF(NewKubernetesCluster),
 		).
