@@ -1,0 +1,13 @@
+name: multi-cloud-kubernetes
+description: Multi-cloud Kubernetes cluster component with explicit provider configuration
+runtime:
+  name: go
+config:
+  pulumi:disable-default-providers:
+    value:
+      - aws
+      - azure-native
+  pulumi:tags:
+    value:
+      pulumi:template: go
+      project: multi-cloud-kubernetes
