@@ -12,7 +12,7 @@ spec:
           app: dev
   template:
     metadata:
-      name: {{.name}}-podtato-head
+      name: '{{.name}}-podtato-head'
     spec:
       project: default
       syncPolicy:
@@ -26,5 +26,5 @@ spec:
         targetRevision: HEAD
         path: delivery/chart
       destination:
-        server: {{.server}}
+        server: '{{.server}}'
         namespace: podtato-head
