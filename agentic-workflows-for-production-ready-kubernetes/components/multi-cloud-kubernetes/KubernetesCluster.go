@@ -125,7 +125,7 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 		// Build provider and parent options
 		awsOpts := []pulumi.ResourceOption{parentOpt}
 
-		awsProvider, err := aws.NewProvider(ctx, "aws-provider", &aws.ProviderArgs{
+		awsProvider, err := aws.NewProvider(ctx, fmt.Sprintf("%s-aws-provider", name), &aws.ProviderArgs{
 			Region:               pulumi.String("us-east-1"),
 			SkipMetadataApiCheck: pulumi.Bool(false),
 			DefaultTags: &aws.ProviderDefaultTagsArgs{
@@ -207,7 +207,7 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 	case ProviderAzure:
 		// Build provider and parent options
 		azureOpts := []pulumi.ResourceOption{parentOpt}
-		azureProvider, err := azurenative.NewProvider(ctx, "azure-provider", &azurenative.ProviderArgs{
+		azureProvider, err := azurenative.NewProvider(ctx, fmt.Sprintf("%s-azure-provider", name), &azurenative.ProviderArgs{
 			Location: pulumi.String("eastus"),
 		})
 		if azureProvider != nil {
