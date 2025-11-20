@@ -1,0 +1,20 @@
+{
+    "name": "@ediri/multi-cloud-kubernetes",
+    "version": "0.5.1",
+    "main": "bin/index.js",
+    "scripts": {
+        "build": "tsc",
+        "postinstall": "node ./scripts/postinstall.js"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.142.0",
+        "@types/node": "^18",
+        "typescript": "^4.3.5"
+    },
+    "pulumi": {
+        "resource": true,
+        "name": "multi-cloud-kubernetes",
+        "version": "0.5.1",
+        "server": "git://github.com/pulumi/workshops/agentic-workflows-for-production-ready-kubernetes/components/multi-cloud-kubernetes"
+    }
+}
