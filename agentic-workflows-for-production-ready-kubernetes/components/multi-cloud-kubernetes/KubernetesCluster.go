@@ -349,12 +349,8 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 		if err != nil {
 			return nil, err
 		}
-		ctx.Log.Info(fmt.Sprintf("Hub cluster %s created with ArgoCD installed", name), nil)
 
 	case RoleSpoke:
-		// This allows the hub cluster's ArgoCD to deploy applications here
-		ctx.Log.Info(fmt.Sprintf("Spoke cluster %s created - Service account setup needed", name), nil)
-
 		// Create ArgoCD Service Account
 		argoCDServiceAccount, err := corev1.NewServiceAccount(ctx, fmt.Sprintf("%s-argocd-sa", name), &corev1.ServiceAccountArgs{
 			Metadata: &metav1.ObjectMetaArgs{
