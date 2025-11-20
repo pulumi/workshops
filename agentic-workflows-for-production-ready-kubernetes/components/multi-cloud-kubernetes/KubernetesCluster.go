@@ -5,9 +5,11 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/pulumi/pulumi-aws/sdk/v7/go/aws"
 	awsx "github.com/pulumi/pulumi-awsx/sdk/v3/go/awsx/ec2"
 	"github.com/pulumi/pulumi-azure-native-sdk/containerservice/v3"
 	"github.com/pulumi/pulumi-azure-native-sdk/resources/v3"
+	azurenative "github.com/pulumi/pulumi-azure-native-sdk/v3"
 	"github.com/pulumi/pulumi-eks/sdk/v4/go/eks"
 	"github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes"
 	corev1 "github.com/pulumi/pulumi-kubernetes/sdk/v4/go/kubernetes/core/v1"
@@ -58,10 +60,10 @@ type KubernetesClusterArgs struct {
 	Tags map[string]pulumi.StringInput `pulumi:"tags,optional"`
 
 	// AWS Provider (optional, will be created if not provided)
-	AwsProvider pulumi.ProviderResource `pulumi:"awsProvider,optional"`
+	//AwsProvider pulumi.ProviderResource `pulumi:"awsProvider,optional"`
 
 	// Azure Native Provider (optional, will be created if not provided)
-	AzureProvider pulumi.ProviderResource `pulumi:"azureProvider,optional"`
+	//AzureProvider pulumi.ProviderResource `pulumi:"azureProvider,optional"`
 }
 
 // KubernetesCluster is a multi-cloud Kubernetes cluster component resource
@@ -125,8 +127,24 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 	case ProviderAWS:
 		// Build provider and parent options
 		awsOpts := []pulumi.ResourceOption{parentOpt}
-		if args.AwsProvider != nil {
-			awsOpts = append(awsOpts, pulumi.Provider(args.AwsProvider))
+
+		awsProvider, err := aws.NewProvider(ctx, "aws-provider", &aws.ProviderArgs{
+			Region:               pulumi.String("us-east-1"),
+			SkipMetadataApiCheck: pulumi.Bool(false),
+			DefaultTags: &aws.ProviderDefaultTagsArgs{
+				Tags: pulumi.StringMap{
+					"ManagedBy":   pulumi.String("Pulumi"),
+					"Project":     pulumi.String("multi-cloud-kubernetes"),
+					"Environment": pulumi.String("dev"),
+				},
+			},
+		})
+		if err != nil {
+			return nil, err
+		}
+
+		if awsProvider != nil {
+			awsOpts = append(awsOpts, pulumi.Provider(awsProvider))
 		}
 
 		// Get the cluster name as a string for tag keys
@@ -192,8 +210,11 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 	case ProviderAzure:
 		// Build provider and parent options
 		azureOpts := []pulumi.ResourceOption{parentOpt}
-		if args.AzureProvider != nil {
-			azureOpts = append(azureOpts, pulumi.Provider(args.AzureProvider))
+		azureProvider, err := azurenative.NewProvider(ctx, "azure-provider", &azurenative.ProviderArgs{
+			Location: pulumi.String("eastus"),
+		})
+		if azureProvider != nil {
+			azureOpts = append(azureOpts, pulumi.Provider(azureProvider))
 		}
 
 		rg, err := resources.NewResourceGroup(ctx, fmt.Sprintf("%s-rg", name), &resources.ResourceGroupArgs{
@@ -244,7 +265,7 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 
 		// Set component outputs for Azure
 		// Fetch kubeconfig for AKS cluster
-		azureKubeconfig := pulumi.All(cluster.Name, rg.Name, args.AzureProvider).ApplyT(func(args []interface{}) (*string, error) {
+		azureKubeconfig := pulumi.All(cluster.Name, rg.Name, azureProvider).ApplyT(func(args []interface{}) (*string, error) {
 			aksClusterName := args[0].(string)
 			resourceGroupName := args[1].(string)
 			provider := args[2].(pulumi.ProviderResource)
@@ -270,7 +291,7 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 		test := containerservice.LookupManagedClusterOutput(ctx, containerservice.LookupManagedClusterOutputArgs{
 			ResourceGroupName: rg.Name,
 			ResourceName:      cluster.Name,
-		}, pulumi.Provider(args.AzureProvider))
+		}, pulumi.Provider(azureProvider))
 
 		component.Endpoint = pulumi.Sprintf("https://%s:4443", test.Fqdn())
 		component.ClusterName = clusterName.ToStringOutput()
