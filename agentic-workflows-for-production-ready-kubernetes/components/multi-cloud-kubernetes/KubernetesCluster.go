@@ -78,9 +78,6 @@ type KubernetesCluster struct {
 
 	// Cluster name
 	ClusterName pulumi.StringOutput `pulumi:"clusterName"`
-
-	// Provider used
-	Provider pulumi.StringInput `pulumi:"provider"`
 }
 
 // NewKubernetesCluster creates a new multi-cloud Kubernetes cluster component resource
@@ -300,9 +297,6 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 		ctx.Log.Warn(fmt.Sprintf("Unsupported provider %s for cluster %s", provider, name), nil)
 	}
 
-	// Set provider output
-	component.Provider = pulumi.String(provider)
-
 	// Initialize Kubernetes provider with the cluster's kubeconfig
 	// This is common for both hub and spoke clusters
 	k8sProvider, err := kubernetes.NewProvider(ctx, fmt.Sprintf("%s-k8s-provider", name), &kubernetes.ProviderArgs{
@@ -493,7 +487,6 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 		"kubeconfig":  component.Kubeconfig,
 		"endpoint":    component.Endpoint,
 		"clusterName": component.ClusterName,
-		"provider":    component.Provider,
 	})
 	if err != nil {
 		return nil, err
