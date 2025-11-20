@@ -135,7 +135,7 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 					"Environment": pulumi.String("dev"),
 				},
 			},
-		})
+		}, awsOpts...)
 		if err != nil {
 			return nil, err
 		}
@@ -209,7 +209,7 @@ func NewKubernetesCluster(ctx *pulumi.Context, name string, args *KubernetesClus
 		azureOpts := []pulumi.ResourceOption{parentOpt}
 		azureProvider, err := azurenative.NewProvider(ctx, fmt.Sprintf("%s-azure-provider", name), &azurenative.ProviderArgs{
 			Location: pulumi.String("eastus"),
-		})
+		}, azureOpts...)
 		if azureProvider != nil {
 			azureOpts = append(azureOpts, pulumi.Provider(azureProvider))
 		}
