@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: podtato-head-app-gitops-promoter
+  namespace: argocd
+spec:
+  goTemplate: true
+  generators:
+  - clusters:
+      selector:
+        matchLabels:
+          app: dev
+  template:
+    metadata:
+      name: {{.name}}-podtato-head
+    spec:
+      project: default
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+        - CreateNamespace=true
+      source:
+        repoURL: https://github.com/dirien/podtato-head
+        targetRevision: HEAD
+        path: delivery/chart
+      destination:
+        server: {{.server}}
+        namespace: podtato-head
