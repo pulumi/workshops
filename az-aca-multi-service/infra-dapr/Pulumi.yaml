@@ -1,0 +1,7 @@
+name: todo-demo-infra
+runtime: dotnet
+description: Azure Container Apps infrastructure for todo-demo
+
+# Import Pulumi ESC environment for configuration
+environment:
+  - adamgordonbell-org/todo-demo/dev

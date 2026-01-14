@@ -1,0 +1,13 @@
+# Local reference to Pulumi ESC environment
+# The actual config is stored in: adamgordonbell-org/todo-demo/dev
+#
+# To view config: esc env get adamgordonbell-org/todo-demo/dev
+# To edit config: esc env edit adamgordonbell-org/todo-demo/dev
+#
+# Environment variables injected:
+#   VITE_API_BASE_URL - Frontend API endpoint
+#   CORS_ORIGINS - Backend allowed origins
+#
+# Usage:
+#   just dev      - runs both services with ESC config
+#   just config   - shows current ESC config
