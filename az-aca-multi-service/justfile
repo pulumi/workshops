@@ -1,0 +1,166 @@
+# ESC environment for configuration
+ESC_ENV := "adamgordonbell-org/todo-demo/dev"
+
+# Infrastructure directory to use (basic or dapr)
+INFRA := env_var_or_default("INFRA", "basic")
+INFRA_DIR := "infra-" + INFRA
+
+# Default recipe shows available commands
+default:
+    @just --list
+
+# Install all dependencies
+install:
+    npm install
+    cd api && dotnet restore
+
+# Build both projects
+build:
+    esc run {{ESC_ENV}} -- npm run build
+    cd api && dotnet build
+
+# Run both services in development mode
+dev:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    echo "Loading config from ESC: {{ESC_ENV}}"
+
+    # Start backend with ESC env vars
+    echo "Starting backend on port 5000..."
+    esc run {{ESC_ENV}} -- bash -c "cd api && dotnet run" &
+    BACKEND_PID=$!
+    echo "Backend PID: $BACKEND_PID"
+
+    # Wait for backend to be ready
+    sleep 2
+
+    # Start frontend with ESC env vars
+    echo "Starting frontend on port 5173..."
+    esc run {{ESC_ENV}} -- npm run dev &
+    FRONTEND_PID=$!
+    echo "Frontend PID: $FRONTEND_PID"
+
+    # Trap Ctrl+C and cleanup
+    trap "echo 'Shutting down...'; kill $BACKEND_PID $FRONTEND_PID 2>/dev/null; exit" INT TERM
+
+    echo ""
+    echo "Services running:"
+    echo "  Frontend: http://localhost:5173"
+    echo "  Backend:  http://localhost:5000"
+    echo "  API Logs: http://localhost:5000/api/logs"
+    echo ""
+    echo "Press Ctrl+C to stop both services"
+
+    # Wait for both processes
+    wait
+
+# Reset board to initial state
+reset:
+    cd api/Data && cp initial-board.json board.json
+    @echo "Board reset to initial state"
+
+# Run backend only
+api:
+    esc run {{ESC_ENV}} -- bash -c "cd api && dotnet run"
+
+# Run frontend only
+frontend:
+    esc run {{ESC_ENV}} -- npm run dev
+
+# Clean build artifacts
+clean:
+    rm -rf dist node_modules/.vite
+    cd api && dotnet clean
+
+# Run API integration tests
+test:
+    cd api && dotnet test Tests/TodoApi.Tests.csproj
+
+# Test backend API with curl (requires running backend)
+test-api:
+    @echo "Testing GET /api/board..."
+    curl -s http://localhost:5000/api/board | head -c 200
+    @echo ""
+    @echo ""
+    @echo "Testing GET /health..."
+    curl -s http://localhost:5000/health
+    @echo ""
+
+# Show current ESC configuration
+config:
+    esc env get {{ESC_ENV}}
+
+# Docker-based development commands
+
+# Build Docker images locally
+docker-build:
+    docker build -t todo-demo-backend:latest ./api
+    docker build --build-arg VITE_API_BASE_URL=http://localhost:5000 \
+      -t todo-demo-frontend:latest .
+
+# Run containerized environment
+docker-dev:
+    docker-compose up --build
+
+# Stop and remove containers
+docker-down:
+    docker-compose down
+
+# View container logs
+docker-logs service="":
+    #!/usr/bin/env bash
+    if [ -z "{{service}}" ]; then
+      docker-compose logs -f
+    else
+      docker-compose logs -f {{service}}
+    fi
+
+# Clean up Docker resources
+docker-clean:
+    docker-compose down -v
+    docker rmi todo-demo-backend:latest todo-demo-frontend:latest 2>/dev/null || true
+
+# Azure deployment commands
+
+# Show current infrastructure variant
+infra-info:
+    @echo "Current infrastructure: {{INFRA}} ({{INFRA_DIR}})"
+    @echo "To use a different variant: INFRA=dapr just deploy"
+
+# Deploy infrastructure to Azure
+deploy:
+    @echo "Deploying {{INFRA}} infrastructure..."
+    cd {{INFRA_DIR}} && pulumi up --yes
+
+# Preview infrastructure changes
+preview:
+    @echo "Previewing {{INFRA}} infrastructure..."
+    cd {{INFRA_DIR}} && pulumi preview
+
+# Destroy infrastructure
+destroy:
+    @echo "Destroying {{INFRA}} infrastructure..."
+    cd {{INFRA_DIR}} && pulumi destroy --yes
+
+# View infrastructure outputs
+outputs:
+    cd {{INFRA_DIR}} && pulumi stack output --json | jq
+
+# Open frontend in browser
+open-app:
+    #!/usr/bin/env bash
+    URL=$(cd {{INFRA_DIR}} && pulumi stack output frontendUrl)
+    open "$URL"
+
+# View container logs
+logs app="backend":
+    #!/usr/bin/env bash
+    RG=$(cd {{INFRA_DIR}} && pulumi stack output resourceGroupName_out)
+    az containerapp logs show --name ca-todo-demo-{{app}}-dev --resource-group $RG --follow
+
+# Restart container app
+restart app="backend":
+    #!/usr/bin/env bash
+    RG=$(cd {{INFRA_DIR}} && pulumi stack output resourceGroupName_out)
+    az containerapp revision restart --name ca-todo-demo-{{app}}-dev --resource-group $RG

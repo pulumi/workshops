@@ -1,0 +1,4 @@
+config:
+  azuredevops:orgServiceUrl: https://dev.azure.com/pulumi-demo
+  azuredevops:personalAccessToken:
+    secure: AAABAL8cSNZwzoWtzuzsO/1QfKGQC2bGWtnVcwpF5Ceoy/J5fzWwSq4rutnL007FVKG+5oGPpUbaKeKSMd+5udla8noKjdZYQgGbNS02hPJX3pRZFbl64US3PwDkA98xvNYcRK5dcLDJyP4y+cQbljRPkcI=
