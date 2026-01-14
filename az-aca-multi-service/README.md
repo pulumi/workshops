@@ -1,16 +1,13 @@
 # Todo Demo - Unified Inbox
 
-A Kanban-style inbox UI with chat control plane, demonstrating Azure Container Apps deployment with Blob Storage and managed identity.
+A Kanban-style inbox UI demonstrating Azure Container Apps deployment with managed identity and Blob Storage integration.
 
 ## Features
 
-- **Kanban Board**: 5 columns (Inbox, Doing, Blocked, Done, Snoozed) with drag-and-drop
-- **Chat Commands**: Natural language commands like "move to blocked" or "mark as done"
-- **Auto-Apply**: Commands execute immediately with transparent action display
-- **Event Simulation**: Create fake webhook events to add new items
-- **Activity Log**: View all API calls for demo visibility
-- **Board Reset**: Reset to initial demo state
-- **Persistent Storage**: Data stored in Azure Blob Storage (or local files in dev)
+- Drag-and-drop Kanban board (Inbox, Doing, Blocked, Done, Snoozed)
+- Natural language chat commands
+- Event simulation for webhook integration testing
+- Persistent storage (Azure Blob Storage in production, local files in dev)
 
 ## Architecture
 
@@ -21,32 +18,26 @@ A Kanban-style inbox UI with chat control plane, demonstrating Azure Container A
 - **Config**: Pulumi ESC for environment variables
 
 ### Azure Production
-- **Frontend**: Azure Container App (external ingress, HTTPS)
-- **Backend**: Azure Container App (external ingress, HTTPS)
-- **Storage**: Azure Blob Storage with managed identity
-- **Registry**: Azure Container Registry (ACR)
-- **IaC**: Pulumi for infrastructure management
+
+Infrastructure deployed to Azure Container Apps with C# Pulumi:
+
+- **Frontend**: Container App with external HTTPS ingress
+- **Backend**: Container App with external HTTPS ingress
+- **Storage**: Blob Storage accessed via managed identity (no connection strings)
+- **Registry**: Azure Container Registry for image hosting
 
 ```
-┌─────────────────────┐
-│   Frontend (React)  │  ← External HTTPS
-│  Container App      │
-└──────────┬──────────┘
-           │ HTTPS
-           ▼
-┌─────────────────────┐
-│  Backend (.NET 8)   │  ← External HTTPS
-│  Container App      │
-│  + Managed Identity │
-└──────────┬──────────┘
-           │ RBAC
-           ▼
-┌─────────────────────┐
-│  Blob Storage       │
-│  board-state/       │
-│  └─ board.json      │
-└─────────────────────┘
+Internet → Frontend Container App
+            ↓ HTTPS
+          Backend Container App (+ Managed Identity)
+            ↓ RBAC auth
+          Azure Blob Storage (board-state/board.json)
 ```
+
+Three infrastructure variants available in separate directories:
+- `infra-basic/` - Simple public deployment
+- `infra-native/` - Private backend with native ACA resiliency policies
+- `infra-dapr/` - Service Bus pub/sub with Dapr integration
 
 ## Tech Stack
 
@@ -64,10 +55,10 @@ A Kanban-style inbox UI with chat control plane, demonstrating Azure Container A
 
 **Infrastructure:**
 - Azure Container Apps
-- Azure Blob Storage
+- Azure Blob Storage with managed identity
 - Azure Container Registry
-- Pulumi IaC with TypeScript
-- Pulumi ESC for configuration
+- Pulumi IaC with C#
+- Pulumi ESC for secrets management
 
 ## Getting Started
 
@@ -105,40 +96,18 @@ Open http://localhost:5174 (note: different port to avoid conflicts)
 
 ### Azure Deployment
 
-**Prerequisites:**
-- Azure CLI (`az login`)
-- Pulumi CLI
-- Docker Desktop running
-
-**Deploy:**
+Prerequisites: Azure CLI (`az login`), Pulumi CLI, Docker Desktop
 
 ```bash
-# Preview changes
-just preview
+just preview    # Preview infrastructure changes
+just deploy     # Deploy to Azure (~3 minutes)
+just outputs    # View URLs and resource names
+just open-app   # Open frontend in browser
 
-# Deploy to Azure (~3 minutes)
-just deploy
-
-# View outputs (URLs, resource names)
-just outputs
-
-# Open deployed app in browser
-just open-app
-```
-
-**Manage deployment:**
-
-```bash
-# View container logs
-just logs backend
-just logs frontend
-
-# Restart containers
-just restart backend
-just restart frontend
-
-# Destroy all resources
-just destroy
+# Management
+just logs backend       # View container logs
+just restart backend    # Restart container
+just destroy           # Remove all Azure resources
 ```
 
 ## Available Commands
@@ -207,39 +176,19 @@ Backend API available at:
 
 ## Configuration
 
-### Pulumi ESC
+Configuration managed via Pulumi ESC. View with `just config`.
 
-Configuration managed via Pulumi ESC environment: `adamgordonbell-org/todo-demo/dev`
+Key environment variables:
+- `VITE_API_BASE_URL` - Frontend API endpoint
+- `CORS_ORIGINS` - Backend CORS configuration
+- `Azure__UseStorage` - Enable Blob Storage (true in production)
+- `Azure__UseManagedIdentity` - Managed identity authentication
 
-**Local development variables:**
-- `VITE_API_BASE_URL` - Frontend API endpoint (default: `http://localhost:5000`)
-- `CORS_ORIGINS` - Backend CORS allowed origins (default: `http://localhost:5173`)
+## Storage
 
-**Azure variables:**
-- `Azure__UseStorage` - Enable Blob Storage (`true` in production, `false` locally)
-- `Azure__StorageAccountName` - Storage account name
-- `Azure__BlobContainerName` - Blob container name (`board-state`)
-- `Azure__UseManagedIdentity` - Use managed identity auth (`true` in production)
-
-View current config:
-```bash
-just config
-```
-
-## Storage Abstraction
-
-The backend uses a storage abstraction layer (`IStorageService`) that supports:
-
-**File Storage** (local dev):
-- Stores board state in `api/Data/board.json`
-- Auto-initializes from `initial-board.json`
-- Fast and simple for development
-
-**Blob Storage** (Azure):
-- Stores board state in Azure Blob Storage
-- Uses managed identity for authentication (no connection strings!)
-- Supports both managed identity and connection string auth
-- Auto-initializes from `initial-board.json` blob
+Backend uses `IStorageService` abstraction:
+- **Local**: File-based storage (`api/Data/board.json`)
+- **Azure**: Blob Storage with managed identity authentication (no connection strings)
 
 ## Testing
 

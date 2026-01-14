@@ -1,9 +1,8 @@
 # ESC environment for configuration
 ESC_ENV := "adamgordonbell-org/todo-demo/dev"
 
-# Infrastructure directory to use (basic or dapr)
-INFRA := env_var_or_default("INFRA", "basic")
-INFRA_DIR := "infra-" + INFRA
+# Infrastructure directory
+INFRA_DIR := "infra-basic"
 
 # Default recipe shows available commands
 default:
@@ -123,24 +122,16 @@ docker-clean:
 
 # Azure deployment commands
 
-# Show current infrastructure variant
-infra-info:
-    @echo "Current infrastructure: {{INFRA}} ({{INFRA_DIR}})"
-    @echo "To use a different variant: INFRA=dapr just deploy"
-
 # Deploy infrastructure to Azure
 deploy:
-    @echo "Deploying {{INFRA}} infrastructure..."
     cd {{INFRA_DIR}} && pulumi up --yes
 
 # Preview infrastructure changes
 preview:
-    @echo "Previewing {{INFRA}} infrastructure..."
     cd {{INFRA_DIR}} && pulumi preview
 
 # Destroy infrastructure
 destroy:
-    @echo "Destroying {{INFRA}} infrastructure..."
     cd {{INFRA_DIR}} && pulumi destroy --yes
 
 # View infrastructure outputs
