@@ -1,0 +1,9 @@
+bin
+obj
+Tests
+*.md
+.git
+.dockerignore
+Dockerfile
+appsettings.Development.json
+board.json

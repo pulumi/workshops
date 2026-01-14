@@ -1,0 +1,25 @@
+node_modules
+dist
+.DS_Store
+*.local
+
+# .NET
+api/bin/
+api/obj/
+api/Tests/bin/
+api/Tests/obj/
+infra-basic/bin/
+infra-basic/obj/
+infra-dapr/bin/
+infra-dapr/obj/
+infra/
+*.user
+*.suo
+
+# Keep board.json as working state (not committed)
+api/Data/board.json
+todo-demo.sln
+
+# Workshop materials (keep locally only)
+WORKSHOP.md
+workshop-infra.md

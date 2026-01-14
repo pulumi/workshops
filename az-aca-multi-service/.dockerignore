@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.gitignore
+*.md
+api
+justfile
+docker-compose.yml
+infra
+.esc
+Dockerfile
+.dockerignore
