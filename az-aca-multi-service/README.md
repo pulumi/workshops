@@ -1,283 +1,215 @@
-# Todo Demo - Unified Inbox
+# Azure Container Apps Workshop: From Local to Cloud-Native
 
-A Kanban-style inbox UI demonstrating Azure Container Apps deployment with managed identity and Blob Storage integration.
+**Build a real application, not just examples.** This workshop takes you from running a todo app on your laptop to deploying it on Azure Container Apps—with three increasingly sophisticated infrastructure patterns.
 
-## Features
+## What You'll Build
 
-- Drag-and-drop Kanban board (Inbox, Doing, Blocked, Done, Snoozed)
-- Natural language chat commands
-- Event simulation for webhook integration testing
-- Persistent storage (Azure Blob Storage in production, local files in dev)
+A production-grade Kanban board application with:
+- **React + TypeScript** frontend with drag-and-drop
+- **.NET 8 API** backend with real persistence
+- **Azure Blob Storage** for state (no databases to manage)
+- **Managed Identity** authentication (zero secrets in code)
 
-## Architecture
+The app is real. The infrastructure is real. The patterns are production-ready.
 
-### Local Development
-- **Frontend**: React 18 + TypeScript + Vite (port 5173)
-- **Backend**: .NET 8 C# API (port 5000)
-- **Storage**: File-based JSON (`api/Data/board.json`)
-- **Config**: Pulumi ESC for environment variables
+## The Workshop Journey
 
-### Azure Production
+You'll deploy the same application three different ways, learning key Azure Container Apps patterns at each stage:
 
-Infrastructure deployed to Azure Container Apps with C# Pulumi:
+```mermaid
+graph LR
+    A[🏠 Local Dev] --> B[☁️ Basic Azure]
+    B --> C[🔒 Native Resilience]
+    C --> D[🎯 Dapr + Events]
 
-- **Frontend**: Container App with external HTTPS ingress
-- **Backend**: Container App with external HTTPS ingress
-- **Storage**: Blob Storage accessed via managed identity (no connection strings)
-- **Registry**: Azure Container Registry for image hosting
-
-```
-Internet → Frontend Container App
-            ↓ HTTPS
-          Backend Container App (+ Managed Identity)
-            ↓ RBAC auth
-          Azure Blob Storage (board-state/board.json)
+    style A fill:#e1f5ff
+    style B fill:#b3e5fc
+    style C fill:#81d4fa
+    style D fill:#4fc3f7
 ```
 
-Three infrastructure variants available in separate directories:
-- `infra-basic/` - Simple public deployment
-- `infra-native/` - Private backend with native ACA resiliency policies
-- `infra-dapr/` - Service Bus pub/sub with Dapr integration
+### Stage 1: Local Development
+**Get familiar with the app**
 
-## Tech Stack
+Run everything locally—React frontend, .NET backend, file-based storage. See how the pieces fit together before deploying anywhere.
 
-**Frontend:**
-- React 18 + TypeScript + Vite
-- Tailwind CSS
-- @dnd-kit (drag-and-drop)
-- date-fns
+```mermaid
+graph TD
+    Browser[Browser<br/>:5173] -->|HTTP| Frontend[React Frontend<br/>Vite Dev Server]
+    Frontend -->|HTTP| Backend[.NET API<br/>:5000]
+    Backend -->|Read/Write| File[board.json<br/>Local File]
 
-**Backend:**
-- .NET 8 (ASP.NET Core)
-- File-based and Blob Storage persistence
-- Swagger/OpenAPI documentation
-- xUnit tests
+    style Browser fill:#fff3e0
+    style Frontend fill:#4caf50
+    style Backend fill:#2196f3
+    style File fill:#ff9800
+```
 
-**Infrastructure:**
-- Azure Container Apps
-- Azure Blob Storage with managed identity
-- Azure Container Registry
-- Pulumi IaC with C#
-- Pulumi ESC for secrets management
+### Stage 2: Basic Azure (`infra-basic/`)
+**Your first cloud deployment**
 
-## Getting Started
+Both apps deployed to Azure Container Apps. Public endpoints. Direct communication. Docker images in Azure Container Registry. State persisted to Blob Storage with managed identity (no connection strings!).
 
-### Local Development (Native)
+```mermaid
+graph TB
+    Internet[Internet] -->|HTTPS| Frontend[Frontend Container App<br/>🌐 Public]
+    Frontend -->|HTTPS| Backend[Backend Container App<br/>🌐 Public]
+    Backend -->|Managed Identity| Blob[Azure Blob Storage<br/>board.json]
+
+    ACR[Azure Container Registry] -.->|Pull images| Frontend
+    ACR -.->|Pull images| Backend
+
+    style Internet fill:#fff3e0
+    style Frontend fill:#4caf50
+    style Backend fill:#2196f3
+    style Blob fill:#ff9800
+    style ACR fill:#9e9e9e
+```
+
+**What you learn:** Container Apps basics, managed identity, Pulumi infrastructure as code
+
+### Stage 3: Native Resilience (`infra-native/`)
+**Production-grade patterns**
+
+Backend goes internal-only. Add native Container Apps resiliency policies: retries, timeouts, circuit breakers. Frontend uses internal service discovery. No Dapr needed—pure Azure Container Apps features.
+
+```mermaid
+graph TB
+    Internet[Internet] -->|HTTPS| Frontend[Frontend Container App<br/>🌐 Public]
+    Frontend -->|Internal FQDN| Backend[Backend Container App<br/>🔒 Internal Only]
+    Backend -->|Managed Identity| Blob[Azure Blob Storage]
+
+    Resilience[⚡ AppResiliency Policy<br/>Retries · Timeouts · Circuit Breaker]
+    Resilience -.->|Applied to| Backend
+
+    style Internet fill:#fff3e0
+    style Frontend fill:#4caf50
+    style Backend fill:#ff5722
+    style Blob fill:#ff9800
+    style Resilience fill:#ffeb3b
+```
+
+**What you learn:** Internal networking, service discovery, built-in resiliency policies, production security
+
+### Stage 4: Dapr + Events (`infra-dapr/`)
+**Event-driven architecture**
+
+Add Azure Service Bus for webhook ingestion. Backend subscribes via Dapr pub/sub. Now external systems can send events without direct access to your backend.
+
+```mermaid
+graph TB
+    Webhooks[External Webhooks<br/>GitHub · Slack · etc] -->|POST| ServiceBus[Azure Service Bus<br/>Topic: external-tasks]
+    ServiceBus -->|Dapr Pub/Sub| Backend[Backend + Dapr Sidecar<br/>🔒 Internal]
+    Frontend[Frontend Container App<br/>🌐 Public] -->|Internal FQDN| Backend
+    Backend -->|Managed Identity| Blob[Azure Blob Storage]
+
+    style Webhooks fill:#9c27b0
+    style ServiceBus fill:#673ab7
+    style Backend fill:#ff5722
+    style Frontend fill:#4caf50
+    style Blob fill:#ff9800
+```
+
+**What you learn:** Dapr integration, pub/sub patterns, decoupled architectures, webhook ingestion
+
+## Why This Workshop Works
+
+**It's a real application.** Not a Hello World. You get a working Kanban board with drag-and-drop, persistence, and API integration.
+
+**Progressive complexity.** Each stage builds on the last. You can stop at any stage and have a complete, working deployment.
+
+**Infrastructure-focused.** Less about React components, more about how to structure Azure Container Apps deployments for real projects.
+
+**Production patterns.** Managed identity, internal networking, resiliency policies, event-driven architecture—things you'll actually use.
+
+## Quick Start
+
+### Prerequisites
+- Node.js 18+, .NET 8 SDK
+- Azure CLI + Pulumi CLI (for cloud deployment)
+- Docker Desktop (for containerized development)
+
+### Run Locally
+```bash
+just install    # Install dependencies
+just dev        # Start frontend + backend
+```
+Visit http://localhost:5173
+
+### Deploy to Azure
+Choose your infrastructure stage and deploy:
 
 ```bash
-# Install dependencies
-just install
-
-# Run both frontend and backend
-just dev
-
-# Or run separately
-just api        # Backend only (port 5000)
-just frontend   # Frontend only (port 5173)
+cd infra-basic/        # Start here
+pulumi up              # Deploy (~3 minutes)
+pulumi stack output frontendUrl  # Get your app URL
 ```
 
-Open http://localhost:5173
-
-### Local Development (Docker)
-
+Switch between stages:
 ```bash
-# Build and run containers
-just docker-build
-just docker-dev
+cd ../infra-native/    # Try internal networking + resiliency
+pulumi up
 
-# View logs
-just docker-logs backend
-
-# Stop containers
-just docker-down
+cd ../infra-dapr/      # Add event-driven patterns
+pulumi up
 ```
 
-Open http://localhost:5174 (note: different port to avoid conflicts)
-
-### Azure Deployment
-
-Prerequisites: Azure CLI (`az login`), Pulumi CLI, Docker Desktop
-
+Tear it down:
 ```bash
-just preview    # Preview infrastructure changes
-just deploy     # Deploy to Azure (~3 minutes)
-just outputs    # View URLs and resource names
-just open-app   # Open frontend in browser
-
-# Management
-just logs backend       # View container logs
-just restart backend    # Restart container
-just destroy           # Remove all Azure resources
+pulumi destroy         # Remove all resources
 ```
 
-## Available Commands
+## What's Included
 
-### Local Development
+**A complete application:**
+- Drag-and-drop Kanban board with natural language commands
+- Event simulation for testing webhook flows
+- Production-ready .NET backend with tests
+- Modern React frontend with TypeScript
+
+**Three infrastructure approaches:**
+- `infra-basic/` - Simple public deployment pattern
+- `infra-native/` - Production security + built-in resiliency
+- `infra-dapr/` - Event-driven architecture with Service Bus
+
+**Real production patterns:**
+- Managed Identity (zero secrets in code)
+- Internal networking and service discovery
+- Native resiliency policies (retry, timeout, circuit breaker)
+- Dapr pub/sub for decoupled event processing
+- Pulumi ESC for centralized configuration
+- Automated Docker builds and registry pushes
+
+## Cost Estimate
+
+Running 24/7 in Azure (West US 2):
+- **~$50/month** for all resources (Container Apps, Storage, Registry)
+- Use `pulumi destroy` when not in use to avoid charges
+
+## Learn More
+
+- **[Infrastructure Deep Dive](./workshop-infra.md)** - Detailed walkthrough of the Pulumi code
+- **[Architecture Diagrams](./images/architecture-diagrams.md)** - Visual comparison of all three stages
+- **API Docs** - Visit `/swagger` on your backend URL
+
+## Helpful Commands
+
 ```bash
-just install      # Install npm + dotnet dependencies
-just build        # Build both projects
-just dev          # Run both services
-just api          # Run backend only
-just frontend     # Run frontend only
+# Local development
+just dev          # Run frontend + backend
 just test         # Run backend tests
-just clean        # Clean build artifacts
 just reset        # Reset board to initial state
-just config       # Show Pulumi ESC configuration
+
+# Docker development
+just docker-build # Build containers
+just docker-dev   # Run with docker-compose
+
+# Azure deployment
+pulumi preview    # See what will change
+pulumi up         # Deploy infrastructure
+pulumi destroy    # Remove all resources
+pulumi stack output frontendUrl  # Get app URL
 ```
-
-### Docker
-```bash
-just docker-build   # Build Docker images
-just docker-dev     # Run with docker-compose
-just docker-down    # Stop containers
-just docker-logs    # View container logs
-just docker-clean   # Remove images and volumes
-```
-
-### Azure Deployment
-```bash
-just deploy       # Deploy infrastructure to Azure
-just preview      # Preview infrastructure changes
-just destroy      # Delete all Azure resources
-just outputs      # View deployment outputs
-just open-app     # Open frontend URL in browser
-just logs [app]   # View container logs (backend/frontend)
-just restart [app] # Restart container app
-```
-
-## Chat Commands
-
-The chat interface supports natural language commands:
-
-- `"move X to blocked"` - Set status to blocked
-- `"mark as done"` / `"close"` - Set status to done
-- `"start"` / `"in progress"` - Set status to doing
-- `"snooze"` - Snooze for 2 days
-- `"snooze for 1 week"` - Snooze for specific duration
-
-Commands apply to the currently selected item, or specify an item in the command.
-
-## API Endpoints
-
-Backend API available at:
-- Local: `http://localhost:5000`
-- Azure: External HTTPS (get URL with `just outputs`)
-- Swagger UI: `/swagger`
-
-**Key endpoints:**
-- `GET /api/board` - Get full board state
-- `GET /api/items/{id}` - Get item with history
-- `POST /api/items` - Create item (webhook simulation)
-- `POST /api/items/{id}/status` - Update item status
-- `POST /api/command` - Execute chat command
-- `POST /api/board/reset` - Reset to initial state
-- `GET /api/logs` - Get activity log
-- `GET /health` - Health check
-
-## Configuration
-
-Configuration managed via Pulumi ESC. View with `just config`.
-
-Key environment variables:
-- `VITE_API_BASE_URL` - Frontend API endpoint
-- `CORS_ORIGINS` - Backend CORS configuration
-- `Azure__UseStorage` - Enable Blob Storage (true in production)
-- `Azure__UseManagedIdentity` - Managed identity authentication
-
-## Storage
-
-Backend uses `IStorageService` abstraction:
-- **Local**: File-based storage (`api/Data/board.json`)
-- **Azure**: Blob Storage with managed identity authentication (no connection strings)
-
-## Testing
-
-### Backend Tests
-```bash
-just test
-# Or: cd api && dotnet test Tests/TodoApi.Tests.csproj
-```
-
-### Deployment Tests
-```bash
-./test-deployment.sh
-```
-
-Tests verify:
-- Frontend health endpoint
-- Frontend HTML loads
-- Backend provisioning status
-- Blob storage container exists
-- Managed identity configured
-
-### Manual Testing
-1. Open frontend URL
-2. Drag items between columns
-3. Use chat commands to move items
-4. Create new items via "Simulate Event"
-5. Reset board to initial state
-6. Refresh page - data should persist
-
-## Cost Estimation
-
-**Azure resources (West US 2, running 24/7):**
-- Container Apps Environment: $0 (included)
-- Backend Container App (0.5 vCPU, 1GB): ~$30/month
-- Frontend Container App (0.25 vCPU, 0.5GB): ~$15/month
-- Storage Account (<1GB): ~$0.02/month
-- Container Registry (Basic, <10GB): ~$5/month
-- **Total: ~$50/month**
-
-Use `just destroy` when not in use to minimize costs.
-
-## Project Structure
-
-```
-todo-demo/
-├── api/                      # .NET 8 backend
-│   ├── Services/
-│   │   ├── IBoardService.cs
-│   │   ├── BoardService.cs
-│   │   ├── IStorageService.cs      # Storage abstraction
-│   │   ├── FileStorageService.cs   # Local file storage
-│   │   └── BlobStorageService.cs   # Azure Blob Storage
-│   ├── Models/              # Data models
-│   ├── Data/                # Initial board state
-│   ├── Tests/               # xUnit tests
-│   ├── Dockerfile           # Multi-stage .NET build
-│   └── Program.cs           # API configuration
-├── frontend/                # React frontend (src/)
-│   └── components/          # UI components
-├── infra/                   # Pulumi infrastructure
-│   ├── index.ts            # Azure resources
-│   ├── package.json
-│   └── tsconfig.json
-├── Dockerfile              # Frontend nginx image
-├── docker-compose.yml      # Local container orchestration
-├── justfile                # Task automation
-├── test-deployment.sh      # Automated deployment tests
-└── README.md               # This file
-```
-
-## Troubleshooting
-
-**Local dev not working:**
-```bash
-lsof -i:5000  # Check if backend port in use
-lsof -i:5173  # Check if frontend port in use
-just reset    # Reset board data
-```
-
-**Azure deployment issues:**
-```bash
-just logs backend     # Check deployment logs
-just restart backend  # Restart containers
-just deploy          # Re-deploy
-```
-
-**Managed identity issues:**
-- Wait 5-10 minutes after deployment for RBAC propagation
-- Verify with: `az containerapp show --query identity`
 
 ## License
 
