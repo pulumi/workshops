@@ -105,7 +105,7 @@ pulumi env run esc-workshop/eks-cluster -- k9s
     pulumi up -y
     ```
 
-1. When the VPC has completed spinning up, create an environment in the Pulumi Cloud console called `esc-training-vpc-stack` with the following config:
+1. When the VPC has completed spinning up, create an environment in the Pulumi Cloud console called `esc-training/vpc-stack` with the following config:
 
     ```yaml
     values:
