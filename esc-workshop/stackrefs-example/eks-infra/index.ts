@@ -1,13 +1,6 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as eks from "@pulumi/eks";
-
-// const stackRef = new pulumi.StackReference("vpc-stack", {
-//   name: `jkodrofftest/esc-training-eks-infra/dev`
-// });
-
-// const vpcId = stackRef.getOutput("vpcId");
-// const publicSubnetIds = stackRef.getOutput("publicSubnetIds") as pulumi.Output<string[]>;
-// const privateSubnetIds = stackRef.getOutput("privateSubnetIds") as pulumi.Output<string[]>;
+import * as pcloud from "@pulumi/pulumiservice";
 
 const config = new pulumi.Config();
 const vpcId = config.require("vpcId");
@@ -27,5 +20,27 @@ const eksCluster = new eks.Cluster("eks-cluster", {
   endpointPrivateAccess: false,
   endpointPublicAccess: true,
 });
+
+const envYaml = `
+imports:
+  - aws/aws-oidc-admin
+values:
+  stacks:
+    fn::open::pulumi-stacks:
+      stacks:
+        eks-cluster:
+          stack: ${pulumi.getProject()}/${pulumi.getStack()}
+  kubeconfig: {'fn::toJSON': "\${stacks.eks-cluster.kubeconfig}"}
+  files:
+    KUBECONFIG: \${kubeconfig}
+`;
+
+new pcloud.Environment("esc-environment", {
+  organization: pulumi.getOrganization(),
+  project: "esc-workshop",
+  name: "eks-cluster",
+  yaml: envYaml,
+});
+
 
 export const kubeconfig = eksCluster.kubeconfig;

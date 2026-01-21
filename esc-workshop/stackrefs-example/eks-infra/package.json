@@ -6,7 +6,8 @@
         "typescript": "^5.0.0"
     },
     "dependencies": {
-        "@pulumi/eks": "^2.8.1",
-        "@pulumi/pulumi": "^3.113.0"
+        "@pulumi/eks": "^4.2.0",
+        "@pulumi/pulumi": "^3.216.0",
+        "@pulumi/pulumiservice": "^0.32.0"
     }
 }
