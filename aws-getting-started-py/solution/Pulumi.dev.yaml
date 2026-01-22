@@ -1,0 +1,7 @@
+environment:
+  - pulumi-idp/auth
+config:
+  aws:region: us-east-1
+  language-tutor-agent:lambdaMemory: "1024"
+  language-tutor-agent:lambdaTimeout: "300"
+  language-tutor-agent:logRetentionDays: "14"

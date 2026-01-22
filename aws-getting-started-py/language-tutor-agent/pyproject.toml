@@ -1,0 +1,33 @@
+[project]
+name = "language-tutor-agent"
+version = "0.1.0"
+description = "AI Language Tutor Agent using Strands SDK - generates stories from vocabulary words"
+requires-python = ">=3.10"
+dependencies = [
+    "strands-agents>=1.23.0",
+    "strands-agents-tools>=0.2.19",
+    "boto3>=1.42.0",
+    "pillow>=11.3.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "ruff>=0.14.0",
+    "mypy>=1.19.0",
+]
+
+[project.scripts]
+language-tutor = "agent:main"
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B", "SIM"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
