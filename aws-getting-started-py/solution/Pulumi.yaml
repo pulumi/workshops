@@ -1,0 +1,7 @@
+name: language-tutor-agent
+runtime: python
+description: Language Tutor Agent deployed to AWS Lambda with SQS trigger
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: aws-python
