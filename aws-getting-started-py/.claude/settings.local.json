@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pulumi preview:*)",
+      "Bash(uv sync:*)",
+      "Bash(source:*)",
+      "Bash(pulumi env run:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}
