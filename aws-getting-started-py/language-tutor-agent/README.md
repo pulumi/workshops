@@ -13,54 +13,44 @@ An AI-powered language tutor that generates stories using vocabulary words to he
 ## Architecture
 
 ```mermaid
-flowchart TB
-    subgraph User["User Interface"]
-        CLI["Interactive CLI"]
+flowchart LR
+    CLI[Interactive CLI]
+
+    subgraph Agent[Strands Agent]
+        Model[BedrockModel]
+        Prompt[System Prompt]
     end
 
-    subgraph Agent["Strands Agent"]
-        direction TB
-        Model["BedrockModel<br/>(Claude Opus 4.5)"]
-        Tools["Tools"]
-        SystemPrompt["System Prompt<br/>(Language Tutor)"]
+    Tool[generate_story]
+
+    subgraph AWS[AWS Services]
+        Bedrock[Amazon Bedrock]
+        ESC[Pulumi ESC]
     end
 
-    subgraph Tools["Agent Tools"]
-        GenerateStory["generate_story()<br/>@tool decorator"]
-    end
+    Output[StoryOutput]
 
-    subgraph Output["Structured Output"]
-        direction TB
-        StoryOutput["StoryOutput<br/>(Pydantic Model)"]
-        subgraph Fields["Output Fields"]
-            Title["title + translation"]
-            Story["story + translation"]
-            Vocab["vocabulary[]"]
-            Questions["questions[]"]
-            Grammar["grammar_tip"]
-            Encourage["encouragement"]
-        end
-    end
-
-    subgraph AWS["AWS Services"]
-        Bedrock["Amazon Bedrock"]
-        ESC["Pulumi ESC<br/>(Credentials)"]
-    end
-
-    CLI -->|"User prompt<br/>(words, language, level)"| Agent
-    Agent -->|"Tool call"| GenerateStory
-    GenerateStory -->|"Story parameters"| Agent
-    Agent -->|"API call"| Bedrock
-    ESC -->|"AWS credentials"| Bedrock
-    Bedrock -->|"LLM response"| Agent
-    Agent -->|"Validated output"| StoryOutput
-    StoryOutput --> Fields
-    Fields -->|"Formatted display"| CLI
+    CLI --> Agent
+    Agent <--> Tool
+    Agent --> Bedrock
+    ESC -.-> Bedrock
+    Bedrock --> Agent
+    Agent --> Output
+    Output --> CLI
 
     style Agent fill:#f9f,stroke:#333,stroke-width:2px
     style Bedrock fill:#ff9900,stroke:#333,stroke-width:2px
-    style StoryOutput fill:#90EE90,stroke:#333,stroke-width:2px
+    style Output fill:#90EE90,stroke:#333,stroke-width:2px
 ```
+
+### Data Flow
+
+1. **User Input**: CLI receives prompt with vocabulary words, language, and level
+2. **Agent Processing**: Strands Agent coordinates the request
+3. **Tool Invocation**: `generate_story()` tool structures the request
+4. **LLM Call**: Amazon Bedrock (Claude Opus 4.5) generates the story
+5. **Structured Output**: Response validated as `StoryOutput` Pydantic model
+6. **Display**: Formatted story with vocabulary, questions, and tips
 
 ## Project Structure
 
