@@ -1,0 +1,11 @@
+name: gcp-intro-python
+description: Infrastructure as Code on GCP with Python
+runtime:
+  name: python
+  options:
+    toolchain: uv
+    virtualenv: .venv
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: gcp-python
