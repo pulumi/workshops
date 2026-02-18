@@ -2,7 +2,7 @@
 
 import pulumi
 import pulumi_gcp as gcp
-import pulumi_docker as docker
+import pulumi_docker_build as docker_build
 
 project = gcp.config.project or pulumi.Config("gcp").require("project")
 
@@ -32,16 +32,15 @@ image_name = pulumi.Output.concat(
     project,
     "/",
     repo.repository_id,
-    "/app:latest"
+    "/app"
 )
 
-image = docker.Image("app-image",
-    image_name=image_name,
-    build=docker.DockerBuildArgs(
-        context=".",
-        dockerfile="Dockerfile",
-        platform="linux/amd64",
-    ),
+image = docker_build.Image("app-image",
+    tags=[pulumi.Output.concat(image_name, ":latest")],
+    context=docker_build.BuildContextArgs(location="."),
+    dockerfile=docker_build.DockerfileArgs(location="./Dockerfile"),
+    platforms=[docker_build.Platform.LINUX_AMD64],
+    push=True,
 )
 
 # ====== CLOUD RUN SERVICE ======
@@ -50,7 +49,7 @@ service = gcp.cloudrun.Service("flask-app",
     template={
         "spec": {
             "containers": [{
-                "image": image.repo_digest,
+                "image": pulumi.Output.concat(image_name, "@", image.digest),
                 "ports": [{"container_port": 8080}],
                 "resources": {
                     "limits": {"memory": "512Mi", "cpu": "1"},

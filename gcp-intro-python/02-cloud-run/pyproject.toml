@@ -5,5 +5,5 @@ requires-python = ">=3.10"
 dependencies = [
     "pulumi>=3.0.0,<4.0.0",
     "pulumi-gcp>=9.0.0,<10.0.0",
-    "pulumi-docker>=4.0.0,<5.0.0",
+    "pulumi-docker-build>=0.0.15",
 ]

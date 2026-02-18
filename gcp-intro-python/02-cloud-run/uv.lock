@@ -178,7 +178,7 @@ wheels = [
 
 [[package]]
 name = "pulumi"
-version = "3.220.0"
+version = "3.221.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "debugpy" },
@@ -190,7 +190,7 @@ dependencies = [
     { name = "semver" },
 ]
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/21/80a96ebd2d3802031d49e897f0f659b74aba6aec107b10332041c3c858d6/pulumi-3.220.0-py3-none-any.whl", hash = "sha256:962bd3ffc3b3546bad085f3c49a7f096dc8dd6c8426e220d87a7746be1314e0f", size = 390326 },
+    { url = "https://files.pythonhosted.org/packages/16/18/d8e1649862ae3b92a2234580df118709d4482a642d65298203064dc8fa64/pulumi-3.221.0-py3-none-any.whl", hash = "sha256:e115ef4fd1776c27af77aa04697158134c5cc160170746bf893e33e856029225", size = 390347 },
 ]
 
 [[package]]
