@@ -345,12 +345,31 @@ The image rebuilds, Cloud Run updates, and your new route is live. No infrastruc
 
 Right now the Flask app serves a file baked into the Docker image. Let's make it read from the GCS bucket instead — the way a real app would. This means we need to set up IAM so the container has permission to access the bucket.
 
-### Create a Service Account
+### Update the Pulumi Program
 
-First, we need a dedicated identity for the Cloud Run service. Add this to `__main__.py` after the storage section:
+Replace `__main__.py` with the following. The new parts are the **service account** section and the **updated Cloud Run service** (marked with `# new` comments):
 
 ```python
-# ====== SERVICE ACCOUNT ======
+"""Deploy a Flask app to Google Cloud Run using Pulumi"""
+
+import pulumi
+import pulumi_gcp as gcp
+import pulumi_docker_build as docker_build
+
+project = gcp.config.project or pulumi.Config("gcp").require("project")
+
+# ====== STORAGE (from part 1) ======
+bucket = gcp.storage.Bucket("my-bucket", location="US")
+
+with open("text.txt", "r") as f:
+    content = f.read()
+
+obj = gcp.storage.BucketObject("my-text-file",
+    bucket=bucket.name,
+    content=content
+)
+
+# ====== SERVICE ACCOUNT (new) ======
 # Create a dedicated service account for Cloud Run
 sa = gcp.serviceaccount.Account("cloud-run-sa",
     account_id="cloud-run-app",
@@ -363,26 +382,44 @@ gcp.storage.BucketIAMMember("bucket-reader",
     role="roles/storage.objectViewer",
     member=pulumi.Output.concat("serviceAccount:", sa.email),
 )
-```
 
-### Update the Cloud Run Service
+# ====== CONTAINER IMAGE ======
+repo = gcp.artifactregistry.Repository("app-repo",
+    format="DOCKER",
+    repository_id="gcp-intro-python",
+    location="us-central1",
+)
 
-Update the Cloud Run service to use the service account and pass the bucket details as environment variables:
+image_name = pulumi.Output.concat(
+    repo.location,
+    "-docker.pkg.dev/",
+    project,
+    "/",
+    repo.repository_id,
+    "/app"
+)
 
-```python
-# ====== CLOUD RUN SERVICE ======
+image = docker_build.Image("app-image",
+    tags=[pulumi.Output.concat(image_name, ":latest")],
+    context=docker_build.BuildContextArgs(location="."),
+    dockerfile=docker_build.DockerfileArgs(location="./Dockerfile"),
+    platforms=[docker_build.Platform.LINUX_AMD64],
+    push=True,
+)
+
+# ====== CLOUD RUN SERVICE (updated) ======
 service = gcp.cloudrun.Service("flask-app",
     location="us-central1",
     template={
         "spec": {
-            "service_account_name": sa.email,
+            "service_account_name": sa.email,          # new
             "containers": [{
                 "image": pulumi.Output.concat(image_name, "@", image.digest),
                 "ports": [{"container_port": 8080}],
                 "resources": {
                     "limits": {"memory": "512Mi", "cpu": "1"},
                 },
-                "envs": [
+                "envs": [                               # new
                     {"name": "BUCKET_NAME", "value": bucket.name},
                     {"name": "OBJECT_NAME", "value": obj.name},
                 ],
@@ -390,6 +427,18 @@ service = gcp.cloudrun.Service("flask-app",
         },
     },
 )
+
+# Allow unauthenticated access
+gcp.cloudrun.IamMember("public-access",
+    service=service.name,
+    location=service.location,
+    role="roles/run.invoker",
+    member="allUsers",
+)
+
+# ====== OUTPUTS ======
+pulumi.export("bucket_name", bucket.url)
+pulumi.export("service_url", service.statuses[0].url)
 ```
 
 Notice how `bucket.name` and `obj.name` are Pulumi outputs — Pulumi resolves them at deploy time and passes the actual values as environment variables. The container doesn't need to know anything about Pulumi.
