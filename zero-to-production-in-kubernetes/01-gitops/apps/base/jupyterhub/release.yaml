@@ -24,3 +24,11 @@ spec:
           service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     singleuser:
       defaultUrl: "/lab"
+    prePuller:
+      hook:
+        enabled: false
+      continuous:
+        enabled: false
+    scheduling:
+      userScheduler:
+        enabled: false
