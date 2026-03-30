@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: flux-web-config
+  namespace: flux-system
+stringData:
+  config.yaml: |
+    insecure: true
+    auth:
+      anonymous:
+        username: workshop-user
+        groups:
+          - flux-web-admin
