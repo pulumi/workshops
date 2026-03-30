@@ -6,3 +6,4 @@ resources:
   - ../base/jupyterhub
 patches:
   - path: jupyterhub-values.yaml
+  - path: podinfo-values.yaml

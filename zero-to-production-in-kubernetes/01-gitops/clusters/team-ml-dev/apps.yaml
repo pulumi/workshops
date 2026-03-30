@@ -16,3 +16,7 @@ spec:
   path: ./zero-to-production-in-kubernetes/01-gitops/apps/ml-dev
   prune: true
   wait: true
+  postBuild:
+    substitute:
+      cluster_name: team-ml-dev
+      cluster_env: dev

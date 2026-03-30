@@ -16,3 +16,7 @@ spec:
   path: ./zero-to-production-in-kubernetes/01-gitops/apps/staging
   prune: true
   wait: true
+  postBuild:
+    substitute:
+      cluster_name: platform-staging
+      cluster_env: staging
