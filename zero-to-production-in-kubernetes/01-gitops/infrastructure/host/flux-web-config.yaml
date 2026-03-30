@@ -13,3 +13,7 @@ stringData:
       authentication:
         type: Anonymous
         sessionDuration: 24h
+        anonymous:
+          username: workshop-user
+          groups:
+            - flux-web-admin
