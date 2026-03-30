@@ -35,8 +35,8 @@ this directory tree from Git.
 | team-frontend-dev | dev | dev |
 | team-backend-dev | dev | dev |
 | team-backend-staging | staging | staging |
-| team-ml-dev | dev | dev |
-| team-ml-staging | staging | staging |
+| team-ml-dev | dev | ml-dev |
+| team-ml-staging | staging | ml-staging |
 
 ### Web UI (Host Only)
 

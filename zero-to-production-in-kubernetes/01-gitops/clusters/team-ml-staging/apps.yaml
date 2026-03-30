@@ -13,6 +13,6 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./zero-to-production-in-kubernetes/01-gitops/apps/staging
+  path: ./zero-to-production-in-kubernetes/01-gitops/apps/ml-staging
   prune: true
   wait: true

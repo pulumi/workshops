@@ -1,0 +1,33 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jupyterhub
+  namespace: jupyterhub
+spec:
+  values:
+    hub:
+      config:
+        Authenticator:
+          admin_users:
+            - admin
+        DummyAuthenticator:
+          password: "workshop2026"
+        JupyterHub:
+          authenticator_class: dummy
+    singleuser:
+      storage:
+        capacity: 5Gi
+      profileList:
+        - display_name: "CPU Only (default)"
+          description: "No GPU — suitable for general notebooks"
+          default: true
+        - display_name: "GPU (NVIDIA)"
+          description: "Single NVIDIA GPU for ML workloads"
+          kubespawner_override:
+            extra_resource_limits:
+              nvidia.com/gpu: "1"
+            tolerations:
+              - key: "nvidia.com/gpu"
+                operator: "Exists"
+                effect: "NoSchedule"

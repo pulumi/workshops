@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: jupyterhub
+  namespace: jupyterhub
+spec:
+  interval: 10m
+  url: oci://quay.io/jupyterhub/jupyterhub
+  ref:
+    tag: "5.4.4"
