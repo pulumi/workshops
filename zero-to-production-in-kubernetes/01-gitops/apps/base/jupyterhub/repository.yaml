@@ -5,6 +5,5 @@ metadata:
   name: jupyterhub
   namespace: jupyterhub
 spec:
-  type: oci
   interval: 10m
-  url: oci://quay.io/jupyterhub
+  url: https://hub.jupyter.org/helm-chart/
