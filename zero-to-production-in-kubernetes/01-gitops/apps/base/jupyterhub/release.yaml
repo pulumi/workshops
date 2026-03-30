@@ -23,7 +23,11 @@ spec:
       chp:
         image:
           name: jupyterhub/configurable-http-proxy
-          tag: "4.6.3"
+          tag: "5.1.0"
+      secretSync:
+        image:
+          name: jupyterhub/k8s-secret-sync
+          tag: "4.3.2"
       service:
         type: LoadBalancer
         annotations:
@@ -42,6 +46,9 @@ spec:
     prePuller:
       hook:
         enabled: false
+        image:
+          name: jupyterhub/k8s-image-awaiter
+          tag: "4.3.2"
       continuous:
         enabled: false
     scheduling:
