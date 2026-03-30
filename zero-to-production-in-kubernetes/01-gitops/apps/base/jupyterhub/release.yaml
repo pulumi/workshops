@@ -15,9 +15,15 @@ spec:
         kind: HelmRepository
         name: jupyterhub
   values:
-    global:
-      imageRegistry: docker.io
+    hub:
+      image:
+        name: jupyterhub/k8s-hub
+        tag: "4.3.2"
     proxy:
+      chp:
+        image:
+          name: jupyterhub/configurable-http-proxy
+          tag: "4.6.3"
       service:
         type: LoadBalancer
         annotations:
@@ -26,6 +32,13 @@ spec:
           service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
     singleuser:
       defaultUrl: "/lab"
+      image:
+        name: jupyterhub/k8s-singleuser-sample
+        tag: "4.3.2"
+      networkTools:
+        image:
+          name: jupyterhub/k8s-network-tools
+          tag: "4.3.2"
     prePuller:
       hook:
         enabled: false
