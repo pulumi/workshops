@@ -62,6 +62,67 @@ this directory tree from Git.
    - `<app-name>-values.yaml` — HelmRelease patch with env-specific values
    - Add patch entry to the overlay's `kustomization.yaml`
 
+## OpenClaw Configuration
+
+OpenClaw runs as a Kubernetes operator + CRD (`OpenClawInstance`).
+
+### Key Files
+
+| File | Purpose |
+|------|---------|
+| `infrastructure/base/openclaw-operator/` | Helm-based operator (v0.24.2) |
+| `apps/base/openclaw/instance.yaml` | OpenClawInstance CR with model config |
+| `apps/base/openclaw/secret.yaml` | `OLLAMA_API_KEY` secret (placeholder — update before deploy) |
+
+### Model Provider: Ollama Cloud
+
+- **API mode**: `openai-completions` (NOT `ollama` — native mode breaks tool calling)
+- **Base URL**: `https://ollama.com/v1` (OpenAI-compatible endpoint)
+- **Auth**: Explicit `headers.Authorization: "Bearer ${OLLAMA_API_KEY}"` (the `apiKey` field doesn't reliably send auth headers — known bug)
+- **Model**: `qwen3.5:cloud` (good tool calling support; `nemotron-3-super:cloud` and `minimax-m2.7:cloud` do not work well with tools)
+
+### Config Gotchas
+
+| Gotcha | Detail |
+|--------|--------|
+| `mergeMode` must be `merge` | Default `overwrite` wipes UI-set config on every pod restart |
+| No `"anthropic": { "enabled": false }` | Schema requires `baseUrl` + `models` — just omit the provider and set a non-Anthropic `agents.defaults.model.primary` |
+| `sandbox` and `tools` need gateway restart | Hot-reload only applies `model` and `models` — sandbox/tools changes require pod restart |
+| Stuck sessions | If the main lane gets stuck, delete `/home/openclaw/.openclaw/agents/main/sessions/` and restart the pod |
+
+### Working Raw Config Template (for UI testing)
+
+```json
+{
+  "models": {
+    "providers": {
+      "ollama": {
+        "baseUrl": "https://ollama.com/v1",
+        "api": "openai-completions",
+        "headers": { "Authorization": "Bearer <OLLAMA_API_KEY>" },
+        "models": [{
+          "id": "qwen3.5:cloud",
+          "name": "Qwen 3.5 Cloud",
+          "reasoning": false,
+          "input": ["text"],
+          "contextWindow": 131072,
+          "maxTokens": 131072,
+          "cost": { "input": 0, "output": 0, "cacheRead": 0, "cacheWrite": 0 }
+        }]
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": { "primary": "ollama/qwen3.5:cloud", "fallbacks": [] },
+      "models": { "ollama/qwen3.5:cloud": { "alias": "Qwen 3.5" } },
+      "sandbox": { "mode": "off" }
+    }
+  },
+  "tools": { "profile": "full", "allow": ["*"], "deny": [], "exec": { "security": "full" } }
+}
+```
+
 ## Boundaries
 
 - **Always**: Use Kustomize overlays for env differences, never duplicate base resources
