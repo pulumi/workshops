@@ -123,6 +123,36 @@ OpenClaw runs as a Kubernetes operator + CRD (`OpenClawInstance`).
 }
 ```
 
+## Notebooks
+
+Workshop demo notebooks live in `notebooks/`.
+
+| File | Purpose |
+|------|---------|
+| `notebooks/llm-api-demo.ipynb` | LLM API demo (chat, streaming, tool calling, multi-turn) — runs on JupyterHub |
+
+- **Default provider**: OpenAI (`gpt-4.1-nano`). Ollama Cloud free tier times out.
+- **Deployment**: Download the raw notebook from GitHub into JupyterHub (hosted on ml-dev / ml-staging clusters only).
+- **API key**: Users paste their own OpenAI key into the config cell; never commit real keys.
+
+## JupyterHub
+
+JupyterHub is deployed **only** on ML clusters (`team-ml-dev`, `team-ml-staging`) via dedicated app overlays.
+
+| Component | Location |
+|-----------|----------|
+| Base chart | `apps/base/jupyterhub/` (HelmRepository + HelmRelease v4.3.2) |
+| ML-dev overlay | `apps/ml-dev/jupyterhub-values.yaml` (DummyAuth, GPU+CPU profiles, 5Gi storage) |
+| ML-staging overlay | `apps/ml-staging/jupyterhub-values.yaml` (DummyAuth, GPU+CPU profiles, 10Gi storage) |
+
+### Gotchas
+
+| Gotcha | Detail |
+|--------|--------|
+| Image registry | All images overridden to Docker Hub (`jupyterhub/k8s-hub` etc.) — quay.io has had outages |
+| Pre-puller disabled | Hook and continuous pre-puller both disabled to avoid orphaned Jobs/DaemonSets |
+| Access | LoadBalancer Service — get external hostname from `kubectl get svc -n jupyterhub` |
+
 ## Boundaries
 
 - **Always**: Use Kustomize overlays for env differences, never duplicate base resources
