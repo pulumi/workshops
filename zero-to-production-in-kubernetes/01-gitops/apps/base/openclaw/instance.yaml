@@ -1,0 +1,11 @@
+---
+apiVersion: openclaw.rocks/v1alpha1
+kind: OpenClawInstance
+metadata:
+  name: workshop-openclaw
+  namespace: openclaw
+spec:
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi
