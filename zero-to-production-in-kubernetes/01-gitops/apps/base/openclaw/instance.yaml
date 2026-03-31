@@ -1,0 +1,54 @@
+---
+apiVersion: openclaw.rocks/v1alpha1
+kind: OpenClawInstance
+metadata:
+  name: workshop-openclaw
+  namespace: openclaw
+spec:
+  envFrom:
+    - secretRef:
+        name: openclaw-ollama-cloud
+  config:
+    mergeMode: merge
+    raw:
+      models:
+        providers:
+          ollama:
+            baseUrl: "https://ollama.com/v1"
+            api: "openai-completions"
+            headers:
+              Authorization: "Bearer ${OLLAMA_API_KEY}"
+            models:
+              - id: "qwen3.5:cloud"
+                name: "Qwen 3.5 Cloud"
+                reasoning: false
+                input:
+                  - "text"
+                contextWindow: 131072
+                maxTokens: 131072
+                cost:
+                  input: 0
+                  output: 0
+                  cacheRead: 0
+                  cacheWrite: 0
+      agents:
+        defaults:
+          model:
+            primary: "ollama/qwen3.5:cloud"
+            fallbacks: []
+          models:
+            "ollama/qwen3.5:cloud":
+              alias: "Qwen 3.5"
+          sandbox:
+            mode: "off"
+      tools:
+        profile: "full"
+        allow:
+          - "*"
+        deny: []
+        exec:
+          security: "full"
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi

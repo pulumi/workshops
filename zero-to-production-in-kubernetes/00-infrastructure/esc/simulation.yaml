@@ -1,0 +1,21 @@
+# ESC environment: zero-to-production-in-kubernetes-infra/simulation
+# Create: pulumi env init zero-to-production-in-kubernetes-infra/simulation
+# Apply:  pulumi env set zero-to-production-in-kubernetes-infra/simulation --file esc/simulation.yaml
+values:
+  vclusters:
+    - name: platform-prod
+      pool: standard
+    - name: platform-staging
+      pool: standard
+    - name: team-frontend-dev
+      pool: standard
+    - name: team-backend-dev
+      pool: standard
+    - name: team-backend-staging
+      pool: standard
+    - name: team-ml-dev
+      pool: gpu
+    - name: team-ml-staging
+      pool: gpu
+  pulumiConfig:
+    vclusters: ${vclusters}
