@@ -1,0 +1,8 @@
+environment:
+  - pulumi-idp/auth
+  - zero-to-production-in-kubernetes-infra/simulation
+config:
+  aws:region: eu-central-1
+  zero-to-production-in-kubernetes-infra:clusterName: zero-to-prod-k8s
+  zero-to-production-in-kubernetes-infra:gitRepoUrl: "https://github.com/pulumi/workshops"
+  zero-to-production-in-kubernetes-infra:gitRepoBranch: "dirien/zero-to-prod-k8s"
