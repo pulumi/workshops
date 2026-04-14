@@ -363,3 +363,15 @@ Each stage intentionally cuts corners so the architectural move is the star. Her
 - **Refactor repeated Lambda wiring into a `ComponentResource`.** In `infra-events/index.ts` the pattern "Lambda + alias + integration + route + permission" repeats for BFF, webhook, and backend-http. Encapsulate it as a `LambdaRoute` ComponentResource. The point isn't code reuse — it's showing that Pulumi programs can use the same abstraction tools as any other TypeScript.
 - **Backend as a container.** Swap the zip-based Lambda for a container image built from `services/backend/Dockerfile`, pushed to ECR, and referenced as `packageType: "Image"`. Same container could run on ECS or Kubernetes later.
 - **S3 as the board store.** Swap DynamoDB for a single JSON object in S3 (`s3://.../board-state.json`). The backend service already reads/writes the whole board under one key, so the adapter is ~20 lines: `GetObject` on read, `PutObject` on write, 404 → seed. Interesting tradeoff: cheaper and simpler, but no conditional writes — concurrent updates can clobber each other unless you add `If-Match` on the ETag.
+
+## Pick one:
+
+https://pickerwheel.com/
+
+Split IAM roles	
+CDN	
+Auth	
+log retention and tags	
+ComponentResource	
+containers	
+S3 Storage	
