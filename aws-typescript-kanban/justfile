@@ -11,6 +11,8 @@ test-local:
 
 start-local:
   -lsof -ti:7001,7070 | xargs kill 2>/dev/null || true
+  [ -d node_modules ] || npm install
+  npm run build
   npm run start:local
 
 preview stage="infra-events":
