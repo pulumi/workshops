@@ -1,0 +1,6 @@
+config:
+  typescript-aws-kanban:appName: TypeScript AWS Kanban
+  aws:region: ca-central-1
+  lambda:memory: "512"
+  lambda:timeout: "30"
+  backend:provisionedConcurrency: "1"

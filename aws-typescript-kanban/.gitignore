@@ -1,0 +1,10 @@
+dist/
+node_modules/
+data/board-state.json
+data/event-queue.json
+data/dead-letter-queue.json
+*.log
+nanobanana-output/
+
+# Workshop-attendee scratch dir — recreated per run via 'pulumi new'
+infra/

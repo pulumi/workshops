@@ -1,0 +1,155 @@
+{
+  "items": [
+    {
+      "id": "item_001",
+      "title": "Port the board API to TypeScript",
+      "status": "doing",
+      "source": {
+        "type": "github",
+        "externalId": "workshop-repo#21",
+        "display": "workshop-repo#21"
+      },
+      "createdAt": "2026-04-09T12:00:00.000Z",
+      "updatedAt": "2026-04-09T12:45:00.000Z"
+    },
+    {
+      "id": "item_002",
+      "title": "Make the backend private behind the BFF",
+      "status": "inbox",
+      "source": {
+        "type": "jira",
+        "externalId": "AWS-314",
+        "display": "AWS-314"
+      },
+      "createdAt": "2026-04-09T12:10:00.000Z",
+      "updatedAt": "2026-04-09T12:10:00.000Z"
+    },
+    {
+      "id": "item_003",
+      "title": "Demonstrate retry behavior with chaos mode",
+      "status": "blocked",
+      "source": {
+        "type": "custom",
+        "externalId": "DEMO-RETRY",
+        "display": "DEMO-RETRY"
+      },
+      "createdAt": "2026-04-09T12:15:00.000Z",
+      "updatedAt": "2026-04-09T12:55:00.000Z"
+    },
+    {
+      "id": "item_004",
+      "title": "Show async ingestion from external webhooks",
+      "status": "done",
+      "source": {
+        "type": "github",
+        "externalId": "integrations#8",
+        "display": "integrations#8"
+      },
+      "createdAt": "2026-04-09T12:20:00.000Z",
+      "updatedAt": "2026-04-09T13:15:00.000Z"
+    },
+    {
+      "id": "item_005",
+      "title": "Swap file storage for DynamoDB in the final stage",
+      "status": "inbox",
+      "source": {
+        "type": "jira",
+        "externalId": "AWS-321",
+        "display": "AWS-321"
+      },
+      "createdAt": "2026-04-09T12:25:00.000Z",
+      "updatedAt": "2026-04-09T12:25:00.000Z"
+    },
+    {
+      "id": "item_006",
+      "title": "Follow up on Slack thread about BFF retry policy",
+      "status": "doing",
+      "source": {
+        "type": "slack",
+        "externalId": "C04XY-1712689200",
+        "display": "#workshop-prep"
+      },
+      "createdAt": "2026-04-09T12:30:00.000Z",
+      "updatedAt": "2026-04-09T12:50:00.000Z"
+    }
+  ],
+  "history": {
+    "item_001": [
+      {
+        "id": "h_001",
+        "type": "itemCreated",
+        "occurredAt": "2026-04-09T12:00:00.000Z",
+        "summary": "Created from GitHub issue"
+      },
+      {
+        "id": "h_002",
+        "type": "statusChanged",
+        "occurredAt": "2026-04-09T12:45:00.000Z",
+        "summary": "Moved into doing for local stage work"
+      }
+    ],
+    "item_002": [
+      {
+        "id": "h_003",
+        "type": "itemCreated",
+        "occurredAt": "2026-04-09T12:10:00.000Z",
+        "summary": "Created from Jira planning ticket"
+      }
+    ],
+    "item_003": [
+      {
+        "id": "h_004",
+        "type": "itemCreated",
+        "occurredAt": "2026-04-09T12:15:00.000Z",
+        "summary": "Created manually"
+      },
+      {
+        "id": "h_005",
+        "type": "statusChanged",
+        "occurredAt": "2026-04-09T12:55:00.000Z",
+        "summary": "Blocked pending chaos demo mechanics"
+      }
+    ],
+    "item_004": [
+      {
+        "id": "h_006",
+        "type": "itemCreated",
+        "occurredAt": "2026-04-09T12:20:00.000Z",
+        "summary": "Created from GitHub webhook"
+      },
+      {
+        "id": "h_007",
+        "type": "statusChanged",
+        "occurredAt": "2026-04-09T13:15:00.000Z",
+        "summary": "Completed async flow sketch"
+      }
+    ],
+    "item_005": [
+      {
+        "id": "h_008",
+        "type": "itemCreated",
+        "occurredAt": "2026-04-09T12:25:00.000Z",
+        "summary": "Created from Jira planning ticket"
+      }
+    ],
+    "item_006": [
+      {
+        "id": "h_009",
+        "type": "itemCreated",
+        "occurredAt": "2026-04-09T12:30:00.000Z",
+        "summary": "Created from Slack message in #workshop-prep"
+      },
+      {
+        "id": "h_010",
+        "type": "statusChanged",
+        "occurredAt": "2026-04-09T12:50:00.000Z",
+        "summary": "Picked up for research"
+      }
+    ]
+  },
+  "nextItemId": 7,
+  "nextHistoryId": 11,
+  "version": 1,
+  "lastModified": "2026-04-09T13:15:00.000Z"
+}
+

@@ -1,0 +1,21 @@
+{
+  "name": "aws-typescript-workshop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node ./scripts/build.mjs",
+    "reset:data": "node ./scripts/reset-data.mjs",
+    "start:backend": "node ./dist/services/backend/src/local-server.js",
+    "start:bff": "node ./dist/services/bff/src/local-server.js",
+    "start:local": "node ./scripts/dev.mjs",
+    "test:local": "node ./scripts/test-stage0.mjs"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.1027.0",
+    "@aws-sdk/client-sqs": "^3.1027.0",
+    "@aws-sdk/lib-dynamodb": "^3.1027.0",
+    "@pulumi/aws": "^7.24.0",
+    "@pulumi/pulumi": "^3.230.0"
+  }
+}

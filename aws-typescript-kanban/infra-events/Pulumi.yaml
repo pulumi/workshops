@@ -1,0 +1,3 @@
+name: typescript-aws-kanban
+runtime: nodejs
+description: TypeScript AWS Kanban evented final AWS infrastructure
