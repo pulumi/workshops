@@ -134,7 +134,7 @@ function createLambda(
     environment: {
       variables: {
         APP_NAME: appName,
-        APP_STAGE: stage,
+        APP_STAGE: `${stage}-private`,
         WORKSHOP_ROOT: "/var/task",
         BOARD_TABLE_NAME: boardTable.name,
         BOARD_STATE_PK: "BOARD_STATE",

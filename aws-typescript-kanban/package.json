@@ -17,5 +17,8 @@
     "@aws-sdk/lib-dynamodb": "^3.1027.0",
     "@pulumi/aws": "^7.24.0",
     "@pulumi/pulumi": "^3.230.0"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.161"
   }
 }

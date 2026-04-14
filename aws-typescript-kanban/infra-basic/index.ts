@@ -124,7 +124,7 @@ function createLambda(
     environment: {
       variables: {
         APP_NAME: appName,
-        APP_STAGE: stage,
+        APP_STAGE: `${stage}-basic`,
         WORKSHOP_ROOT: "/var/task",
         BOARD_TABLE_NAME: boardTable.name,
         BOARD_STATE_PK: "BOARD_STATE",
@@ -194,7 +194,7 @@ new aws.lambda.Permission("backend-api-permission", {
   sourceArn: pulumi.interpolate`${backendApi.executionArn}/*/*`,
 });
 
-const backendBaseUrl = backendApi.apiEndpoint.apply((apiEndpoint) => `${apiEndpoint}`);
+const backendBaseUrl = backendApi.apiEndpoint;
 
 // ─── 5. BFF Lambda ────────────────────────────────────────────────
 // The public-facing Lambda the browser talks to. It turns around

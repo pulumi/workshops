@@ -198,6 +198,8 @@ pulumi stack output backendPublicUrl
 
 Open `frontendUrl` in a browser — same app, now live on AWS.
 
+> **Heads up on cost.** The `prod` stack sets `backend:provisionedConcurrency` to 5, which keeps 5 Lambda instances warm 24/7 (~$15/month per instance). Leave it at `0` in `dev`, and `pulumi destroy` any stack when you're done with it.
+
 View on AWS console here:
 ```
 https://ca-central-1.console.aws.amazon.com/lambda/home?region=ca-central-1#/functions
@@ -348,12 +350,17 @@ pulumi destroy
 
 ---
 
-## Tangents
+## Continuing Exercises
 
-Small fun extensions you can try after the tutorial. Not part of the core workshop — skip unless curious.
+Each stage intentionally cuts corners so the architectural move is the star. Here is what a real deployment would add — pick whichever is most interesting.
 
-- **Backend as a container.** Swap the zip-based Lambda for a container image built from `services/backend/Dockerfile`, pushed to ECR, and referenced as `packageType: "Image"`. Same container could run on ECS or Kubernetes later.
+- **Split per-Lambda IAM roles.** Today one `lambda-role` is shared by the BFF, backend, webhook, and worker — and granted `sqs:PurgeQueue` across the board. Replace with four roles, each scoped to exactly what that Lambda touches (BFF: nothing AWS-side; backend: `dynamodb:GetItem/PutItem` on the table ARN; webhook: `sqs:SendMessage` on the queue ARN; worker: `sqs:ReceiveMessage/DeleteMessage` + `dynamodb:GetItem/PutItem`). Least-privilege, one role at a time.
 - **Add a CDN.** Put CloudFront in front of the S3 site (and optionally the public API). Gets HTTPS on the frontend, a global edge cache, and lets you switch the bucket to private + Origin Access Control.
 - **Add simple auth.** Shared-secret header check inside the BFF handler — no Cognito, no authorizer, no extra resources. Set `API_TOKEN` via `pulumi config set --secret`, pipe it into the BFF Lambda env, reject requests without a matching `x-api-key` header. Frontend reads the token from `window.__WORKSHOP_CONFIG__` and attaches it to every fetch. ~10 lines of code.
+- **Verify webhook signatures.** Pick a provider (Slack or GitHub), validate the HMAC signature on the raw body in `services/webhook/src/lambda.ts` before enqueueing. Store the signing secret via `pulumi config set --secret`.
+- **Enable log retention and tags.** Create an `aws.cloudwatch.LogGroup` per Lambda with `retentionInDays: 7` (default is never-expire). Add a consistent `tags: { workshop, stage, owner }` map to every resource — one-line hygiene that real shops require.
+- **Bundle with esbuild.** Swap `scripts/build.mjs`'s `tsc --outDir dist` for `esbuild --bundle --platform=node --target=node20 --external:aws-sdk`. Stop shipping `node_modules` in every Lambda; watch the package size drop an order of magnitude.
+- **Refactor repeated Lambda wiring into a `ComponentResource`.** In `infra-events/index.ts` the pattern "Lambda + alias + integration + route + permission" repeats for BFF, webhook, and backend-http. Encapsulate it as a `LambdaRoute` ComponentResource. The point isn't code reuse — it's showing that Pulumi programs can use the same abstraction tools as any other TypeScript.
+- **Backend as a container.** Swap the zip-based Lambda for a container image built from `services/backend/Dockerfile`, pushed to ECR, and referenced as `packageType: "Image"`. Same container could run on ECS or Kubernetes later.
 - **S3 as the board store.** Swap DynamoDB for a single JSON object in S3 (`s3://.../board-state.json`). The backend service already reads/writes the whole board under one key, so the adapter is ~20 lines: `GetObject` on read, `PutObject` on write, 404 → seed. Interesting tradeoff: cheaper and simpler, but no conditional writes — concurrent updates can clobber each other unless you add `If-Match` on the ETag.
 

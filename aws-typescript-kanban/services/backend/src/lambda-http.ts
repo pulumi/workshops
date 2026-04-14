@@ -1,52 +1,21 @@
+import type { ALBEvent, ALBResult, APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from "aws-lambda";
 import { ActivityLog } from "../../../packages/shared/src/activity-log.js";
 import { TransientServiceError } from "../../../packages/shared/src/backend-service.js";
-
-const activityLog = new ActivityLog();
 import { basicBackendService } from "../../../packages/shared/src/stages/basic.js";
 import { finalBackendService } from "../../../packages/shared/src/stages/final.js";
 import { privateBackendService } from "../../../packages/shared/src/stages/private.js";
 
-type ApiEvent = {
-  httpMethod?: string;
-  path?: string;
-  rawPath?: string;
-  body?: string | null;
-  requestContext?: {
-    http?: {
-      method?: string;
-    };
-  };
-};
+const activityLog = new ActivityLog();
 
-type LambdaResponse = {
-  statusCode: number;
-  statusDescription: string;
-  isBase64Encoded: false;
-  headers: Record<string, string>;
-  body: string;
-};
-
-function reasonPhrase(statusCode: number): string {
-  switch (statusCode) {
-    case 200:
-      return "OK";
-    case 400:
-      return "Bad Request";
-    case 404:
-      return "Not Found";
-    case 500:
-      return "Internal Server Error";
-    case 503:
-      return "Service Unavailable";
-    default:
-      return "OK";
-  }
-}
+// Stage 1 and Stage 3 front the backend Lambda with API Gateway v2;
+// Stage 2 fronts it with an internal ALB. The two wire formats differ,
+// so accept either and normalize method and path below.
+type LambdaEvent = APIGatewayProxyEventV2 | ALBEvent;
+type LambdaResponse = APIGatewayProxyStructuredResultV2 & ALBResult;
 
 function response(statusCode: number, body: unknown): LambdaResponse {
   return {
     statusCode,
-    statusDescription: `${statusCode} ${reasonPhrase(statusCode)}`,
     isBase64Encoded: false,
     headers: {
       "content-type": "application/json",
@@ -69,9 +38,11 @@ function backendServiceForStage() {
   return finalBackendService;
 }
 
-export async function handler(event: ApiEvent): Promise<LambdaResponse> {
-  const method = event.requestContext?.http?.method ?? event.httpMethod ?? "GET";
-  const path = event.rawPath ?? event.path ?? "/";
+export async function handler(event: LambdaEvent): Promise<LambdaResponse> {
+  const method = "requestContext" in event && "http" in event.requestContext
+    ? event.requestContext.http.method
+    : (event as ALBEvent).httpMethod ?? "GET";
+  const path = "rawPath" in event ? event.rawPath : (event as ALBEvent).path ?? "/";
   const backendService = backendServiceForStage();
 
   try {

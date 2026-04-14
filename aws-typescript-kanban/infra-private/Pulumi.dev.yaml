@@ -3,4 +3,4 @@ config:
   aws:region: ca-central-1
   lambda:memory: "512"
   lambda:timeout: "30"
-  backend:provisionedConcurrency: "1"
+  backend:provisionedConcurrency: "0"

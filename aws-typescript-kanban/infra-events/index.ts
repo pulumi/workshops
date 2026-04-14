@@ -67,19 +67,20 @@ const boardTable = new aws.dynamodb.Table("board-table", {
 
 // ─── 1a. Event queue (SQS + DLQ) (new in Stage 3) ─────────────────
 // Webhook events land here. The DLQ catches messages the worker
-// can't process after 3 attempts. Visibility timeout matches the
-// worker Lambda timeout.
+// can't process after 3 attempts. Visibility timeout is ≥ 6× the
+// worker Lambda timeout — anything shorter risks a second delivery
+// while the first invocation is still running.
 
 const deadLetterQueue = new aws.sqs.Queue("event-dlq", {
   messageRetentionSeconds: 1209600,
 });
 
 const eventQueue = new aws.sqs.Queue("event-queue", {
-  visibilityTimeoutSeconds: 30,
-  redrivePolicy: pulumi.interpolate`${deadLetterQueue.arn.apply((arn) => JSON.stringify({
+  visibilityTimeoutSeconds: lambdaTimeout * 6,
+  redrivePolicy: deadLetterQueue.arn.apply((arn) => JSON.stringify({
     deadLetterTargetArn: arn,
     maxReceiveCount: 3,
-  }))}`,
+  })),
 });
 
 // ─── 2. Lambda runtime (IAM role + code bundle + factory) ─────────
@@ -175,7 +176,7 @@ function createLambda(
     environment: {
       variables: {
         APP_NAME: appName,
-        APP_STAGE: stage,
+        APP_STAGE: `${stage}-events`,
         WORKSHOP_ROOT: "/var/task",
         BOARD_TABLE_NAME: boardTable.name,
         BOARD_STATE_PK: "BOARD_STATE",

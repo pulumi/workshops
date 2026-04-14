@@ -1,18 +1,9 @@
+import type { APIGatewayProxyEventV2, APIGatewayProxyStructuredResultV2 } from "aws-lambda";
 import { ActivityLog } from "../../../packages/shared/src/activity-log.js";
 import type { BoardView, RecentActivityEntry } from "../../../packages/shared/src/types.js";
 
 const activityLog = new ActivityLog();
 const activityLimit = Number(process.env.BFF_ACTIVITY_LIMIT ?? 3);
-
-type ApiEvent = {
-  rawPath?: string;
-  body?: string | null;
-  requestContext?: {
-    http?: {
-      method?: string;
-    };
-  };
-};
 
 function notificationsFrom(board: BoardView) {
   return (board.recentActivity ?? []).slice(0, activityLimit).map((entry: RecentActivityEntry) => {
@@ -25,7 +16,7 @@ function notificationsFrom(board: BoardView) {
   });
 }
 
-function json(statusCode: number, body: unknown, headers: Record<string, string> = {}): { statusCode: number; body: string; headers: Record<string, string> } {
+function json(statusCode: number, body: unknown, headers: Record<string, string> = {}): APIGatewayProxyStructuredResultV2 {
   return {
     statusCode,
     body: JSON.stringify(body),
@@ -80,9 +71,9 @@ async function proxy(path: string, method = "GET", body?: unknown): Promise<{ st
   };
 }
 
-export async function handler(event: ApiEvent): Promise<{ statusCode: number; body: string; headers: Record<string, string> }> {
-  const method = event.requestContext?.http?.method ?? "GET";
-  const path = event.rawPath ?? "/";
+export async function handler(event: APIGatewayProxyEventV2): Promise<APIGatewayProxyStructuredResultV2> {
+  const method = event.requestContext.http.method;
+  const path = event.rawPath;
 
   if (method === "GET" && path === "/api/logs") {
     return json(200, { entries: activityLog.list(50) });
