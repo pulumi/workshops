@@ -21,11 +21,13 @@ spec:
       models:
         providers:
           google-vertex:
-            # ADC-based; no API key. The GSA bound by Workload Identity holds
-            # roles/aiplatform.user on the project.
+            # Vertex AI publisher endpoint, project-scoped. ADC token is
+            # obtained automatically by the SDK via the Workload-Identity-bound
+            # GSA. No API key.
+            baseUrl: "https://aiplatform.googleapis.com/v1/projects/${gcp_project_id}/locations/global/publishers/google/models"
             models:
-              - id: "gemini-3-flash"
-                name: "Gemini 3 Flash"
+              - id: "gemini-2.5-flash"
+                name: "Gemini 2.5 Flash"
                 reasoning: false
                 input:
                   - "text"
@@ -34,7 +36,7 @@ spec:
       agents:
         defaults:
           model:
-            primary: "google-vertex/gemini-3-flash"
+            primary: "google-vertex/gemini-2.5-flash"
             fallbacks: []
           sandbox:
             mode: "off"
