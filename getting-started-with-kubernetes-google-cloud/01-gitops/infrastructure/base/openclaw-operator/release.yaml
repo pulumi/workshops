@@ -1,0 +1,16 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: openclaw-operator
+  namespace: openclaw-system
+spec:
+  interval: 10m
+  timeout: 10m
+  chartRef:
+    kind: OCIRepository
+    name: openclaw-operator
+  values:
+    crds:
+      install: true
+      keep: true
