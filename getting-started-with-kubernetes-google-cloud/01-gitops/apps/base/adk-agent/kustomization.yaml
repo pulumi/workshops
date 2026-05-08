@@ -6,3 +6,4 @@ resources:
   - serviceaccount.yaml
   - deployment.yaml
   - service.yaml
+  - podmonitoring.yaml
