@@ -8,4 +8,4 @@ spec:
   interval: 10m
   url: oci://ghcr.io/openclaw-rocks/charts/openclaw-operator
   ref:
-    tag: "0.24.2"
+    tag: "0.31.0"
