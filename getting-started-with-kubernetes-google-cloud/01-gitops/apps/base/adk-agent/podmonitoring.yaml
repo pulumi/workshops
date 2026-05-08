@@ -1,0 +1,17 @@
+---
+# Managed Prometheus scrapes the FastAPI /metrics endpoint exposed by
+# prometheus-fastapi-instrumentator inside the ADK agent. Same pattern as
+# apps/base/podinfo/podmonitoring.yaml.
+apiVersion: monitoring.googleapis.com/v1
+kind: PodMonitoring
+metadata:
+  name: adk-agent
+  namespace: adk
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: adk-agent
+  endpoints:
+    - port: http
+      interval: 30s
+      path: /metrics

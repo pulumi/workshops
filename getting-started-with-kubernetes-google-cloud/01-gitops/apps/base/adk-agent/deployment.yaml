@@ -19,8 +19,10 @@ spec:
       serviceAccountName: adk-agent
       containers:
         - name: adk-agent
-          image: ghcr.io/dirien/adk-agent:1.0.0
-          imagePullPolicy: IfNotPresent
+          # `:latest` + `Always` so a fresh image push + `kubectl rollout
+          # restart deploy/adk-agent` ships the new code — no gitops PR.
+          image: ghcr.io/dirien/adk-agent:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8000
               name: http
