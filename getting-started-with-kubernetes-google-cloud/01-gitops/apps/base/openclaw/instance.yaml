@@ -1,0 +1,51 @@
+---
+apiVersion: openclaw.rocks/v1alpha1
+kind: OpenClawInstance
+metadata:
+  name: gke-openclaw
+  namespace: openclaw
+spec:
+  # GOOGLE_CLOUD_PROJECT is consumed by the google-vertex provider's
+  # Application Default Credentials path. The token itself is provided by
+  # GKE Workload Identity via the annotated ServiceAccount below.
+  env:
+    - name: GOOGLE_CLOUD_PROJECT
+      value: "${gcp_project_id}"
+  security:
+    rbac:
+      serviceAccountAnnotations:
+        iam.gke.io/gcp-service-account: "openclaw-vertex@${gcp_project_id}.iam.gserviceaccount.com"
+  config:
+    mergeMode: merge
+    raw:
+      models:
+        providers:
+          google-vertex:
+            # ADC-based; no API key. The GSA bound by Workload Identity holds
+            # roles/aiplatform.user on the project.
+            models:
+              - id: "gemini-3-flash"
+                name: "Gemini 3 Flash"
+                reasoning: false
+                input:
+                  - "text"
+                contextWindow: 1048576
+                maxTokens: 8192
+      agents:
+        defaults:
+          model:
+            primary: "google-vertex/gemini-3-flash"
+            fallbacks: []
+          sandbox:
+            mode: "off"
+      tools:
+        profile: "full"
+        allow:
+          - "*"
+        deny: []
+        exec:
+          security: "full"
+  storage:
+    persistence:
+      enabled: true
+      size: 10Gi

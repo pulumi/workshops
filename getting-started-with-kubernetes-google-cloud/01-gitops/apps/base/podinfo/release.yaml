@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: podinfo
+  namespace: podinfo
+spec:
+  interval: 10m
+  timeout: 5m
+  chartRef:
+    kind: OCIRepository
+    name: podinfo
+  values:
+    service:
+      type: LoadBalancer
+    resources:
+      requests:
+        cpu: 100m
+        memory: 64Mi
+      limits:
+        cpu: 500m
+        memory: 256Mi
+    hpa:
+      enabled: true
+      minReplicas: 2
+      maxReplicas: 10
+      cpu: 50
+    ui:
+      message: "Hello from ${cluster_name}"
+      color: "#4285F4"
