@@ -1,0 +1,19 @@
+---
+# Flux Operator web UI exposed via GCP Network Load Balancer.
+# The operator pod listens on 9080 internally; we surface it on :80 externally.
+# Anonymous flux-web-admin access is configured by the operator chart values
+# (set in 00-infrastructure/flux_operator.tf).
+apiVersion: v1
+kind: Service
+metadata:
+  name: flux-web-lb
+  namespace: flux-system
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: flux-operator
+  ports:
+    - name: http
+      port: 80
+      targetPort: 9080
+      protocol: TCP
