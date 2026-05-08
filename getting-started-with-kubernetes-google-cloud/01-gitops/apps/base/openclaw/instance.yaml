@@ -5,12 +5,21 @@ metadata:
   name: gke-openclaw
   namespace: openclaw
 spec:
-  # GOOGLE_CLOUD_PROJECT is consumed by the google-vertex provider's
-  # Application Default Credentials path. The token itself is provided by
-  # GKE Workload Identity via the annotated ServiceAccount below.
+  # Custom OpenClaw runtime image with two upstream pi-ai bug fixes that
+  # together let the bundled google-vertex provider use GKE Workload
+  # Identity / ADC end-to-end. Source + Dockerfile under
+  # 00-infrastructure/openclaw-vertex-adc-fix/.
+  # Tracking issue: https://github.com/openclaw/openclaw/issues/49191
+  image: "ghcr.io/dirien/openclaw:2026.5.7-vertex-adc-fix.1"
+
+  # Pod-level env. Both project and location must be set; pi-ai's
+  # getEnvApiKey("google-vertex") returns the "<authenticated>" sentinel
+  # only when both are present.
   env:
     - name: GOOGLE_CLOUD_PROJECT
       value: "${gcp_project_id}"
+    - name: GOOGLE_CLOUD_LOCATION
+      value: "global"
   security:
     rbac:
       serviceAccountAnnotations:
@@ -18,12 +27,18 @@ spec:
   config:
     mergeMode: merge
     raw:
+      # Propagated to OpenClaw agent subprocesses so they see the same
+      # GOOGLE_CLOUD_* values the gateway sees.
+      env:
+        vars:
+          GOOGLE_CLOUD_PROJECT: "${gcp_project_id}"
+          GOOGLE_CLOUD_LOCATION: "global"
       models:
         providers:
           google-vertex:
             # Vertex AI publisher endpoint, project-scoped. ADC token is
-            # obtained automatically by the SDK via the Workload-Identity-bound
-            # GSA. No API key.
+            # obtained automatically by @google/genai via the
+            # Workload-Identity-bound GSA — no API key.
             baseUrl: "https://aiplatform.googleapis.com/v1/projects/${gcp_project_id}/locations/global/publishers/google/models"
             models:
               - id: "gemini-2.5-flash"
