@@ -1,0 +1,57 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adk-agent
+  namespace: adk
+  labels:
+    app.kubernetes.io/name: adk-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: adk-agent
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: adk-agent
+    spec:
+      serviceAccountName: adk-agent
+      containers:
+        - name: adk-agent
+          image: ghcr.io/dirien/adk-agent:1.0.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+              name: http
+          env:
+            # Tell the Google GenAI SDK to use Vertex AI (not the AI Studio
+            # API key flow). The SDK then reads ADC, which on GKE comes from
+            # the metadata server using the WI-bound GSA.
+            - name: GOOGLE_GENAI_USE_VERTEXAI
+              value: "1"
+            - name: GOOGLE_CLOUD_PROJECT
+              value: "${gcp_project_id}"
+            - name: GOOGLE_CLOUD_LOCATION
+              value: "global"
+            - name: PORT
+              value: "8000"
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 1
+              memory: 1Gi
+          readinessProbe:
+            httpGet:
+              path: /docs
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /docs
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 30
