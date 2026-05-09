@@ -1,0 +1,31 @@
+---
+# The flux-operator Helm chart ships its own NetworkPolicy
+# (`flux-operator-web`) that allows ingress to port 9080 only from
+# `namespaceSelector: {}` — i.e. in-cluster pods in any namespace.
+# External LoadBalancer traffic has no source pod and gets dropped.
+#
+# This policy adds a parallel rule with no `from` clause, allowing the
+# flux-web-lb Service (Network LB → pod port 9080) to actually reach the
+# operator's web UI from the public internet. K8s NetworkPolicy is
+# additive — both rules apply, and traffic matching either is allowed.
+#
+# Production posture: drop this policy and use port-forward, IAP, or a
+# VPN. The Flux Operator UI shows full GitOps state including source
+# URLs and policy bindings — exposing it on a public LB without auth is
+# a real security gap, only acceptable for short-lived workshop clusters.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-flux-web-external
+  namespace: flux-system
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: flux-operator
+      app.kubernetes.io/name: flux-operator
+  policyTypes:
+    - Ingress
+  ingress:
+    - ports:
+        - protocol: TCP
+          port: 9080
