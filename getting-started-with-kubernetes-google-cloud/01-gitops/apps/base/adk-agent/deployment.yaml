@@ -18,10 +18,17 @@ spec:
     spec:
       serviceAccountName: adk-agent
       # Pod-level securityContext required by PSA `restricted` on the
-      # namespace. The image's USER myuser already runs non-root; this
-      # makes that explicit to the kubelet and admission controller.
+      # namespace. The image's Dockerfile declares `USER myuser` (a name,
+      # not a UID), so kubelet can't *verify* non-root from the image
+      # config alone — `runAsNonRoot: true` admission passes but the
+      # container fails to start with "image has non-numeric user". Set
+      # runAsUser explicitly to the UID Alpine's adduser assigned to
+      # myuser (1000 — verified with `docker run --entrypoint id`).
       securityContext:
         runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
         seccompProfile:
           type: RuntimeDefault
       containers:
