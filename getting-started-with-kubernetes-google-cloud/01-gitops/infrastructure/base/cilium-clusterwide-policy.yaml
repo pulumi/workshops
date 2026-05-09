@@ -1,0 +1,27 @@
+---
+# Block egress to the GCE metadata server (169.254.169.254) cluster-wide,
+# except from namespaces that legitimately need it:
+#   * kube-system  — hosts the gke-metadata-server DaemonSet, the GKE
+#                    component that intercepts WI requests.
+#   * adk          — the ADK agent uses Workload Identity to call Vertex
+#                    AI / Cloud Trace / Cloud Monitoring.
+#
+# Defense-in-depth: even with PSA + per-namespace NetworkPolicies, an
+# unrestricted route to the metadata server is a classic SSRF target. A
+# CiliumClusterwideNetworkPolicy enforces a baseline that namespace owners
+# can't accidentally weaken with their own policies.
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: deny-egress-gce-metadata
+spec:
+  endpointSelector:
+    matchExpressions:
+      - key: io.kubernetes.pod.namespace
+        operator: NotIn
+        values:
+          - kube-system
+          - adk
+  egressDeny:
+    - toCIDR:
+        - 169.254.169.254/32
