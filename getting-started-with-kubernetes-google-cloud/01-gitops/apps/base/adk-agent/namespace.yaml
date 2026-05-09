@@ -3,3 +3,14 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: adk
+  labels:
+    # Pod Security Admission — built into the kube-apiserver, no controller
+    # to install. The ADK agent's container image (Alpine, USER myuser,
+    # port 8000) passes `restricted` once the deployment carries an explicit
+    # securityContext, so we enforce the strictest profile here.
+    pod-security.kubernetes.io/enforce: restricted
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/audit-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/warn-version: latest

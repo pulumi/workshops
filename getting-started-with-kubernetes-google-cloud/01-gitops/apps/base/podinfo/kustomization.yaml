@@ -6,3 +6,5 @@ resources:
   - repository.yaml
   - release.yaml
   - podmonitoring.yaml
+  - limits.yaml
+  - networkpolicy.yaml

@@ -1,0 +1,36 @@
+---
+# LimitRange: per-container defaults + max. Kicks in BEFORE the
+# ResourceQuota admission check, so existing deployments without explicit
+# requests/limits don't get rejected the moment the quota lands.
+apiVersion: v1
+kind: LimitRange
+metadata:
+  name: defaults
+  namespace: adk
+spec:
+  limits:
+    - type: Container
+      default:
+        cpu: 500m
+        memory: 512Mi
+      defaultRequest:
+        cpu: 100m
+        memory: 128Mi
+      max:
+        cpu: "2"
+        memory: 4Gi
+---
+# ResourceQuota: total budget for the namespace. Stops a single
+# misbehaving workload (or a runaway HPA) from consuming the cluster.
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: tenant-quota
+  namespace: adk
+spec:
+  hard:
+    requests.cpu: "4"
+    requests.memory: 8Gi
+    limits.cpu: "8"
+    limits.memory: 16Gi
+    pods: "20"

@@ -17,12 +17,30 @@ spec:
         app.kubernetes.io/name: adk-agent
     spec:
       serviceAccountName: adk-agent
+      # Pod-level securityContext required by PSA `restricted` on the
+      # namespace. The image's USER myuser already runs non-root; this
+      # makes that explicit to the kubelet and admission controller.
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
       containers:
         - name: adk-agent
           # `:latest` + `Always` so a fresh image push + `kubectl rollout
           # restart deploy/adk-agent` ships the new code — no gitops PR.
           image: ghcr.io/dirien/adk-agent:latest
           imagePullPolicy: Always
+          # Container-level securityContext to satisfy PSA `restricted`:
+          # drop all caps, deny privilege escalation. Port 8000 is >1024
+          # so we don't need NET_BIND_SERVICE back.
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            runAsNonRoot: true
+            seccompProfile:
+              type: RuntimeDefault
           ports:
             - containerPort: 8000
               name: http

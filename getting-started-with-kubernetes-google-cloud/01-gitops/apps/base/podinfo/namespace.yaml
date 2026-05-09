@@ -3,3 +3,15 @@ apiVersion: v1
 kind: Namespace
 metadata:
   name: podinfo
+  labels:
+    # Pod Security Admission. Podinfo's chart defaults pass `baseline`
+    # cleanly; `restricted` would require pinning extra securityContext
+    # values that drift on chart upgrades, so we enforce baseline and
+    # surface any restricted-level violations via audit + warn instead of
+    # blocking deploys.
+    pod-security.kubernetes.io/enforce: baseline
+    pod-security.kubernetes.io/enforce-version: latest
+    pod-security.kubernetes.io/audit: restricted
+    pod-security.kubernetes.io/audit-version: latest
+    pod-security.kubernetes.io/warn: restricted
+    pod-security.kubernetes.io/warn-version: latest

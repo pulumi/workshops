@@ -1,0 +1,113 @@
+---
+# DNS: every pod needs to resolve names. kube-dns runs in kube-system.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-dns
+  namespace: adk
+spec:
+  podSelector: {}
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
+      ports:
+        - protocol: UDP
+          port: 53
+        - protocol: TCP
+          port: 53
+---
+# Workload Identity: the ADK agent calls Vertex AI / Cloud Trace under WI,
+# which means hitting the GKE metadata server (169.254.169.254). The
+# CiliumClusterwideNetworkPolicy in infrastructure/base denies this
+# everywhere by default; this policy explicitly allows it for the adk
+# namespace via Cilium's CIDR-egress support, layered on top.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-metadata-server
+  namespace: adk
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: adk-agent
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 169.254.169.254/32
+---
+# Vertex AI / Cloud Trace / Cloud Logging / Cloud Monitoring all ride on
+# *.googleapis.com over HTTPS. Allowing 443 to anywhere is broader than
+# strict production wants, but it's the cleanest workshop posture without
+# pinning Google IP ranges that drift. For a tighter posture, swap for an
+# FQDN policy (Dataplane V2 supports them).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-egress-https
+  namespace: adk
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: adk-agent
+  policyTypes:
+    - Egress
+  egress:
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+            except:
+              # Block egress back into the cluster network and metadata IP.
+              # Per-namespace traffic stays governed by the cluster's own
+              # NetworkPolicy posture, not this allow rule.
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.169.254/32
+      ports:
+        - protocol: TCP
+          port: 443
+---
+# Managed Prometheus collector lives in gmp-system and scrapes /metrics on
+# port 8000 (the FastAPI app exposes it via prometheus-fastapi-instrumentator).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: allow-ingress-monitoring
+  namespace: adk
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: adk-agent
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: gmp-system
+      ports:
+        - protocol: TCP
+          port: 8000
+---
+# Default-deny baseline: any traffic not explicitly allowed above is
+# dropped. Lands LAST in the document so the allow-rules above are
+# evaluated first when the apiserver admits the bundle.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: default-deny
+  namespace: adk
+spec:
+  podSelector: {}
+  policyTypes:
+    - Ingress
+    - Egress
