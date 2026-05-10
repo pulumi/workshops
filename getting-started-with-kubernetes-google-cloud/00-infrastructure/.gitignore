@@ -1,0 +1,6 @@
+/bin/
+/node_modules/
+/sdks/
+/.claude/
+kubeconfig
+*.log

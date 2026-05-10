@@ -1,0 +1,8 @@
+environment:
+  - cloud-creds/gcp-dev-sandbox
+config:
+  gcp:region: europe-west1
+  getting-started-with-kubernetes-google-cloud:cluster_name: gke-workshop
+  getting-started-with-kubernetes-google-cloud:git_repo_url: https://github.com/pulumi/workshops
+  getting-started-with-kubernetes-google-cloud:git_repo_branch: main
+  getting-started-with-kubernetes-google-cloud:git_cluster_path: getting-started-with-kubernetes-google-cloud/01-gitops/clusters/gke-workshop

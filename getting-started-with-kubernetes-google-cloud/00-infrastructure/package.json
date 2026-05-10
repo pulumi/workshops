@@ -1,0 +1,21 @@
+{
+    "name": "00-infrastructure-pulumi",
+    "main": "index.ts",
+    "scripts": {
+        "lint": "eslint .",
+        "lint:fix": "eslint . --fix"
+    },
+    "devDependencies": {
+        "@eslint/js": "^10.0.1",
+        "@types/node": "^22.19.18",
+        "eslint": "^10.3.0",
+        "typescript": "^5.9.3",
+        "typescript-eslint": "^8.59.2"
+    },
+    "dependencies": {
+        "@pulumi/gcp": "^9.0.0",
+        "@pulumi/gke-workshop": "file:sdks/pulumi-gke-workshop",
+        "@pulumi/kubernetes": "^4.30.0",
+        "@pulumi/pulumi": "^3.113.0"
+    }
+}

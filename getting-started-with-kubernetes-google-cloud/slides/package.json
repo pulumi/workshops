@@ -1,0 +1,19 @@
+{
+  "name": "stop-wasting-gpus",
+  "version": "0.1.0",
+  "description": "Stop Wasting GPUs: How We Built a Golden Path for GPU Sharing on Kubernetes",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "vue": "^3.5.13"
+  }
+}
