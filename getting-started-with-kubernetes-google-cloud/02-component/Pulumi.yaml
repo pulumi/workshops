@@ -1,0 +1,14 @@
+name: gke-workshop
+description: A reusable, production-close GKE cluster component for the workshop.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+packages:
+  gke:
+    source: terraform-module
+    version: 0.1.3
+    parameters:
+      - terraform-google-modules/kubernetes-engine/google//modules/private-cluster
+      - 44.0.0
+      - gke

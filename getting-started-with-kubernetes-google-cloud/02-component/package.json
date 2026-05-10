@@ -1,0 +1,15 @@
+{
+    "name": "gke-workshop",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/js-yaml": "^4.0.9",
+        "@types/node": "^22",
+        "typescript": "^5.9.0"
+    },
+    "dependencies": {
+        "@pulumi/gcp": "^9.23.0",
+        "@pulumi/gke": "file:sdks/gke",
+        "@pulumi/pulumi": "^3.237.0",
+        "js-yaml": "^4.1.1"
+    }
+}
