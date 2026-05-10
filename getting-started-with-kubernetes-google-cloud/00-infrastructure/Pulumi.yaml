@@ -1,0 +1,12 @@
+name: getting-started-with-kubernetes-google-cloud
+description: GKE workshop infrastructure (Pulumi TypeScript port)
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: gcp-typescript
+packages:
+  gke-workshop: https://github.com/pulumi/workshops/getting-started-with-kubernetes-google-cloud/02-component@0.6.0
