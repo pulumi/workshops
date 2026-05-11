@@ -11,7 +11,7 @@ If you followed along with lab 1, you should be all set. If not, copy the files 
 make install_provider
 ```
 
-If succesful, your terminal output should contain at least the following lines. More lines are possible when the dependencies haven't been downloaded yet.
+If successful, your terminal output should contain at least the following lines. More lines are possible when the dependencies haven't been downloaded yet.
 
 ```
 rm -rf /Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/bin/pulumi-resource-ced
