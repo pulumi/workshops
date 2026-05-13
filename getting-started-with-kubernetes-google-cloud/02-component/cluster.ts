@@ -304,10 +304,27 @@ export class GkeWorkshopCluster extends pulumi.ComponentResource {
 
         const clientConfig = gcp.organizations.getClientConfigOutput();
 
+        // The terraform-module bridge (pulumi-terraform-module 0.1.x) does
+        // not surface the underlying gke module's outputs into Pulumi
+        // state — cluster.endpoint / cluster.ca_certificate / cluster.name
+        // all resolve to undefined. Read live values via the gcp data
+        // source instead. dependsOn keeps the lookup ordered after the
+        // module apply.
+        const clusterData = gcp.container.getClusterOutput(
+            {
+                name: clusterName,
+                location: args.region,
+                project: args.projectId,
+            },
+            { dependsOn: [cluster] },
+        );
+
         const kubeconfig = pulumi
             .all([
-                cluster.endpoint,
-                cluster.ca_certificate,
+                clusterData.endpoint,
+                clusterData.masterAuths.apply(
+                    (m) => m[0]?.clusterCaCertificate ?? "",
+                ),
                 clientConfig.accessToken,
                 clusterName,
             ])
@@ -386,10 +403,12 @@ export class GkeWorkshopCluster extends pulumi.ComponentResource {
         // Outputs.
         // ----------------------------------------------------------------
 
-        this.clusterId = cluster.cluster_id.apply((id) => id ?? "");
-        this.clusterName = cluster.name.apply((n) => n ?? "");
-        this.clusterEndpoint = cluster.endpoint.apply((e) => e ?? "");
-        this.clusterCaCertificate = cluster.ca_certificate.apply((c) => c ?? "");
+        this.clusterId = clusterData.id;
+        this.clusterName = clusterData.name;
+        this.clusterEndpoint = clusterData.endpoint;
+        this.clusterCaCertificate = clusterData.masterAuths.apply(
+            (m) => m[0]?.clusterCaCertificate ?? "",
+        );
         this.vpcName = vpc.name;
         this.subnetName = subnet.name;
         this.kubeconfig = pulumi.secret(kubeconfig);
