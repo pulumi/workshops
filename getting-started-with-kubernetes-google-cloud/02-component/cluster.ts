@@ -360,7 +360,7 @@ export class GkeWorkshopCluster extends pulumi.ComponentResource {
                 `${name}-backup`,
                 {
                     name: pulumi.interpolate`${clusterName}-daily`,
-                    cluster: cluster.cluster_id.apply((id) => id ?? ""),
+                    cluster: pulumi.interpolate`projects/${args.projectId}/locations/${args.region}/clusters/${cluster.cluster_id.apply((id) => id ?? "")}`,
                     location: args.region,
                     backupConfig: {
                         includeVolumeData: true,
