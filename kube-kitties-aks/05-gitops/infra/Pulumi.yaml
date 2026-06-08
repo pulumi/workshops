@@ -1,0 +1,3 @@
+name: kube-kitties-gitops
+runtime: dotnet
+description: Stage 05 — cluster + Argo CD; Argo reconciles the cat from git

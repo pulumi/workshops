@@ -1,0 +1,3 @@
+name: kube-kitties-workload
+runtime: dotnet
+description: Stage 04 — cat app from existing YAML via ConfigFile

@@ -1,0 +1,11 @@
+# .NET build output
+bin/
+obj/
+*.csproj.user
+
+# Pulumi local
+.pulumi/
+
+# editor
+.vs/
+.idea/
