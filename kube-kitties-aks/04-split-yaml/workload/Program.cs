@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using Pulumi;
 using K8s = Pulumi.Kubernetes;
 using Yaml = Pulumi.Kubernetes.Yaml;
+using Core = Pulumi.Kubernetes.Core.V1;
 
 // Stage 04 — same infra/workload split as 03, but the workload is your EXISTING
 // Kubernetes YAML. Pulumi drives the raw manifests via ConfigGroup instead of
@@ -25,4 +27,14 @@ return await Pulumi.Deployment.RunAsync(() =>
     {
         Files = new[] { "manifests/*.yaml" },
     }, new ComponentResourceOptions { Provider = k8sProvider });
+
+    // Reach into the ConfigGroup for the Service the YAML created, export its IP.
+    var catService = catManifests.GetResource<Core.Service>("cat-service");
+
+    return new Dictionary<string, object?>
+    {
+        ["catServiceIp"] = catService
+            .Apply(s => s.Status)
+            .Apply(st => st!.LoadBalancer.Ingress[0].Ip),
+    };
 });

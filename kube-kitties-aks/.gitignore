@@ -9,3 +9,8 @@ obj/
 # editor
 .vs/
 .idea/
+
+# live demo working folders (presenter scratch — created during the walkthrough)
+/demo/
+/kube-kitties/
+kubeconfig.yaml

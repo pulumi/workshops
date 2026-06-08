@@ -1,3 +1,3 @@
 config:
   azure-native:location: canadacentral
-  kube-kitties-workload:clusterStack: adamgordonbell-org/kube-kitties-cluster/dev
+  kube-kitties-workload:clusterStack: adamgordonbell-org/kube-kitties/dev
