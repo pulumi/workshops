@@ -33,12 +33,18 @@ return await Pulumi.Deployment.RunAsync(() =>
         {
             Type = AC.ResourceIdentityType.SystemAssigned,
         },
+        // --- Networking: Azure CNI Powered by Cilium (eBPF dataplane) ----------
+        // THE Azure-native opt-in here (NOT the AKS default). The eBPF dataplane
+        // replaces kube-proxy/iptables; NetworkPolicy is enforced in-kernel and you
+        // get Hubble flow visibility. Same technology as GKE's "Dataplane V2".
+        // Self-hosted you'd `helm install cilium … --set kubeProxyReplacement=true`
+        // and own its lifecycle — here it's these fields and Azure runs it.
         NetworkProfile = new ACI.ContainerServiceNetworkProfileArgs
         {
-            NetworkDataplane = "cilium",
+            NetworkDataplane = "cilium",   // eBPF dataplane (the opt-in)
             NetworkPlugin = "azure",
             NetworkPluginMode = "overlay",
-            NetworkPolicy = "cilium",
+            NetworkPolicy = "cilium",      // network policy enforced by Cilium, in-kernel
             PodCidr = "192.168.0.0/16",
         },
         AgentPoolProfiles =
@@ -54,6 +60,54 @@ return await Pulumi.Deployment.RunAsync(() =>
                 Mode = "System",
             },
         },
+
+        // ─── More AKS-native features (commented out — uncomment to turn on) ───
+        // We don't use these in the workshop, but this is what enabling them looks like.
+
+        // Entra ID (formerly Azure AD) + Azure RBAC for CLUSTER ACCESS.
+        // Controls WHO can hit the Kubernetes API: humans sign in with their company
+        // identity (SSO/MFA), and you grant access with Azure role assignments to Entra
+        // groups instead of in-cluster RoleBindings — revoke = drop them from the group.
+        // NOTE: EnableRBAC above is only *Kubernetes* RBAC; these two booleans add the
+        // Entra integration on top.
+        // AadProfile = new ACI.ManagedClusterAADProfileArgs
+        // {
+        //     Managed             = true,   // AKS-managed — no manual app registrations
+        //     EnableAzureRBAC     = true,   // authz via Azure role assignments
+        //     AdminGroupObjectIDs = { "<entra-group-guid>" },   // optional cluster-admin group
+        // },
+
+        // Workload Identity — the OTHER direction: lets a POD get an Entra token to call
+        // Azure services (Key Vault, Storage, …) with NO secrets, via OIDC federation
+        // between a Kubernetes ServiceAccount and a managed identity. Different feature
+        // from AadProfile (pods→Azure, not humans→cluster). The lines below are only the
+        // cluster side — each workload ALSO needs a FederatedIdentityCredential + a
+        // ServiceAccount annotation. Heavier setup; it's the basis for the AI-agent-on-AKS
+        // sequel, which is why it's described here but not wired up.
+        // OidcIssuerProfile = new ACI.ManagedClusterOidcIssuerProfileArgs { Enabled = true },
+        // SecurityProfile = new ACI.ManagedClusterSecurityProfileArgs
+        // {
+        //     WorkloadIdentity = new ACI.ManagedClusterSecurityProfileWorkloadIdentityArgs { Enabled = true },
+        // },
+
+        // KEDA — event-driven autoscaling add-on (scale on queue depth, HTTP rps, cron,
+        // etc., not just CPU/memory). Pod-level; pairs with a node autoscaler (below).
+        // One managed-add-on field:
+        // WorkloadAutoScalerProfile = new ACI.ManagedClusterWorkloadAutoScalerProfileArgs
+        // {
+        //     Keda = new ACI.ManagedClusterWorkloadAutoScalerProfileKedaArgs { Enabled = true },
+        // },
+
+        // Node Auto Provisioning (NAP) — AKS's managed Karpenter, the NODE layer under
+        // KEDA. Instead of fixed agent pools with min/max, Azure provisions + right-sizes
+        // nodes to fit pending pods. Requires Azure CNI Overlay + Cilium (this cluster
+        // already has it). ⚠️ Preview: needs `az feature register --namespace
+        // Microsoft.ContainerService --name NodeAutoProvisioningPreview` first. You then
+        // tune it with in-cluster NodePool / AKSNodeClass CRDs, not here.
+        // NodeProvisioningProfile = new ACI.ManagedClusterNodeProvisioningProfileArgs
+        // {
+        //     Mode = "Auto",   // "Manual" (default) = classic fixed agent pools
+        // },
     });
 
     // --- Azure Container Registry --------------------------------------------

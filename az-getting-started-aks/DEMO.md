@@ -13,10 +13,23 @@ end-state checkpoints if you need to reset.
 > stack.
 
 You'll deploy:
-- An **AKS** cluster (Cilium / Dataplane V2) with Pulumi (C#)
+- An **AKS** cluster (Azure CNI Powered by Cilium) with Pulumi (C#)
 - An **Azure Container Registry**, with the image imported server-side and the
   cluster's `AcrPull` permission wired in code
 - A silly **random-cat** web app, exposed on a public LoadBalancer — no `kubectl apply`
+
+**What AKS gives you on top of vanilla k8s** (the wait-filler talking points):
+
+| Feature | What it is | In this demo? |
+|---|---|---|
+| **Cilium dataplane** | eBPF networking — replaces kube-proxy/iptables; in-kernel NetworkPolicy + Hubble flow visibility. **One config line** (`NetworkDataplane = "cilium"`). Same tech as GKE's Dataplane V2. | ✅ Stage 1 (opt-in — not the AKS default) |
+| **ACR + AcrPull** | Registry and cluster are both Azure resources; Pulumi grants the cluster's kubelet identity `AcrPull` **in code** — no image-pull secrets. Image imported server-side (`az acr import`), no local Docker. | ✅ Stage 1–2 |
+| **Entra ID RBAC** | Cluster auth via your existing Azure identities (not cluster certs); Azure RBAC roles map to Kubernetes access, per-team/namespace, centrally audited. | Mention (opt-in) |
+| **Workload Identity** | Pods get Azure access tokens via federated identity — reach Key Vault / Storage / etc. with **no secrets**. The path the AI-agent sequel builds on. | Mention (where you go next) |
+| **Managed add-ons** | KEDA (event autoscaling), service mesh, Key Vault CSI, monitoring (`az aks addon list-available`) | Mention (opt-in) |
+| **Managed control plane** | Azure runs/upgrades the control plane + cluster/node autoscaling | Always on |
+
+> Cilium one-liner: *self-hosted you'd `helm install cilium … --set kubeProxyReplacement=true` and own its lifecycle; on AKS it's one field and Azure runs it.*
 
 **Estimated time**: 60 minutes. **Cluster create is ~5 min** — start it, keep talking.
 
@@ -69,7 +82,11 @@ Paste the cluster, an ACR, and the `AcrPull` wiring. The talking point: *the
 registry and the cluster are both Azure resources, and Pulumi grants the
 cluster's kubelet identity pull rights on the registry — in code, no secrets.*
 
-First, the imports — replace the template's `using` lines with these:
+Replace the template's `Program.cs` **entirely** with this — one block, top to
+bottom: imports, then RG + AKS (Cilium) + ACR + `AcrPull` wiring + the
+Kubernetes provider. The commented `── More AKS-native features ──` section in
+the middle is a menu (Entra ID, Workload Identity, KEDA) — left off for the demo,
+there to show what turning each on looks like.
 
 ```csharp
 using System.Text;
@@ -82,21 +99,19 @@ using CR = Pulumi.AzureNative.ContainerRegistry;
 using CRI = Pulumi.AzureNative.ContainerRegistry.Inputs;
 using Authz = Pulumi.AzureNative.Authorization;
 using K8s = Pulumi.Kubernetes;
-```
 
-Then the program body — RG + AKS (Cilium) + ACR + `AcrPull` wiring + the
-Kubernetes provider:
+// Getting Started with AKS — Stage 01: the cluster + an Azure Container Registry.
+// AKS-native story: the registry and the cluster are BOTH Azure resources, and
+// Pulumi wires the pull-permission between them (AcrPull on the kubelet identity).
+// No app yet — this is the "infrastructure is ready" checkpoint.
 
-```csharp
 return await Pulumi.Deployment.RunAsync(() =>
 {
-    // --- Resource group ------------------------------------------------------
     var rg = new ResourceGroup("kubeKittiesRg", new ResourceGroupArgs
     {
         ResourceGroupName = "kube-kitties-rg",
     });
 
-    // --- AKS cluster (Cilium / Dataplane V2, system-assigned identity) -------
     var cluster = new AC.ManagedCluster("kubeKitties", new AC.ManagedClusterArgs
     {
         ResourceGroupName = rg.Name,
@@ -109,12 +124,18 @@ return await Pulumi.Deployment.RunAsync(() =>
         {
             Type = AC.ResourceIdentityType.SystemAssigned,
         },
+        // --- Networking: Azure CNI Powered by Cilium (eBPF dataplane) ----------
+        // THE Azure-native opt-in here (NOT the AKS default). The eBPF dataplane
+        // replaces kube-proxy/iptables; NetworkPolicy is enforced in-kernel and you
+        // get Hubble flow visibility. Same technology as GKE's "Dataplane V2".
+        // Self-hosted you'd `helm install cilium … --set kubeProxyReplacement=true`
+        // and own its lifecycle — here it's these fields and Azure runs it.
         NetworkProfile = new ACI.ContainerServiceNetworkProfileArgs
         {
-            NetworkDataplane = "cilium",
+            NetworkDataplane = "cilium",   // eBPF dataplane (the opt-in)
             NetworkPlugin = "azure",
             NetworkPluginMode = "overlay",
-            NetworkPolicy = "cilium",
+            NetworkPolicy = "cilium",      // network policy enforced by Cilium, in-kernel
             PodCidr = "192.168.0.0/16",
         },
         AgentPoolProfiles =
@@ -130,9 +151,58 @@ return await Pulumi.Deployment.RunAsync(() =>
                 Mode = "System",
             },
         },
+
+        // ─── More AKS-native features (commented out — uncomment to turn on) ───
+        // We don't use these in the workshop, but this is what enabling them looks like.
+
+        // Entra ID (formerly Azure AD) + Azure RBAC for CLUSTER ACCESS.
+        // Controls WHO can hit the Kubernetes API: humans sign in with their company
+        // identity (SSO/MFA), and you grant access with Azure role assignments to Entra
+        // groups instead of in-cluster RoleBindings — revoke = drop them from the group.
+        // NOTE: EnableRBAC above is only *Kubernetes* RBAC; these two booleans add the
+        // Entra integration on top.
+        // AadProfile = new ACI.ManagedClusterAADProfileArgs
+        // {
+        //     Managed             = true,   // AKS-managed — no manual app registrations
+        //     EnableAzureRBAC     = true,   // authz via Azure role assignments
+        //     AdminGroupObjectIDs = { "<entra-group-guid>" },   // optional cluster-admin group
+        // },
+
+        // Workload Identity — the OTHER direction: lets a POD get an Entra token to call
+        // Azure services (Key Vault, Storage, …) with NO secrets, via OIDC federation
+        // between a Kubernetes ServiceAccount and a managed identity. Different feature
+        // from AadProfile (pods→Azure, not humans→cluster). The lines below are only the
+        // cluster side — each workload ALSO needs a FederatedIdentityCredential + a
+        // ServiceAccount annotation. Heavier setup; it's the basis for the AI-agent-on-AKS
+        // sequel, which is why it's described here but not wired up.
+        // OidcIssuerProfile = new ACI.ManagedClusterOidcIssuerProfileArgs { Enabled = true },
+        // SecurityProfile = new ACI.ManagedClusterSecurityProfileArgs
+        // {
+        //     WorkloadIdentity = new ACI.ManagedClusterSecurityProfileWorkloadIdentityArgs { Enabled = true },
+        // },
+
+        // KEDA — event-driven autoscaling add-on (scale on queue depth, HTTP rps, cron,
+        // etc., not just CPU/memory). Pod-level; pairs with a node autoscaler (below).
+        // One managed-add-on field:
+        // WorkloadAutoScalerProfile = new ACI.ManagedClusterWorkloadAutoScalerProfileArgs
+        // {
+        //     Keda = new ACI.ManagedClusterWorkloadAutoScalerProfileKedaArgs { Enabled = true },
+        // },
+
+        // Node Auto Provisioning (NAP) — AKS's managed Karpenter, the NODE layer under
+        // KEDA. Instead of fixed agent pools with min/max, Azure provisions + right-sizes
+        // nodes to fit pending pods. Requires Azure CNI Overlay + Cilium (this cluster
+        // already has it). ⚠️ Preview: needs `az feature register --namespace
+        // Microsoft.ContainerService --name NodeAutoProvisioningPreview` first. You then
+        // tune it with in-cluster NodePool / AKSNodeClass CRDs, not here.
+        // NodeProvisioningProfile = new ACI.ManagedClusterNodeProvisioningProfileArgs
+        // {
+        //     Mode = "Auto",   // "Manual" (default) = classic fixed agent pools
+        // },
     });
 
     // --- Azure Container Registry --------------------------------------------
+    // RegistryName omitted → Pulumi auto-names (alphanumeric, globally unique).
     var registry = new CR.Registry("acr", new CR.RegistryArgs
     {
         ResourceGroupName = rg.Name,
@@ -140,7 +210,7 @@ return await Pulumi.Deployment.RunAsync(() =>
         AdminUserEnabled = false,
     });
 
-    // --- AcrPull: let the cluster's kubelet identity pull from the ACR -------
+    // --- Wire AcrPull: let the cluster's kubelet identity pull from the ACR ---
     var clientConfig = Authz.GetClientConfig.Invoke();
     var kubeletObjectId = cluster.IdentityProfile.Apply(p => p!["kubeletidentity"].ObjectId!);
 
@@ -154,7 +224,7 @@ return await Pulumi.Deployment.RunAsync(() =>
         Scope = registry.Id,
     });
 
-    // --- Kubeconfig (auto-secret in state) + a programmatic k8s provider -----
+    // --- Kubeconfig + Kubernetes provider (ready for Stage 02) ---------------
     var creds = AC.ListManagedClusterUserCredentials.Invoke(new AC.ListManagedClusterUserCredentialsInvokeArgs
     {
         ResourceGroupName = rg.Name,
@@ -169,12 +239,13 @@ return await Pulumi.Deployment.RunAsync(() =>
         EnableServerSideApply = true,
     });
 
-    // Export the kubeconfig (stays a secret in state) so we can talk to the cluster.
     return new Dictionary<string, object?>
     {
         ["clusterName"] = cluster.Name,
-        ["acrLoginServer"] = registry.LoginServer,
-        ["kubeconfig"] = Output.CreateSecret(kubeconfig),
+        ["acrLoginServer"] = registry.LoginServer,   // e.g. acr1a2b3c4.azurecr.io
+        ["kubeconfig"] = Output.CreateSecret(kubeconfig),   // talk to the cluster: pulumi stack output kubeconfig --show-secrets
+        // After up:  az acr import --name <acrLoginServer-minus-domain> \
+        //              --source docker.io/agbell/my-random-cat:latest --image my-random-cat:latest
     };
 });
 ```
@@ -185,8 +256,8 @@ pulumi up        # ~5 minutes — DON'T WAIT. Keep talking.
 
 **While it builds (~5 min) — "what AKS gives you on top of vanilla k8s":**
 - It's just code — stacks, config, outputs; Pulumi figures out the dependency order.
-- **Cilium / Dataplane V2** — eBPF networking + network policy, on by default.
-- **Entra ID RBAC** — cluster access controlled by Azure AD groups.
+- **Cilium** (Azure CNI Powered by Cilium) — eBPF networking + in-kernel NetworkPolicy; the opt-in we made above (not the AKS default). Same tech as GKE's Dataplane V2.
+- **Entra ID RBAC** — cluster access controlled by your Azure (Entra ID / AD) groups (commented in the code above).
 - **Managed add-ons** (`az aks addon list-available`) — KEDA, service mesh, Key Vault CSI.
 - The kubeconfig is **automatically a secret** in state — nobody can read it.
 
