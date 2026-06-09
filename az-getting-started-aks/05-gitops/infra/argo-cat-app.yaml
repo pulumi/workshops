@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cat
+  namespace: argocd
+spec:
+  project: default
+  source:
+    # Argo watches THIS git path and reconciles it. Points at Adam's public
+    # k8s-demo cat manifests so it works out of the box. To make it self-contained,
+    # push this repo and switch to: repoURL .../az-getting-started-aks, path 05-gitops/gitops/cat
+    repoURL: https://github.com/adamgordonbell/k8s-demo
+    targetRevision: yaml
+    path: workload/yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: default
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

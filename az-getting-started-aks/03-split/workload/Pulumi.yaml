@@ -1,0 +1,3 @@
+name: kube-kitties-workload
+runtime: dotnet
+description: Stage 03 — cat app, consumes the cluster via stack reference

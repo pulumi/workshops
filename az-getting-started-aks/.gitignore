@@ -1,0 +1,16 @@
+# .NET build output
+bin/
+obj/
+*.csproj.user
+
+# Pulumi local
+.pulumi/
+
+# editor
+.vs/
+.idea/
+
+# live demo working folders (presenter scratch — created during the walkthrough)
+/demo/
+/kube-kitties/
+kubeconfig.yaml

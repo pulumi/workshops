@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cat-deployment
+  labels:
+    app: cat-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: cat-app
+  template:
+    metadata:
+      labels:
+        app: cat-app
+    spec:
+      containers:
+      - name: cat-server
+        image: agbell/my-random-cat:latest
+        ports:
+        - containerPort: 8080

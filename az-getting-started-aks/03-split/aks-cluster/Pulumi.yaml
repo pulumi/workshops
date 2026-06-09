@@ -1,0 +1,3 @@
+name: kube-kitties
+runtime: dotnet
+description: Stage 03 — AKS cluster + ACR (exports kubeconfig for the workload stack). Name stays "kube-kitties" so this is the SAME stack as Stages 1–2 — the cluster is reused, not recreated.
