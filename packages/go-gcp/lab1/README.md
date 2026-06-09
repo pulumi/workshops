@@ -11,7 +11,7 @@ Copy the files to from the `lab1` folder to an empty directory. To verify the co
 make install_provider
 ```
 
-If succesful, your terminal output should contain at least the following lines. More lines are possible when the dependencies haven't been downloaded yet.
+If successful, your terminal output should contain at least the following lines. More lines are possible when the dependencies haven't been downloaded yet.
 
 ```
 rm -rf /Users/ringods/Projects/pulumi/workshops/packages/go-gcp/lab1/bin/pulumi-resource-ced
