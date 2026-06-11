@@ -26,7 +26,7 @@ these are the reference + take-home.
 | Stage | What it shows |
 |-------|---------------|
 | **`01-cluster/`** | RG + AKS (1.33, Cilium/Dataplane V2) + ACR + the `AcrPull` role wiring + kubeconfig + Kubernetes provider. The "infrastructure is ready" checkpoint. |
-| **`02-app/`** | `01` + the cat app (Deployment + LoadBalancer Service), image pulled from **your ACR** (`az acr import`, no local Docker). **The core — `pulumi up`, hit the IP, see the cat.** |
+| **`02-app/`** | `01` + the cat app (Deployment + LoadBalancer Service), image **built into your ACR** (`az acr build` from `app/`, no local Docker). **The core — `pulumi up`, hit the IP, see the cat.** |
 | **`03-split/`** | Split into two projects — `aks-cluster/` and `workload/` — joined by a **stack reference**. Slow-moving infra vs. fast-moving workload. |
 | **`04-split-yaml/`** | Same split, but the workload is your **existing Kubernetes YAML** driven via `ConfigGroup` — the on-ramp for teams that already have manifests. |
 | **`05-gitops/`** | *(take-home, not demoed)* Pulumi stands up the cluster + installs **Argo CD** + registers the cat as an Argo `Application`; Argo then reconciles the cat from git. Real, verified code. Points to the production-close GKE/Flux sequel. |

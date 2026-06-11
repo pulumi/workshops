@@ -13,10 +13,23 @@ end-state checkpoints if you need to reset.
 > stack.
 
 You'll deploy:
-- An **AKS** cluster (Cilium / Dataplane V2) with Pulumi (C#)
-- An **Azure Container Registry**, with the image imported server-side and the
-  cluster's `AcrPull` permission wired in code
+- An **AKS** cluster (Azure CNI Powered by Cilium) with Pulumi (C#)
+- An **Azure Container Registry**, with the image **built server-side in ACR**
+  and the cluster's `AcrPull` permission wired in code
 - A silly **random-cat** web app, exposed on a public LoadBalancer — no `kubectl apply`
+
+**What AKS gives you on top of vanilla k8s** (the wait-filler talking points):
+
+| Feature | What it is | In this demo? |
+|---|---|---|
+| **Cilium dataplane** | eBPF networking — replaces kube-proxy/iptables; in-kernel NetworkPolicy + Hubble flow visibility. **One config line** (`NetworkDataplane = "cilium"`). Same tech as GKE's Dataplane V2. | ✅ Stage 1 (opt-in — not the AKS default) |
+| **ACR + AcrPull** | Registry and cluster are both Azure resources; Pulumi grants the cluster's kubelet identity `AcrPull` **in code** — no image-pull secrets. Image **built server-side in ACR Tasks** (`az acr build`), no local Docker and no Docker Hub pull limit on our app image. | ✅ Stage 1–2 |
+| **Entra ID RBAC** | Cluster auth via your existing Azure identities (not cluster certs); Azure RBAC roles map to Kubernetes access, per-team/namespace, centrally audited. | Mention (opt-in) |
+| **Workload Identity** | Pods get Azure access tokens via federated identity — reach Key Vault / Storage / etc. with **no secrets**. The path the AI-agent sequel builds on. | Mention (where you go next) |
+| **Managed add-ons** | KEDA (event autoscaling), service mesh, Key Vault CSI, monitoring (`az aks addon list-available`) | Mention (opt-in) |
+| **Managed control plane** | Azure runs/upgrades the control plane + cluster/node autoscaling | Always on |
+
+> Cilium one-liner: *self-hosted you'd `helm install cilium … --set kubeProxyReplacement=true` and own its lifecycle; on AKS it's one field and Azure runs it.*
 
 **Estimated time**: 60 minutes. **Cluster create is ~5 min** — start it, keep talking.
 
@@ -29,7 +42,10 @@ You'll deploy:
 - k9s (optional but used here) + kubectl
 ```
 
-> Verified Jun 2026: cluster create ~271–306s; full deploy curls HTTP 200.
+> Verified Jun 2026: cluster create ~271–306s; image built in ACR via
+> `az acr build` (~30s in ACR Tasks, no Docker Hub pull of the app image); full
+> deploy curls HTTP 200. Stage 4 re-verified: the workload swaps the manifest
+> image to the ACR copy and pods pull from there (not `agbell/...`).
 
 ---
 
@@ -39,6 +55,7 @@ You'll deploy:
 mkdir kube-kitties && cd kube-kitties
 pulumi new azure-csharp
 # Project name: kube-kitties (just accept the default — it's the folder name)   Stack: dev
+location: canadacentral
 ```
 
 ⚠️ **The project name must be `kube-kitties`** — every later step references the
@@ -69,7 +86,11 @@ Paste the cluster, an ACR, and the `AcrPull` wiring. The talking point: *the
 registry and the cluster are both Azure resources, and Pulumi grants the
 cluster's kubelet identity pull rights on the registry — in code, no secrets.*
 
-First, the imports — replace the template's `using` lines with these:
+Replace the template's `Program.cs` **entirely** with this — one block, top to
+bottom: imports, then RG + AKS (Cilium) + ACR + `AcrPull` wiring + the
+Kubernetes provider. The commented `── More AKS-native features ──` section in
+the middle is a menu (Entra ID, Workload Identity, KEDA) — left off for the demo,
+there to show what turning each on looks like.
 
 ```csharp
 using System.Text;
@@ -82,21 +103,19 @@ using CR = Pulumi.AzureNative.ContainerRegistry;
 using CRI = Pulumi.AzureNative.ContainerRegistry.Inputs;
 using Authz = Pulumi.AzureNative.Authorization;
 using K8s = Pulumi.Kubernetes;
-```
 
-Then the program body — RG + AKS (Cilium) + ACR + `AcrPull` wiring + the
-Kubernetes provider:
+// Getting Started with AKS — Stage 01: the cluster + an Azure Container Registry.
+// AKS-native story: the registry and the cluster are BOTH Azure resources, and
+// Pulumi wires the pull-permission between them (AcrPull on the kubelet identity).
+// No app yet — this is the "infrastructure is ready" checkpoint.
 
-```csharp
 return await Pulumi.Deployment.RunAsync(() =>
 {
-    // --- Resource group ------------------------------------------------------
     var rg = new ResourceGroup("kubeKittiesRg", new ResourceGroupArgs
     {
         ResourceGroupName = "kube-kitties-rg",
     });
 
-    // --- AKS cluster (Cilium / Dataplane V2, system-assigned identity) -------
     var cluster = new AC.ManagedCluster("kubeKitties", new AC.ManagedClusterArgs
     {
         ResourceGroupName = rg.Name,
@@ -109,12 +128,18 @@ return await Pulumi.Deployment.RunAsync(() =>
         {
             Type = AC.ResourceIdentityType.SystemAssigned,
         },
+        // --- Networking: Azure CNI Powered by Cilium (eBPF dataplane) ----------
+        // THE Azure-native opt-in here (NOT the AKS default). The eBPF dataplane
+        // replaces kube-proxy/iptables; NetworkPolicy is enforced in-kernel and you
+        // get Hubble flow visibility. Same technology as GKE's "Dataplane V2".
+        // Self-hosted you'd `helm install cilium … --set kubeProxyReplacement=true`
+        // and own its lifecycle — here it's these fields and Azure runs it.
         NetworkProfile = new ACI.ContainerServiceNetworkProfileArgs
         {
-            NetworkDataplane = "cilium",
+            NetworkDataplane = "cilium",   // eBPF dataplane (the opt-in)
             NetworkPlugin = "azure",
             NetworkPluginMode = "overlay",
-            NetworkPolicy = "cilium",
+            NetworkPolicy = "cilium",      // network policy enforced by Cilium, in-kernel
             PodCidr = "192.168.0.0/16",
         },
         AgentPoolProfiles =
@@ -130,9 +155,58 @@ return await Pulumi.Deployment.RunAsync(() =>
                 Mode = "System",
             },
         },
+
+        // ─── More AKS-native features (commented out — uncomment to turn on) ───
+        // We don't use these in the workshop, but this is what enabling them looks like.
+
+        // Entra ID (formerly Azure AD) + Azure RBAC for CLUSTER ACCESS.
+        // Controls WHO can hit the Kubernetes API: humans sign in with their company
+        // identity (SSO/MFA), and you grant access with Azure role assignments to Entra
+        // groups instead of in-cluster RoleBindings — revoke = drop them from the group.
+        // NOTE: EnableRBAC above is only *Kubernetes* RBAC; these two booleans add the
+        // Entra integration on top.
+        // AadProfile = new ACI.ManagedClusterAADProfileArgs
+        // {
+        //     Managed             = true,   // AKS-managed — no manual app registrations
+        //     EnableAzureRBAC     = true,   // authz via Azure role assignments
+        //     AdminGroupObjectIDs = { "<entra-group-guid>" },   // optional cluster-admin group
+        // },
+
+        // Workload Identity — the OTHER direction: lets a POD get an Entra token to call
+        // Azure services (Key Vault, Storage, …) with NO secrets, via OIDC federation
+        // between a Kubernetes ServiceAccount and a managed identity. Different feature
+        // from AadProfile (pods→Azure, not humans→cluster). The lines below are only the
+        // cluster side — each workload ALSO needs a FederatedIdentityCredential + a
+        // ServiceAccount annotation. Heavier setup; it's the basis for the AI-agent-on-AKS
+        // sequel, which is why it's described here but not wired up.
+        // OidcIssuerProfile = new ACI.ManagedClusterOidcIssuerProfileArgs { Enabled = true },
+        // SecurityProfile = new ACI.ManagedClusterSecurityProfileArgs
+        // {
+        //     WorkloadIdentity = new ACI.ManagedClusterSecurityProfileWorkloadIdentityArgs { Enabled = true },
+        // },
+
+        // KEDA — event-driven autoscaling add-on (scale on queue depth, HTTP rps, cron,
+        // etc., not just CPU/memory). Pod-level; pairs with a node autoscaler (below).
+        // One managed-add-on field:
+        // WorkloadAutoScalerProfile = new ACI.ManagedClusterWorkloadAutoScalerProfileArgs
+        // {
+        //     Keda = new ACI.ManagedClusterWorkloadAutoScalerProfileKedaArgs { Enabled = true },
+        // },
+
+        // Node Auto Provisioning (NAP) — AKS's managed Karpenter, the NODE layer under
+        // KEDA. Instead of fixed agent pools with min/max, Azure provisions + right-sizes
+        // nodes to fit pending pods. Requires Azure CNI Overlay + Cilium (this cluster
+        // already has it). ⚠️ Preview: needs `az feature register --namespace
+        // Microsoft.ContainerService --name NodeAutoProvisioningPreview` first. You then
+        // tune it with in-cluster NodePool / AKSNodeClass CRDs, not here.
+        // NodeProvisioningProfile = new ACI.ManagedClusterNodeProvisioningProfileArgs
+        // {
+        //     Mode = "Auto",   // "Manual" (default) = classic fixed agent pools
+        // },
     });
 
     // --- Azure Container Registry --------------------------------------------
+    // RegistryName omitted → Pulumi auto-names (alphanumeric, globally unique).
     var registry = new CR.Registry("acr", new CR.RegistryArgs
     {
         ResourceGroupName = rg.Name,
@@ -140,7 +214,7 @@ return await Pulumi.Deployment.RunAsync(() =>
         AdminUserEnabled = false,
     });
 
-    // --- AcrPull: let the cluster's kubelet identity pull from the ACR -------
+    // --- Wire AcrPull: let the cluster's kubelet identity pull from the ACR ---
     var clientConfig = Authz.GetClientConfig.Invoke();
     var kubeletObjectId = cluster.IdentityProfile.Apply(p => p!["kubeletidentity"].ObjectId!);
 
@@ -154,7 +228,7 @@ return await Pulumi.Deployment.RunAsync(() =>
         Scope = registry.Id,
     });
 
-    // --- Kubeconfig (auto-secret in state) + a programmatic k8s provider -----
+    // --- Kubeconfig + Kubernetes provider (ready for Stage 02) ---------------
     var creds = AC.ListManagedClusterUserCredentials.Invoke(new AC.ListManagedClusterUserCredentialsInvokeArgs
     {
         ResourceGroupName = rg.Name,
@@ -169,12 +243,13 @@ return await Pulumi.Deployment.RunAsync(() =>
         EnableServerSideApply = true,
     });
 
-    // Export the kubeconfig (stays a secret in state) so we can talk to the cluster.
     return new Dictionary<string, object?>
     {
         ["clusterName"] = cluster.Name,
-        ["acrLoginServer"] = registry.LoginServer,
-        ["kubeconfig"] = Output.CreateSecret(kubeconfig),
+        ["acrLoginServer"] = registry.LoginServer,   // e.g. acr1a2b3c4.azurecr.io
+        ["kubeconfig"] = Output.CreateSecret(kubeconfig),   // talk to the cluster: pulumi stack output kubeconfig --show-secrets
+        // After up:  az acr build --registry <acrLoginServer-minus-domain> \
+        //              --image my-random-cat:latest app   (builds in ACR, no local Docker)
     };
 });
 ```
@@ -185,8 +260,8 @@ pulumi up        # ~5 minutes — DON'T WAIT. Keep talking.
 
 **While it builds (~5 min) — "what AKS gives you on top of vanilla k8s":**
 - It's just code — stacks, config, outputs; Pulumi figures out the dependency order.
-- **Cilium / Dataplane V2** — eBPF networking + network policy, on by default.
-- **Entra ID RBAC** — cluster access controlled by Azure AD groups.
+- **Cilium** (Azure CNI Powered by Cilium) — eBPF networking + in-kernel NetworkPolicy; the opt-in we made above (not the AKS default). Same tech as GKE's Dataplane V2.
+- **Entra ID RBAC** — cluster access controlled by your Azure (Entra ID / AD) groups (commented in the code above).
 - **Managed add-ons** (`az aks addon list-available`) — KEDA, service mesh, Key Vault CSI.
 - The kubeconfig is **automatically a secret** in state — nobody can read it.
 
@@ -210,10 +285,18 @@ k9s                        # default namespace empty — nothing running yet
 
 ## 4. Stage 2 — the cat app (`pulumi up` #2, the payoff)
 
-The `import` step shells out to `az acr import`, so add the Command provider:
+The image-build step shells out to `az acr build`, so add the Command provider:
 
 ```bash
 dotnet add package Pulumi.Command
+```
+
+Drop the cat app's source next to the program — `az acr build` uploads this
+folder to ACR and builds it there (no local Docker daemon). It's a tiny Flask
+app + a `python:3.9-slim` Dockerfile; copy it from the Stage-2 checkpoint:
+
+```bash
+mkdir -p app && cp ../02-app/app/* app/      # Dockerfile, app.py, requirements.txt
 ```
 
 Add the Kubernetes + Command imports alongside the ones from Stage 1:
@@ -227,23 +310,25 @@ using CoreIn = Pulumi.Kubernetes.Types.Inputs.Core.V1;
 using MetaIn = Pulumi.Kubernetes.Types.Inputs.Meta.V1;
 ```
 
-Import the public cat image into our ACR (server-side, no local Docker), then
-deploy it. Add this inside `Deployment.RunAsync`, after the Stage 1 resources
-(it reuses `registry`, `k8sProvider`, `cluster`, and `kubeconfig`):
+Build the cat image into our ACR (server-side, no local Docker), then deploy it.
+Add this inside `Deployment.RunAsync`, after the Stage 1 resources (it reuses
+`registry`, `k8sProvider`, `cluster`, and `kubeconfig`):
 
 ```csharp
-// Pull the cat image into OUR registry, server-side (no local Docker).
-var import = new Cmd.Command("import-cat-image", new Cmd.CommandArgs
+// Build the cat image into OUR registry, in ACR Tasks (no local Docker). Our
+// app image never hits Docker Hub's pull limiter — only the Dockerfile's base
+// image is fetched, by ACR's build infra. Source is in app/.
+var build = new Cmd.Command("build-cat-image", new Cmd.CommandArgs
 {
     Create = registry.Name.Apply(n =>
-        $"az acr import --name {n} --source docker.io/agbell/my-random-cat:latest --image my-random-cat:latest --force"),
+        $"az acr build --registry {n} --image my-random-cat:latest app"),
 }, new CustomResourceOptions { DependsOn = { registry } });
 
 var catImage = registry.LoginServer.Apply(s => $"{s}/my-random-cat:latest");
 var labels = new InputMap<string> { { "app", "cat-app" } };
 
-// Provider + don't deploy the app until the image import has run.
-var catOpts = new CustomResourceOptions { Provider = k8sProvider, DependsOn = { import } };
+// Provider + don't deploy the app until the image build has run.
+var catOpts = new CustomResourceOptions { Provider = k8sProvider, DependsOn = { build } };
 
 var catDeployment = new Apps.Deployment("cat-deployment", new AppsIn.DeploymentArgs
 {
@@ -328,16 +413,16 @@ helper (it lives one level up, in the workshop's `03-split/` folder):
 ../03-split/split.sh
 ```
 
-It creates `aks-cluster/` — your project files moved in, `Program.cs` rewritten to
-the cluster-only version (RG + AKS + ACR + AcrPull + the image `import` kept, the
-cat **stripped**, exports trimmed to `clusterName` / `acrLoginServer` /
-`kubeconfig`) — and an **empty `workload/`** you'll fill in at 5c. The project name
-is unchanged, so `aks-cluster/` is still the same `<project>/dev` stack; Pulumi
-won't recreate the cluster.
+It creates `aks-cluster/` — your project files (including the `app/` build
+context) moved in, `Program.cs` rewritten to the cluster-only version (RG + AKS +
+ACR + AcrPull + the image `build` kept, the cat **stripped**, exports trimmed to
+`clusterName` / `acrLoginServer` / `kubeconfig`) — and an **empty `workload/`**
+you'll fill in at 5c. The project name is unchanged, so `aks-cluster/` is still
+the same `<project>/dev` stack; Pulumi won't recreate the cluster.
 
-> By hand instead: make the two folders, `mv` the project files into
+> By hand instead: make the two folders, `mv` the project files (and `app/`) into
 > `aks-cluster/`, delete `catImage` / `catOpts` / `catDeployment` / `catService`
-> from its `Program.cs` (keep `import`), and trim the exports to the three above.
+> from its `Program.cs` (keep `build`), and trim the exports to the three above.
 
 **5b — bring the cat down from the cluster stack.**
 
@@ -465,6 +550,24 @@ curl http://$(pulumi stack output catServiceIp)/      # cat's back, now owned by
 > teaching point — the *workload* moved to its own stack while the *cluster*
 > never budged. Don't promise the same URL across the split.
 
+> **"But wouldn't that be downtime in prod?" — say this before they ask.** The
+> blip is a *demo artifact*: I'm tearing the cat down to show a different way to
+> define it. In the real world this is a **refactor, not a redeploy** — the live
+> Deployment/Service don't need to change, only *who owns them in Pulumi state*:
+> - **One-time restructure** (move to a new stack / switch to YAML): transfer
+>   ownership without touching the object — `pulumi state delete` from the old
+>   stack then `pulumi import` into the new one, or use resource **`aliases`** so
+>   Pulumi treats it as the same resource and never replaces it. Zero downtime.
+> - **Ongoing app changes** (new image, env): Kubernetes does a **rolling update**
+>   — new pods pass readiness probes before old ones drain (`maxSurge` /
+>   `maxUnavailable` + a PodDisruptionBudget). Normal deploys are zero-downtime.
+> - **Keep the address stable:** the IP only moves because the Service is
+>   recreated. In prod you reserve a **static Azure Public IP** (pin via
+>   `loadBalancerIP`/annotation) or front it with **Ingress + DNS**, so the
+>   entrypoint never changes.
+> - **Steady state = GitOps (Stage 5):** changes are `git push`; Argo/Flux does
+>   the rolling update — `pulumi up` never touches a live object again.
+
 *(Full file: `03-split/workload/Program.cs`.)*
 
 ---
@@ -483,9 +586,14 @@ mkdir -p manifests
 cp ../../04-split-yaml/workload/manifests/*.yaml manifests/
 ```
 
-That's `cat-deployment.yaml` + `cat-service.yaml`. Note the image is the **public
-DockerHub** `agbell/my-random-cat:latest` (not the ACR copy) — the point of this
-act is "your existing manifests, as-written," nothing Azure-specific.
+That's `cat-deployment.yaml` + `cat-service.yaml`. The image in them is the
+**public DockerHub** `agbell/my-random-cat:latest` — left exactly as a team would
+already have written it. We **don't edit the files**; the program below reads
+them and does a plain string-swap of that image for the ACR copy the cluster
+stack built (same `az acr build` as Stage 1–3), then hands the result to
+`ConfigGroup`. So the manifests stay portable and as-written on disk, but the
+pods pull from our registry — nothing hits Docker Hub's rate limiter. *That* swap
+is the only Azure-specific bit, and it lives in Pulumi, not in your manifests.
 
 **6b — drop the typed cat first, then swap to YAML.** ⚠️ You can't do this as a
 single in-place `pulumi up`: the `ConfigGroup` would try to *create*
@@ -506,6 +614,7 @@ export the Service IP (so `pulumi stack output` works like the other stages):
 
 ```csharp
 using System.Collections.Generic;
+using System.IO;
 using Pulumi;
 using K8s = Pulumi.Kubernetes;
 using Yaml = Pulumi.Kubernetes.Yaml;
@@ -516,6 +625,8 @@ return await Pulumi.Deployment.RunAsync(() =>
     var cfg = new Config();
     var clusterStack = new StackReference(cfg.Require("clusterStack"));
     var kubeconfig = clusterStack.GetOutput("kubeconfig");
+    var acrLoginServer = clusterStack.GetOutput("acrLoginServer");
+    var catImage = acrLoginServer.Apply(s => $"{s}/my-random-cat:latest");
 
     var k8sProvider = new K8s.Provider("kubeKittiesK8s", new K8s.ProviderArgs
     {
@@ -523,11 +634,20 @@ return await Pulumi.Deployment.RunAsync(() =>
         EnableServerSideApply = true,
     });
 
-    // Pulumi drives the existing manifests; it still tracks the Service↔Deployment
+    // Read the raw manifests and point the image at our ACR copy — a plain text
+    // swap; the files on disk stay as-written. catImage is an Output (the ACR
+    // host isn't known until the cluster stack resolves), so the rewritten
+    // Deployment YAML is an Output<string> too — ConfigGroup.Yaml accepts that.
+    var serviceYaml = File.ReadAllText("manifests/cat-service.yaml");
+    var deploymentYaml = catImage.Apply(img =>
+        File.ReadAllText("manifests/cat-deployment.yaml")
+            .Replace("agbell/my-random-cat:latest", img));
+
+    // Pulumi drives the manifests; it still tracks the Service↔Deployment
     // dependency graph and applies in the right order.
     var catManifests = new Yaml.ConfigGroup("cat-manifests", new Yaml.ConfigGroupArgs
     {
-        Files = new[] { "manifests/*.yaml" },
+        Yaml = { serviceYaml, deploymentYaml },
     }, new ComponentResourceOptions { Provider = k8sProvider });
 
     // Reach into the ConfigGroup for the Service the YAML created, export its IP.
@@ -548,7 +668,9 @@ curl http://$(pulumi stack output catServiceIp)/
 ```
 
 > Narrate it the same way as the split: the cat drops and comes back (new IP) —
-> only now its *definition* is plain YAML instead of typed C#.
+> only now its *definition* is plain YAML instead of typed C#. Same real-world
+> caveat as Stage 3: in prod you'd `import`/alias the existing Service into the
+> `ConfigGroup` instead of destroy+recreate (no downtime, IP stays put).
 
 *(Full file: `04-split-yaml/workload/`.)*
 

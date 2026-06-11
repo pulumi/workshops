@@ -9,7 +9,7 @@ using CRI = Pulumi.AzureNative.ContainerRegistry.Inputs;
 using Authz = Pulumi.AzureNative.Authorization;
 using Cmd = Pulumi.Command.Local;
 
-// Stage 03/04 — the CLUSTER stack. Stands up AKS + ACR, imports the cat image,
+// Stage 03/04 — the CLUSTER stack. Stands up AKS + ACR, builds the cat image,
 // and EXPORTS the kubeconfig + ACR login server so the separate workload stack
 // can consume them via a stack reference. This is the slow-moving base layer.
 
@@ -65,10 +65,12 @@ return await Pulumi.Deployment.RunAsync(() =>
         Scope = registry.Id,
     });
 
-    var import = new Cmd.Command("import-cat-image", new Cmd.CommandArgs
+    // Build the cat image into ACR (ACR Tasks, no local Docker, no Docker Hub
+    // pull of our app image). Source is in app/.
+    var build = new Cmd.Command("build-cat-image", new Cmd.CommandArgs
     {
         Create = registry.Name.Apply(n =>
-            $"az acr import --name {n} --source docker.io/agbell/my-random-cat:latest --image my-random-cat:latest --force"),
+            $"az acr build --registry {n} --image my-random-cat:latest app"),
     }, new CustomResourceOptions { DependsOn = { registry } });
 
     var creds = AC.ListManagedClusterUserCredentials.Invoke(new AC.ListManagedClusterUserCredentialsInvokeArgs

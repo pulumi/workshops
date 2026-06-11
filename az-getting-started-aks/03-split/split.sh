@@ -5,9 +5,9 @@
 # Run this from INSIDE your flat Stage-2 demo project (the folder with
 # Program.cs + Pulumi.yaml, cluster + cat both deployed). It:
 #
-#   1. creates  aks-cluster/  and moves the project files into it
+#   1. creates  aks-cluster/  and moves the project files (incl. app/) into it
 #   2. rewrites aks-cluster/Program.cs to the CLUSTER-ONLY program
-#      (RG + AKS + ACR + AcrPull + image import + kubeconfig export — no cat)
+#      (RG + AKS + ACR + AcrPull + image build + kubeconfig export — no cat)
 #   3. creates an empty  workload/  folder for you to fill in by hand
 #
 # The project NAME is left unchanged, so aks-cluster is the SAME stack you've
@@ -30,9 +30,10 @@ mkdir aks-cluster workload
 
 # 1. Move the project files into aks-cluster/ (name unchanged → same stack).
 mv Program.cs Pulumi.yaml Pulumi.dev.yaml *.csproj aks-cluster/
+[ -d app ] && mv app aks-cluster/   # the cat's build context goes with the registry
 rm -rf bin obj   # stale build output from the flat layout
 
-# 2. Overwrite Program.cs with the cluster-only program (cat stripped, import kept).
+# 2. Overwrite Program.cs with the cluster-only program (cat stripped, build kept).
 cat > aks-cluster/Program.cs <<'CSHARP'
 using System.Text;
 using System.Collections.Generic;
@@ -46,7 +47,7 @@ using Authz = Pulumi.AzureNative.Authorization;
 using K8s = Pulumi.Kubernetes;
 using Cmd = Pulumi.Command.Local;
 
-// Stage 03 — the CLUSTER stack. RG + AKS + ACR + AcrPull + image import, and it
+// Stage 03 — the CLUSTER stack. RG + AKS + ACR + AcrPull + image build, and it
 // EXPORTS the kubeconfig + ACR login server for the workload stack. No app here.
 // Project name is UNCHANGED, so this is the SAME stack as Stage 2 — `pulumi up`
 // just removes the cat Deployment + Service; the cluster is untouched.
@@ -127,11 +128,12 @@ return await Pulumi.Deployment.RunAsync(() =>
         EnableServerSideApply = true,
     });
 
-    // Keep the image import with the registry — the image belongs to the infra.
-    var import = new Cmd.Command("import-cat-image", new Cmd.CommandArgs
+    // Keep the image build with the registry — the image belongs to the infra.
+    // Builds in ACR Tasks from app/ (no local Docker, no Docker Hub pull of our image).
+    var build = new Cmd.Command("build-cat-image", new Cmd.CommandArgs
     {
         Create = registry.Name.Apply(n =>
-            $"az acr import --name {n} --source docker.io/agbell/my-random-cat:latest --image my-random-cat:latest --force"),
+            $"az acr build --registry {n} --image my-random-cat:latest app"),
     }, new CustomResourceOptions { DependsOn = { registry } });
 
     return new Dictionary<string, object?>
@@ -149,7 +151,7 @@ CSHARP
 cat <<EOF
 
 ✅ Split scaffolding ready.
-   aks-cluster/  → project '$PROJECT', SAME stack (cluster code, cat stripped, import kept)
+   aks-cluster/  → project '$PROJECT', SAME stack (cluster code, cat stripped, build kept)
    workload/     → empty, yours to build (5c/5d)
 
 Next (yours to run):
