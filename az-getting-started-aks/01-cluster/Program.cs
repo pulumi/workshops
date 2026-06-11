@@ -153,7 +153,7 @@ return await Pulumi.Deployment.RunAsync(() =>
         ["clusterName"] = cluster.Name,
         ["acrLoginServer"] = registry.LoginServer,   // e.g. acr1a2b3c4.azurecr.io
         ["kubeconfig"] = Output.CreateSecret(kubeconfig),   // talk to the cluster: pulumi stack output kubeconfig --show-secrets
-        // After up:  az acr import --name <acrLoginServer-minus-domain> \
-        //              --source docker.io/agbell/my-random-cat:latest --image my-random-cat:latest
+        // After up:  az acr build --registry <acrLoginServer-minus-domain> \
+        //              --image my-random-cat:latest app   (builds in ACR, no local Docker)
     };
 });

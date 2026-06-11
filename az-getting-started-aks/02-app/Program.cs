@@ -83,7 +83,8 @@ return await Pulumi.Deployment.RunAsync(() =>
 
     // --- AKS-native: Azure Container Registry + AcrPull ----------------------
     // The registry and the cluster are both Azure resources; Pulumi wires the
-    // pull-permission between them, and imports the cat image (no local Docker).
+    // pull-permission between them, and builds the cat image into ACR (no local
+    // Docker, no Docker Hub pull of our app image).
     var registry = new CR.Registry("acr", new CR.RegistryArgs
     {
         ResourceGroupName = rg.Name,
@@ -101,11 +102,14 @@ return await Pulumi.Deployment.RunAsync(() =>
         Scope = registry.Id,
     });
 
-    // Pull the public cat image into our ACR, server-side (no local Docker).
-    var import = new Cmd.Command("import-cat-image", new Cmd.CommandArgs
+    // Build the cat image straight into our ACR. The build runs in ACR Tasks
+    // (no local Docker), and our app image never touches Docker Hub's pull
+    // limiter — only the base image in the Dockerfile is fetched, by ACR's
+    // build infra. Source is in app/ (Dockerfile + Flask app).
+    var build = new Cmd.Command("build-cat-image", new Cmd.CommandArgs
     {
         Create = registry.Name.Apply(n =>
-            $"az acr import --name {n} --source docker.io/agbell/my-random-cat:latest --image my-random-cat:latest --force"),
+            $"az acr build --registry {n} --image my-random-cat:latest app"),
     }, new CustomResourceOptions { DependsOn = { registry } });
 
     var catImage = registry.LoginServer.Apply(s => $"{s}/my-random-cat:latest");
@@ -113,7 +117,7 @@ return await Pulumi.Deployment.RunAsync(() =>
     // --- The cat app (pulled from our ACR) -----------------------------------
     var labels = new InputMap<string> { { "app", "cat-app" } };
 
-    var catOpts = new CustomResourceOptions { Provider = k8sProvider, DependsOn = { import } };
+    var catOpts = new CustomResourceOptions { Provider = k8sProvider, DependsOn = { build } };
 
     var catDeployment = new Apps.Deployment("cat-deployment", new AppsIn.DeploymentArgs
     {

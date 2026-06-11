@@ -15,7 +15,7 @@ using MetaIn = Pulumi.Kubernetes.Types.Inputs.Meta.V1;
 return await Pulumi.Deployment.RunAsync(() =>
 {
     var cfg = new Config();
-    var clusterStackName = cfg.Require("clusterStack");   // e.g. org/kube-kitties-cluster/dev
+    var clusterStackName = cfg.Require("clusterStack");   // e.g. org/kube-kitties/dev
     var clusterStack = new StackReference(clusterStackName);
 
     var kubeconfig = clusterStack.GetOutput("kubeconfig");
