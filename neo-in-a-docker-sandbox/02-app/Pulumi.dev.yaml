@@ -1,0 +1,8 @@
+# The stack imports the Pulumi ESC environment created by ../00-esc. ESC mints
+# short-lived AWS credentials through OIDC every time this stack runs, so no
+# AWS key ever lives in the sandbox (or on the laptop). The organization is
+# implied by the stack (<org>/dev); see ../README.md.
+environment:
+  - neo-workshop/aws-oidc
+config:
+  neo-workshop-app:bucketPrefix: neo-workshop-

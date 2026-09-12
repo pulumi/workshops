@@ -1,0 +1,15 @@
+{
+  "name": "neo-workshop-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Neo in a Docker Sandbox: the S3 bucket Neo hardens live",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^7.46.0",
+    "@pulumi/pulumi": "^3.262.0"
+  }
+}
