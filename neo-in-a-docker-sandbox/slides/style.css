@@ -183,3 +183,16 @@ html {
   height: auto !important;
   filter: drop-shadow(0 6px 18px rgba(126, 107, 255, 0.18));
 }
+
+/* ── Denser code blocks for slides whose snippet must fit half a column ── */
+.code-sm pre, .code-sm .shiki, .code-sm pre.shiki, .code-sm code {
+  font-size: 0.85rem !important;
+  line-height: 1.45 !important;
+}
+.code-xs pre, .code-xs .shiki, .code-xs pre.shiki, .code-xs code {
+  font-size: 0.72rem !important;
+  line-height: 1.4 !important;
+}
+.code-sm pre, .code-sm pre.shiki, .code-xs pre, .code-xs pre.shiki {
+  padding: 0.9rem 1.1rem !important;
+}

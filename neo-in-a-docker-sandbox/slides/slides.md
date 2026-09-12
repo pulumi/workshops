@@ -339,13 +339,13 @@ screenshot on the right is `pulumi neo` in a terminal. Then straight into what
   <div class="big-code">
 
 ```bash
-pulumi login                      # Neo uses this identity and its RBAC
-cd my-project                     # a directory with a Pulumi.yaml
-pulumi neo                        # interactive TUI
-pulumi neo "what's in this stack?" # …or start with a prompt
+pulumi login                  # identity + RBAC for Neo
+cd my-project                 # needs a Pulumi.yaml
+pulumi neo                    # interactive TUI
+pulumi neo "what's in this stack?"  # or with a prompt
 
-# the local tool loop runs here; approvals show up in the TUI
-# the console URL of the task is printed, so the browser view works too
+# tool calls run here; approvals show in the TUI
+# the task's console URL is printed as well
 ```
 
   </div>
@@ -450,23 +450,23 @@ the role ESC hands out and the network the VM can reach.
 # The command, flag by flag
 
 <div class="grid grid-cols-2 gap-10 mt-4">
-  <div class="big-code">
+  <div class="big-code code-sm">
 
 ```text
 pulumi neo [prompt] [flags]
 
-  --approval-mode     manual | balanced | auto   (default manual)
-  --permission-mode   default | read-only         (default default)
+  --approval-mode     manual | balanced | auto  (manual)
+  --permission-mode   default | read-only       (default)
   -s, --stack         stack to attach to the task
-  --cwd               working directory for local tool execution
-  -p, --print         one prompt, non-interactive, final answer on stdout
-  --debug-update[=v]  investigate a failed update (latest, or =42)
-  --debug-preview[=id] investigate a failed preview
-  --disable-integrations   no integration credentials for this task
+  --cwd               working directory for local tools
+  -p, --print         one prompt, non-interactive, exit
+  --debug-update[=v]  investigate a failed update
+  --debug-preview[=id]   investigate a failed preview
+  --disable-integrations no integration credentials
   --org               organization that owns the task
 
-pulumi neo resume <task-id>   reattach the local tool loop to a task
-pulumi neo acp                run Neo as an ACP agent inside your editor
+pulumi neo resume <task-id>   reattach the tool loop
+pulumi neo acp                Neo as an ACP editor agent
 ```
 
   </div>
@@ -583,19 +583,19 @@ the kit in the workshop folder.
       <li>Three ways in: a mixin kit on the stock Claude agent, the template plus the mixin, or one sandbox kit that names the image</li>
     </ul>
   </div>
-  <div class="big-code">
+  <div class="big-code code-sm">
 
 ```text
 infrastructure-sandbox-kit/
-├── kit/spec.yaml          # mixin: kind: mixin, schemaVersion "2"
-├── sandbox-kit/spec.yaml  # one-flag bundle: kind: sandbox, pins the image
-├── template/Dockerfile    # the baked image (FROM claude-code-docker)
-├── scripts/               # pinned, checksum-verified provisioning
+├── kit/spec.yaml          # mixin (schemaVersion "2")
+├── sandbox-kit/spec.yaml  # one-flag bundle, pins the image
+├── template/Dockerfile    # the baked image
+├── scripts/               # pinned, verified provisioning
 ├── docs/credentials.md    # binding Pulumi / cloud creds
 └── docs/network.md        # extending the allow-list
 
-workshop repo:
-└── neo-kit/spec.yaml      # kind: sandbox, entrypoint: pulumi neo
+pulumi/workshops → neo-in-a-docker-sandbox/
+└── neo-kit/spec.yaml      # kind: sandbox, runs pulumi neo
 ```
 
   </div>
@@ -663,22 +663,22 @@ why we mint it short-lived instead of injecting it.
 # Network rules
 
 <div class="grid grid-cols-2 gap-10 mt-4">
-  <div class="big-code">
+  <div class="big-code code-sm">
 
 ```yaml
 permissions:
   network:
     allow:
-      - api.pulumi.com          # Neo task API + event stream, state, ESC
-      - get.pulumi.com          # plugin downloads
-      - github.com              # providers, the kit's own scripts
+      - api.pulumi.com        # Neo API + events, state, ESC
+      - get.pulumi.com        # plugin downloads
+      - github.com            # providers, kit scripts
       - objects.githubusercontent.com
-      - registry.npmjs.org      # your program's dependencies
+      - registry.npmjs.org    # program dependencies
       - sts.amazonaws.com
       - sts.eu-central-1.amazonaws.com
       - s3.eu-central-1.amazonaws.com
       - "*.s3.eu-central-1.amazonaws.com"
-      # …registries, apt mirrors, other clouds' control planes
+      # …registries, apt mirrors, other clouds
 ```
 
   </div>
@@ -783,7 +783,7 @@ defined.
 # How the Neo agent is defined
 
 <div class="grid grid-cols-2 gap-10 mt-4">
-  <div class="big-code">
+  <div class="big-code code-xs">
 
 ```yaml
 # neo-kit/spec.yaml (abridged)
@@ -803,12 +803,11 @@ environment:
 setup:
   install:
     - user: "1000"
-      command: bash "$HOME/.local/share/neo-sandbox/install-shims.sh"
+      command: bash ~/.local/share/neo-sandbox/install-shims.sh
   files:
     - path: /home/agent/.config/neo-sandbox/workspace
       content: "${WORKDIR}"
-agentInstructions:
-  filename: AGENTS.md
+agentInstructions: { filename: AGENTS.md }
 ```
 
   </div>
@@ -835,16 +834,16 @@ reference. Then the run command on the next slide.
 # Running it, and the boundaries it draws
 
 <div class="grid grid-cols-2 gap-10 mt-4">
-  <div class="big-code">
+  <div class="big-code code-sm">
 
 ```bash
-sbx secret set -g pulumi                       # once
-sbx run --name neo-demo ./neo-kit ./02-app     # create + attach
+sbx secret set -g pulumi                  # once
+sbx run --name neo-demo ./neo-kit ./02-app
 sbx run --name neo-demo \
-  --env NEO_SANDBOX_PERMISSION_MODE=read-only  # re-attach, other mode
-sbx exec neo-demo sh -c 'pulumi destroy'       # → guard: blocked
-sbx policy log neo-demo                        # who tried to reach what
-sbx rm -f neo-demo                             # gone, including secrets scoped to it
+  --env NEO_SANDBOX_PERMISSION_MODE=read-only
+sbx exec neo-demo sh -c 'pulumi destroy'  # blocked
+sbx policy log neo-demo                   # who reached what
+sbx rm -f neo-demo                        # gone, secrets too
 ```
 
   </div>
@@ -939,14 +938,14 @@ for this audience.
       <li>Kit sources are allow-listed (<code>kit.allowedSources</code>); install commands run as root in the VM, so provenance matters</li>
     </ul>
   </div>
-  <div class="big-code">
+  <div class="big-code code-sm">
 
 ```bash
-sbx run ./my-agent/                          # a sandbox kit, local
-sbx run claude --kit ./my-mixin/             # a mixin on a built-in agent
+sbx run ./my-agent/                    # sandbox kit
+sbx run claude --kit ./my-mixin/       # mixin on claude
 sbx run "git+https://github.com/docker/sbx-kits-contrib.git#dir=amp"
-sbx run ghcr.io/myorg/my-agent:1.0           # from an OCI registry
-sbx run ./my-agent/ --kit-arg channel=beta   # kit arguments (0.42)
+sbx run ghcr.io/myorg/my-agent:1.0     # OCI registry
+sbx run ./my-agent/ --kit-arg channel=beta
 ```
 
   </div>
@@ -976,14 +975,16 @@ Two things the Pulumi half relies on: the mixin vs sandbox distinction and
       <li>Third-party v2 kits need an approved credential binding per service and domain</li>
     </ul>
   </div>
-  <div class="big-code">
+  <div class="big-code code-sm">
 
 ```bash
-sbx secret set anthropic                     # built-in service
-sbx secret set -g pulumi                     # kit-declared service (our kit)
+sbx secret set anthropic                 # built-in service
+sbx secret set -g pulumi                 # kit-declared (ours)
 sbx secret set github --command 'gh auth token'
-sbx secret set-custom --host api.example.com --env API_KEY --value "$KEY"
-gh auth token | sbx secret set --registry ghcr.io --password-stdin
+sbx secret set-custom --host api.example.com \
+  --env API_KEY --value "$KEY"
+gh auth token | sbx secret set --registry ghcr.io \
+  --password-stdin
 ```
 
   </div>
@@ -1087,17 +1088,17 @@ this slide up while T2 runs the boundaries script.
   <div class="big-code">
 
 ```bash
-01-sandbox/boundaries.sh        # host, via sbx exec
+01-sandbox/boundaries.sh     # host, via sbx exec
 ```
 
 ```text
-▶ 1. Identity            pulumi whoami -v → User: engin
-▶ 2. Token               PULUMI_ACCESS_TOKEN=proxy-managed
-▶ 3. Cloud creds         (no AWS_/GOOGLE_/AZURE_ variables) (no ~/.aws)
-▶ 4. Filesystem          only …/02-app is there; no parent, no /Users
-▶ 5. Network             ifconfig.me → blocked; api.pulumi.com → 200
-▶ 6. Proxy log           sbx policy log neo-demo: host, rule, count
-▶ 7. Guard               pulumi destroy --yes → guard: blocked, exit=2
+▶ 1. Identity    whoami → User: engin
+▶ 2. Token       PULUMI_ACCESS_TOKEN=proxy-managed
+▶ 3. Cloud creds no AWS_/GOOGLE_/AZURE_ vars, no ~/.aws
+▶ 4. Filesystem  only …/02-app; no parent, no /Users
+▶ 5. Network     ifconfig.me blocked; api.pulumi.com 200
+▶ 6. Proxy log   sbx policy log: host, rule, count
+▶ 7. Guard       pulumi destroy → blocked, exit=2
 ```
 
   </div>
@@ -1127,14 +1128,14 @@ it doesn't have; and it doesn't have much.
 Harden the S3 bucket in index.ts: enable versioning,
 default SSE-S3 encryption, block all public access,
 and tag the new resources with owner=neo. Use the
-@pulumi/aws v7 sub-resources. Run pulumi preview and
-show me the diff before deploying anything.
+@pulumi/aws v7 sub-resources. Run pulumi preview
+and show me the diff before deploying anything.
 ```
 
 ```text
-+  aws:s3:BucketVersioning                        create
-+  aws:s3:BucketServerSideEncryptionConfiguration create
-+  aws:s3:BucketPublicAccessBlock                 create
++  aws:s3:BucketVersioning                   create
++  aws:s3:BucketServerSideEncryptionConfig…  create
++  aws:s3:BucketPublicAccessBlock            create
 Resources: + 3 to create, 2 unchanged
 ```
 
@@ -1164,17 +1165,18 @@ the second screen.
   <div class="big-code">
 
 ```bash
-# leave the session, re-attach read-only with a first prompt
-01-sandbox/up.sh --env NEO_SANDBOX_PERMISSION_MODE=read-only -- \
-  "Add a lifecycle rule that expires noncurrent versions \
-   after 30 days, preview it, and deploy it."
+# leave the session, re-attach read-only
+01-sandbox/up.sh \
+  --env NEO_SANDBOX_PERMISSION_MODE=read-only -- \
+  "Add a lifecycle rule that expires noncurrent \
+   versions after 30 days, preview it, and deploy it."
 ```
 
 ```text
-│ modes       approval=manual  permission=read-only
+│ modes   approval=manual  permission=read-only
 …
-Neo: edits index.ts, runs pulumi preview (+1 to create)
-Neo: cannot deploy in read-only mode; stops and reports
+Neo: edits index.ts, runs pulumi preview (+1)
+Neo: cannot deploy in read-only mode; reports
 ```
 
   </div>
@@ -1202,8 +1204,8 @@ all three approval modes; describe balanced and auto in one sentence each.
   <div class="big-code">
 
 ```text
-You: We are done with this environment. Tear the whole stack down.
-Neo: runs `pulumi destroy --yes`   [approve on purpose]
+You: We're done here. Tear the whole stack down.
+Neo: runs `pulumi destroy --yes`  [approve on purpose]
 
 guard: blocked a destructive command
   pulumi destroy --yes
@@ -1212,8 +1214,8 @@ Nothing was executed. …
 ```
 
 ```bash
-03-guardrails/try-destroy.sh   # same from the host: exit=2, guard.log
-03-guardrails/try-egress.sh    # an unlisted region endpoint → blocked
+03-guardrails/try-destroy.sh  # from the host: exit=2
+03-guardrails/try-egress.sh   # unlisted region → blocked
 ```
 
   </div>
@@ -1284,10 +1286,10 @@ what the demo used, and what it replaces.
 # Pulumi ESC: credentials that expire
 
 <div class="grid grid-cols-2 gap-10 mt-4">
-  <div class="big-code">
+  <div class="big-code code-sm">
 
 ```yaml
-# ESC environment <org>/neo-workshop/aws-oidc (created by 00-esc)
+# ESC environment <org>/neo-workshop/aws-oidc (from 00-esc)
 values:
   aws:
     region: eu-central-1
@@ -1295,7 +1297,7 @@ values:
       fn::open::aws-login:
         oidc:
           duration: 1h
-          roleArn: arn:aws:iam::123456789012:role/neo-workshop-esc
+          roleArn: arn:aws:iam::<account>:role/neo-workshop-esc
           sessionName: neo-in-a-docker-sandbox
   environmentVariables:
     AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
@@ -1495,18 +1497,18 @@ next workshop link in the handouts tab.
 
 <div class="contact-grid">
   <div class="contact-card">
-    <div class="contact-card__avatar"><img src="https://github.com/adamgordonbell.png" alt="Adam Gordon Bell" /></div>
+    <div class="contact-card__avatar"><img src="/avatars/adamgordonbell.png" alt="Adam Gordon Bell" /></div>
     <div class="contact-card__name">Adam Gordon Bell</div>
     <div class="contact-card__role">Community Engineer, Pulumi</div>
   </div>
   <div class="contact-card">
-    <div class="contact-card__avatar"><img src="https://github.com/dirien.png" alt="Engin Diri" /></div>
+    <div class="contact-card__avatar"><img src="/avatars/dirien.png" alt="Engin Diri" /></div>
     <div class="contact-card__name">Engin Diri</div>
     <div class="contact-card__role">Principal Solutions Architect, Pulumi</div>
     <div class="contact-card__handles"><span>dirien</span><span>engin-diri</span></div>
   </div>
   <div class="contact-card">
-    <div class="contact-card__avatar"><img src="https://github.com/mikegcoleman.png" alt="Mike Coleman" /></div>
+    <div class="contact-card__avatar"><img src="/avatars/mikegcoleman.png" alt="Mike Coleman" /></div>
     <div class="contact-card__name">Mike Coleman</div>
     <div class="contact-card__role">Staff Solutions Architect, Docker</div>
   </div>
@@ -1535,7 +1537,7 @@ next workshop link in the handouts tab.
 question needs it. If nobody asks for 10 seconds, prompt with: "which of the
 six boundaries would your security team ask about first?"
 
-Avatars are GitHub profile photos (github.com/<handle>.png); confirm the
-handles for Adam and Mike before the session or drop local images into
-slides/public/avatars/ and swap the src values.
+Avatars are GitHub profile photos saved under slides/public/avatars/
+(handles adamgordonbell, dirien, mikegcoleman); confirm the two that are
+not yours before the session and replace the files if needed.
 -->
