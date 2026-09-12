@@ -33,7 +33,7 @@ defaults:
 
 <!--
 30s hook. Suggested speaker: Adam. Read the title, introduce the three of us in
-one line each. Don't sell anything yet — the argument starts on slide 5 with
+one line each. Don't sell anything yet. The argument starts on slide 5 with
 "an agent that breaks your laptop is annoying". Arc of the hour: why infra is
 different → Neo's controls → the kit → Docker Sandboxes (Mike) → the demo →
 ESC → wrap.
@@ -143,7 +143,7 @@ the line from the workshop abstract; the whole hour hangs on it.
     <ul class="!mt-4 !text-[1.15rem] !leading-relaxed space-y-2">
       <li>A wrong <code>pulumi destroy</code> is customer data</li>
       <li>A leaked key is an incident, not a cleanup</li>
-      <li>There is no undo, only a postmortem</li>
+      <li>There is no undo button</li>
     </ul>
   </div>
 </div>
@@ -162,8 +162,8 @@ the line from the workshop abstract; the whole hour hangs on it.
 ~90s. Suggested speaker: Adam. Left card is the world everyone knows from
 coding agents. Right card is why platform teams say no. Don't argue the
 point; the audience is here because they agree. Land the last line: we are
-not going to tell you to keep the agent out. We put it in a sealed workspace,
-give it an identity with limits, and give it credentials that expire.
+not going to tell you to keep the agent out. We put it in a sealed workspace
+with an identity that has limits and credentials that expire.
 -->
 
 ---
@@ -274,8 +274,8 @@ is what we have to design.
 
 <!--
 ~2 min. Six questions, six answers. Every answer on the right is something the
-audience will see in the next 45 minutes: rows 1–3 are Neo (part 3), row 4 is
-Docker Sandboxes and the kit (parts 4–5), row 5 is ESC (part 7), row 6 is the
+audience will see in the next 45 minutes: rows 1 to 3 are Neo (part 3), row 4 is
+Docker Sandboxes and the kit (parts 4 and 5), row 5 is ESC (part 7), row 6 is the
 guardrail step of the demo. Read it as the map of the talk, then move to Neo.
 -->
 
@@ -539,7 +539,7 @@ skills page: the delegation plugin and the universal `npx skills add` path.
   <li>Neo has no identity of its own. A task carries the acting user's role assignments; on Enterprise and Business Critical a task can assume one role you already hold, which narrows access and never widens it</li>
   <li>RBAC is evaluated at execution time: lose access, and a running task loses it immediately</li>
   <li>Version control writes are the exception: Neo opens pull requests and pushes as the shared Pulumi GitHub App, not as you</li>
-  <li>ESC secrets that a task reads can reach the model; Neo is instructed never to run <code>pulumi env open</code> or <code>--show-secrets</code>, and task events are scanned and redacted. Defense in depth, not a guarantee</li>
+  <li>ESC secrets that a task reads can reach the model; Neo is instructed never to run <code>pulumi env open</code> or <code>--show-secrets</code>, and task events are scanned and redacted. the docs call that defense in depth rather than a guarantee</li>
 </ul>
 
 </div>
@@ -606,7 +606,7 @@ pulumi/workshops → neo-in-a-docker-sandbox/
 on the left is pinned; the hardening table in the kit README lists the
 verification method per tool. The workshop adds one thing: a `neo-kit` that
 reuses the same image and rules but starts `pulumi neo` instead of Claude
-Code. Same wall, different agent.
+Code. The wall stays the same; the agent inside it changes.
 -->
 
 ---
@@ -736,16 +736,16 @@ terraform|^(destroy|taint|force-unlock)          tofu|^apply[[:space:]].*-destro
 </div>
 
 <aside class="info-card">
-  <div class="info-card__label">Honest framing</div>
-  <p>The guard is a seatbelt against accidents, not a security boundary: the agent has sudo inside the VM. The boundaries are the hypervisor, the allow-list, the proxy and Pulumi RBAC.</p>
+  <div class="info-card__label">What the guard is not</div>
+  <p>The guard catches accidents. It is no security boundary, because the agent has sudo inside the VM. The boundaries are the hypervisor, the allow-list, the proxy and Pulumi RBAC.</p>
 </aside>
 
 <!--
 ~90s. Left is what the kit already did for Claude Code. Right is the port to
 Neo: same idea, different mechanism, because `pulumi neo` executes shell
 tools with `sh -c` (that is in the pulumi/pulumi source, tools/shell.go). The
-pattern file is in the repo. Say the info card out loud; it is the difference
-between a demo trick and a security story.
+pattern file is in the repo. Say the info card out loud, because without it
+the guard looks like a demo trick.
 -->
 
 ---
@@ -870,8 +870,8 @@ sbx rm -f neo-demo                        # gone, secrets too
 
 <!--
 ~75s. Five commands the demo uses, and the table the demo proves row by row.
-Rows 1–4 are enforced outside the VM (Mike's part explains why that holds),
-rows 5–6 by Pulumi Cloud and the kit. This is the last Pulumi slide before
+Rows 1 to 4 are enforced outside the VM (Mike's part explains why that holds),
+rows 5 and 6 by Pulumi Cloud and the kit. This is the last Pulumi slide before
 the Docker segment; hand over to Mike with "so why can we trust rows 1 to 4".
 -->
 
@@ -1054,7 +1054,7 @@ same six steps (DEMO.md, "Fallback").
 ```text
 ┌─ Neo in a Docker Sandbox ────────────────────────────
 │ agent       pulumi neo  (Pulumi CLI v3.260.0)
-│ identity    engin  orgs: …  — via the credential proxy
+│ identity    engin  orgs: …  via the credential proxy
 │ token       PULUMI_ACCESS_TOKEN=proxy-managed
 │ cloud creds none; ESC mints them at run time
 │ egress      default-deny; kit allow-list only
@@ -1104,7 +1104,7 @@ this slide up while T2 runs the boundaries script.
   </div>
   <div>
     <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-3">
-      <li>Seven checks from outside the VM. Nothing in them is a mock</li>
+      <li>Seven checks, all run from outside the VM</li>
       <li>The proxy log is the host's view: it decides what leaves, and it knows which rule matched</li>
       <li>Try it on your own kit: every blocked row is a host to add or a leak you just prevented</li>
     </ul>
@@ -1144,7 +1144,7 @@ Resources: + 3 to create, 2 unchanged
     <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-3">
       <li>Manual mode: every tool call asks. Reads, the edit, the preview, then <em>deploy it</em>, then the update</li>
       <li>The preview ran inside the VM against the real account, with credentials ESC minted for that run; the proxy log shows STS and S3 in one region</li>
-      <li>What is not happening: no key file, no pasted secret, no mocked provider</li>
+      <li>Neo never sees a key file or a secret value; the provider is the real one</li>
       <li>The update URL points at Pulumi Cloud: the audit trail is the normal one</li>
     </ul>
   </div>
@@ -1231,7 +1231,7 @@ Nothing was executed. …
 <!--
 Step 5, 2 min. Approve the destroy on purpose so the audience sees the guard
 answer instead of Pulumi. Then the host-side scripts. The three layers are
-the takeaway; the guard alone would be a demo trick.
+the takeaway, because the guard alone proves little.
 -->
 
 ---
@@ -1256,7 +1256,7 @@ pulumi env run <org>/neo-workshop/aws-oidc -- \
   </div>
   <div>
     <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-3">
-      <li>A real change in real code, reviewed at every step, in a real account</li>
+      <li>A real change in a real account, reviewed at every step</li>
       <li>The same ESC environment the sandbox used mints the credentials for this check; no static key anywhere in the demo</li>
       <li>The diff is what you would review in a pull request; the update is in Pulumi Cloud; the bucket is in the AWS console</li>
     </ul>
@@ -1355,8 +1355,8 @@ outcome 4, so name it: "this is how ESC replaces static API keys".
 </div>
 
 <aside class="info-card">
-  <div class="info-card__label">Tie it back to Neo</div>
-  <p>Neo opens environments <strong>as you</strong>. Scope the role, scope who can open the environment, and the agent's cloud reach is exactly what you decided.</p>
+  <div class="info-card__label">Neo opens environments as you</div>
+  <p>Scope the role and scope who can open the environment, and the agent's cloud reach is exactly what you decided.</p>
 </aside>
 
 <!--
@@ -1466,7 +1466,7 @@ the only one people need; the runbook (DEMO.md) and the kit are in there.
     <div class="journey-card__title">Sign up for a Pulumi Cloud account!</div>
     <p class="journey-card__body">
       A free individual account is enough to try <code>pulumi neo</code> and ESC;
-      a trial organization unlocks the full set of features.
+      a trial organization gives you the full set of features.
     </p>
   </div>
   <div class="gpu-card gpu-card--accent journey-card">
