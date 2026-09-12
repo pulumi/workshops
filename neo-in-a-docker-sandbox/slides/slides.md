@@ -16,7 +16,6 @@ layout: cover
 defaults:
   layout: default
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-start px-20">
   <h1 class="!text-[5.4rem] !leading-[1.02] !font-semibold !tracking-tight !mb-6 !max-w-[95%]">
     Neo in a Docker Sandbox
@@ -38,7 +37,6 @@ controls, the kit, Docker Sandboxes with Mike, the demo, ESC, wrap-up.
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6.5rem] !leading-tight !font-semibold !tracking-tight !m-0 !max-w-[95%]">Housekeeping and Agenda</h1>
 </div>
@@ -48,7 +46,6 @@ controls, the kit, Docker Sandboxes with Mike, the demo, ESC, wrap-up.
 -->
 
 ---
-
 # Housekeeping
 
 <div class="zoom-content">
@@ -74,7 +71,6 @@ take notes; the recording link lands in the follow-up email.
 -->
 
 ---
-
 # Today's Agenda
 
 <div class="zoom-content">
@@ -103,7 +99,6 @@ in the middle; everything before it sets up what you will see.
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[5.5rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">An agent that breaks your laptop is annoying.</h1>
 </div>
@@ -114,7 +109,6 @@ are from the workshop abstract on the event page.
 -->
 
 ---
-
 # An agent that breaks production comes with a postmortem
 
 <div class="zoom-content">
@@ -156,7 +150,6 @@ that expire.
 -->
 
 ---
-
 # You leave with four answers
 
 <div class="zoom-content">
@@ -186,7 +179,6 @@ after the demo.
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Infra is not a codebase.</h1>
 </div>
@@ -197,7 +189,6 @@ the controls.
 -->
 
 ---
-
 # The credential is the blast radius
 
 <div class="zoom-content">
@@ -241,7 +232,6 @@ design.
 -->
 
 ---
-
 # Six questions decide what an agent can do
 
 <div class="zoom-content">
@@ -276,7 +266,6 @@ step 5 of the demo.
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Pulumi Neo in the terminal.</h1>
 </div>
@@ -290,7 +279,6 @@ post.
 -->
 
 ---
-
 # Neo is Pulumi's infrastructure agent
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -326,7 +314,6 @@ is pulumi neo in a terminal.
 -->
 
 ---
-
 # `pulumi neo` inherits your local setup
 
 <div class="zoom-content">
@@ -364,7 +351,6 @@ and it is why the sandbox exists.
 -->
 
 ---
-
 # Approval mode decides when Neo pauses
 
 <div class="zoom-content">
@@ -397,7 +383,6 @@ read, to avoid approval fatigue. The demo runs manual.
 -->
 
 ---
-
 # Permission mode decides what Neo may change
 
 <div class="zoom-content">
@@ -427,7 +412,6 @@ user can override them per task; the CLI flags are --approval-mode and
 -->
 
 ---
-
 # Plan Mode: agree on a plan, then act
 
 <div class="zoom-content">
@@ -458,7 +442,6 @@ unfamiliar infrastructure.
 -->
 
 ---
-
 # Read-only stops Pulumi Cloud writes, not cloud access
 
 <div class="zoom-content">
@@ -491,7 +474,6 @@ is the role ESC hands out and the network the VM can reach.
 -->
 
 ---
-
 # Two flags set the modes, resume recovers a session
 
 <div class="zoom-content">
@@ -525,7 +507,6 @@ the kit, and resume is the recovery step in the runbook.
 -->
 
 ---
-
 # Put instructions in the project, not the kit
 
 <div class="zoom-content">
@@ -557,7 +538,6 @@ carries stack names, the ESC environment and what never to run. Open question
 -->
 
 ---
-
 # Other agents hand work off to Neo
 
 <div class="zoom-content">
@@ -589,7 +569,6 @@ using pulumi neo under the hood.
 -->
 
 ---
-
 # Neo acts as you, never as more
 
 <div class="zoom-content">
@@ -624,203 +603,29 @@ call defense in depth rather than a guarantee.
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">The infrastructure sandbox kit.</h1>
 </div>
 
 <!--
-Part 4 divider. ~3s. Ten minutes: the image, the credential proxy, the
-network rules, the guard, MCP, how the Neo agent is defined, how to start it,
-and the boundaries it draws. Sources: github.com/dirien/infrastructure-sandbox-kit
+Part 4 divider. ~3s. Ten minutes: why Neo needs a custom agent, the two ways
+to get it into a sandbox, how the kit defines the agent, the one command, then
+the image, the credential proxy, the network rules, the guard and its limits,
+MCP, and the boundaries table. Sources: github.com/dirien/infrastructure-sandbox-kit
 and neo-kit/ in the workshop folder.
 -->
 
 ---
-
-# One image, every IaC tool pinned
-
-<div class="grid grid-cols-2 gap-10 mt-4">
-  <div>
-    <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-2">
-      <li><code>ghcr.io/dirien/infrastructure-sandbox:v0.9.0</code></li>
-      <li>Pulumi 3.260.0 with <code>pulumi neo</code></li>
-      <li>Terraform, OpenTofu, kubectl, Helm</li>
-      <li>AWS, Azure and Google Cloud CLIs</li>
-      <li>Checksums or signatures on every core tool</li>
-    </ul>
-  </div>
-  <div class="big-code code-sm">
-
-```text
-infrastructure-sandbox-kit/
-├── kit/spec.yaml          # mixin
-├── sandbox-kit/spec.yaml  # one-flag bundle
-├── template/Dockerfile    # the baked image
-├── scripts/               # pinned provisioning
-└── docs/                  # credentials, network
-neo-in-a-docker-sandbox/
-└── neo-kit/spec.yaml      # runs pulumi neo
-```
-
-  </div>
-</div>
-
-<!--
-~75s. The kit started as a Claude Code sandbox for IaC work. The template
-image is multi-arch, built from docker/sandbox-templates:claude-code-docker,
-and pins Pulumi CLI 3.260.0 (with pulumi neo and ESC via pulumi env),
-Terraform 1.16.0, OpenTofu 1.12.6, kubectl 1.37.0, Helm 4.2.4, AWS CLI
-2.36.34, plus Azure CLI and gcloud from GPG-signed apt repos, and Go, Node.js,
-Python and Java with language servers. Every core tool is pinned and verified
-by checksum or signature; the kit README has the table. Three ways in: a
-mixin on the stock Claude agent, the template plus the mixin, or one sandbox
-kit that names the image. The workshop adds neo-kit: same image and rules,
-pulumi neo as the agent.
--->
-
----
-
-# The token never enters the VM
-
-<div class="grid grid-cols-2 gap-10 mt-4">
-  <div class="big-code">
-
-```yaml
-credentials:
-  - service: pulumi
-    apiKey:
-      name: PULUMI_ACCESS_TOKEN
-      proxyManaged: true
-      inject:
-        - domain: api.pulumi.com
-          header: Authorization
-```
-
-  </div>
-  <div>
-    <ul class="!mt-2 !text-[1.25rem] !leading-relaxed space-y-3">
-      <li>The kit declares, the host binds</li>
-      <li>Inside: <code>PULUMI_ACCESS_TOKEN=proxy-managed</code></li>
-      <li>The proxy rewrites the header on <code>api.pulumi.com</code></li>
-      <li>Enough for login, neo, up, env</li>
-    </ul>
-  </div>
-</div>
-
-<!--
-~90s. The block is neo-kit/spec.yaml minus two lines (format: "token %s",
-required: true). Mental model from the Docker credentials docs: a kit
-declares which credential it needs and where the proxy injects it; a kit
-cannot read host environment variables or files; the user binds the value
-once with sbx secret set -g pulumi; for third-party v2 kits sbx asks you to
-approve a credential binding on first run and records it in
-~/.config/sbx/credentials.yaml. proxyManaged: true is the line that puts the
-sentinel in the VM; the host-side proxy rewrites the Authorization header on
-requests to api.pulumi.com only. That is enough for pulumi login, pulumi
-neo, pulumi up and pulumi env, and the real token never enters the VM. Cloud
-credentials are deliberately not in this block: AWS signs requests with the
-key (SigV4), so a key would have to live in the VM. ESC mints it short-lived
-instead; that is the part after the demo.
--->
-
----
-
-# Egress is default-deny
-
-<div class="grid grid-cols-2 gap-10 mt-4">
-  <div class="big-code">
-
-```yaml
-permissions:
-  network:
-    allow:
-      - api.pulumi.com
-      - get.pulumi.com
-      - registry.npmjs.org
-      - sts.eu-central-1.amazonaws.com
-      - "*.s3.eu-central-1.amazonaws.com"
-```
-
-  </div>
-  <div>
-    <ul class="!mt-2 !text-[1.25rem] !leading-relaxed space-y-3">
-      <li>All outbound TCP through a host proxy</li>
-      <li>UDP and ICMP are blocked</li>
-      <li>Only listed hosts and regions resolve</li>
-      <li><code>sbx policy log neo-demo</code> shows every request</li>
-    </ul>
-  </div>
-</div>
-
-<!--
-~90s. The list is abridged from neo-kit/spec.yaml (41 hosts: Pulumi, the
-Terraform and OpenTofu registries, kubectl and Helm downloads, the cloud CLI
-installers and apt repos, GitHub, npm, PyPI, the Go proxy, AWS STS and S3 in
-eu-central-1, the other clouds' identity endpoints). Docker's default posture:
-all outbound TCP is blocked unless a rule allows it, direct UDP and ICMP are
-blocked at the network layer, DNS goes through a policy-aware resolver. In a
-kit's list, exact hosts, host:port and single-label *.host patterns are
-enforced; **.host and CIDR parse but enforcement is pending. Regional AWS
-endpoints are explicit on purpose. sbx policy log <sandbox> on the host shows
-every request with the rule it matched; that is the discovery loop for new
-hosts, and step 2 of the demo. Organization governance (paid) can override:
-only org allow rules grant access, kit deny rules still apply.
--->
-
----
-
-# Neo has no hooks, so PATH is the hook
-
-<div class="grid grid-cols-2 gap-10 mt-4">
-  <div>
-    <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-2">
-      <li>Claude kit: PreToolUse and PostToolUse hooks</li>
-      <li>Neo runs shell tools through <code>sh -c</code></li>
-      <li>Shims front <code>pulumi</code>, <code>aws</code>, <code>terraform</code>, <code>tofu</code></li>
-      <li>Match, log, exit 2; otherwise exec</li>
-      <li>Blocked attempts land in <code>guard.log</code></li>
-    </ul>
-  </div>
-  <div class="big-code code-sm">
-
-```text
-pulumi|^(destroy|down)([[:space:]]|$)
-pulumi|^state[[:space:]]+(delete|unprotect)([[:space:]]|$)
-aws|(^|[[:space:]])s3[[:space:]]+(rb|rm)([[:space:]]|$)
-terraform|^(destroy|taint|force-unlock)([[:space:]]|$)
-```
-
-  </div>
-</div>
-
-<!--
-~90s. What the Claude Code kit already did: hooks from
-dirien/my-claude-apm-setup wired into ~/.claude/settings.json on every start;
-a PreToolUse guard that blocks destructive shell commands (rm -rf /, git push
---force, mkfs and friends) and a PostToolUse hook that scans edits for
-hardcoded secrets and formats files. Neo has no hook system, but it executes
-shell tool calls with sh -c (pulumi/pulumi, pkg/cmd/pulumi/neo/tools/shell.go),
-so PATH is where the guard goes: ~/.local/bin/{pulumi,aws,terraform,tofu} are
-shims that match the argument line against destructive.patterns, log to
-~/.local/state/neo-sandbox/guard.log and exit 2, otherwise exec the real
-binary. The four lines on the slide are real lines from destructive.patterns;
-the full list (17 patterns for pulumi, aws, terraform and tofu) is in
-neo-kit/files.
--->
-
----
-
-# A guard stops accidents, boundaries stop adversaries
+# Neo is not a built-in sandbox agent
 
 <div class="zoom-content">
 
 <ul class="!mt-6 !text-[1.35rem] !leading-relaxed space-y-3">
-  <li>The agent has sudo inside the VM</li>
-  <li>Any in-VM guard can be bypassed</li>
-  <li>Hypervisor, allow-list and proxy sit outside</li>
-  <li>RBAC and <code>protect: true</code> sit in Pulumi Cloud</li>
-  <li>A human lifts the guard with one file</li>
+  <li>Built in: Claude Code, Codex, Copilot, Cursor, Devin</li>
+  <li>Also Docker Agent, Droid, Gemini, Kiro, OpenCode</li>
+  <li>Plus <code>shell</code>: a bash login, no agent</li>
+  <li><code>pulumi neo</code> is not on the list</li>
+  <li>Templates customize agents; kits define them</li>
 </ul>
 
 </div>
@@ -830,52 +635,63 @@ neo-kit/files.
 </style>
 
 <!--
-~60s. Say this out loud, because without it the guard looks like a demo
-trick. The Docker isolation page: the agent runs as a non-root user with sudo
-inside the VM, and the hypervisor boundary is the isolation control, not
-in-VM privilege separation. So the guard catches accidents; the boundaries
-that hold against a determined agent are the hypervisor, the egress
-allow-list and the credential proxy outside the VM, plus Pulumi RBAC and
-protect: true on the resource. A human lifts the guard for one sandbox by
-creating ~/.config/neo-sandbox/allow-destructive; the workshop scripts do
-teardown on the host instead.
+~45s. Say it plainly, because this is the question the audience will ask.
+Docker Sandboxes run these agents out of the box (supported agents page,
+and "Available agents" in sbx run --help): claude, codex, copilot, cursor,
+devin, docker-agent, droid, gemini, kiro, opencode, plus shell, an
+agent-less sandbox with a bash login for manual setup. Pulumi Neo is not
+among them. A custom template does not fix that: the templates page says
+custom templates customize an existing agent's environment and do not create
+new agent runtimes; the agent that launches is determined by the base image
+variant and the agent named in sbx run, not by binaries installed in the
+template. To define a new agent, the docs point at kits. That is why the kit
+exists.
 -->
 
 ---
-
-# Neo brings its own MCP
+# Two ways to put Neo in a sandbox
 
 <div class="zoom-content">
 
-<ul class="!mt-6 !text-[1.35rem] !leading-relaxed space-y-3">
-  <li>Claude kit registers the <code>pulumi</code> MCP server</li>
-  <li>Neo ships skills and registry knowledge</li>
-  <li>External MCP comes from Pulumi Cloud</li>
-  <li>Integration credentials never reach the model</li>
-  <li><code>--disable-integrations</code> turns them off</li>
-</ul>
+<div class="grid grid-cols-2 gap-10 mt-6">
+  <div class="gpu-card gpu-card--muted">
+    <div class="gpu-caption gpu-caption--muted">1 · Shell sandbox</div>
+    <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
+      <li><code>sbx run shell</code>, then install Pulumi</li>
+      <li>Log in, type <code>pulumi neo</code></li>
+      <li>Works; nothing is reusable</li>
+    </ul>
+  </div>
+  <div class="gpu-card gpu-card--primary">
+    <div class="gpu-caption gpu-caption--accent">2 · Custom agent kit</div>
+    <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
+      <li><code>spec.yaml</code> defines the agent</li>
+      <li>Pinned CLIs, proxy, allow-list, guard</li>
+      <li>One command starts it every time</li>
+    </ul>
+  </div>
+</div>
 
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.5; }
+.zoom-content { zoom: 1.4; }
 </style>
 
 <!--
-~45s. The kit's MCP story is a Claude Code feature: on every start it
-registers the hosted pulumi MCP server (mcp.ai.pulumi.com) at user scope for
-registry lookups, resource schemas, code validation and Neo tasks from
-Claude; Docker routes supported agents through one host-side MCP gateway
-where org MCP policies are enforced. For Neo the equivalent lives in Pulumi
-Cloud: it ships the Pulumi Agent Skills catalog and registry knowledge, gets
-external MCP integrations from the org's integrations page, MCP integration
-credentials are never exposed to the model, and --disable-integrations turns
-them off per task. CLI integrations run as pulumi env run against an ESC
-environment, as you.
+~60s. Way 1 is the shell agent page: sbx run shell drops you into a bash
+login shell with no agent, you install the Pulumi CLI, pulumi login,
+pulumi neo. It works, and nothing survives the sandbox: the CLI install, the
+login, the network rules and the guard would be redone by hand every time,
+and a custom template with Pulumi baked in would still start a shell, not
+Neo. Way 2 is a sandbox kit: spec.yaml names the image with the pinned CLIs,
+sets pulumi neo as the entrypoint, declares the proxy-managed Pulumi token,
+the egress allow-list, the guard shims and the mode arguments, and loads
+from a directory, git or an OCI registry. One command starts it, the same
+way, every time. That is the kit the demo runs.
 -->
 
 ---
-
 # Twenty lines make Neo a sandbox agent
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -905,7 +721,7 @@ credentials:
 </div>
 
 <!--
-~90s. The eight lines are neo-kit/spec.yaml trimmed to the lines that define
+~75s. The eight lines are neo-kit/spec.yaml trimmed to the lines that define
 the agent: kind: sandbox (a mixin would only extend an agent), the image the
 Claude kit builds, the entrypoint, and the proxy-managed Pulumi credential.
 The whole file is about 200 lines with the allow-list and comments. The
@@ -920,7 +736,6 @@ this.
 -->
 
 ---
-
 # One command starts Neo in the sandbox
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -943,7 +758,7 @@ sbx run --name neo-demo ./neo-kit ./02-app
 </div>
 
 <!--
-~60s. Both commands are in DEMO.md: the token is bound once, and
+~45s. Both commands are in DEMO.md: the token is bound once, and
 01-sandbox/up.sh expands to sbx run --name neo-demo ./neo-kit ./02-app. Since
 sbx 0.42.0 a sandbox kit reference goes in the agent position; the older
 --kit form for sandbox kits is deprecated (--kit is for mixins). The first
@@ -955,7 +770,238 @@ neo-demo removes the VM and the secrets scoped to it.
 -->
 
 ---
+# One image, every IaC tool pinned
 
+<div class="grid grid-cols-2 gap-10 mt-4">
+  <div>
+    <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-2">
+      <li><code>ghcr.io/dirien/infrastructure-sandbox:v0.9.0</code></li>
+      <li>Pulumi 3.260.0 with <code>pulumi neo</code></li>
+      <li>Terraform, OpenTofu, kubectl, Helm</li>
+      <li>AWS, Azure and Google Cloud CLIs</li>
+      <li>Checksums or signatures on every core tool</li>
+    </ul>
+  </div>
+  <div class="big-code code-sm">
+
+```text
+infrastructure-sandbox-kit/
+├── kit/spec.yaml          # mixin
+├── sandbox-kit/spec.yaml  # one-flag bundle
+├── template/Dockerfile    # the baked image
+├── scripts/               # pinned provisioning
+└── docs/                  # credentials, network
+neo-in-a-docker-sandbox/
+└── neo-kit/spec.yaml      # runs pulumi neo
+```
+
+  </div>
+</div>
+
+<!--
+~45s. The kit started as a Claude Code sandbox for IaC work. The template
+image is multi-arch, built from docker/sandbox-templates:claude-code-docker,
+and pins Pulumi CLI 3.260.0 (with pulumi neo and ESC via pulumi env),
+Terraform 1.16.0, OpenTofu 1.12.6, kubectl 1.37.0, Helm 4.2.4, AWS CLI
+2.36.34, plus Azure CLI and gcloud from GPG-signed apt repos, and Go, Node.js,
+Python and Java with language servers. Every core tool is pinned and verified
+by checksum or signature; the kit README has the table. Three ways in: a
+mixin on the stock Claude agent, the template plus the mixin, or one sandbox
+kit that names the image. The workshop adds neo-kit: same image and rules,
+pulumi neo as the agent.
+-->
+
+---
+# The token never enters the VM
+
+<div class="grid grid-cols-2 gap-10 mt-4">
+  <div class="big-code">
+
+```yaml
+credentials:
+  - service: pulumi
+    apiKey:
+      name: PULUMI_ACCESS_TOKEN
+      proxyManaged: true
+      inject:
+        - domain: api.pulumi.com
+          header: Authorization
+```
+
+  </div>
+  <div>
+    <ul class="!mt-2 !text-[1.25rem] !leading-relaxed space-y-3">
+      <li>The kit declares, the host binds</li>
+      <li>Inside: <code>PULUMI_ACCESS_TOKEN=proxy-managed</code></li>
+      <li>The proxy rewrites the header on <code>api.pulumi.com</code></li>
+      <li>Enough for login, neo, up, env</li>
+    </ul>
+  </div>
+</div>
+
+<!--
+~75s. The block is neo-kit/spec.yaml minus two lines (format: "token %s",
+required: true). Mental model from the Docker credentials docs: a kit
+declares which credential it needs and where the proxy injects it; a kit
+cannot read host environment variables or files; the user binds the value
+once with sbx secret set -g pulumi; for third-party v2 kits sbx asks you to
+approve a credential binding on first run and records it in
+~/.config/sbx/credentials.yaml. proxyManaged: true is the line that puts the
+sentinel in the VM; the host-side proxy rewrites the Authorization header on
+requests to api.pulumi.com only. That is enough for pulumi login, pulumi
+neo, pulumi up and pulumi env, and the real token never enters the VM. Cloud
+credentials are deliberately not in this block: AWS signs requests with the
+key (SigV4), so a key would have to live in the VM. ESC mints it short-lived
+instead; that is the part after the demo.
+-->
+
+---
+# Egress is default-deny
+
+<div class="grid grid-cols-2 gap-10 mt-4">
+  <div class="big-code">
+
+```yaml
+permissions:
+  network:
+    allow:
+      - api.pulumi.com
+      - get.pulumi.com
+      - registry.npmjs.org
+      - sts.eu-central-1.amazonaws.com
+      - "*.s3.eu-central-1.amazonaws.com"
+```
+
+  </div>
+  <div>
+    <ul class="!mt-2 !text-[1.25rem] !leading-relaxed space-y-3">
+      <li>All outbound TCP through a host proxy</li>
+      <li>UDP and ICMP are blocked</li>
+      <li>Only listed hosts and regions resolve</li>
+      <li><code>sbx policy log neo-demo</code> shows every request</li>
+    </ul>
+  </div>
+</div>
+
+<!--
+~60s. The list is abridged from neo-kit/spec.yaml (41 hosts: Pulumi, the
+Terraform and OpenTofu registries, kubectl and Helm downloads, the cloud CLI
+installers and apt repos, GitHub, npm, PyPI, the Go proxy, AWS STS and S3 in
+eu-central-1, the other clouds' identity endpoints). Docker's default posture:
+all outbound TCP is blocked unless a rule allows it, direct UDP and ICMP are
+blocked at the network layer, DNS goes through a policy-aware resolver. In a
+kit's list, exact hosts, host:port and single-label *.host patterns are
+enforced; **.host and CIDR parse but enforcement is pending. Regional AWS
+endpoints are explicit on purpose. sbx policy log <sandbox> on the host shows
+every request with the rule it matched; that is the discovery loop for new
+hosts, and step 2 of the demo. Organization governance (paid) can override:
+only org allow rules grant access, kit deny rules still apply.
+-->
+
+---
+# Neo has no hooks, so PATH is the hook
+
+<div class="grid grid-cols-2 gap-10 mt-4">
+  <div>
+    <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-2">
+      <li>Claude kit: PreToolUse and PostToolUse hooks</li>
+      <li>Neo runs shell tools through <code>sh -c</code></li>
+      <li>Shims front <code>pulumi</code>, <code>aws</code>, <code>terraform</code>, <code>tofu</code></li>
+      <li>Match, log, exit 2; otherwise exec</li>
+      <li>Blocked attempts land in <code>guard.log</code></li>
+    </ul>
+  </div>
+  <div class="big-code code-sm">
+
+```text
+pulumi|^(destroy|down)([[:space:]]|$)
+pulumi|^state[[:space:]]+(delete|unprotect)([[:space:]]|$)
+aws|(^|[[:space:]])s3[[:space:]]+(rb|rm)([[:space:]]|$)
+terraform|^(destroy|taint|force-unlock)([[:space:]]|$)
+```
+
+  </div>
+</div>
+
+<!--
+~75s. What the Claude Code kit already did: hooks from
+dirien/my-claude-apm-setup wired into ~/.claude/settings.json on every start;
+a PreToolUse guard that blocks destructive shell commands (rm -rf /, git push
+--force, mkfs and friends) and a PostToolUse hook that scans edits for
+hardcoded secrets and formats files. Neo has no hook system, but it executes
+shell tool calls with sh -c (pulumi/pulumi, pkg/cmd/pulumi/neo/tools/shell.go),
+so PATH is where the guard goes: ~/.local/bin/{pulumi,aws,terraform,tofu} are
+shims that match the argument line against destructive.patterns, log to
+~/.local/state/neo-sandbox/guard.log and exit 2, otherwise exec the real
+binary. The four lines on the slide are real lines from destructive.patterns;
+the full list (17 patterns for pulumi, aws, terraform and tofu) is in
+neo-kit/files.
+-->
+
+---
+# A guard stops accidents, boundaries stop adversaries
+
+<div class="zoom-content">
+
+<ul class="!mt-6 !text-[1.35rem] !leading-relaxed space-y-3">
+  <li>The agent has sudo inside the VM</li>
+  <li>Any in-VM guard can be bypassed</li>
+  <li>Hypervisor, allow-list and proxy sit outside</li>
+  <li>RBAC and <code>protect: true</code> sit in Pulumi Cloud</li>
+  <li>A human lifts the guard with one file</li>
+</ul>
+
+</div>
+
+<style scoped>
+.zoom-content { zoom: 1.5; }
+</style>
+
+<!--
+~45s. Say this out loud, because without it the guard looks like a demo
+trick. The Docker isolation page: the agent runs as a non-root user with sudo
+inside the VM, and the hypervisor boundary is the isolation control, not
+in-VM privilege separation. So the guard catches accidents; the boundaries
+that hold against a determined agent are the hypervisor, the egress
+allow-list and the credential proxy outside the VM, plus Pulumi RBAC and
+protect: true on the resource. A human lifts the guard for one sandbox by
+creating ~/.config/neo-sandbox/allow-destructive; the workshop scripts do
+teardown on the host instead.
+-->
+
+---
+# Neo brings its own MCP
+
+<div class="zoom-content">
+
+<ul class="!mt-6 !text-[1.35rem] !leading-relaxed space-y-3">
+  <li>Claude kit registers the <code>pulumi</code> MCP server</li>
+  <li>Neo ships skills and registry knowledge</li>
+  <li>External MCP comes from Pulumi Cloud</li>
+  <li>Integration credentials never reach the model</li>
+  <li><code>--disable-integrations</code> turns them off</li>
+</ul>
+
+</div>
+
+<style scoped>
+.zoom-content { zoom: 1.5; }
+</style>
+
+<!--
+~30s. The kit's MCP story is a Claude Code feature: on every start it
+registers the hosted pulumi MCP server (mcp.ai.pulumi.com) at user scope for
+registry lookups, resource schemas, code validation and Neo tasks from
+Claude; Docker routes supported agents through one host-side MCP gateway
+where org MCP policies are enforced. For Neo the equivalent lives in Pulumi
+Cloud: it ships the Pulumi Agent Skills catalog and registry knowledge, gets
+external MCP integrations from the org's integrations page, MCP integration
+credentials are never exposed to the model, and --disable-integrations turns
+them off per task. CLI integrations run as pulumi env run against an ESC
+environment, as you.
+-->
+
+---
 # Six boundaries, six enforcers
 
 <div class="boundaries mt-6">
@@ -979,14 +1025,13 @@ neo-demo removes the VM and the secrets scoped to it.
 </style>
 
 <!--
-~60s. The table the demo proves row by row. Rows 1 to 4 are enforced outside
+~45s. The table the demo proves row by row. Rows 1 to 4 are enforced outside
 the VM (Mike's part explains why that holds), rows 5 and 6 by Pulumi Cloud
 and the kit. Last Pulumi slide before the Docker segment; hand over to Mike
 with "so why can we trust rows 1 to 4".
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Docker Sandboxes.</h1>
 </div>
@@ -1000,7 +1045,6 @@ ideas were covered: microVM isolation, kits, secret injection.
 -->
 
 ---
-
 <!-- MIKE: replace -->
 
 # A sandbox is a microVM with its own kernel
@@ -1038,7 +1082,6 @@ review agent-edited files in a direct mount like an untrusted pull request.
 -->
 
 ---
-
 <!-- MIKE: replace -->
 
 # A kit declares the whole sandbox in one file
@@ -1075,7 +1118,6 @@ are experimental; the format can change.
 -->
 
 ---
-
 <!-- MIKE: replace -->
 
 # Secrets stay on the host
@@ -1113,7 +1155,6 @@ explicitly set them. Hand back to Engin for the demo.
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Demo: Neo in a Docker Sandbox.</h1>
 </div>
@@ -1126,7 +1167,6 @@ runbook with every command and expected output is DEMO.md.
 -->
 
 ---
-
 # Six steps, fifteen minutes
 
 <div class="zoom-content">
@@ -1155,7 +1195,6 @@ same six steps (DEMO.md, "Fallback").
 -->
 
 ---
-
 # 1 · One command starts the sandbox
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1194,7 +1233,6 @@ sbx secret set -g pulumi, sbx rm -f neo-demo, start again.
 -->
 
 ---
-
 # 2 · Neo sees the workspace and nothing else
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1236,7 +1274,6 @@ prevented.
 -->
 
 ---
-
 # 3 · Neo hardens the bucket, we approve each step
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1278,7 +1315,6 @@ the update in the console on the second screen.
 -->
 
 ---
-
 # 4 · Read-only lets Neo plan, not deploy
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1319,7 +1355,6 @@ approval modes; describe balanced and auto in one sentence each.
 -->
 
 ---
-
 # 5 · The guard answers instead of Pulumi
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1359,7 +1394,6 @@ the VM, where root inside cannot reach them.
 -->
 
 ---
-
 # 6 · The change is in the account
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1394,7 +1428,6 @@ to the ESC part, which explains the pulumi env run you just used.
 -->
 
 ---
-
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">No static keys.</h1>
 </div>
@@ -1405,7 +1438,6 @@ credentials: what the demo used, and what it replaces.
 -->
 
 ---
-
 # ESC mints credentials that expire
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1454,7 +1486,6 @@ replaces static API keys.
 -->
 
 ---
-
 # ESC replaces the key on your laptop
 
 <div class="zoom-content">
@@ -1499,7 +1530,6 @@ you decided.
 -->
 
 ---
-
 # Sixty minutes, one safe loop
 
 <div class="zoom-content">
@@ -1528,7 +1558,6 @@ hour. Kit, runbook, scripts and slides are in one folder of pulumi/workshops.
 -->
 
 ---
-
 # Resources
 
 <div class="zoom-content">
@@ -1577,7 +1606,6 @@ only one people need; the runbook (DEMO.md) and the kit are in there.
 -->
 
 ---
-
 # Continue your Pulumi journey!
 
 <div class="zoom-content">
@@ -1621,7 +1649,6 @@ tab.
 -->
 
 ---
-
 # Questions?
 
 <div class="contact-grid">
