@@ -42,9 +42,13 @@ if (existingOidcProviderArn) {
     oidcProviderArn = provider.arn;
 }
 
-// 2. The role ESC assumes. Subject claims look like
-//    pulumi:environments:org:<org>:env:<project>/<environment>; the condition
-//    limits assumption to environments in the neo-workshop ESC project.
+// 2. The role ESC assumes. The trust policy follows the ESC AWS OIDC docs
+//    (docs/esc/guides/configuring-oidc/aws): audience aws:<org>, subject
+//    pulumi:environments:org:<org>:env:* (any environment in the org). When a
+//    Pulumi IaC stack imports the environment, the subject is literally
+//    …:env:<yaml>, so a narrower env:<project>/* pattern would not match; the
+//    docs recommend subjectAttributes to pin one environment (open question 18).
+//    The S3 policy below is what limits the blast radius.
 const role = new aws.iam.Role("neo-workshop-esc", {
     name: "neo-workshop-esc",
     description: "Assumed by Pulumi ESC (OIDC) for the Neo in a Docker Sandbox demo",
@@ -60,7 +64,7 @@ const role = new aws.iam.Role("neo-workshop-esc", {
                     Condition: {
                         StringEquals: { "api.pulumi.com/oidc:aud": `aws:${pulumiOrg}` },
                         StringLike: {
-                            "api.pulumi.com/oidc:sub": `pulumi:environments:org:${pulumiOrg}:env:${escProject}/*`,
+                            "api.pulumi.com/oidc:sub": `pulumi:environments:org:${pulumiOrg}:env:*`,
                         },
                     },
                 },

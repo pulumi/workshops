@@ -113,3 +113,18 @@ what unblocks each. Numbered so the deck and the runbook can point at them.
 17. **Who speaks which part.** The notes suggest Adam for the intro and the
     wrap-up, Engin for parts 2, 3, 4, 6, 7, Mike for part 5. Adjust the
     "Suggested speaker" notes once the three of you decide.
+18. **Pin the ESC subject to one environment.** The AWS OIDC docs say a stack
+    that imports an environment presents the subject
+    `pulumi:environments:org:<org>:env:<yaml>` (the literal `<yaml>`), so
+    the bootstrap's trust policy now uses the documented default
+    `…:env:*` (any environment in the org; the role's S3 policy is the real
+    limit). The docs recommend `subjectAttributes` (for example
+    `currentEnvironment.name`) to pin a single environment; the exact
+    subject format with one attribute is shown only by example. Try it on
+    the host once the demo works, then tighten the trust policy.
+19. **Neo on the free plan.** The closing slide invites people to sign up for
+    Pulumi Cloud, as the event page does. Whether an individual (free) account
+    can run `pulumi neo` and ESC login providers, or whether that needs a
+    trial organization, is not stated on the pages read for the deck. Check
+    the pricing page before the session and adjust the notes on slide 49.
+

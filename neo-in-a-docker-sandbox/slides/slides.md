@@ -374,7 +374,7 @@ and it is why the sandbox exists.
   <li>The console calls <code>manual</code> Review</li>
   <li><code>balanced</code>: asks only before <code>pulumi up</code></li>
   <li><code>auto</code>: never asks</li>
-  <li>Reads never prompt, in any mode</li>
+  <li>Console gates: preview, up, pull request</li>
 </ul>
 
 </div>
@@ -385,14 +385,15 @@ and it is why the sandbox exists.
 
 <!--
 ~75s. From the permissions model page: approval mode, also called task mode,
-governs when Neo pauses. Review mode requires approval before running pulumi
-preview, running pulumi up, and opening a pull request; Balanced only before
-pulumi up; Auto never. In the CLI and the API the strictest mode is named
-manual, and the flag help says manual prompts on every call while balanced
-auto-approves low-risk calls. What approval mode does not gate: by design Neo
-investigates autonomously, reading state, opening ESC environments and
-reaching accounts without prompting for each read, to avoid approval fatigue.
-The demo runs manual, so every tool call asks.
+governs when Neo pauses. In the console, Review mode requires approval before
+running pulumi preview, running pulumi up, and opening a pull request;
+Balanced only before pulumi up; Auto never. In the CLI and the API the
+strictest mode is named manual, and the CLI flag help says manual prompts on
+every call while balanced auto-approves low-risk calls; the local tool loop
+is what prompts, so in the demo even file reads ask. What the console's
+approval gates do not cover: by design Neo investigates autonomously, reading
+state, opening ESC environments and reaching accounts without a prompt per
+read, to avoid approval fatigue. The demo runs manual.
 -->
 
 ---
@@ -785,9 +786,9 @@ only org allow rules grant access, kit deny rules still apply.
 
 ```text
 pulumi|^(destroy|down)([[:space:]]|$)
-pulumi|^state[[:space:]]+(delete|unprotect)
-aws|(delete|terminate|purge|remove)-[a-z0-9-]+
-terraform|^(destroy|taint|force-unlock)
+pulumi|^state[[:space:]]+(delete|unprotect)([[:space:]]|$)
+aws|(^|[[:space:]])s3[[:space:]]+(rb|rm)([[:space:]]|$)
+terraform|^(destroy|taint|force-unlock)([[:space:]]|$)
 ```
 
   </div>
@@ -803,8 +804,9 @@ shell tool calls with sh -c (pulumi/pulumi, pkg/cmd/pulumi/neo/tools/shell.go),
 so PATH is where the guard goes: ~/.local/bin/{pulumi,aws,terraform,tofu} are
 shims that match the argument line against destructive.patterns, log to
 ~/.local/state/neo-sandbox/guard.log and exit 2, otherwise exec the real
-binary. The full pattern list is in neo-kit/files; the four lines on the slide
-are abridged.
+binary. The four lines on the slide are real lines from destructive.patterns;
+the full list (17 patterns for pulumi, aws, terraform and tofu) is in
+neo-kit/files.
 -->
 
 ---
@@ -1200,13 +1202,13 @@ sbx secret set -g pulumi, sbx rm -f neo-demo, start again.
 
 ```text
 01-sandbox/boundaries.sh
-▶ 1. Identity    whoami → User: engin
-▶ 2. Token       PULUMI_ACCESS_TOKEN=proxy-managed
-▶ 3. Cloud creds no AWS_ vars, no ~/.aws
-▶ 4. Filesystem  only …/02-app, no /Users
-▶ 5. Network     ifconfig.me blocked
-▶ 6. Proxy log   host, rule, count
-▶ 7. Guard       pulumi destroy → blocked
+▶ 1. Identity     pulumi whoami -v
+▶ 2. Token        $PULUMI_ACCESS_TOKEN
+▶ 3. Cloud creds  env, ~/.aws
+▶ 4. Filesystem   ls outside the workspace
+▶ 5. Network      curl an unlisted host
+▶ 6. Proxy log    sbx policy log neo-demo
+▶ 7. Guard        pulumi destroy --yes
 ```
 
   </div>
@@ -1371,10 +1373,6 @@ pulumi env run <org>/neo-workshop/aws-oidc -- \
   --bucket "$(pulumi stack output bucketName)"
 ```
 
-```json
-{ "Status": "Enabled" }
-```
-
   </div>
   <div>
     <ul class="!mt-2 !text-[1.25rem] !leading-relaxed space-y-3">
@@ -1388,7 +1386,7 @@ pulumi env run <org>/neo-workshop/aws-oidc -- \
 <!--
 Step 6, 1.5 min. From the host: the git diff of index.ts (three resources),
 the AWS API through pulumi env run with the same ESC environment the sandbox
-used, and the AWS console (Properties, Bucket Versioning: Enabled) plus the
+used (DEMO.md expects a versioning status of Enabled), and the AWS console (Properties, Bucket Versioning: Enabled) plus the
 update in Pulumi Cloud. Close the loop: a real change in a real account,
 reviewed at every step, with nothing on the laptop an agent could have
 leaked. Reset happens after the session with 01-sandbox/reset.sh. Hand over
@@ -1428,7 +1426,7 @@ values:
   <div>
     <ul class="!mt-2 !text-[1.25rem] !leading-relaxed space-y-3">
       <li>AWS trusts <code>api.pulumi.com/oidc</code></li>
-      <li>Subject pinned to <code>neo-workshop</code> environments</li>
+      <li>Audience <code>aws:&lt;org&gt;</code>, subject <code>env:*</code></li>
       <li>Opening the environment mints STS credentials</li>
       <li><code>Pulumi.dev.yaml</code> imports it</li>
     </ul>
@@ -1441,9 +1439,12 @@ values:
 also projects the credentials as AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY and
 AWS_SESSION_TOKEN environment variables and sets aws:region as stack config.
 From the ESC AWS OIDC docs: AWS trusts https://api.pulumi.com/oidc as an
-identity provider with audience aws:<org>, and the role's trust policy pins
-the subject claim (pulumi:environments:org:<org>:env:…) to this project's
-environments. fn::open::aws-login exchanges the ESC OIDC token for STS
+identity provider with audience aws:<org>, and the documented trust policy
+allows the subject pulumi:environments:org:<org>:env:* (any environment in
+the org). A stack that imports the environment presents the literal subject
+…:env:<yaml>, so the docs recommend subjectAttributes to pin a single
+environment; the demo keeps the documented default and limits blast radius
+with the role's S3 policy instead (open question 18). fn::open::aws-login exchanges the ESC OIDC token for STS
 credentials whenever the environment is opened: by pulumi up, pulumi env open
 or pulumi env run. The stack imports it with a two-line environment: block in
 02-app/Pulumi.dev.yaml, so the provider gets region and credentials and
@@ -1591,7 +1592,7 @@ only one people need; the runbook (DEMO.md) and the kit are in there.
   <div class="gpu-card gpu-card--primary journey-card">
     <div class="journey-card__title">Sign up for a Pulumi Cloud account!</div>
     <p class="journey-card__body">
-      Free individual account: try <code>pulumi neo</code> and ESC
+      Sign up to follow along
     </p>
   </div>
   <div class="gpu-card gpu-card--accent journey-card">
@@ -1613,9 +1614,10 @@ only one people need; the runbook (DEMO.md) and the kit are in there.
 
 <!--
 ~20s. The three CTAs from every Pulumi workshop: the community Slack (ask
-about Neo, ESC or the sandbox kit), a Pulumi Cloud account (a free individual
-account is enough to try pulumi neo and ESC; a trial organization gives you
-the full set of features), and the next workshop link in the handouts tab.
+about Neo, ESC or the sandbox kit), a Pulumi Cloud account (the event page
+says "This workshop uses Pulumi Cloud. Sign up to follow along."; which plans
+include Neo is open question 19), and the next workshop link in the handouts
+tab.
 -->
 
 ---
