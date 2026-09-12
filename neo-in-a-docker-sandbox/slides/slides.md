@@ -15,7 +15,9 @@ lineNumbers: false
 layout: cover
 defaults:
   layout: default
+
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-start px-20">
   <h1 class="!text-[5.4rem] !leading-[1.02] !font-semibold !tracking-tight !mb-6 !max-w-[95%]">
     Neo in a Docker Sandbox
@@ -37,6 +39,7 @@ controls, the kit, Docker Sandboxes with Mike, the demo, ESC, wrap-up.
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6.5rem] !leading-tight !font-semibold !tracking-tight !m-0 !max-w-[95%]">Housekeeping and Agenda</h1>
 </div>
@@ -46,6 +49,7 @@ controls, the kit, Docker Sandboxes with Mike, the demo, ESC, wrap-up.
 -->
 
 ---
+
 # Housekeeping
 
 <div class="zoom-content">
@@ -71,6 +75,7 @@ take notes; the recording link lands in the follow-up email.
 -->
 
 ---
+
 # Today's Agenda
 
 <div class="zoom-content">
@@ -99,6 +104,7 @@ in the middle; everything before it sets up what you will see.
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[5.5rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">An agent that breaks your laptop is annoying.</h1>
 </div>
@@ -109,6 +115,7 @@ are from the workshop abstract on the event page.
 -->
 
 ---
+
 # An agent that breaks production comes with a postmortem
 
 <div class="zoom-content">
@@ -150,6 +157,7 @@ that expire.
 -->
 
 ---
+
 # You leave with four answers
 
 <div class="zoom-content">
@@ -179,6 +187,7 @@ after the demo.
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Infra is not a codebase.</h1>
 </div>
@@ -189,6 +198,7 @@ the controls.
 -->
 
 ---
+
 # The credential is the blast radius
 
 <div class="zoom-content">
@@ -232,6 +242,7 @@ design.
 -->
 
 ---
+
 # Six questions decide what an agent can do
 
 <div class="zoom-content">
@@ -266,6 +277,7 @@ step 5 of the demo.
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Pulumi Neo in the terminal.</h1>
 </div>
@@ -279,6 +291,7 @@ post.
 -->
 
 ---
+
 # Neo is Pulumi's infrastructure agent
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -314,6 +327,7 @@ is pulumi neo in a terminal.
 -->
 
 ---
+
 # `pulumi neo` inherits your local setup
 
 <div class="zoom-content">
@@ -351,6 +365,7 @@ and it is why the sandbox exists.
 -->
 
 ---
+
 # Approval mode decides when Neo pauses
 
 <div class="zoom-content">
@@ -383,6 +398,7 @@ read, to avoid approval fatigue. The demo runs manual.
 -->
 
 ---
+
 # Permission mode decides what Neo may change
 
 <div class="zoom-content">
@@ -412,6 +428,7 @@ user can override them per task; the CLI flags are --approval-mode and
 -->
 
 ---
+
 # Plan Mode: agree on a plan, then act
 
 <div class="zoom-content">
@@ -442,6 +459,7 @@ unfamiliar infrastructure.
 -->
 
 ---
+
 # Read-only stops Pulumi Cloud writes, not cloud access
 
 <div class="zoom-content">
@@ -474,6 +492,7 @@ is the role ESC hands out and the network the VM can reach.
 -->
 
 ---
+
 # Two flags set the modes, resume recovers a session
 
 <div class="zoom-content">
@@ -507,6 +526,7 @@ the kit, and resume is the recovery step in the runbook.
 -->
 
 ---
+
 # Put instructions in the project, not the kit
 
 <div class="zoom-content">
@@ -538,6 +558,7 @@ carries stack names, the ESC environment and what never to run. Open question
 -->
 
 ---
+
 # Other agents hand work off to Neo
 
 <div class="zoom-content">
@@ -569,6 +590,7 @@ using pulumi neo under the hood.
 -->
 
 ---
+
 # Neo acts as you, never as more
 
 <div class="zoom-content">
@@ -603,6 +625,7 @@ call defense in depth rather than a guarantee.
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">The infrastructure sandbox kit.</h1>
 </div>
@@ -616,6 +639,7 @@ and neo-kit/ in the workshop folder.
 -->
 
 ---
+
 # Neo is not a built-in sandbox agent
 
 <div class="zoom-content">
@@ -649,6 +673,7 @@ exists.
 -->
 
 ---
+
 # Two ways to put Neo in a sandbox
 
 <div class="zoom-content">
@@ -692,6 +717,7 @@ way, every time. That is the kit the demo runs.
 -->
 
 ---
+
 # Twenty lines make Neo a sandbox agent
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -736,6 +762,7 @@ this.
 -->
 
 ---
+
 # One command starts Neo in the sandbox
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -770,6 +797,7 @@ neo-demo removes the VM and the secrets scoped to it.
 -->
 
 ---
+
 # One image, every IaC tool pinned
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -812,6 +840,7 @@ pulumi neo as the agent.
 -->
 
 ---
+
 # The token never enters the VM
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -856,6 +885,7 @@ instead; that is the part after the demo.
 -->
 
 ---
+
 # Egress is default-deny
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -899,6 +929,7 @@ only org allow rules grant access, kit deny rules still apply.
 -->
 
 ---
+
 # Neo has no hooks, so PATH is the hook
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -939,6 +970,7 @@ neo-kit/files.
 -->
 
 ---
+
 # A guard stops accidents, boundaries stop adversaries
 
 <div class="zoom-content">
@@ -970,6 +1002,7 @@ teardown on the host instead.
 -->
 
 ---
+
 # Neo brings its own MCP
 
 <div class="zoom-content">
@@ -1002,6 +1035,7 @@ environment, as you.
 -->
 
 ---
+
 # Six boundaries, six enforcers
 
 <div class="boundaries mt-6">
@@ -1032,6 +1066,7 @@ with "so why can we trust rows 1 to 4".
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Docker Sandboxes.</h1>
 </div>
@@ -1045,6 +1080,7 @@ ideas were covered: microVM isolation, kits, secret injection.
 -->
 
 ---
+
 <!-- MIKE: replace -->
 
 # A sandbox is a microVM with its own kernel
@@ -1082,6 +1118,7 @@ review agent-edited files in a direct mount like an untrusted pull request.
 -->
 
 ---
+
 <!-- MIKE: replace -->
 
 # A kit declares the whole sandbox in one file
@@ -1118,6 +1155,7 @@ are experimental; the format can change.
 -->
 
 ---
+
 <!-- MIKE: replace -->
 
 # Secrets stay on the host
@@ -1155,6 +1193,7 @@ explicitly set them. Hand back to Engin for the demo.
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Demo: Neo in a Docker Sandbox.</h1>
 </div>
@@ -1167,6 +1206,7 @@ runbook with every command and expected output is DEMO.md.
 -->
 
 ---
+
 # Six steps, fifteen minutes
 
 <div class="zoom-content">
@@ -1195,6 +1235,7 @@ same six steps (DEMO.md, "Fallback").
 -->
 
 ---
+
 # 1 · One command starts the sandbox
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1233,6 +1274,7 @@ sbx secret set -g pulumi, sbx rm -f neo-demo, start again.
 -->
 
 ---
+
 # 2 · Neo sees the workspace and nothing else
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1274,6 +1316,7 @@ prevented.
 -->
 
 ---
+
 # 3 · Neo hardens the bucket, we approve each step
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1315,6 +1358,7 @@ the update in the console on the second screen.
 -->
 
 ---
+
 # 4 · Read-only lets Neo plan, not deploy
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1355,6 +1399,7 @@ approval modes; describe balanced and auto in one sentence each.
 -->
 
 ---
+
 # 5 · The guard answers instead of Pulumi
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1394,6 +1439,7 @@ the VM, where root inside cannot reach them.
 -->
 
 ---
+
 # 6 · The change is in the account
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1428,6 +1474,7 @@ to the ESC part, which explains the pulumi env run you just used.
 -->
 
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">No static keys.</h1>
 </div>
@@ -1438,6 +1485,7 @@ credentials: what the demo used, and what it replaces.
 -->
 
 ---
+
 # ESC mints credentials that expire
 
 <div class="grid grid-cols-2 gap-10 mt-4">
@@ -1486,6 +1534,7 @@ replaces static API keys.
 -->
 
 ---
+
 # ESC replaces the key on your laptop
 
 <div class="zoom-content">
@@ -1530,6 +1579,7 @@ you decided.
 -->
 
 ---
+
 # Sixty minutes, one safe loop
 
 <div class="zoom-content">
@@ -1558,6 +1608,7 @@ hour. Kit, runbook, scripts and slides are in one folder of pulumi/workshops.
 -->
 
 ---
+
 # Resources
 
 <div class="zoom-content">
@@ -1606,6 +1657,7 @@ only one people need; the runbook (DEMO.md) and the kit are in there.
 -->
 
 ---
+
 # Continue your Pulumi journey!
 
 <div class="zoom-content">
@@ -1649,6 +1701,7 @@ tab.
 -->
 
 ---
+
 # Questions?
 
 <div class="contact-grid">
