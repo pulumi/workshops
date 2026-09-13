@@ -26,6 +26,9 @@ for the runbook.
 
 ## Slides (`slides/`)
 
+The deck's brief, its sources and the slide rules are in
+[`slides/AGENTS.md`](slides/AGENTS.md); read it before touching `slides.md`.
+
 - Slidev with `@pulumi/slidev-theme` (public npm). Keep the style of the GKE
   workshop deck: `# Title` content slides with `<div class="zoom-content">`
   lists, separator slides as centered `<h1>` in `text-[var(--p-primary)]`,
