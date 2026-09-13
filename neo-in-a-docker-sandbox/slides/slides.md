@@ -80,13 +80,13 @@ take notes; the recording link lands in the follow-up email.
 
 <div class="zoom-content">
 
-<ul class="!mt-8 !text-[1.5rem] !leading-relaxed space-y-4">
-  <li>Why infra is different <span class="text-[var(--p-fg-muted)]">· 10 min</span></li>
-  <li>Pulumi Neo in the CLI <span class="text-[var(--p-fg-muted)]">· 10 min</span></li>
-  <li>The infrastructure sandbox kit <span class="text-[var(--p-fg-muted)]">· 10 min</span></li>
-  <li>Docker Sandboxes, with Mike <span class="text-[var(--p-fg-muted)]">· 10 min</span></li>
-  <li>The demo <span class="text-[var(--p-fg-muted)]">· 15 min</span></li>
-  <li>Pulumi ESC, wrap-up, Q&amp;A <span class="text-[var(--p-fg-muted)]">· 5 min</span></li>
+<ul class="!mt-8 !text-[1.6rem] !leading-relaxed space-y-5">
+  <li>Why infra is different</li>
+  <li>Pulumi Neo in the CLI</li>
+  <li>The infrastructure sandbox kit</li>
+  <li>Docker Sandboxes, with Mike</li>
+  <li>The demo</li>
+  <li>Pulumi ESC, wrap-up, Q&amp;A</li>
 </ul>
 
 </div>
@@ -96,11 +96,11 @@ take notes; the recording link lands in the follow-up email.
 </style>
 
 <!--
-~30s. Eight parts, folded into six lines: why this matters (5) and infra vs
-codebase (5) are the first line; ESC (3) and wrap-up (2) are the last. Full
-table: intro 5, infra vs codebase 5, Neo CLI 10, kit 10, Docker Sandboxes 10,
-demo 15, ESC 3, wrap-up 2. Say the part names, not the minutes. The demo sits
-in the middle; everything before it sets up what you will see.
+~30s. Eight parts, folded into six lines: why this matters and infra vs
+codebase are the first line; ESC and wrap-up are the last. The minutes stay
+off the slide; for your own pacing: intro 5, infra vs codebase 5, Neo CLI 10,
+kit 10, Docker Sandboxes 10, demo 15, ESC 3, wrap-up 2. The demo sits in the
+middle; everything before it sets up what you will see.
 -->
 
 ---
