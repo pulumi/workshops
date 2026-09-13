@@ -106,17 +106,18 @@ middle; everything before it sets up what you will see.
 ---
 
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
-  <h1 class="!text-[5.5rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">An agent that breaks your laptop is annoying.</h1>
+  <h1 class="!text-[5rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">An agent that breaks your laptop is annoying.<br/>An agent that breaks production comes with a postmortem.</h1>
 </div>
 
 <!--
-Part 1 divider. ~5s pause; the next slide finishes the sentence. Both lines
-are from the workshop abstract on the event page.
+Part 1 divider. Read both lines, pause. They are the workshop abstract's
+sentence, verbatim from the event page; the next slide shows why the second
+half is true.
 -->
 
 ---
 
-# An agent that breaks production comes with a postmortem
+# Production has no undo button
 
 <div class="zoom-content">
 
@@ -134,7 +135,7 @@ are from the workshop abstract on the event page.
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li><code>pulumi destroy</code> deletes customer data</li>
       <li>A leaked key is an incident</li>
-      <li>There is no undo button</li>
+      <li>A revert is another change in production</li>
     </ul>
   </div>
 </div>
@@ -147,12 +148,16 @@ are from the workshop abstract on the event page.
 
 <!--
 ~90s. Suggested speaker: Adam. Coding agents changed how software gets
-written, and almost nobody lets one near their infrastructure. The reason is
-that the failure modes are not symmetric: the left card is the world people
-know from coding agents, the right card is why platform teams say no. Do not
-argue the point; the audience already agrees. Close with the abstract's own
-line: this session is about letting the agent in anyway, safely, in a sealed
-workspace, with an identity that has limits and credentials that expire.
+written, and almost nobody lets one near their infrastructure, because the
+failure modes are not symmetric. The left card is the world people know from
+coding agents: a bad edit is a checkout away, a wrong rm -rf costs an
+afternoon, a leaked secret lands on your own disk. The right card is why
+platform teams say no: a wrong destroy deletes customer data, a leaked key
+is an incident, and undoing a change means running another change against
+production. Do not argue the point; the audience already agrees. Close with
+the abstract's own line: this session is about letting the agent in anyway,
+safely, in a sealed workspace, with an identity that has limits and
+credentials that expire.
 -->
 
 ---
