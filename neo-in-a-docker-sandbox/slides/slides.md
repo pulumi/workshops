@@ -55,10 +55,10 @@ controls, the kit, Docker Sandboxes with Mike, the demo, ESC, wrap-up.
 <div class="zoom-content">
 
 <ul class="!mt-8 !text-[1.6rem] !leading-relaxed space-y-5">
-  <li>Chat tab: be chatty</li>
-  <li>Q&amp;A tab: questions, answered as we go</li>
-  <li>Handouts tab: slides, runbook, scripts</li>
-  <li>Recorded; the link comes by email</li>
+  <li>Be chatty in the chat tab</li>
+  <li>Ask questions in the Q&amp;A tab</li>
+  <li>The handouts tab has slides and scripts</li>
+  <li>The recording link comes by email</li>
 </ul>
 
 </div>
@@ -150,15 +150,14 @@ are from the workshop abstract on the event page.
 written, and almost nobody lets one near their infrastructure. The reason is
 that the failure modes are not symmetric: the left card is the world people
 know from coding agents, the right card is why platform teams say no. Do not
-argue the point; the audience is here because they agree. Land the close from
-the abstract: this session is about letting the agent in anyway, safely. We
-put it in a sealed workspace with an identity that has limits and credentials
-that expire.
+argue the point; the audience already agrees. Close with the abstract's own
+line: this session is about letting the agent in anyway, safely, in a sealed
+workspace, with an identity that has limits and credentials that expire.
 -->
 
 ---
 
-# You leave with four answers
+# The event page promised four things
 
 <div class="zoom-content">
 
@@ -236,14 +235,13 @@ versus against real accounts with real credentials. Two more differences that
 did not fit the slide: in a codebase secrets are an anti-pattern and the agent
 rarely needs one, in your cloud secrets are the raw material and the agent
 cannot work without cloud access; and the blast radius is one repo versus
-everything the credential can reach. That is the thesis of the hour: with
-infra, the credential is the blast radius, so the credential is what we
-design.
+everything the credential can reach. The rest of the hour builds on this:
+the credential is the blast radius, so the credential is what we design.
 -->
 
 ---
 
-# Six questions decide what an agent can do
+# Every control answers one question
 
 <div class="zoom-content">
 
@@ -263,8 +261,7 @@ design.
 </style>
 
 <!--
-~2 min. Six questions, six answers, and every answer comes back in the next
-45 minutes. Who: pulumi neo runs as your Pulumi user, and Neo never has more
+~2 min. Each answer comes back later in the deck. Who: pulumi neo runs as your Pulumi user, and Neo never has more
 access than you do, only less. What: permission mode default or read-only,
 plus protect: true on resources. When: approval mode manual, balanced or
 auto, and Plan Mode before Neo starts. Where: a Docker Sandbox microVM with
@@ -359,9 +356,9 @@ run on this machine, in the working directory you select; the reasoning stays
 in the Neo backend. Typical asks: investigate a failed preview, change the
 program and verify against a fresh preview, read live stack state. It is
 interactive by design; for long asynchronous work the docs still point at
-Pulumi Cloud Neo, and both reach the same backend. Then flip it: whatever the
-terminal can reach, Neo can reach. That is the surface we put a wall around,
-and it is why the sandbox exists.
+Pulumi Cloud Neo, and both reach the same backend. The same sentence
+describes the risk: whatever the terminal can reach, Neo can reach. The
+sandbox limits what the terminal can reach.
 -->
 
 ---
@@ -372,7 +369,7 @@ and it is why the sandbox exists.
 
 <ul class="!mt-6 !text-[1.35rem] !leading-relaxed space-y-3">
   <li><code>manual</code>: asks before every tool call</li>
-  <li>The console calls <code>manual</code> Review</li>
+  <li>In the console, <code>manual</code> is called Review</li>
   <li><code>balanced</code>: asks only before <code>pulumi up</code></li>
   <li><code>auto</code>: never asks</li>
   <li>Console gates: preview, up, pull request</li>
@@ -429,7 +426,7 @@ user can override them per task; the CLI flags are --approval-mode and
 
 ---
 
-# Plan Mode: agree on a plan, then act
+# Plan Mode makes Neo agree on a plan first
 
 <div class="zoom-content">
 
@@ -460,7 +457,7 @@ unfamiliar infrastructure.
 
 ---
 
-# Read-only stops Pulumi Cloud writes, not cloud access
+# Read-only is scoped to Pulumi Cloud
 
 <div class="zoom-content">
 
@@ -479,21 +476,20 @@ unfamiliar infrastructure.
 </style>
 
 <!--
-~60s. The paragraph every security reviewer should read, from the permissions
-model page: "Read-only is scoped to Pulumi Cloud, not to your cloud accounts.
+~60s. From the permissions model page: "Read-only is scoped to Pulumi Cloud, not to your cloud accounts.
 Read-only mode blocks writes in Pulumi Cloud and instructs Neo not to make
 modifications, but it does not technically prevent Neo from opening ESC
 environments or reaching the cloud accounts those environments unlock. Treat
 read-only as 'no Pulumi Cloud mutations,' not 'no side effects anywhere.'" To
 constrain what Neo can reach, scope the acting user's RBAC and the ESC
 environments they can open, and prefer read-only cloud roles in ESC
-environments. This is why the sandbox and ESC exist: the cloud-side boundary
-is the role ESC hands out and the network the VM can reach.
+environments. The cloud-side boundary is therefore the role ESC hands out and
+the network the VM can reach.
 -->
 
 ---
 
-# Two flags set the modes, resume recovers a session
+# The demo needs two flags and resume
 
 <div class="zoom-content">
 
@@ -527,7 +523,7 @@ the kit, and resume is the recovery step in the runbook.
 
 ---
 
-# Put instructions in the project, not the kit
+# Instructions belong in the project directory
 
 <div class="zoom-content">
 
@@ -591,7 +587,7 @@ using pulumi neo under the hood.
 
 ---
 
-# Neo acts as you, never as more
+# Neo runs as your Pulumi user
 
 <div class="zoom-content">
 
@@ -659,8 +655,8 @@ and neo-kit/ in the workshop folder.
 </style>
 
 <!--
-~45s. Say it plainly, because this is the question the audience will ask.
-Docker Sandboxes run these agents out of the box (supported agents page,
+~45s. This is the question the audience will ask first. Docker Sandboxes run
+these agents out of the box (supported agents page,
 and "Available agents" in sbx run --help): claude, codex, copilot, cursor,
 devin, docker-agent, droid, gemini, kiro, opencode, plus shell, an
 agent-less sandbox with a bash login for manual setup. Pulumi Neo is not
@@ -668,13 +664,13 @@ among them. A custom template does not fix that: the templates page says
 custom templates customize an existing agent's environment and do not create
 new agent runtimes; the agent that launches is determined by the base image
 variant and the agent named in sbx run, not by binaries installed in the
-template. To define a new agent, the docs point at kits. That is why the kit
-exists.
+template. To define a new agent, the docs point at kits, so a kit is the only
+documented way to make pulumi neo the agent.
 -->
 
 ---
 
-# Two ways to put Neo in a sandbox
+# Only a kit makes `pulumi neo` the agent
 
 <div class="zoom-content">
 
@@ -684,7 +680,7 @@ exists.
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li><code>sbx run shell</code>, then install Pulumi</li>
       <li>Log in, type <code>pulumi neo</code></li>
-      <li>Works; nothing is reusable</li>
+      <li>Nothing carries over to the next sandbox</li>
     </ul>
   </div>
   <div class="gpu-card gpu-card--primary">
@@ -712,13 +708,13 @@ and a custom template with Pulumi baked in would still start a shell, not
 Neo. Way 2 is a sandbox kit: spec.yaml names the image with the pinned CLIs,
 sets pulumi neo as the entrypoint, declares the proxy-managed Pulumi token,
 the egress allow-list, the guard shims and the mode arguments, and loads
-from a directory, git or an OCI registry. One command starts it, the same
-way, every time. That is the kit the demo runs.
+from a directory, git or an OCI registry, and one command starts it. The demo
+runs that kit.
 -->
 
 ---
 
-# Twenty lines make Neo a sandbox agent
+# The spec names an image and an entrypoint
 
 <div class="grid grid-cols-2 gap-10 mt-4">
   <div class="big-code code-xs">
@@ -741,7 +737,7 @@ credentials:
       <li>The image is the Claude kit's image</li>
       <li>The entrypoint execs <code>pulumi neo</code></li>
       <li>Modes come in as kit arguments</li>
-      <li>Same credential, same allow-list</li>
+      <li>It reuses the kit's credential and allow-list</li>
     </ul>
   </div>
 </div>
@@ -763,7 +759,7 @@ this.
 
 ---
 
-# One command starts Neo in the sandbox
+# `sbx run` starts Neo in the sandbox
 
 <div class="grid grid-cols-2 gap-10 mt-4">
   <div class="big-code">
@@ -798,7 +794,7 @@ neo-demo removes the VM and the secrets scoped to it.
 
 ---
 
-# One image, every IaC tool pinned
+# The IaC tools are baked into one image
 
 <div class="grid grid-cols-2 gap-10 mt-4">
   <div>
@@ -860,10 +856,10 @@ credentials:
   </div>
   <div>
     <ul class="!mt-2 !text-[1.25rem] !leading-relaxed space-y-3">
-      <li>The kit declares, the host binds</li>
+      <li>You bind the value once on the host</li>
       <li>Inside: <code>PULUMI_ACCESS_TOKEN=proxy-managed</code></li>
       <li>The proxy rewrites the header on <code>api.pulumi.com</code></li>
-      <li>Enough for login, neo, up, env</li>
+      <li>Covers <code>pulumi login</code>, <code>neo</code>, <code>up</code> and <code>env</code></li>
     </ul>
   </div>
 </div>
@@ -930,7 +926,7 @@ only org allow rules grant access, kit deny rules still apply.
 
 ---
 
-# Neo has no hooks, so PATH is the hook
+# The guard moves from hooks to PATH shims
 
 <div class="grid grid-cols-2 gap-10 mt-4">
   <div>
@@ -938,8 +934,8 @@ only org allow rules grant access, kit deny rules still apply.
       <li>Claude kit: PreToolUse and PostToolUse hooks</li>
       <li>Neo runs shell tools through <code>sh -c</code></li>
       <li>Shims front <code>pulumi</code>, <code>aws</code>, <code>terraform</code>, <code>tofu</code></li>
-      <li>Match, log, exit 2; otherwise exec</li>
-      <li>Blocked attempts land in <code>guard.log</code></li>
+      <li>A match is refused and logged</li>
+      <li>Anything else runs the real binary</li>
     </ul>
   </div>
   <div class="big-code code-sm">
@@ -971,7 +967,7 @@ neo-kit/files.
 
 ---
 
-# A guard stops accidents, boundaries stop adversaries
+# The guard only catches accidents
 
 <div class="zoom-content">
 
@@ -990,8 +986,8 @@ neo-kit/files.
 </style>
 
 <!--
-~45s. Say this out loud, because without it the guard looks like a demo
-trick. The Docker isolation page: the agent runs as a non-root user with sudo
+~45s. Without this slide the guard looks like a demo trick. The Docker
+isolation page: the agent runs as a non-root user with sudo
 inside the VM, and the hypervisor boundary is the isolation control, not
 in-VM privilege separation. So the guard catches accidents; the boundaries
 that hold against a determined agent are the hypervisor, the egress
@@ -1003,7 +999,7 @@ teardown on the host instead.
 
 ---
 
-# Neo brings its own MCP
+# Neo needs no MCP server from the kit
 
 <div class="zoom-content">
 
@@ -1036,7 +1032,7 @@ environment, as you.
 
 ---
 
-# Six boundaries, six enforcers
+# Every boundary has an enforcer outside Neo
 
 <div class="boundaries mt-6">
   <table>
@@ -1207,7 +1203,7 @@ runbook with every command and expected output is DEMO.md.
 
 ---
 
-# Six steps, fifteen minutes
+# The demo runs six steps in fifteen minutes
 
 <div class="zoom-content">
 
@@ -1215,7 +1211,7 @@ runbook with every command and expected output is DEMO.md.
   <div class="gpu-card gpu-card--muted step-card"><div class="gpu-caption gpu-caption--muted">1 · 2 min</div><p>One command starts the sandbox</p></div>
   <div class="gpu-card gpu-card--muted step-card"><div class="gpu-caption gpu-caption--muted">2 · 2 min</div><p>Neo sees the workspace and nothing else</p></div>
   <div class="gpu-card gpu-card--primary step-card"><div class="gpu-caption gpu-caption--accent">3 · 5 min</div><p>Neo hardens the bucket, we approve</p></div>
-  <div class="gpu-card gpu-card--muted step-card"><div class="gpu-caption gpu-caption--muted">4 · 2.5 min</div><p>Read-only lets Neo plan, not deploy</p></div>
+  <div class="gpu-card gpu-card--muted step-card"><div class="gpu-caption gpu-caption--muted">4 · 2.5 min</div><p>Read-only stops the deploy</p></div>
   <div class="gpu-card gpu-card--accent step-card"><div class="gpu-caption gpu-caption--accent">5 · 2 min</div><p>The guard answers instead of Pulumi</p></div>
   <div class="gpu-card gpu-card--muted step-card"><div class="gpu-caption gpu-caption--muted">6 · 1.5 min</div><p>The change is in the account</p></div>
 </div>
@@ -1309,10 +1305,9 @@ no AWS_, GOOGLE_ or AZURE_ variables and no ~/.aws; only the 02-app path is
 mounted, the parent folder and /Users are absent; curl to ifconfig.me fails
 while api.pulumi.com answers 200; sbx policy log neo-demo on the host lists
 every host with the rule it matched; pulumi destroy --yes is refused by the
-guard with exit 2. The question this answers: what could the agent
-exfiltrate? Nothing it does not have, and it does not have much. Try it on
-your own kit: every blocked row is a host to add or a leak you just
-prevented.
+guard with exit 2. The audience's question is what the agent could
+exfiltrate: only what it has, and it has little. On your own kit, every
+blocked row is either a host to add or a leak you prevented.
 -->
 
 ---
@@ -1350,16 +1345,15 @@ aws.s3.BucketPublicAccessBlock, asks to run pulumi preview; the preview shows
 three creates and two unchanged. ESC minted the AWS credentials for that
 preview inside the VM; the proxy log shows STS and S3 in eu-central-1. Type
 "deploy it", approve pulumi up: three created, two unchanged, update URL in
-Pulumi Cloud. Say while it runs: Neo is editing a real TypeScript program and
-running the real CLI, inside the VM, against a real account, with credentials
-that did not exist a minute ago and expire in an hour. It never sees a key
-file or a secret value, and the preview was against the real provider. Open
-the update in the console on the second screen.
+Pulumi Cloud. While it runs: Neo edits a TypeScript program and runs the
+Pulumi CLI inside the VM against the demo account, with credentials ESC
+minted for this run that expire in an hour. It never sees a key file or a
+secret value. Open the update in the console on the second screen.
 -->
 
 ---
 
-# 4 · Read-only lets Neo plan, not deploy
+# 4 · Read-only stops the deploy
 
 <div class="grid grid-cols-2 gap-10 mt-4">
   <div class="big-code">
@@ -1467,9 +1461,9 @@ pulumi env run <org>/neo-workshop/aws-oidc -- \
 Step 6, 1.5 min. From the host: the git diff of index.ts (three resources),
 the AWS API through pulumi env run with the same ESC environment the sandbox
 used (DEMO.md expects a versioning status of Enabled), and the AWS console (Properties, Bucket Versioning: Enabled) plus the
-update in Pulumi Cloud. Close the loop: a real change in a real account,
-reviewed at every step, with nothing on the laptop an agent could have
-leaked. Reset happens after the session with 01-sandbox/reset.sh. Hand over
+update in Pulumi Cloud. Summarize: the bucket changed, each step was
+approved, and no credential was on the laptop for an agent to leak. Reset
+happens after the session with 01-sandbox/reset.sh. Hand over
 to the ESC part, which explains the pulumi env run you just used.
 -->
 
@@ -1552,8 +1546,8 @@ replaces static API keys.
     <div class="gpu-caption gpu-caption--accent">With ESC</div>
     <ul class="!mt-3 !text-[1.15rem] !leading-relaxed space-y-2">
       <li>A role only your org's environments assume</li>
-      <li>One hour, least privilege</li>
-      <li>Who opens it is Pulumi RBAC</li>
+      <li>Credentials expire after one hour</li>
+      <li>Opening it takes Pulumi RBAC</li>
     </ul>
   </div>
 </div>
@@ -1580,16 +1574,16 @@ you decided.
 
 ---
 
-# Sixty minutes, one safe loop
+# The demo changed real infrastructure without a key
 
 <div class="zoom-content">
 
 <ul class="!mt-6 !text-[1.35rem] !leading-relaxed space-y-3">
   <li>The credential is the blast radius</li>
-  <li>Neo: modes, Plan Mode, your RBAC</li>
-  <li>A microVM: one folder, proxy, allow-list, guard</li>
-  <li>ESC: credentials that expire in an hour</li>
-  <li>One repo folder has everything</li>
+  <li>Neo asked before every change</li>
+  <li>The VM had one folder and an allow-list</li>
+  <li>The AWS credentials lasted an hour</li>
+  <li>Everything is in one repo folder</li>
 </ul>
 
 </div>
