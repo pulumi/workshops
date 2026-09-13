@@ -106,13 +106,14 @@ middle; everything before it sets up what you will see.
 ---
 
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
-  <h1 class="!text-[5rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">An agent that breaks your laptop is annoying.<br/>An agent that breaks production comes with a postmortem.</h1>
+  <h1 class="!text-[5.5rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">An agent that breaks your laptop is annoying.</h1>
 </div>
 
 <!--
-Part 1 divider. Read both lines, pause. They are the workshop abstract's
-sentence, verbatim from the event page; the next slide shows why the second
-half is true.
+Part 1 divider. Read the line, pause, then say the second half of the
+abstract's sentence yourself: "an agent that breaks production comes with a
+postmortem." Both halves are verbatim from the event page; the next slide
+shows why the second one is true.
 -->
 
 ---
