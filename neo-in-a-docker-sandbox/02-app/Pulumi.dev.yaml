@@ -1,0 +1,10 @@
+# The stack imports a Pulumi ESC environment. ESC mints short-lived AWS
+# credentials through OIDC every time this stack runs, so no AWS key ever lives
+# in the sandbox (or on the laptop). The organization is implied by the stack
+# (<org>/dev); see ../README.md. `aws:region` is pinned to the one region the
+# sandbox's network policy allows (01-sandbox/region-kit/spec.yaml).
+environment:
+  - pulumi-idp/auth
+config:
+  neo-workshop-app:bucketPrefix: neo-workshop-
+  aws:region: eu-central-1

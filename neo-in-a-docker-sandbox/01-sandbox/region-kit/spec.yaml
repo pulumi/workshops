@@ -1,0 +1,18 @@
+schemaVersion: "2"
+kind: mixin
+name: neo-demo-region
+displayName: AWS region endpoints for the demo
+description: >-
+  The published infrastructure sandbox kit allows sts.amazonaws.com but no
+  regional AWS endpoints, and the demo stack talks to S3 and STS in one region.
+  This mixin adds those hosts to this sandbox only, so the machine's global
+  network policy stays as it is and other sandboxes are untouched.
+version: "0.1.0"
+
+# Change these three lines to the region your ESC environment hands out.
+permissions:
+  network:
+    allow:
+      - sts.eu-central-1.amazonaws.com
+      - s3.eu-central-1.amazonaws.com
+      - "*.s3.eu-central-1.amazonaws.com"

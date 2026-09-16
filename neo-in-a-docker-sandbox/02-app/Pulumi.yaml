@@ -1,0 +1,9 @@
+name: neo-workshop-app
+description: >-
+  Demo project for "Neo in a Docker Sandbox": one S3 bucket that Pulumi Neo
+  hardens live from inside a Docker Sandbox, with AWS credentials minted by
+  Pulumi ESC.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
