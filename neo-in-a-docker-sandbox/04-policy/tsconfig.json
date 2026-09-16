@@ -10,7 +10,11 @@
     "pretty": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true
   },
-  "files": ["index.ts"]
+  "include": [
+    "*.ts",
+    "test/*.ts"
+  ]
 }

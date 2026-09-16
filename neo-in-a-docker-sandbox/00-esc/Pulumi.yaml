@@ -1,9 +1,0 @@
-name: neo-workshop-esc
-description: >-
-  One-time bootstrap for "Neo in a Docker Sandbox": the AWS IAM OIDC trust for
-  Pulumi ESC, a least-privilege role for the S3 demo, and the Pulumi ESC
-  environment (neo-workshop/aws-oidc) that mints short-lived AWS credentials.
-runtime:
-  name: nodejs
-  options:
-    packagemanager: npm

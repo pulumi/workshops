@@ -1,0 +1,7 @@
+name: neo-workshop-guardrails
+runtime: nodejs
+description: >-
+  Guardrails for the "Neo in a Docker Sandbox" workshop. The demo bucket stays
+  private: no public ACL, no bucket policy that grants everyone access, and a
+  public access block that keeps all four settings on. Mandatory, so a
+  violation stops `pulumi up` before anything reaches AWS.

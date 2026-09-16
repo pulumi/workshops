@@ -33,6 +33,11 @@ if [ "$destroy" -eq 1 ]; then
   note "the stack itself is kept; remove it with: pulumi stack rm $STACK"
 else
   say "reconciling stack $STACK to the baseline (removes what Neo added, keeps the bucket)"
+  # Neo may put `protect: true` on the resources it creates, and the reconcile
+  # deletes those, so clear protection first. The baseline program carries
+  # `{ protect: true }` on the bucket, so this `pulumi up` protects it again.
+  pulumi state unprotect --all --yes --stack "$STACK"
   pulumi up --yes --stack "$STACK"
+  note "the bucket is protected again (the baseline program sets it)"
 fi
 say "clean"

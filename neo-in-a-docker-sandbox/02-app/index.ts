@@ -8,7 +8,8 @@ import * as aws from "@pulumi/aws";
 //
 // `protect: true` is a Pulumi engine guardrail: `pulumi destroy` refuses to
 // delete the bucket until a human unprotects it. That is the second layer on
-// top of the sandbox's command guard (see ../neo-kit).
+// top of the sandbox itself: the microVM, the egress allow-list and the
+// credential proxy all sit outside, where the agent cannot reach them.
 
 const config = new pulumi.Config();
 const bucketPrefix = config.get("bucketPrefix") ?? "neo-workshop-";
@@ -20,6 +21,7 @@ const bucket = new aws.s3.Bucket(
         tags: {
             workshop: "neo-in-a-docker-sandbox",
             "managed-by": "pulumi",
+            owner: "neo",
         },
     },
     { protect: true },

@@ -41,36 +41,41 @@ The four outcomes promised on the event page are the spine of the deck:
 ```
 neo-in-a-docker-sandbox/
 ├── README.md            this file
-├── DEMO.md              the 15-minute runbook: every command, expected output, what to say, reset
 ├── AGENTS.md            conventions for agents (and humans) editing this folder
-├── OPEN-QUESTIONS.md    what could not be verified or decided here, and who unblocks it
-├── 00-esc/              ONE-TIME bootstrap: AWS IAM OIDC trust + role + the Pulumi ESC environment
 ├── 01-sandbox/          host-side scripts: preflight, up (start/attach), boundaries, reset, record
+│   └── region-kit/      one-file mixin kit: the regional AWS endpoints this demo needs
 ├── 02-app/              the demo Pulumi project (one S3 bucket) that Neo hardens live
-├── 03-guardrails/       scripts that trip the guardrails on purpose (destroy, egress) + lift/re-arm
-├── neo-kit/             the Docker Sandboxes kit that runs `pulumi neo` as the sandbox agent
+├── 03-guardrails/       scripts that trip the guardrails on purpose (protected destroy preview, egress)
+├── 04-policy/           Pulumi policy pack (CrossGuard): the demo bucket may not be opened to the public
 └── slides/              Slidev deck (@pulumi/slidev-theme), speaker notes on every content slide
 ```
 
-The numbered folders follow the demo flow: credentials first (`00`), then the
-sandbox (`01`), then the task (`02`), then the guardrails (`03`).
+The numbered folders follow the demo flow: the sandbox (`01`), the task
+(`02`), the guardrails (`03`) and the policy pack (`04`). The sandbox
+itself comes from the published
+[infrastructure-sandbox-kit](https://github.com/dirien/infrastructure-sandbox-kit);
+nothing is built for the demo.
 
 ## Prerequisites
 
 - A [Pulumi Cloud](https://app.pulumi.com/signup) account in an organization
   with Pulumi Neo enabled, and a personal access token. `pulumi login` on the
-  host; the token is bound to the sandbox proxy once (`sbx secret set -g pulumi`).
+  host; the token is stored for all sandboxes once (`sbx secret set pulumi`).
 - [Docker Sandboxes](https://docs.docker.com/ai/sandboxes/install/): the `sbx`
   CLI **≥ 0.42.0** (macOS 14+ on Apple silicon, Windows 11, or Ubuntu 24.04+
-  with KVM). 0.42.0 is where `sbx run <kit-ref>` and kit arguments landed, both
-  of which the kit uses. Docker Desktop is not required by `sbx`; it is only
-  needed to build custom template images, and this workshop uses the published
-  `ghcr.io/dirien/infrastructure-sandbox:v0.9.0` image (Pulumi CLI 3.260.0 with
+  with KVM). 0.42.0 is where `sbx run <kit-ref>` landed, which the demo uses.
+  Docker Desktop is not required by `sbx`; it is only needed to build custom
+  template images, and this workshop uses the published sandbox kit
+  `ghcr.io/dirien/infrastructure-sandbox-kit:v0.10.0` and its template image
+  `ghcr.io/dirien/infrastructure-sandbox:v0.10.0` (Pulumi CLI 3.260.0 with
   `pulumi neo`, Terraform, OpenTofu, AWS/Azure/gcloud CLIs) as-is.
 - The Pulumi CLI (≥ 3.256.0; the demo runs 3.260.0 inside the sandbox) on the
   host for the bootstrap and the reset.
-- An AWS account you can create an IAM OIDC provider and a role in (once, for
-  `00-esc`). The demo itself creates one S3 bucket.
+- A Pulumi ESC environment that hands out AWS credentials, which you almost
+  certainly already have. The demo stack imports it, so no AWS key lives on the
+  laptop or in the sandbox. If you need to create one, follow
+  [Configuring OIDC for AWS](https://www.pulumi.com/docs/esc/environments/configuring-oidc/aws/).
+  The demo itself creates one S3 bucket.
 - Node.js ≥ 20 and npm for the slides.
 - Optional: [asciinema](https://asciinema.org/) for the fallback recording.
 
@@ -92,25 +97,33 @@ mode with notes.
 
 ## Run the demo
 
-Step-by-step with timings and expected output: [DEMO.md](DEMO.md). The short version:
+The demo is four beats in about eleven minutes: one secret and one kit give you
+a shell in the sandbox, `boundaries.sh` shows what Neo can and cannot reach,
+Neo hardens the bucket for real (preview → approve → up), and then `protect:
+true` refuses to delete it. Set it up once, then run steps 2 and 3 as often as
+you like:
 
 ```bash
-# 0. once: the OIDC trust, the role and the ESC environment (your AWS creds + pulumi login on the host)
-cd 00-esc && npm install
-pulumi stack init <org>/bootstrap && pulumi config set pulumiOrg <org>
-pulumi up                                     # outputs: roleArn, escEnvironmentPath, tryIt
-pulumi env run <org>/neo-workshop/aws-oidc -- aws sts get-caller-identity   # short-lived creds work
+# 0. once: point the demo stack at the ESC environment you already have
+cd 02-app && npm install
+pulumi stack init <org>/dev
+pulumi config env add <your-project>/<your-env> --stack dev --yes    # AWS credentials come from here
+pulumi up                                     # creates the protected demo bucket
+cd ..
 
-# 0. once: the baseline stack (the bucket Neo will harden)
-cd ../02-app && npm install
-pulumi stack init <org>/dev && pulumi up      # Pulumi.dev.yaml imports the ESC environment
-
-# 1. bind the Pulumi token to the sandbox proxy, then check the host
-sbx secret set -g pulumi
+# 1. once: the Pulumi token for all sandboxes and GHCR as a kit source; then check the host
+sbx settings set kit.allowedSources '["docker.io/","ghcr.io/dirien/"]'
+sbx secret set pulumi
 01-sandbox/preflight.sh
 
-# 2. start Neo in the sandbox (first run pulls the image and asks you to approve the pulumi credential binding)
-01-sandbox/up.sh
+# 1b. once: publish the policy pack and switch it on (mandatory; blocks a public bucket)
+cd 04-policy && npm install
+pulumi policy publish <org>
+pulumi policy enable <org>/neo-workshop-guardrails latest    # default group: every stack in the org
+cd ..
+
+# 2. start the sandbox from the published kit (first run pulls the image and asks you to approve the pulumi credential binding)
+01-sandbox/up.sh                              # a shell in the VM: pulumi whoami -v, then pulumi neo
 
 # 3. between runs
 01-sandbox/reset.sh                           # remove sandbox, restore index.ts, reconcile the stack
@@ -118,25 +131,30 @@ sbx secret set -g pulumi
 ```
 
 Everything the demo shows is scripted so it can be replayed: `01-sandbox/boundaries.sh`
-prints what Neo can and cannot touch, `03-guardrails/try-destroy.sh` and
-`03-guardrails/try-egress.sh` trip the guardrails on purpose, and
+prints what Neo can and cannot touch, `03-guardrails/try-destroy.sh` (a
+destroy preview the protected bucket refuses) and
+`03-guardrails/try-egress.sh` trip the guardrails on purpose, the policy pack in
+[`04-policy/`](04-policy) refuses a public bucket on every `pulumi preview` and
+`pulumi up`, and
 `01-sandbox/record.sh` records the whole happy path with asciinema as the
 on-stage fallback.
 
 ### The kit in one paragraph
 
-[`neo-kit/`](neo-kit) is a `kind: sandbox` Docker Sandboxes kit. It points at
-the published infrastructure-sandbox image, declares the Pulumi Cloud token as
-a proxy-managed credential (the container only ever sees
-`PULUMI_ACCESS_TOKEN=proxy-managed`), carries a default-deny egress allow-list
-(Pulumi Cloud, AWS S3/STS in the demo region, package registries, GitHub), and
-starts `pulumi neo` through a small entrypoint that prints the sandbox
-boundaries first. A PATH-shim guard blocks destructive `pulumi`, `aws`,
-`terraform` and `tofu` commands and logs the attempts; Neo runs shell tool calls
-through `sh -c`, so they resolve through the shims. Approval and permission
-modes are kit arguments (`--kit-arg approvalMode=balanced`) or per-session
-environment overrides (`--env NEO_SANDBOX_PERMISSION_MODE=read-only`). Details
-and the "not verified yet" list in [neo-kit/README.md](neo-kit/README.md).
+The demo uses the published sandbox kit from
+[dirien/infrastructure-sandbox-kit](https://github.com/dirien/infrastructure-sandbox-kit),
+`ghcr.io/dirien/infrastructure-sandbox-kit:v0.10.0`. It names the template
+image `ghcr.io/dirien/infrastructure-sandbox:v0.10.0`, where the IaC tools are
+baked in and verified by checksum or signature, and it declares the Pulumi
+Cloud token as a proxy-managed credential (the VM only ever sees
+`PULUMI_ACCESS_TOKEN=proxy-managed`) plus a default-deny egress allow-list.
+You store the token once with `sbx secret set pulumi`; it is global, so every
+sandbox created afterwards whose kit declares `pulumi` gets it. Inside, the
+v0.10.0 kit opens a shell, and the Pulumi CLI works as usual: `pulumi whoami`,
+`pulumi preview`, `pulumi neo`. Neo's approval and permission modes are its own
+flags (`--approval-mode`, `--permission-mode`); deletes stop at Neo's approval
+prompt and at `protect: true` on the bucket, and the policy pack in
+[`04-policy/`](04-policy) refuses a public bucket on every preview and update.
 
 ### What we expect from the Docker segment
 
@@ -158,14 +176,6 @@ of the deck assumes he covers, because the demo leans on it:
 
 If he covers something else, the Pulumi slides in section 4 ("The kit") and the
 demo slides stay valid; they only reference these three ideas.
-
-## Open questions
-
-Everything that could not be verified or decided while preparing this folder
-(host-only checks, credentials, Mike's input, unclear docs) is in
-[OPEN-QUESTIONS.md](OPEN-QUESTIONS.md). The most important one: the runbook was
-written and each piece was tested in isolation, but a full end-to-end run with
-`sbx` needs a host with virtualization and your credentials.
 
 ## Sources
 

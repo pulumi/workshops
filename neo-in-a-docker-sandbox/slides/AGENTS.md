@@ -59,14 +59,14 @@ Q&A (2). Speaker notes on every content slide.
 - Pulumi terminology (brand guidelines): Pulumi Neo, Pulumi ESC, Pulumi
   Cloud, Pulumi IaC, Pulumi console; never Copilot, Pulumi Service, Insights
 
-Every claim on a slide or in its notes is mapped to one of these in
-`../FACTCHECK.md`. What could not be verified is in `../OPEN-QUESTIONS.md`.
+Every claim on a slide or in its notes is mapped back to one of these sources
+in the presenter's fact-check log (kept out of the repo, see `../AGENTS.md`).
 
 ## Rules that still bind
 
 - Facts come from the sources above, not memory. Unclear docs become an open
   question, not a guess. Nothing unverified stays on a slide.
-- Every `sbx` and `pulumi` command on a slide is one DEMO.md runs, same flags
+- Every `sbx` and `pulumi` command on a slide is one the demo runs, same flags
   (the one deliberate exception is `sbx run shell` on the "two ways" slide).
 - One idea per slide. The headline is a claim, not a topic. At most six lines
   of body text, at most eight words per line, no paragraphs, no full sentences
@@ -80,8 +80,25 @@ Every claim on a slide or in its notes is mapped to one of these in
   in the notes ("say it plainly", "the thesis of the hour").
 - Slides marked `<!-- MIKE: replace -->` are Mike's; leave them as
   placeholders unless his content is provided.
+- Every content slide from 10 on builds up with `v-click` / `<v-clicks>`, one
+  block at a time; the title is always there. Section slides, the Kermit slide,
+  Resources (48) and the closing slide (50) reveal at once. Keep that when you
+  edit: give new blocks the directive, and use an absolute `v-click="n"` when an
+  arrow has to arrive with the card it points at.
 - Do not change the part durations or the timing table; if a rule forces a
   structural change, say why in the commit message.
+
+## Changes after the brief (September 15, 2026, Engin)
+
+- The demo and section 4 use the published
+  [infrastructure-sandbox-kit](https://github.com/dirien/infrastructure-sandbox-kit)
+  (`ghcr.io/dirien/infrastructure-sandbox-kit:v0.10.0`) instead of a custom
+  Neo kit; building a kit on stage was too much for the slot. Section 4 now
+  explains why kits sit on top of templates, how kits compose, and how
+  `sbx secret set pulumi` makes the token available to every sandbox.
+- The Pulumi ESC part (four slides) was removed from the deck. ESC still mints
+  the demo's AWS credentials and appears on the boundary and recap slides. The
+  60-minute structure above still gives ESC 3 minutes; decide where they go.
 
 ## Check before committing
 

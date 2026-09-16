@@ -5,12 +5,17 @@ in `index.ts`. It is the demo target of the "Neo in a Docker Sandbox" workshop.
 
 ## How to work here
 
-- Stack: `dev` (config in `Pulumi.dev.yaml`). It imports the Pulumi ESC
-  environment `neo-workshop/aws-oidc`, which mints short-lived AWS credentials
-  at run time. Do not add AWS keys, profiles or `aws:accessKey` config.
-- Region comes from the ESC environment (`aws:region`). Do not hardcode it.
+- Stack: `dev` (config in `Pulumi.dev.yaml`). It imports a Pulumi ESC
+  environment that mints short-lived AWS credentials at run time. Do not add
+  AWS keys, profiles or `aws:accessKey` config.
+- `aws:region` in `Pulumi.dev.yaml` is pinned to the one region this sandbox is
+  allowed to reach. Do not change it, and do not set a region on a provider or
+  a resource: any other region's endpoint is blocked by the network policy and
+  fails with `unable to validate AWS credentials` (STS 403).
 - Always run `pulumi preview` before `pulumi up`.
-- Keep `protect: true` on the bucket. Never run `pulumi destroy`,
+- Keep `protect: true` on the bucket, and do **not** add it to resources you
+  create: teardown is a human's job on the host, and protecting the new
+  resources makes the reset harder. Never run `pulumi destroy`,
   `pulumi stack rm`, `pulumi state delete` or `pulumi state unprotect`; the
   sandbox guard blocks them and a human runs teardown from the host.
 - Prefer the `@pulumi/aws` v7 sub-resources when hardening the bucket:

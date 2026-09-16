@@ -5,8 +5,27 @@
 WORKSHOP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SANDBOX="${NEO_DEMO_SANDBOX:-neo-demo}"          # sbx sandbox name
 PROJECT_DIR="$WORKSHOP_DIR/02-app"                # the workspace Neo works in
-KIT_DIR="$WORKSHOP_DIR/neo-kit"
 STACK="${NEO_DEMO_STACK:-dev}"                    # <org>/dev; the org comes from `pulumi org set-default` or PULUMI_ORG
+
+# The published sandbox kit from dirien/infrastructure-sandbox-kit. It names the
+# template image (ghcr.io/dirien/infrastructure-sandbox:v0.10.0), declares the
+# `pulumi` credential and the egress allow-list. Pinned to an immutable tag.
+KIT_REF="${NEO_DEMO_KIT:-ghcr.io/dirien/infrastructure-sandbox-kit:v0.10.0}"
+
+# A one-file mixin kit that adds the regional AWS endpoints the demo stack needs
+# (the published kit allows sts.amazonaws.com only). It rides along with this
+# sandbox, so no global network policy changes and other sandboxes stay as they
+# are. Edit the region in its spec.yaml.
+REGION_KIT="$WORKSHOP_DIR/01-sandbox/region-kit"
+AWS_REGION="$(sed -n 's/^[[:space:]]*-[[:space:]]*s3\.\([a-z0-9-]*\)\.amazonaws\.com.*/\1/p' "$REGION_KIT/spec.yaml" 2>/dev/null | head -n1)"
+AWS_REGION="${AWS_REGION:-eu-central-1}"
+
+# The ESC environment the demo stack imports, read from 02-app/Pulumi.dev.yaml
+# (written there by `pulumi config env add`). Empty until you add one.
+esc_env() {
+  sed -n '/^environment:/,/^[^ -]/p' "$PROJECT_DIR/Pulumi.dev.yaml" 2>/dev/null \
+    | sed -n 's/^[[:space:]]*-[[:space:]]*//p' | head -n1
+}
 
 say()  { printf '\n\033[1;35m▶ %s\033[0m\n' "$*"; }
 note() { printf '  \033[2m%s\033[0m\n' "$*"; }
