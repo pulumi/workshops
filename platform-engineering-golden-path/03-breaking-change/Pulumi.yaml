@@ -1,0 +1,17 @@
+name: acme-checkout
+description: >-
+  The consuming team's original program, unchanged, pointed at component-v2
+  to show the breaking change: v1 called this input serviceName, v2 renamed
+  it to name.
+runtime: yaml
+packages:
+  compliance-web-service: ./component-v2
+resources:
+  checkout:
+    type: compliance-web-service:ComplianceWebService
+    properties:
+      serviceName: checkout
+      image: nginx:latest
+      port: 80
+outputs:
+  url: ${checkout.url}

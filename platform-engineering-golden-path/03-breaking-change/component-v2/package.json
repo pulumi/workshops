@@ -1,0 +1,18 @@
+{
+    "name": "compliance-web-service",
+    "version": "2.0.0",
+    "description": "Platform golden path v2: renames the serviceName input to name, a deliberate breaking change for the versioning demo.",
+    "main": "index.ts",
+    "scripts": {
+        "typecheck": "tsc --noEmit"
+    },
+    "devDependencies": {
+        "@types/node": "^22.0.0",
+        "typescript": "^5.9.0"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^7.3.0",
+        "@pulumi/awsx": "^3.9.0",
+        "@pulumi/pulumi": "^3.262.0"
+    }
+}
