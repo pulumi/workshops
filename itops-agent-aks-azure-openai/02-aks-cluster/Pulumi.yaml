@@ -1,0 +1,9 @@
+name: itops-agent-aks-cluster
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 2 — a resource group and an AKS cluster (azure-native.containerservice.
+  ManagedCluster), with the OIDC issuer and workload identity features turned
+  on so step 4 can wire up credential-free authentication to Azure OpenAI.

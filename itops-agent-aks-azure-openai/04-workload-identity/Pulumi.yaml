@@ -1,0 +1,11 @@
+name: itops-agent-workload-identity
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 4 — a user-assigned managed identity, an OIDC federated identity
+  credential binding it to a Kubernetes service account (no static secret
+  involved), and a role assignment granting it "Cognitive Services OpenAI
+  User" on the account from step 3. End state: no static secret appears in
+  the Pulumi program or the container spec built in step 5.

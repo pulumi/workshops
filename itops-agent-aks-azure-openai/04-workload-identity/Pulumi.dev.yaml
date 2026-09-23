@@ -1,0 +1,7 @@
+config:
+  azure-native:location: eastus2
+  itops-agent-workload-identity:resourceGroupName: rg-itops-agent-aks-azure-openai
+  itops-agent-workload-identity:oidcIssuerUrl: ""
+  itops-agent-workload-identity:openaiAccountId: ""
+  itops-agent-workload-identity:namespace: itops-agent
+  itops-agent-workload-identity:serviceAccountName: itops-agent

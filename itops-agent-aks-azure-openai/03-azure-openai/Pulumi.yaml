@@ -1,0 +1,10 @@
+name: itops-agent-openai
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 3 — a Cognitive Services account of kind OpenAI (azure-native.
+  cognitiveservices.Account) plus a GPT-4o-class model deployment (azure-
+  native.cognitiveservices.Deployment). No API keys are exported; local auth
+  is disabled on the account, since step 4 wires up identity-based access.
