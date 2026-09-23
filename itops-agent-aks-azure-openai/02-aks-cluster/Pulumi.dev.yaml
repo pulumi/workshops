@@ -1,0 +1,5 @@
+config:
+  azure-native:location: eastus2
+  itops-agent-aks-cluster:resourceGroupName: rg-itops-agent-aks-azure-openai
+  itops-agent-aks-cluster:createCluster: "true"
+  itops-agent-aks-cluster:existingClusterName: ""
