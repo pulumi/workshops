@@ -1,0 +1,6 @@
+config:
+  azure-native:location: eastus2
+  itops-agent-openai:createOpenAI: "true"
+  itops-agent-openai:existingResourceGroup: ""
+  itops-agent-openai:existingAccountName: ""
+  itops-agent-openai:existingDeploymentName: ""

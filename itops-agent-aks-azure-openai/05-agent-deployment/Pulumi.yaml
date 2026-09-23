@@ -1,0 +1,11 @@
+name: itops-agent-deployment
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 5 — the Kubernetes provider pointed at the AKS cluster's kubeconfig,
+  plus a Namespace, a workload-identity-annotated ServiceAccount, a
+  Deployment and a Service running the pre-built agent container from
+  ./agent-app. End state: `kubectl get pods` shows the agent running, and a
+  test prompt through the service returns a real model response.
