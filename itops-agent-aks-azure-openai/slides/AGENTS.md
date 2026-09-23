@@ -1,94 +1,92 @@
 # AGENTS.md — the deck's brief and sources
 
-This file records what the deck was asked to be and which sources it was
-built from, so anyone (human or agent) editing `slides.md` works from the
-same brief. Conventions for the whole workshop folder are in `../AGENTS.md`.
+This file records the deck's brief and sources so any editor working on
+`slides.md` starts from the same context. Folder-wide conventions (demo code
+style, teardown discipline, credential handling) live in the parent
+`../AGENTS.md`; this file is scoped to the slide deck only.
 
 ## The workshop
 
-"AI Agents for IT Ops: Custom Agent on AKS with Azure OpenAI." Scheduled
-delivery 2026-09-23, plus one undated second regional delivery of the same
-title, 90 minutes each. Speakers not yet assigned for either session. Pulumi
-owns the deck and the demo.
+"AI Agents for IT Ops: Custom Agent on AKS with Azure OpenAI." Ninety
+minutes, intermediate level (basic Kubernetes and Azure familiarity assumed,
+no prior Pulumi experience required). Two sessions on the calendar: 2026-09-23
+(Notion page `3a5fdbdf-1cce-8102-8856-effd38fff249`) and an undated second
+regional delivery (Notion page `3a5fdbdf-1cce-8158-8958-c4707b8a9951`).
+Speakers are not yet named; the deck ships with an obvious placeholder speaker
+slide and closing QR code, both marked `TODO(presenter)`.
 
 ## The original request
 
-The deck was drafted from these inputs, in this order of authority:
+Sources, in order of authority:
 
-1. The workshop brief, whose learning outcomes and 14-slide outline are the
-   spine of this deck:
-   https://workprentice.ai/documents/906ca05e-04b4-4a30-876d-09640a805b31
-2. The demo code in this folder (`01-empty-program/` through
-   `06-teardown/`), the second source of truth for every command, resource
-   name, config key, and version shown on a slide.
+1. The workshop brief (https://workprentice.ai/documents/906ca05e-04b4-4a30-876d-09640a805b31),
+   which supplies the title, promise, learning outcomes, demo plan, slide
+   outline (§5), prerequisites (§6), risks (§7) and sourced facts (§8).
+2. The reference workshop, `pulumi/workshops/neo-in-a-docker-sandbox`, for
+   frame-slide content patterns: the speaker-slide markup, housekeeping,
+   agenda, and the `components/QRCode.vue` component. Its `slides.md` uses
+   only `cover`/`image`/`default` layouts and carries no speaker notes at all,
+   so it is not a model for layout variety or note-writing; those come from
+   the `slidev-deck` and `workshop-deck` skills instead.
+3. The demo code under `itops-agent-aks-azure-openai/01` through `06`, read
+   directly from this checkout, for every command, config key, and code
+   snippet shown on a slide.
+4. The `slidev-deck` and `workshop-deck` skills for scaffold, layout choice,
+   and the fixed slide arc.
 
-## Sources added during the fact check
+## Structure asked for
 
-Copied verbatim from the brief's section 8 sources table, all read
-2026-09-22:
+The brief's §5 slide outline has 14 entries; the `workshop-deck` skill wraps
+those in a fixed frame (title, speaker, housekeeping, agenda, live-demo
+section divider, follow-up, Q&A). The deck ships 20 slides in total.
+Speaker notes are required on every content slide, each carrying a time
+budget, and the budgets must sum to the brief's 90-minute length. This deck's
+notes sum to exactly 90 minutes across 20 slides.
 
-| Link | What it is | Date read |
-| --- | --- | --- |
-| Notion page 3a5fdbdf-1cce-8102-8856-effd38fff249 | Scheduled delivery, 2026-09-23 | 2026-09-22 |
-| Notion page 3a5fdbdf-1cce-8158-8958-c4707b8a9951 | Undated second regional delivery, same title | 2026-09-22 |
-| pulumi.com/docs/iac/download-install/ | Pulumi CLI version 3.263.0 | 2026-09-22 |
-| GitHub Releases API, pulumi/pulumi-azure-native | Provider version v3.28.0 | 2026-09-22 |
-| pulumi.com/registry/packages/azure-native/api-docs/containerservice/managedcluster/ | AKS resource type confirmed | 2026-09-22 |
-| pulumi.com/registry/packages/azure-native/api-docs/cognitiveservices/account/ and /deployment/ | Azure OpenAI resource types confirmed | 2026-09-22 |
-| pulumi.com/docs/esc/providers/azure-login/ | OIDC-based credential pattern for Azure | 2026-09-22 |
-| azure.microsoft.com/en-us/pricing/details/kubernetes-service/ | AKS cost reference | 2026-09-22 |
-| azure.microsoft.com/en-us/pricing/details/azure-openai/ | Azure OpenAI cost reference | 2026-09-22 |
+## Sources with read dates
+
+From the brief's §8, all read 2026-09-22 unless noted:
+
+- Pulumi registry: `azure-native.containerservice.ManagedCluster` — current, stable.
+- Pulumi registry: `azure-native.cognitiveservices.Account` and `.Deployment` — current, stable.
+- pulumi.com/docs — Kubernetes provider, provider-of-provider pattern for AKS.
+- azure.microsoft.com/pricing/details/kubernetes-service — AKS node pricing.
+- azure.microsoft.com/pricing/details/cognitive-services/openai-service — GPT-4o token pricing.
+- Azure docs — AKS OIDC issuer and workload identity feature pages.
+- Azure docs — Cognitive Services soft-delete and purge behavior.
+- The workshop brief itself, read 2026-09-23.
+- The demo code in this checkout (`01-empty-program` through `06-teardown`), read 2026-09-23.
+
+## Deviations from the brief
+
+1. The brief's §5 item 14, "Q&A / where to find the code," is split into two
+   slides ("Where to go next" and "Q&A / Thanks") because the `workshop-deck`
+   skill's fixed arc treats follow-up links and the closing Q&A slide as
+   separate, and the closing slide is the one that stays on screen during
+   questions.
+2. The brief's §5 item 13 says "recap of the three learning outcomes," but
+   §3 lists four. The recap slide carries all four, since all four are true
+   of what the session actually demonstrates.
+3. Frame slides not present in §5 (speaker, housekeeping, agenda, the
+   live-demo section divider) come from the `workshop-deck` skill's fixed
+   arc, not from the brief.
+4. A "Before we start" prerequisites slide was added on the strength of §6
+   (participant prerequisites), since the audience follows along live.
+5. Speaker identity is unknown at build time. The speaker slide and the
+   closing Q&A slide both carry an obvious placeholder image and a
+   `TODO(presenter)` HTML comment rather than an invented name or bio.
+6. The closing "Where to go next" slide points its repo QR code at this
+   pull request rather than a `tree/main/...` URL, because the
+   `itops-agent-aks-azure-openai` folder is not on `main` yet. Update it to
+   the tree URL once the pull request merges.
 
 ## Rules that still bind
 
-- Folder-wide conventions in `../AGENTS.md` govern this subfolder too:
-  fact sources (pulumi.com/registry, learn.microsoft.com), pinned versions
-  (Pulumi CLI 3.263.0, `pulumi-azure-native` 3.28.0, `pulumi-kubernetes`
-  >=4.0.0,<5.0.0), per-folder resource conventions, and the commit
-  convention (`docs(itops-agent-aks-azure-openai): …`).
-- Naming precision: Pulumi Neo (or Neo), Pulumi ESC, Pulumi Cloud, Pulumi
-  IaC, lowercase "pulumi console". Never "Copilot", "Pulumi Service",
-  "Insights", or "CrossGuard" as a product name.
-- Every command on a slide is one the demo actually runs, same flags. No
-  invented flags, no commands the demo folders don't use.
-
-## Changes after the brief (2026-09-23, Anvil)
-
-1. Added a prerequisites slide (slide 2) because brief section 6 lists
-   participant prerequisites for a follow-along session: an Azure
-   subscription with Owner or Contributor rights and Azure OpenAI access,
-   the Pulumi CLI, Python 3.11+, `az` CLI logged in, `kubectl`. The brief's
-   14 slide entries in section 5 all follow afterward, in the same order.
-2. Brief section 5's slide 13 entry says "the three learning outcomes,"
-   but section 3 lists four. The recap slide (slide 14) covers all four:
-   provisioning both resources from one program, authenticating without a
-   static secret, deploying the agent and making a real call, and tearing
-   down with verification.
-3. Brief section 5 has no slide dedicated to demo step 1
-   (`01-empty-program/`); it is folded into the "Pulumi program structure"
-   slide (slide 5), since that is where that folder's content belongs.
-4. Brief section 5 entries 8 and 9 both map to `05-agent-deployment/`:
-   entry 8 (slide 9 here) is the `pulumi up` deployment; entry 9 (slide 10
-   here) is the port-forward-plus-curl verification the same folder
-   documents.
-5. Brief section 5 entry 7 names "Pulumi ESC / OIDC" for credentials
-   (slide 7). The demo actually implements native AKS workload identity: a
-   `UserAssignedIdentity`, a `FederatedIdentityCredential`, and a
-   `RoleAssignment`. Pulumi ESC stays a presenter fallback per brief section
-   7 (a short-lived key shown once on screen if OIDC federation is fiddly
-   live), not the primary mechanism. The slide shows what the demo does and
-   names ESC as the documented fallback, not the mechanism.
-6. The speaker-note-with-time-budget convention is taken from
-   `getting-started-with-kubernetes-google-cloud/slides/slides.md` because
-   `neo-in-a-docker-sandbox/slides/slides.md` (the deck named as this
-   task's reference) carries zero speaker notes despite its own AGENTS.md
-   requiring them.
-
-## Check before committing
-
-```bash
-npm run build && npm run export          # both must pass
-```
-
-Read the exported PDF page by page for overflow, truncated code, and
-orphan headlines.
+- Every command shown on a slide is one the demo actually runs, with the same
+  flags — verified slide by slide against the six numbered folders.
+- No em dashes or en dashes anywhere in `slides.md`, including inside speaker
+  notes.
+- `mermaid` is a direct dependency in `package.json`, not just a theme
+  devDependency, since Slidev does not bundle it.
+- Never invent a speaker name, photo, or bio. Use the placeholder pattern
+  above and say so in the pull request.

@@ -1,11 +1,6 @@
-node_modules
-dist
-.slidev
-.claude
+node_modules/
+dist/
+.slidev/
 *.log
 *.pdf
 export-png/
-
-# Throwaway Playwright probes used to eyeball slide layout while authoring
-.probe.mjs
-.vf7.mjs

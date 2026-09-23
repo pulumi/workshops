@@ -16,27 +16,95 @@ lineNumbers: false
 layout: cover
 defaults:
   layout: default
+---
+
+# AI Agents for IT Ops
+
+A custom agent on AKS, calling Azure OpenAI, provisioned as one Pulumi program
+
+<!--
+2min: By the end of this session you will have provisioned an AKS cluster and an
+Azure OpenAI deployment from one Pulumi program, deployed a small agent onto
+that cluster, sent it a real prompt, and torn the whole stack down without a
+bill running. Ninety minutes, one region, six numbered folders on disk, each
+one a runnable Pulumi stack.
+-->
 
 ---
 
-<div class="absolute inset-0 flex flex-col justify-center items-start px-20">
-  <h1 class="!text-[5.4rem] !leading-[1.02] !font-semibold !tracking-tight !mb-6 !max-w-[95%]">
-    AI Agents for IT Ops
-  </h1>
-  <p class="!mt-1 !text-[2.2rem] text-[var(--p-fg-muted)] !m-0 !leading-relaxed !max-w-[90%]">
-    A custom agent on AKS, calling Azure OpenAI, provisioned entirely as Pulumi code
-  </p>
-  <p class="!mt-8 !text-[1.6rem] text-[var(--p-fg-muted)] !m-0 !leading-relaxed">
-    Pulumi
-  </p>
+<div class="absolute inset-0 flex items-center px-24 gap-20">
+  <div class="flex-shrink-0">
+    <img src="/img/speaker-placeholder.png" class="w-[28rem] rounded-2xl shadow-xl border-4" style="border-color: rgba(126,107,255,0.45)" alt="Speaker photo placeholder" />
+  </div>
+  <div class="flex-1">
+    <h1 class="!text-[7rem] !leading-[1.02] !font-semibold !tracking-tight !mb-4 !text-[var(--p-primary)]">Speaker Name</h1>
+    <p class="!text-[2.2rem] !leading-relaxed !m-0 opacity-90">
+      Role at <strong class="!text-[var(--p-primary)]">Pulumi</strong>
+    </p>
+    <div class="!mt-8 flex items-center gap-8 !text-[1.5rem] opacity-70">
+      <span class="flex items-center gap-2"><carbon-logo-x /> @handle</span>
+      <span class="flex items-center gap-2"><carbon-logo-linkedin /> handle</span>
+      <span class="flex items-center gap-2"><carbon-logo-github /> handle</span>
+    </div>
+    <p class="!mt-10 !text-[1.75rem] !leading-relaxed opacity-70 !m-0">
+      Two lines on what this person actually does.
+    </p>
+  </div>
 </div>
 
+<!-- TODO(presenter): replace photo, name, role, socials and bio -->
+
 <!--
-~2min. By the end of this session you'll have provisioned an AKS cluster and
-an Azure OpenAI deployment from one Pulumi program, deployed a small agent
-onto that cluster, made it answer a real prompt, and torn the whole stack
-down without leaving a bill running. Ninety minutes, one region (eastus2),
-six numbered folders on disk, each one a runnable Pulumi stack.
+1min: Speaker details are unknown at build time. Swap this card for the real
+presenter before delivery.
+-->
+
+---
+
+# Housekeeping
+
+<div class="zoom-content">
+
+<ul class="!mt-8 !text-[1.6rem] !leading-relaxed space-y-5">
+  <li>Be chatty in the chat tab</li>
+  <li>Ask questions in the Q&amp;A tab</li>
+  <li>The handouts tab has slides and scripts</li>
+  <li>The recording link comes by email</li>
+</ul>
+
+</div>
+
+<style scoped>
+.zoom-content { zoom: 1.8; }
+</style>
+
+<!--
+1min: Quick, four lines, keep it moving.
+-->
+
+---
+
+# Today's Agenda
+
+<div class="zoom-content">
+
+<ul class="!mt-8 !text-[1.6rem] !leading-relaxed space-y-5">
+  <li>Why a custom agent</li>
+  <li>Architecture and program structure</li>
+  <li>Live demo: cluster, model, credentials, agent</li>
+  <li>Cost and teardown</li>
+  <li>What changes for production</li>
+  <li>Wrap-up and Q&amp;A</li>
+</ul>
+
+</div>
+
+<style scoped>
+.zoom-content { zoom: 1.6; }
+</style>
+
+<!--
+1min: The shape of the next ninety minutes.
 -->
 
 ---
@@ -48,338 +116,10 @@ six numbered folders on disk, each one a runnable Pulumi stack.
 <div class="info-card">
 <div class="info-card__label">You'll need</div>
 <ul>
-<li>An Azure subscription with Owner or Contributor rights</li>
-<li>Azure OpenAI access enabled on that subscription</li>
-<li>Pulumi CLI, Python 3.11+</li>
+<li>An Azure subscription with Owner or Contributor rights, Azure OpenAI access enabled</li>
+<li>Pulumi CLI 3.263.0 or later</li>
+<li>Python 3.11+</li>
 <li><code>az</code> CLI logged in, <code>kubectl</code> installed</li>
-</ul>
-</div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.6; }
-</style>
-
-<!--
-~3min. Azure OpenAI access needs prior approval on some subscriptions, so
-this is worth flagging before the session, not during it. If you're
-following along rather than watching, get these four things sorted now:
-subscription rights, OpenAI access, the Pulumi CLI and Python, and az/kubectl
-authenticated against the subscription you'll use today.
--->
-
----
-
-# Why a custom agent, not a managed service
-
-<div class="zoom-content">
-
-<ul class="!mt-8 !text-[1.6rem] !leading-relaxed space-y-5">
-<li>You choose the runtime, the model version, and the network path</li>
-<li>The agent is a container you own, not a vendor's black box</li>
-<li>Same authentication story as every other workload on the cluster</li>
-<li>No packaged component exists for this pattern: you assemble it from AKS and Azure OpenAI primitives</li>
-</ul>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.7; }
-</style>
-
-<!--
-~5min. A managed agent service is fine until you need control over the
-runtime, the model version pinned, or the network boundary. This demo
-builds the primitives yourself: azure-native.containerservice.ManagedCluster,
-azure-native.cognitiveservices.Account and Deployment, standard Kubernetes
-resources. No packaged Pulumi component for "agent on AKS calling Azure
-OpenAI" exists as of today. That's not a gap in the workshop; it's the
-reason the workshop is useful.
--->
-
----
-
-# The shape of the demo
-
-<div class="wi-mermaid">
-
-```mermaid {scale: 1.1, theme: 'base', themeVariables: { 'background': 'transparent', 'primaryColor': '#1f1d3a', 'primaryTextColor': '#e9e7ff', 'primaryBorderColor': '#7e6bff', 'lineColor': '#9b8cff', 'clusterBkg': '#15132c', 'clusterBorder': '#5b4cd6', 'fontFamily': 'Inter, ui-sans-serif, system-ui', 'fontSize': '17px' } }
-flowchart LR
-  subgraph rg["rg-itops-agent-aks-azure-openai · eastus2"]
-    subgraph aks["AKS · itops-agent-aks"]
-      pod["itops-agent pod<br/>ServiceAccount: itops-agent<br/>azure.workload.identity/use: true"]
-    end
-    identity["UserAssignedIdentity<br/>itops-agent-identity"]
-    fed["FederatedIdentityCredential<br/>subject: system:serviceaccount:itops-agent:itops-agent"]
-    role["RoleAssignment<br/>Cognitive Services OpenAI User"]
-    openai["Cognitive Services Account<br/>itops-agent-openai (kind OpenAI)<br/>Deployment: itops-agent-gpt-4o"]
-  end
-
-  pod -. workload identity webhook .-> identity
-  identity -. trusts .-> fed
-  identity -. granted .-> role
-  role -. scoped to .-> openai
-  pod -- "POST /prompt" --> openai
-
-  classDef pool fill:#2a2456,stroke:#7e6bff,stroke-width:1.5px,color:#f3f1ff;
-  classDef svc fill:#1a2c4a,stroke:#5db0ff,stroke-width:1.5px,color:#e6f1ff;
-  class pod pool;
-  class openai,identity,fed,role svc;
-```
-
-</div>
-
-<!--
-~6min. Walk the diagram left to right. One resource group, one AKS cluster
-running the agent pod, and a chain of three resources (managed identity,
-federated credential, role assignment) that lets the pod's ServiceAccount
-reach Azure OpenAI without a stored key anywhere. No LoadBalancer, no public
-IP; the agent is reached with kubectl port-forward only. This whole graph
-comes from six numbered Pulumi Python folders, each building on the last.
--->
-
----
-
-# One program per step, same shape
-
-<div class="zoom-content">
-
-```python {all}
-config = pulumi.Config()
-resource_group = azure_native.resources.ResourceGroup(
-    "itops-agent",
-    resource_group_name="rg-itops-agent-aks-azure-openai",
-    location=config.get("location") or "eastus2",
-    tags={"workshop": "itops-agent-aks-azure-openai", "managed-by": "pulumi"},
-)
-pulumi.export("resourceGroupName", resource_group.name)
-pulumi.export("location", resource_group.location)
-```
-
-<div class="info-card">
-<div class="info-card__label">01-empty-program/</div>
-The output of <code>pulumi new azure-native-python</code>, plus one
-resource group with a fixed, non-suffixed name so every later folder can
-reference it by name.
-</div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.35; }
-</style>
-
-<!--
-~5min. Six folders, one Pulumi stack each, same two providers throughout:
-azure-native and, from step 5, kubernetes. This first folder is deliberately
-almost nothing: one resource group named rg-itops-agent-aks-azure-openai,
-fixed rather than auto-suffixed, because every later step looks it up by
-that literal name instead of passing an output around. Pulumi CLI 3.263.0,
-pulumi-azure-native 3.28.0, pinned in every folder's requirements.txt.
--->
-
----
-
-# Live demo: the AKS cluster
-
-<div class="zoom-content code-sm">
-
-```bash
-cd 02-aks-cluster && pulumi up --stack dev
-```
-
-```bash
-az aks show --resource-group rg-itops-agent-aks-azure-openai --name itops-agent-aks
-```
-
-<div class="info-card">
-<div class="info-card__label">itops-agent-aks · eastus2</div>
-<ul>
-<li>2x <code>Standard_D2s_v5</code>, pool <code>agentpool</code>, Kubernetes 1.31</li>
-<li><code>oidcIssuerProfile.enabled=True</code>, <code>workloadIdentity.enabled=True</code></li>
-</ul>
-</div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.3; }
-</style>
-
-<!--
-~12min. This step takes five to ten minutes live. If time is tight, this is
-pre-provisioned before the session and the narration starts from step 3
-instead, explaining on this slide what would have run. The cluster is a
-ManagedCluster named itops-agent-aks, two Standard_D2s_v5 nodes, Kubernetes
-1.31. Two flags matter for later: OIDC issuer and workload identity are both
-enabled now, because step 4's federated credential needs the issuer URL this
-step exports. Verify live with az aks show.
--->
-
----
-
-# Live demo: Azure OpenAI
-
-<div class="zoom-content code-sm">
-
-```bash
-cd 03-azure-openai && pulumi up --stack dev
-```
-
-```bash
-az cognitiveservices account show
-az cognitiveservices account deployment list
-```
-
-<div class="info-card">
-<div class="info-card__label">itops-agent-openai · gpt-4o 2024-11-20</div>
-<ul>
-<li>SKU <code>GlobalStandard</code>, capacity <code>10</code></li>
-<li><code>disable_local_auth=True</code>: no API key exists for this account</li>
-</ul>
-</div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.3; }
-</style>
-
-<!--
-~10min. Azure OpenAI quota or region approval can take days and is the most
-likely reason a live demo fails, so this account and deployment are
-pre-provisioned before the session if quota isn't confirmed, and this slide
-narrates what pulumi up would have produced. The account is kind OpenAI,
-model gpt-4o version 2024-11-20 (current as of the read date; 2024-05-13 and
-2024-08-06 are deprecated). disable_local_auth=True turns off key-based auth
-at the account level entirely; no key is ever generated. Verify live with
-az cognitiveservices account show and account deployment list.
--->
-
----
-
-# Credentials without secrets
-
-<div class="zoom-content">
-
-<div class="gpu-card gpu-card--primary">
-<div class="gpu-caption gpu-caption--accent">04-workload-identity/</div>
-<ul>
-<li><code>UserAssignedIdentity</code>: itops-agent-identity</li>
-<li><code>FederatedIdentityCredential</code>: trusts <code>system:serviceaccount:itops-agent:itops-agent</code></li>
-<li><code>RoleAssignment</code>: role <code>5e0bd9bd-...61bd</code>, "Cognitive Services OpenAI User"</li>
-</ul>
-</div>
-
-<div class="info-card">
-<div class="info-card__label">This is AKS workload identity, not Pulumi ESC</div>
-Pulumi ESC is a documented presenter fallback: a short-lived key minted and
-shown once on screen if OIDC federation is fiddly live. Never a
-persisted static secret.
-</div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.35; }
-</style>
-
-<!--
-~8min. This step never issues a static key. It's a chain of three Azure
-resources: a UserAssignedIdentity, a FederatedIdentityCredential whose
-subject string is exactly system:serviceaccount:&lt;namespace&gt;:&lt;serviceAccount&gt;
-(the Kubernetes-side identity being trusted), and a RoleAssignment granting
-that identity Cognitive Services OpenAI User, scoped to the OpenAI account
-from the last step. Verify with az role assignment list --assignee
-&lt;identityClientId&gt;. If OIDC federation doesn't come together live, the
-presenter's fallback is a short-lived Pulumi ESC key shown once on screen,
-never written to a file. Say that out loud if you use it.
--->
-
----
-
-# Live demo: deploying the agent
-
-<div class="zoom-content code-sm">
-
-```bash
-cd 05-agent-deployment && pulumi up --stack dev
-```
-
-<div class="info-card">
-<div class="info-card__label">What pulumi up creates</div>
-<ul>
-<li>k8s.Provider from the cluster's own kubeconfig, no static file</li>
-<li>Namespace, ServiceAccount (workload identity annotation), Deployment, Service</li>
-<li>Service is <code>ClusterIP</code> by design: no billable public IP</li>
-</ul>
-</div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.25; }
-</style>
-
-<!--
-~10min. The agent image is built and pushed to a registry before the
-session; pulumi up here never runs docker build. Which registry to push to
-is an open question the demo leaves as a required config value rather than
-inventing one. The ServiceAccount carries the
-azure.workload.identity/client-id annotation from step 4's identity, and the
-pod template carries azure.workload.identity/use: true. Both are
-required for the webhook to inject credentials. The Service is ClusterIP on
-purpose: no LoadBalancer, no public IP, reachable only by port-forward.
--->
-
----
-
-# Live demo: a real call, end to end
-
-<div class="zoom-content code-sm">
-
-```bash
-kubectl get pods -n itops-agent
-```
-
-```bash
-kubectl port-forward svc/itops-agent 8080:80 -n itops-agent
-```
-
-```bash
-curl -X POST localhost:8080/prompt \
-  -H 'Content-Type: application/json' \
-  -d '{"prompt": "Say hello from AKS"}'
-```
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.25; }
-</style>
-
-<!--
-~8min. Three commands, run in order: confirm the pod is running, forward the
-ClusterIP service to a local port, then post a prompt to it. The response
-comes back from gpt-4o through the identity chain built in the last two
-slides. Nothing in this call touches a stored key. AZURE_CLIENT_ID,
-AZURE_TENANT_ID and AZURE_FEDERATED_TOKEN_FILE are injected into the pod by
-the AKS workload identity webhook itself, not set anywhere in this program.
--->
-
----
-
-# Cost reality check
-
-<div class="zoom-content">
-
-<div class="info-card">
-<div class="info-card__label">Directional, not a Pulumi-published figure</div>
-<ul>
-<li>~$150&ndash;300/month for a small 2&ndash;3 node AKS cluster left running</li>
-<li>A few dollars for workshop-scale GPT-4o token volume</li>
-<li>A single session plus immediate teardown: a few dollars total</li>
 </ul>
 </div>
 
@@ -390,79 +130,302 @@ the AKS workload identity webhook itself, not set anywhere in this program.
 </style>
 
 <!--
-~4min. These numbers come from combining two Azure pricing pages, read the
-same day as everything else in this deck. They're directional, not a
-Pulumi-published figure. The monthly range only matters if teardown gets
-skipped. Run for one session and tear it down right after, and the real
-number is a few dollars. That's the argument for the next slide.
+3min: Azure OpenAI access is the one that trips people up. It has to be
+enabled on the subscription ahead of time, not something you can turn on
+mid-session. If your subscription does not have it, follow along on the
+recording instead.
 -->
 
+---
+layout: two-cols
+---
+
+# Why a custom agent, not a managed service
+
+A managed "AI agent" product handles the loop for you, and hides where your prompts and your infrastructure state actually live.
+
+- You own the runtime: the container, the identity, the network path
+- No vendor-specific agent framework to learn or migrate off later
+- The same Pulumi program that stands up your cluster stands up the model
+
+::right::
+
+Full control costs you the plumbing. That is the trade this workshop makes visible: five folders of infrastructure to get one prompt to one model, safely.
+
+<!--
+5min: Say plainly that this is more code than clicking through a managed
+agent console. The payoff is that every piece (cluster, model, identity,
+container) is a Pulumi resource you can read, review, and diff, not a
+black box behind someone else's API.
+-->
+
+---
+layout: diagram
+---
+
+# Architecture
+
+```mermaid {scale: 0.8}
+flowchart LR
+  Dev[Developer] -->|pulumi up| CLI[Pulumi CLI]
+  CLI --> RG[Resource Group]
+  RG --> AKS[AKS Cluster]
+  RG --> AOI[Azure OpenAI Account + Deployment]
+  AKS --> Pod[Agent Pod]
+  Pod -->|managed identity, no static key| AOI
+  User[Workshop participant] -->|POST /prompt| Pod
+```
+
+<!--
+6min: One resource group, two Azure services, one pod in between. The arrow
+that matters is the one from the pod to Azure OpenAI: it carries a
+short-lived token from a managed identity, never an API key. Walk the
+diagram left to right before touching a terminal.
+-->
+
+---
+layout: code
+---
+
+# Pulumi program structure
+
+Six numbered folders, one per demo step, two providers.
+
+```python
+# 02-aks-cluster/__main__.py
+oidc_issuer_profile=containerservice.ManagedClusterOIDCIssuerProfileArgs(
+    enabled=True,
+),
+security_profile=containerservice.ManagedClusterSecurityProfileArgs(
+    workload_identity=containerservice.ManagedClusterSecurityProfileWorkloadIdentityArgs(
+        enabled=True,
+    ),
+),
+```
+
+<!--
+5min: `pulumi-azure-native` builds the cluster and the model; `pulumi-kubernetes`
+deploys into it once it exists. Point out the OIDC issuer and workload
+identity flags here: they are what step 4's credential-free auth depends on,
+turned on from the very first cluster resource.
+-->
+
+---
+layout: section
+---
+
+# Live demo
+
+## Six folders, six `pulumi up` runs
+
+<!--
+1min: Section divider. From here on we are in the terminal.
+-->
+
+---
+layout: code
+---
+
+# Live demo: the AKS cluster
+
+```bash
+cd 02-aks-cluster && pulumi up --stack dev
+```
+
+Verify:
+
+```bash
+az aks show --resource-group rg-itops-agent-aks-azure-openai --name itops-agent-aks
+```
+
+- `ManagedCluster`, 2 nodes, `Standard_D2s_v5`, Kubernetes 1.31
+- OIDC issuer and workload identity already enabled
+
+<!--
+10min: This step takes 5-10 minutes to provision, so it is pre-provisioned
+before the session and this slide narrates it from a recording rather than
+waiting on it live. If it does run live, this is the moment to talk through
+the diagram again while Azure catches up. The `az aks show` verification is
+the same command whether it ran live or ahead of time.
+-->
+
+---
+layout: code
+---
+
+# Live demo: Azure OpenAI
+
+```bash
+cd 03-azure-openai && pulumi up --stack dev
+```
+
+Verify:
+
+```bash
+az cognitiveservices account show
+az cognitiveservices account deployment list
+```
+
+```python
+properties=cognitiveservices.AccountPropertiesArgs(
+    custom_sub_domain_name=ACCOUNT_NAME,
+    disable_local_auth=True,
+),
+```
+
+<!--
+9min: `disable_local_auth=True` is the line worth pausing on: this account
+never issues an API key at all, by construction. GPT-4o, version 2024-11-20,
+GlobalStandard SKU, capacity 10. Azure OpenAI quota approval can take days for
+a fresh subscription, which is the other reason this step is usually
+pre-provisioned; narrate from the recording if quota was not available ahead
+of time.
+-->
+
+---
+layout: diagram-right
+---
+
+# Credentials without secrets
+
+- A user-assigned managed identity, not a service principal with a stored password
+- A federated identity credential trusts the AKS OIDC issuer for one Kubernetes service account
+- A role assignment grants that identity "Cognitive Services OpenAI User", scoped to the account
+- Grep this program and the agent deployment for `accessKey` or `apiKey`: nothing
+
+::diagram::
+
+```mermaid {scale: 0.55}
+sequenceDiagram
+  participant Pod as Agent pod
+  participant AKS as AKS OIDC issuer
+  participant AAD as Microsoft Entra ID
+  participant AOI as Azure OpenAI
+  Pod->>AKS: present service account token
+  AKS->>AAD: federated credential exchange
+  AAD-->>Pod: short-lived access token
+  Pod->>AOI: call with bearer token
+```
+
+<!--
+8min: cd 04-workload-identity && pulumi up --stack dev, after copying the
+oidcIssuerUrl output from step 2 and the accountId output from step 3 into
+Pulumi.dev.yaml. Verify with az role assignment list --assignee
+<identityClientId>. This step is the fiddliest of the six to get right live,
+if the OIDC exchange does not want to cooperate in the room, fall back to a
+short-lived ESC-issued key shown once on screen, and say clearly that a
+persisted static secret is never the right answer, even as a fallback.
+-->
+
+---
+layout: code
+---
+
+# Live demo: deploying the agent
+
+```bash
+cd 05-agent-deployment && pulumi up --stack dev
+```
+
+```python
+k8s_provider = k8s.Provider("itops-agent-k8s", kubeconfig=kubeconfig)
+annotations={"azure.workload.identity/client-id": identity_client_id},
+labels={"azure.workload.identity/use": "true"},
+```
+
+- `Namespace`, `ServiceAccount`, `Deployment`, `Service` (`ClusterIP`, no public IP)
+- Container image built and pushed before the session
+
+<!--
+9min: Copy the identityClientId output from step 4 and the endpoint output
+from step 3, plus the pushed image reference, into Pulumi.dev.yaml first.
+ClusterIP only: a LoadBalancer here would provision a billable public IP
+nobody needs for a workshop demo. The image was built and pushed ahead of
+time so this step is a scheduling wait, not a docker build, while the room
+watches.
+-->
+
+---
+layout: code
+---
+
+# Live demo: a real call, end to end
+
+```bash
+kubectl get pods -n itops-agent
+kubectl port-forward svc/itops-agent 8080:80 -n itops-agent
+```
+
+```bash
+curl -X POST localhost:8080/prompt \
+  -H 'Content-Type: application/json' \
+  -d '{"prompt": "Say hello from AKS"}'
+```
+
+<!--
+8min: This is the payoff slide: a pod running on the cluster we just built,
+answering a prompt using a token it obtained without ever holding an API key.
+Read the JSON response out loud when it comes back. If the port-forward is
+flaky in the room, this is the one command worth a second attempt live rather
+than falling back to the recording.
+-->
+
+---
+layout: statement
+---
+
+# A month of this left running: **$150-$300**. One session, torn down: **a few dollars.**
+
+<!--
+4min: Directional figures from two Azure pricing pages, read 2026-09-22, not
+a Pulumi-published number: a small 2-3 node AKS cluster plus workshop-scale
+GPT-4o token volume. The monthly number only matters if teardown gets
+skipped, which is exactly what the next slide exists to prevent.
+-->
+
+---
+layout: code
 ---
 
 # Live demo: destroy and verify
 
-<div class="zoom-content code-xs">
-
 ```bash
-pulumi destroy --yes --stack dev   # 05, then 04, 03, 02, 01
+06-teardown/teardown.sh
 ```
 
 ```bash
-az resource list --resource-group rg-itops-agent-aks-azure-openai
-az aks show --resource-group rg-itops-agent-aks-azure-openai --name itops-agent-aks
-az cognitiveservices account show
-az role assignment list --assignee <identityClientId>
+az resource list --resource-group rg-itops-agent-aks-azure-openai --output tsv
 ```
 
-<div class="info-card">
-<div class="info-card__label">Soft-deleted accounts block name reuse</div>
-Purge any soft-deleted Cognitive Services account named itops-agent-openai
-before the next delivery, or that name can't be reused.
-</div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.25; }
-</style>
+- Destroys 05 → 04 → 03 → 02 → 01, in that order
+- Purges any soft-deleted Cognitive Services account so the name can be reused
 
 <!--
-~7min. Teardown destroys the five stacks in reverse dependency order: 05,
-04, 03, 02, 01. Then az resource list against the resource group should come
-back empty, and az cognitiveservices account list-deleted is checked for a
-soft-deleted itops-agent-openai account; if found, az cognitiveservices
-account purge removes it. Skip that purge and the second delivery can't
-reuse the account name. The az aks show / account show / role assignment
-list commands above are the same ones used earlier to verify each resource
-existed, run again here to confirm they're gone.
+7min: The script runs pulumi destroy --yes --stack dev in each folder in
+strict reverse dependency order. The resource-list check should come back
+empty. Azure Cognitive Services accounts soft-delete by default, which blocks
+reusing the same account name on the next delivery. The purge step exists
+specifically for the second regional session already on the calendar.
 -->
 
+---
+layout: two-cols
 ---
 
 # What to change for production
 
-<div class="zoom-content">
+- Network policy restricting pod-to-pod traffic inside the cluster
+- Private endpoints on the Azure OpenAI account instead of a public endpoint
+- Quota and rate-limit handling in the agent itself, not just at the Azure layer
 
-<ul class="!mt-8 !text-[1.6rem] !leading-relaxed space-y-5">
-<li>Private endpoints for the OpenAI account instead of a public data plane</li>
-<li>Network policy restricting which pods can reach the AKS API and the OpenAI endpoint</li>
-<li>Quota and rate-limit handling in the agent, not just at deployment time</li>
-<li>A named container registry, not a placeholder config value</li>
-</ul>
+::right::
 
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.6; }
-</style>
+Nothing in this demo is wrong for a workshop and nothing in it is a production checklist. Say that plainly before anyone copies the code into a real deployment.
 
 <!--
-~5min. Everything in this demo is workshop-scale: public endpoints, one
-node pool, one replica. Moving toward production means private endpoints
-for the OpenAI account, network policy around who can reach the API server
-and the model endpoint, quota and rate-limit handling built into the agent
-rather than assumed away, and a real registry decision instead of the
-placeholder config value this demo leaves open.
+4min: This is the "what we skipped and why" slide. None of these three are
+hard to add. They are just out of scope for ninety minutes and a live
+demo, and pretending otherwise would be the wrong lesson to teach.
 -->
 
 ---
@@ -472,44 +435,69 @@ placeholder config value this demo leaves open.
 <div class="zoom-content">
 
 <ul class="!mt-8 !text-[1.6rem] !leading-relaxed space-y-5">
-<li>Provisioned AKS and an Azure OpenAI deployment from one Pulumi program</li>
-<li>Explained how the workload authenticates without a static secret</li>
-<li>Deployed the agent and got a real model response back</li>
-<li>Tore it all down and verified nothing billable remained</li>
+  <li>Provisioned an AKS cluster and an Azure OpenAI deployment from one Pulumi program</li>
+  <li>Authenticated a workload to Azure OpenAI with managed identity, no static secret, ever</li>
+  <li>Deployed a small containerized agent and had it make a real call to the model</li>
+  <li>Tore the entire stack down and verified nothing billable was left running</li>
 </ul>
 
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.6; }
+.zoom-content { zoom: 1.4; }
 </style>
 
 <!--
-~3min. Four things, in the order you just watched them happen: one program
-provisioning both AKS and Azure OpenAI, an authentication chain with no
-static secret anywhere, an agent pod answering a real prompt, and a
-teardown you verified rather than assumed. Same six folders on disk if you
-want to run it again yourself.
+2min: The brief names three learning outcomes in its slide outline but lists
+four in its learning-outcomes section; this recap carries all four, since all
+four are true of what the room just watched.
 -->
 
 ---
 
-# Q&amp;A
+# Where to go next
 
-<div class="zoom-content">
-
-<div class="info-card">
-<div class="info-card__label">Code</div>
-<a href="https://github.com/pulumi/workshops/tree/main/itops-agent-aks-azure-openai">github.com/pulumi/workshops/tree/main/itops-agent-aks-azure-openai</a>
+<div class="grid grid-cols-3 gap-8 mt-8">
+  <div class="flex flex-col items-center text-center">
+    <div class="!text-[1.3rem] font-semibold mb-3">Pulumi Community Slack</div>
+    <div class="p-2 bg-white rounded-lg" style="width: 8rem; height: 8rem;"><QRCode data="https://slack.pulumi.com" dark="#000000" /></div>
+  </div>
+  <div class="flex flex-col items-center text-center">
+    <div class="!text-[1.3rem] font-semibold mb-3">Pulumi Cloud, free tier</div>
+    <div class="p-2 bg-white rounded-lg" style="width: 8rem; height: 8rem;"><QRCode data="https://app.pulumi.com/signup" dark="#000000" /></div>
+  </div>
+  <div class="flex flex-col items-center text-center">
+    <div class="!text-[1.3rem] font-semibold mb-3">This workshop's code</div>
+    <div class="p-2 bg-white rounded-lg" style="width: 8rem; height: 8rem;"><QRCode data="https://github.com/pulumi/workshops/pull/230" dark="#000000" /></div>
+  </div>
 </div>
-
-</div>
-
-<style scoped>
-.zoom-content { zoom: 1.6; }
-</style>
 
 <!--
-~2min. All six folders, the agent-app source, and the teardown script are
-in the repo at the link above. Questions now, or find us afterward.
+2min: The repo QR points at this workshop's pull request rather than a
+tree URL on main, because the itops-agent-aks-azure-openai folder is not
+merged to main yet at build time. Swap it for the tree URL once merged.
+-->
+
+---
+layout: end
+---
+
+# Thank you.
+
+<div class="grid grid-cols-2 gap-10 mt-10">
+  <div class="flex flex-col items-center text-center">
+    <div class="p-2 bg-white rounded-lg" style="width: 7rem; height: 7rem;"><QRCode data="https://github.com/pulumi" dark="#000000" /></div>
+    <div class="mt-2 !text-[1rem] opacity-70">Speaker: replace with presenter's GitHub or LinkedIn</div>
+  </div>
+  <div class="flex flex-col items-center text-center">
+    <div class="p-2 bg-white rounded-lg" style="width: 7rem; height: 7rem;"><QRCode data="https://github.com/pulumi/workshops/pull/230" dark="#000000" /></div>
+    <div class="mt-2 !text-[1rem] opacity-70">Workshop repo</div>
+  </div>
+</div>
+
+<!-- TODO(presenter): replace the speaker QR target with the real presenter's handle -->
+
+<!--
+2min: This slide stays on screen through Q&A, so it carries the links people
+will actually use. Questions in the Q&A tab, as covered in housekeeping.
 -->
