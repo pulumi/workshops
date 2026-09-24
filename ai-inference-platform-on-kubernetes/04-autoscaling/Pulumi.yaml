@@ -1,0 +1,6 @@
+name: ai-inference-platform-autoscaling
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Karpenter IAM/SQS prerequisites, the Karpenter Helm release, and a GPU NodePool
