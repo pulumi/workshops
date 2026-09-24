@@ -1,0 +1,4 @@
+config:
+  aws:region: us-east-1
+  cost-aware-iac-budget:limitAmount: "50"
+  cost-aware-iac-budget:alertEmail: TODO(presenter)@example.com
