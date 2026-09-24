@@ -1,0 +1,13 @@
+.DS_Store
+*.log
+venv/
+__pycache__/
+*.pyc
+
+# Presenter-only working docs (DEMO, REHEARSAL, OPEN-QUESTIONS, FACTCHECK …):
+# the repo publishes the slides, the demo code and the notes that describe them.
+*.md
+!README.md
+!AGENTS.md
+!slides/slides.md
+!slides/AGENTS.md

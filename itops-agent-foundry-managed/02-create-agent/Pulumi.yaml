@@ -1,0 +1,9 @@
+name: itops-agent-create-agent
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 2 - a GPT-4o model deployment on the Foundry account, and an
+  AgentApplication resource registering the agent as a first-class Azure
+  resource under the project.

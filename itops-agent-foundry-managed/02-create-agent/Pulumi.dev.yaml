@@ -1,0 +1,6 @@
+config:
+  azure-native:location: eastus2
+  itops-agent-create-agent:accountName: itops-agent-foundry
+  itops-agent-create-agent:projectName: itops-agent-project
+  itops-agent-create-agent:resourceGroupName: rg-itops-agent-foundry-managed
+encryptionsalt: v1:T/iWzqV9Oko=:v1:jE6YkOBTXBNnx4rr:gqLwRF9Fdv1JGDWwjWh/ILFWOA9W5g==

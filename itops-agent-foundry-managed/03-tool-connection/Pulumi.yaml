@@ -1,0 +1,10 @@
+name: itops-agent-tool-connection
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 3 - a storage account holding the IT-ops runbook, a role assignment
+  giving the project's managed identity read access, and a ProjectConnection
+  (category AzureBlob, auth_type AAD) wiring the two together with no static
+  key.

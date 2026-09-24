@@ -1,0 +1,9 @@
+name: itops-agent-foundry-project
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 1 - a resource group, a Microsoft Foundry-enabled Cognitive Services
+  account (kind AIServices, allowProjectManagement=true) with a project as a
+  child resource, and a GPT-4o-class model deployment.
