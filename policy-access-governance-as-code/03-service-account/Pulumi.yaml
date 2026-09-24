@@ -1,0 +1,8 @@
+name: policy-access-governance-serviceaccount
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 3 - a service account and a least-privilege gcp.serviceaccount.IAMMember
+  binding: the account has only the one role it needs, not project-level access.

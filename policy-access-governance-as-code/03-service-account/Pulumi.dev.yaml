@@ -1,0 +1,5 @@
+config:
+  gcp:project: your-gcp-project-id
+  gcp:region: us-central1
+  policy-access-governance-serviceaccount:principal: user:jane@example.com
+encryptionsalt: v1:YdKUhRF8dwQ=:v1:BZrJcXThh2yHM6Y/:d/oB24PY4DJGEikfTWSLv+1tNHRK9Q==

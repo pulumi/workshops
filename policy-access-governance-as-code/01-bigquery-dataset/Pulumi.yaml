@@ -1,0 +1,9 @@
+name: policy-access-governance-dataset
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 1 - an empty BigQuery dataset and a least-privilege
+  gcp.bigquery.DatasetIamMember binding: one principal, `roles/bigquery.dataViewer`,
+  nothing project-wide.

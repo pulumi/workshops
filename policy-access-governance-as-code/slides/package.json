@@ -1,0 +1,26 @@
+{
+  "name": "policy-access-governance-as-code-slides",
+  "version": "1.0.0",
+  "description": "Slides for Access governance as code: BigQuery, Secret Manager and service-account bindings without console clicks",
+  "main": "index.js",
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@pulumi/slidev-theme": "^0.4.0",
+    "@slidev/cli": "^53.0.0",
+    "@slidev/client": "^53.0.0",
+    "@slidev/types": "^53.0.0",
+    "mermaid": "^12.0.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.43"
+  },
+  "private": true,
+  "type": "module"
+}

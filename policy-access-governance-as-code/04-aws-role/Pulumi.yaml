@@ -1,0 +1,8 @@
+name: policy-access-governance-awsrole
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 4 - the AWS mirror of the GCP least-privilege pattern: an aws.iam.Role
+  and an aws.iam.RolePolicy scoped to a single action set, nothing broader.

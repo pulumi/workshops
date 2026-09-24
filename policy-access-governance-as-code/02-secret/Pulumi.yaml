@@ -1,0 +1,9 @@
+name: policy-access-governance-secret
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Step 2 - a Secret Manager secret and a least-privilege
+  gcp.secretmanager.SecretIamMember binding: the secret is readable only by
+  the intended principal.

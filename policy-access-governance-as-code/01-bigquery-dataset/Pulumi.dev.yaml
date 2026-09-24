@@ -1,0 +1,5 @@
+config:
+  gcp:project: your-gcp-project-id
+  gcp:region: us-central1
+  policy-access-governance-dataset:principal: user:jane@example.com
+encryptionsalt: v1:fTcaR9YyWTU=:v1:5ku28OqsPJpsfKWy:h5w8GaecFhzDlX8hApAVCB+7Y8rdjA==
