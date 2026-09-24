@@ -1,0 +1,32 @@
+--- a/01-base-stack/index.ts	2026-09-24 09:29:55.951660078 +0000
++++ b/01-base-stack/index.ts	2026-09-24 09:30:25.021514429 +0000
+@@ -53,6 +53,28 @@
+     restrictPublicBuckets: true,
+ });
+ 
++// Proposed by the agent in 04-propose-change: an access-logs bucket for the
++// artifact bucket, plus the logging config that wires the two together.
++// This is the change 05-review-diff and 06-blocked-apply act on.
++const accessLogsBucket = new aws.s3.Bucket("workshop-access-logs", {
++    tags: { ...tags, Name: "iac-ai-agents-keys-safely-access-logs" },
++});
++
++const accessLogsBucketPublicAccessBlock = new aws.s3.BucketPublicAccessBlock("workshop-access-logs-pab", {
++    bucket: accessLogsBucket.id,
++    blockPublicAcls: true,
++    blockPublicPolicy: true,
++    ignorePublicAcls: true,
++    restrictPublicBuckets: true,
++});
++
++const artifactBucketLogging = new aws.s3.BucketLogging("workshop-artifacts-logging", {
++    bucket: artifactBucket.id,
++    targetBucket: accessLogsBucket.id,
++    targetPrefix: "artifacts-access-logs/",
++});
++
+ export const vpcId = vpc.id;
+ export const subnetId = subnet.id;
+ export const artifactBucketName = artifactBucket.bucket;
++export const accessLogsBucketName = accessLogsBucket.bucket;
+\ No newline at end of file

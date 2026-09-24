@@ -1,0 +1,5 @@
+# Presenter/participant supplies real AWS credentials out of band (env vars
+# or a profile) — see the root README's prerequisites. No static key belongs
+# in this file.
+config:
+  aws:region: us-east-1

@@ -1,0 +1,10 @@
+name: iac-ai-agents-keys-safely-base
+description: >-
+  Give your AI agent the keys, safely: a small VPC (one subnet) and an
+  artifact S3 bucket in us-east-1. This is the stack an agent will later be
+  asked to change through 02-mcp-server and 03-agent-client. Nothing here
+  involves an agent; it exists so there is a real baseline to diff against.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

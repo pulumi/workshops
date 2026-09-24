@@ -1,0 +1,5 @@
+The artifact bucket in 01-base-stack does not have access logging enabled.
+Add an S3 bucket for access logs next to it, keep it private, and wire the
+artifact bucket's server access logging to write there. Do not touch
+anything else in the stack, and do not apply the change yourself — show me
+a preview.
