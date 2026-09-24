@@ -1,0 +1,6 @@
+name: ai-inference-platform-cluster
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: VPC, EKS cluster, system node group and a config-gated GPU node group for the AI inference platform workshop
