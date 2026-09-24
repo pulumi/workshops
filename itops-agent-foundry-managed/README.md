@@ -100,12 +100,17 @@ pulumi up
 
 cd ../02-create-agent
 pulumi stack init dev
-pulumi config set --path itops-agent-foundry-managed:resourceGroupName rg-itops-agent-foundry-managed
+pulumi config set accountName "$(pulumi stack output accountName --cwd ../01-foundry-project)"
+pulumi config set projectName "$(pulumi stack output projectName --cwd ../01-foundry-project)"
+pulumi config set resourceGroupName "$(pulumi stack output resourceGroupName --cwd ../01-foundry-project)"
 pulumi up
 
 cd ../03-tool-connection
 pulumi stack init dev
-pulumi config set itops-agent-foundry-managed:projectPrincipalId "$(pulumi stack output projectPrincipalId --cwd ../01-foundry-project)"
+pulumi config set accountName "$(pulumi stack output accountName --cwd ../01-foundry-project)"
+pulumi config set projectName "$(pulumi stack output projectName --cwd ../01-foundry-project)"
+pulumi config set resourceGroupName "$(pulumi stack output resourceGroupName --cwd ../01-foundry-project)"
+pulumi config set projectPrincipalId "$(pulumi stack output projectPrincipalId --cwd ../01-foundry-project)"
 pulumi up
 python upload_runbook.py
 
