@@ -1,0 +1,11 @@
+name: access-governance-guardrails
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  Guardrails for the "Access governance as code" workshop demo. Every IAM
+  binding across the demo's four resources (dataset, secret, service account,
+  AWS role) must be scoped to one resource and one principal. Mandatory, so a
+  violation stops `pulumi up` before it applies - this is the workshop's
+  "catch before it applies" moment (brief step 6).
