@@ -1,0 +1,7 @@
+config:
+  azure-native:location: eastus2
+  itops-agent-tool-connection:accountName: itops-agent-foundry
+  itops-agent-tool-connection:projectName: itops-agent-project
+  itops-agent-tool-connection:projectPrincipalId: "00000000-0000-0000-0000-000000000000"
+  itops-agent-tool-connection:resourceGroupName: rg-itops-agent-foundry-managed
+encryptionsalt: v1:oqoBoSRNP90=:v1:TmKg2zwokcq0WnZ2:0w/c0Hq1gk/atkjh7CL8FqukZijwdg==
