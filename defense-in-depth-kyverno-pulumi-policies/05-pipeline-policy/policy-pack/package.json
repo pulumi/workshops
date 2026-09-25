@@ -1,0 +1,16 @@
+{
+  "name": "require-resource-limits",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Pulumi Policies pack for the defense-in-depth workshop demo",
+  "main": "index.js",
+  "devDependencies": {
+    "@types/node": "^22",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/policy": "^1.21.0",
+    "@pulumi/pulumi": "^3.264.0"
+  }
+}

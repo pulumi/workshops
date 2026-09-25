@@ -1,0 +1,6 @@
+runtime: nodejs
+description: >-
+  Defense-in-depth workshop, step 6: the identical resource-limits rule as
+  03-cluster-policy's ClusterPolicy, enforced at the Pulumi pipeline layer
+  instead of at Kubernetes admission. Mandatory, so a violation stops
+  `pulumi preview`/`pulumi up` before anything reaches the cluster.

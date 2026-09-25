@@ -1,0 +1,22 @@
+{
+  "name": "defense-in-depth-kyverno-pulumi-policies",
+  "version": "1.0.0",
+  "description": "Defense in depth as code: Kyverno admission control and Pulumi Policies",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "^0.4.0",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.17.2",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.43"
+  }
+}
