@@ -1,0 +1,15 @@
+{
+  "name": "mesh-demo-trust-anchor",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zero-trust networking workshop: generate the mesh's trust anchor and issuer certificate as Pulumi code",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.264.0",
+    "@pulumi/tls": "^5.6.1"
+  }
+}

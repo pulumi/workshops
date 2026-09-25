@@ -1,0 +1,6 @@
+name: mesh-demo-trust-anchor
+runtime: nodejs
+description: >-
+  Step 2 of the zero-trust-networking workshop: generate the mesh's own root
+  trust anchor and identity issuer certificate as Pulumi-managed
+  infrastructure, using @pulumi/tls. Nobody hand-runs `step` or `openssl`.
