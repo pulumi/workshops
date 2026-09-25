@@ -1,0 +1,26 @@
+# unauthorized-client.yaml — a plain kubectl manifest, not Pulumi code.
+# Step 7 is about observing the policy from step 6 in action, not
+# provisioning more infrastructure, so the throwaway test client is applied
+# directly. It gets its own ServiceAccount ("curl-client") specifically so
+# its mesh identity is neither "front" nor "backend" — the whole point of
+# this step is that its request is denied on identity, not on the
+# namespace it happens to run in.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: curl-client
+  namespace: mesh-demo
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: curl-client
+  namespace: mesh-demo
+  labels:
+    app: curl-client
+spec:
+  serviceAccountName: curl-client
+  containers:
+    - name: curl
+      image: curlimages/curl:8.11.1
+      command: ["sleep", "3600"]

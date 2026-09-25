@@ -1,0 +1,7 @@
+name: mesh-demo-policy
+runtime: nodejs
+description: >-
+  Step 6 of the zero-trust-networking workshop: declare a traffic policy as
+  Pulumi code — a Server naming the backend's port, and an
+  AuthorizationPolicy that only lets the front service's mesh identity call
+  it. Everything else is denied by the Server's default accessPolicy.

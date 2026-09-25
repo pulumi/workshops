@@ -1,0 +1,15 @@
+{
+  "name": "mesh-demo-viz",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Zero-trust networking workshop: install linkerd-viz to prove mTLS is in effect",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.264.0"
+  }
+}
