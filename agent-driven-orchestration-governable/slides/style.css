@@ -1,0 +1,32 @@
+/*
+ * Agent-driven orchestration workshop — minimal style overlay on top of
+ * @pulumi/slidev-theme. Only the reusable card primitives this deck's
+ * slides.md actually uses; everything else comes from the theme.
+ */
+
+/* Card primitive used for two-up and three-up comparison grids. */
+.gpu-card {
+  background: var(--p-bg-elevated);
+  border: 1.5px solid var(--p-border);
+  border-radius: 16px;
+  padding: 1.5rem 1.75rem;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.gpu-card--accent  { border-color: color-mix(in srgb, var(--p-accent)  60%, var(--p-border)); }
+.gpu-card--primary { border-color: color-mix(in srgb, var(--p-primary) 60%, var(--p-border)); }
+.gpu-card--muted   { border-color: var(--p-border); background: transparent; }
+
+/* Overline caption above a card's body — mono, uppercase, tracked. */
+.gpu-caption {
+  font-family: var(--slidev-font-mono);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--p-fg-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+.gpu-caption--accent { color: var(--p-primary); }
+.gpu-caption--muted   { color: var(--p-fg-muted); }

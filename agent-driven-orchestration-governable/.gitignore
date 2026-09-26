@@ -2,10 +2,11 @@
 *.log
 
 # Presenter-only working docs (DEMO, REHEARSAL, OPEN-QUESTIONS, FACTCHECK …):
-# the repo publishes the demo code and the notes that describe it.
+# the repo publishes the slides, the demo code and the notes that describe them.
 *.md
 !README.md
 !AGENTS.md
+!slides/slides.md
 
 # Runtime state from running the demo: local Pulumi backend and audit log.
 /.pulumi-local-state/
