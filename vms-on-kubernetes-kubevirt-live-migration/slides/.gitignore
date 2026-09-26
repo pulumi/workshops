@@ -1,0 +1,7 @@
+node_modules
+dist
+.slidev
+*.log
+*.pdf
+export-png/
+render/

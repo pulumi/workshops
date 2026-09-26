@@ -1,0 +1,15 @@
+# kind cluster config for this workshop. Pinned to kind v0.33.0's own default
+# node image (released 2026-08-26, Kubernetes 1.37.0) so every run of this
+# demo boots the same cluster regardless of which kind version is installed
+# on the laptop running it. Config shape:
+# https://kind.sigs.k8s.io/docs/user/configuration/
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: vms-workshop-demo
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+  - role: worker
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+  - role: worker
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
