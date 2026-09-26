@@ -1,0 +1,12 @@
+{
+  "name": "agent-audit-reader",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Reads the orchestrator's audit log and prints every attempted action",
+  "main": "read-audit.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {}
+}
