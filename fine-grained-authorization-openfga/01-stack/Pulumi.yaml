@@ -1,0 +1,8 @@
+name: fine-grained-authorization-openfga
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: >-
+  An OpenFGA store, authorization model and relationship tuples, provisioned
+  as Pulumi code, checked for both a human user and an AI agent principal.

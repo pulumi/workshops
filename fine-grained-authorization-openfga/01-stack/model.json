@@ -1,0 +1,83 @@
+{
+  "schema_version": "1.1",
+  "type_definitions": [
+    {
+      "type": "user"
+    },
+    {
+      "type": "agent"
+    },
+    {
+      "type": "stack",
+      "relations": {
+        "owner": {
+          "this": {}
+        },
+        "viewer": {
+          "this": {}
+        },
+        "deployer": {
+          "this": {}
+        },
+        "can_view": {
+          "union": {
+            "child": [
+              {
+                "computedUserset": {
+                  "object": "",
+                  "relation": "owner"
+                }
+              },
+              {
+                "computedUserset": {
+                  "object": "",
+                  "relation": "viewer"
+                }
+              }
+            ]
+          }
+        },
+        "can_deploy": {
+          "union": {
+            "child": [
+              {
+                "computedUserset": {
+                  "object": "",
+                  "relation": "owner"
+                }
+              },
+              {
+                "computedUserset": {
+                  "object": "",
+                  "relation": "deployer"
+                }
+              }
+            ]
+          }
+        }
+      },
+      "metadata": {
+        "relations": {
+          "owner": {
+            "directly_related_user_types": [
+              { "type": "user" },
+              { "type": "agent" }
+            ]
+          },
+          "viewer": {
+            "directly_related_user_types": [
+              { "type": "user" },
+              { "type": "agent" }
+            ]
+          },
+          "deployer": {
+            "directly_related_user_types": [
+              { "type": "user" },
+              { "type": "agent" }
+            ]
+          }
+        }
+      }
+    }
+  ]
+}
