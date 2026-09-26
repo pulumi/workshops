@@ -1,0 +1,9 @@
+name: vms-cluster
+description: >-
+  Creates the local three-node kind cluster (one control-plane, two workers)
+  that the VMs on Kubernetes as Code workshop runs KubeVirt and its
+  VirtualMachine on.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
