@@ -1,0 +1,14 @@
+{
+  "name": "agent-orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Scripted stand-in agent that drives 01-fleet through Automation API, gated by 02-policy",
+  "main": "orchestrator.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.262.0"
+  }
+}
