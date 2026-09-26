@@ -56,7 +56,7 @@ fine-grained-authorization-openfga/
 ├── 01-stack/             Pulumi Python program: container, store, model, tuples (steps 1-4, 6)
 ├── 02-checks/            Check-call script against the running stack (steps 5, 7)
 ├── 03-teardown/          teardown verification (step 8)
-└── slides/               not built yet — a separate assignment on this branch
+└── slides/               Slidev deck, built to match the demo steps 1-8
 ```
 
 ## Verification commands, by area

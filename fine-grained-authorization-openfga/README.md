@@ -69,7 +69,7 @@ fine-grained-authorization-openfga/
 │   └── model.json       the authorization model (also the presenter's pre-validated fallback)
 ├── 02-checks/           check.sh — runs an OpenFGA Check call against the running stack (steps 5, 7)
 ├── 03-teardown/         verify-teardown.sh — confirms `pulumi destroy` left nothing behind (step 8)
-└── slides/              not built yet — a separate assignment on this branch
+└── slides/              Slidev deck, built to match the demo steps 1-8
 ```
 
 ## Prerequisites
