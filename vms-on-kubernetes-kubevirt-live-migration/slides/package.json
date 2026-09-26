@@ -1,0 +1,20 @@
+{
+  "name": "vms-on-kubernetes-kubevirt-live-migration-slides",
+  "version": "1.0.0",
+  "description": "VMs on Kubernetes as code: provisioning and live-migrating a KubeVirt VM with Pulumi",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "^0.4.0",
+    "@slidev/cli": "^53.0.0",
+    "mermaid": "^12.0.0",
+    "playwright-chromium": "^1.0.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.0"
+  }
+}
