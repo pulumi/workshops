@@ -1,0 +1,5 @@
+config:
+  fine-grained-authorization-openfga:storeName: pulumi-workshop
+  fine-grained-authorization-openfga:apiPort: "8080"
+  fine-grained-authorization-openfga:playgroundPort: "3000"
+encryptionsalt: v1:jpaOkWfWdQI=:v1:DlR62RbgEdzCmtc8:TP3fdBO9nd0P1kiHukOnwKEGuAn6mg==
