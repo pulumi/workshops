@@ -1,0 +1,12 @@
+.DS_Store
+*.log
+
+# Presenter-only working docs (DEMO, REHEARSAL, OPEN-QUESTIONS, FACTCHECK …):
+# the repo publishes the demo code and the notes that describe it.
+*.md
+!README.md
+!AGENTS.md
+
+# Runtime state from running the demo: local Pulumi backend and audit log.
+/.pulumi-local-state/
+/.audit/
