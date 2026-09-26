@@ -1,0 +1,7 @@
+name: agent-orchestration-approval-gate
+runtime: nodejs
+description: >-
+  Approval gate for the agent-driven-orchestration-governable workshop. Any
+  change to the worker fleet must carry an explicit approval flag; absent or
+  false, the update is blocked before it applies. Mandatory, so a policy
+  violation stops `pulumi up` rather than only warning about it.

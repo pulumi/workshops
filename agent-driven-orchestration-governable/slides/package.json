@@ -1,0 +1,21 @@
+{
+  "name": "agent-driven-orchestration-governable",
+  "version": "0.1.0",
+  "description": "Putting Agents to Work — Agent-Driven Orchestration You Can Govern, Trust and Repeat",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "^0.4.0",
+    "@slidev/cli": "^53.0.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}
