@@ -56,3 +56,6 @@ default; that is deliberate, do not force-add it.
 - Every script and Pulumi project pins the versions named in README
   "Sources"; if a version there stops resolving, say so rather than silently
   bumping it.
+
+See `slides/AGENTS.md` for the deck's own build record, sources and minute
+budget.
