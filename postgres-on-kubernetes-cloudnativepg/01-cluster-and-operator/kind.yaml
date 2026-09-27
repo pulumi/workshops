@@ -1,0 +1,17 @@
+# kind cluster config for this workshop. Node image pinned to kind v0.33.0's
+# own default image (Kubernetes 1.37.0) so every run boots the same cluster
+# regardless of which kind version is installed on the laptop running it,
+# and so the control-plane satisfies CNPG's documented kubeVersion >=1.29.0-0
+# floor. Config shape: https://kind.sigs.k8s.io/docs/user/configuration/
+# Three nodes (1 control-plane + 2 workers) so the workshop's later
+# replication/failover steps have somewhere real to schedule a standby.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: pg-workshop-demo
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+  - role: worker
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+  - role: worker
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5

@@ -1,0 +1,9 @@
+name: pg-pitr-restore
+description: >-
+  Point-in-time restore of the CloudNativePG cluster from the 02 step's
+  Barman Cloud plugin archive, with WAL archiving re-enabled on the restored
+  cluster so it can serve as a source for a further restore.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

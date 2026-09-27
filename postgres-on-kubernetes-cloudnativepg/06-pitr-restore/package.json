@@ -1,0 +1,15 @@
+{
+  "name": "pg-workshop-pitr-restore",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Point-in-time restore of the CNPG cluster onto a new Cluster CR",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.265.0"
+  }
+}

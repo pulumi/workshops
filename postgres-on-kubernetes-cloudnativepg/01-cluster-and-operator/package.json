@@ -1,0 +1,16 @@
+{
+  "name": "pg-workshop-cluster-operator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Postgres on Kubernetes with CloudNativePG: kind cluster, cert-manager, CNPG operator, Barman Cloud plugin",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.265.0",
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/command": "^1.2.1"
+  }
+}

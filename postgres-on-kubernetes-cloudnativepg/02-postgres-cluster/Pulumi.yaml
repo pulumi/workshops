@@ -1,0 +1,9 @@
+name: pg-postgres-cluster
+description: >-
+  Postgres on Kubernetes with CloudNativePG: namespace, S3 backup bucket and
+  dedicated IAM user, ObjectStore and a 3-instance Cluster wired to the
+  barman-cloud plugin.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

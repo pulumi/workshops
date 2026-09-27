@@ -1,0 +1,9 @@
+name: pg-cluster
+description: >-
+  Provisions the kind cluster for "Postgres on Kubernetes with CloudNativePG"
+  and installs cert-manager, the CloudNativePG operator, and the Barman
+  Cloud plugin (CNPG-I) that the workshop's later backup steps depend on.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
