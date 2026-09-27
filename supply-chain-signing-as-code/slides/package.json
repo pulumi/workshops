@@ -1,0 +1,19 @@
+{
+  "name": "supply-chain-signing-as-code",
+  "version": "0.1.0",
+  "description": "Supply chain signing as code: Notation image signing, Kyverno admission enforcement and Kubescape posture scanning with Pulumi",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "latest",
+    "mermaid": "latest",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "latest"
+  }
+}
