@@ -1,0 +1,22 @@
+# kind cluster config for this workshop. One control-plane node plus three
+# workers so the workshop's six Kafka node pods (a 3-replica controller pool
+# and a 3-replica broker pool, see 02-kafka) have somewhere real to spread
+# across, and so 05-scale-brokers has headroom to add a fourth broker pod
+# without the control-plane node taking Kafka workload. Config shape:
+# https://kind.sigs.k8s.io/docs/user/configuration/ (read 2026-09-27)
+#
+# No node image is pinned here (unlike this repo's CloudNativePG workshop):
+# this build could not run `kind` on the build workstation to look up a
+# current node-image digest to pin (see AGENTS.md). The presenter should pin
+# `nodes[].image` to a specific `kindest/node` tag+digest from
+# https://github.com/kubernetes-sigs/kind/releases during rehearsal, the same
+# way the CloudNativePG workshop does, so every delivery boots an identical
+# cluster regardless of which kind version is on the presenter's laptop.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: kafka-workshop-demo
+nodes:
+  - role: control-plane
+  - role: worker
+  - role: worker
+  - role: worker

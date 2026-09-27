@@ -1,0 +1,10 @@
+name: kafka-clients
+description: >-
+  Provisions a long-running consumer Deployment for "Running Apache Kafka on
+  Kubernetes with the Strimzi operator and Pulumi", so producer/consumer
+  traffic can be demonstrated end to end and kept running through the
+  scaling and rolling-upgrade steps.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

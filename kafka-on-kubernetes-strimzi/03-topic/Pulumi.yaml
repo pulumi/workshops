@@ -1,0 +1,8 @@
+name: kafka-topic
+description: >-
+  Provisions the demo-events KafkaTopic for "Running Apache Kafka on
+  Kubernetes with the Strimzi operator and Pulumi".
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

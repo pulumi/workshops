@@ -1,0 +1,9 @@
+name: kafka-kafka
+description: >-
+  Provisions the KRaft-mode Kafka cluster for "Running Apache Kafka on
+  Kubernetes with the Strimzi operator and Pulumi": a controller node pool,
+  a broker node pool, and the Kafka custom resource itself.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

@@ -1,0 +1,9 @@
+name: kafka-cluster
+description: >-
+  Provisions the kind cluster for "Running Apache Kafka on Kubernetes with
+  the Strimzi operator and Pulumi" and installs the Strimzi Cluster Operator
+  via its OCI Helm chart.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
