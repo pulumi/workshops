@@ -1,0 +1,9 @@
+name: gpu-batch-gang-scheduling
+description: >-
+  A Volcano vcjob whose minAvailable asks for more pods than its own queue's
+  capability allows, so the whole job stays Pending together -- never
+  partially started -- until enough capacity exists for all of it at once.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

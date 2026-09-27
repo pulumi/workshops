@@ -1,0 +1,13 @@
+name: gpu-batch-dra
+description: >-
+  Optional, cloud-only step: a real EKS cluster with one g4dn.xlarge GPU node
+  (aws.eks.NodeGroup), the NVIDIA DRA driver, and two pods that each request a
+  fraction of that single GPU via a DRA ResourceClaimTemplate. Separate from
+  the kind-based steps 01-04 -- DRA-managed GPU sharing needs real GPU
+  hardware, which kind cannot provide. Provision this well before the
+  session: the node group takes 15-20 minutes and GPU instance quota in most
+  new AWS accounts is 0 and needs a support-ticket increase (see README).
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

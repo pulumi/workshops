@@ -1,0 +1,9 @@
+name: gpu-batch-fair-share
+description: >-
+  Two vcjobs submitted at once, one per team queue from 02-queues, sized so
+  the over-quota team's job must wait while the under-quota team's runs.
+  Requires 02-queues to have been deployed first.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

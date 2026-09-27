@@ -1,0 +1,15 @@
+{
+  "name": "gpu-batch-gang-scheduling",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Volcano vcjob demonstrating all-or-nothing gang scheduling",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.262.0"
+  }
+}

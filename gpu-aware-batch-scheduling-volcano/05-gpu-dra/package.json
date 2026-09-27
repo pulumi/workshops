@@ -1,0 +1,18 @@
+{
+  "name": "gpu-batch-dra",
+  "version": "0.1.0",
+  "private": true,
+  "description": "EKS + single GPU node + NVIDIA DRA driver + fractional GPU sharing demo",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^7.48.0",
+    "@pulumi/awsx": "^3.0.0",
+    "@pulumi/eks": "^4.0.1",
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.262.0"
+  }
+}

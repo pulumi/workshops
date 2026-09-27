@@ -1,0 +1,9 @@
+name: gpu-batch-queues
+description: >-
+  Two Volcano Queue objects standing in for two simulated teams sharing the
+  cluster, with different weights and capacity limits. 04-fair-share submits
+  one job into each to show the quota difference.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

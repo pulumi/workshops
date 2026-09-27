@@ -1,0 +1,9 @@
+name: gpu-batch-cluster
+description: >-
+  A local kind cluster (CPU-only) with the Volcano batch scheduler installed
+  via its official Helm chart. Everything else in this workshop assumes the
+  "kind-gpu-batch-demo" kubeconfig context this project creates.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
