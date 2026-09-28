@@ -1,0 +1,9 @@
+name: storage-caching-cache-client
+description: >-
+  A Job that exercises the Dragonfly cache with redis-cli: PING, then a
+  handful of key writes and reads, for "Storage and caching as code:
+  Longhorn and Dragonfly on Kubernetes with Pulumi".
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
