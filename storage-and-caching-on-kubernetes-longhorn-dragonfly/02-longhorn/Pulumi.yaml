@@ -1,0 +1,9 @@
+name: storage-caching-longhorn
+description: >-
+  Installs Longhorn v1.12.1 via its Helm chart into the longhorn-system
+  namespace created by 01-cluster, for "Storage and caching as code:
+  Longhorn and Dragonfly on Kubernetes with Pulumi".
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
