@@ -1,0 +1,16 @@
+{
+  "name": "storage-caching-workshop-cluster",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Storage and caching on Kubernetes: kind cluster and namespaces",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.265.0",
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/command": "^1.2.1"
+  }
+}

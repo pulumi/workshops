@@ -1,0 +1,9 @@
+name: storage-caching-cluster
+description: >-
+  Provisions the 3-worker kind cluster for "Storage and caching as code:
+  Longhorn and Dragonfly on Kubernetes with Pulumi" and creates the two
+  namespaces the rest of the workshop targets.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

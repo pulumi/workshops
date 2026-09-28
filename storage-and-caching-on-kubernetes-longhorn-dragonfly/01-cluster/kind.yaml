@@ -1,0 +1,44 @@
+# 3-worker kind cluster for the storage-and-caching workshop: enough
+# nodes for Longhorn's default 3-way replication and for the failover
+# drill in 05-failover-drill to cordon/drain a worker without losing the
+# control plane. Config shape and pinning syntax:
+# https://kind.sigs.k8s.io/docs/user/configuration/ (read 2026-09-28)
+#
+# Node image pinned to kind v0.33.0's own release image (the newest
+# release as of this build) since Longhorn's chart declares
+# `kubeVersion: >=1.25.0-0` (02-longhorn/index.ts) and this comfortably
+# clears it:
+# https://github.com/kubernetes-sigs/kind/releases (read 2026-09-28)
+#
+# OPEN QUESTION (see the pull request): Longhorn on kind is not a
+# documented, supported combination on either longhorn.io or
+# kind.sigs.k8s.io. kind's node "machines" are containers sharing the
+# Docker host's kernel, so Longhorn's iscsiadm/open-iscsi and kernel
+# module requirements have to be satisfied on the host, not injected into
+# a node container. The `extraMounts` below give each node container a
+# distinguishable, host-backed path for `/var/lib/longhorn` -- without it,
+# all four node containers share the same ephemeral filesystem layer,
+# which will not survive `kind delete cluster` and can confuse Longhorn's
+# per-node disk detection since these are containers, not real hosts.
+# This is a workaround pattern, not documented Longhorn guidance.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: storage-caching-workshop-demo
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+  - role: worker
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+    extraMounts:
+      - hostPath: /tmp/kind-longhorn/worker1
+        containerPath: /var/lib/longhorn
+  - role: worker
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+    extraMounts:
+      - hostPath: /tmp/kind-longhorn/worker2
+        containerPath: /var/lib/longhorn
+  - role: worker
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5
+    extraMounts:
+      - hostPath: /tmp/kind-longhorn/worker3
+        containerPath: /var/lib/longhorn
