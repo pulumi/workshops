@@ -1,0 +1,18 @@
+{
+  "name": "observability-sample-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Instrumented Express app for the observability workshop demo",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --require ./tracing.js index.js"
+  },
+  "dependencies": {
+    "@opentelemetry/api": "^1.9.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.80.0",
+    "@opentelemetry/exporter-metrics-otlp-grpc": "^0.222.0",
+    "@opentelemetry/exporter-trace-otlp-grpc": "^0.222.0",
+    "@opentelemetry/sdk-node": "^0.222.0",
+    "express": "^5.2.1"
+  }
+}
