@@ -1,0 +1,21 @@
+# kind cluster config for this workshop. A single control-plane node is
+# enough: the whole demo is two tiny backend Deployments, one controller
+# Deployment, and a handful of Gateway API objects, none of which need
+# multi-node scheduling headroom. Config shape:
+# https://kind.sigs.k8s.io/docs/user/configuration/ (read 2026-09-28)
+#
+# No node image is pinned here: this build could not run `kind` on the
+# build workstation to look up a current node-image digest to pin (see
+# AGENTS.md; no docker/kind/kubectl on this workstation). kgateway 2.4.x's
+# support matrix covers Kubernetes 1.32-1.36
+# (https://kgateway.dev/docs/envoy/latest/reference/versions/, read
+# 2026-09-28). The presenter should pin `nodes[].image` to a specific
+# `kindest/node` tag+digest from
+# https://github.com/kubernetes-sigs/kind/releases within that range during
+# rehearsal, so every delivery boots an identical, verified cluster
+# regardless of which kind version is on the presenter's laptop.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: api-gateways-workshop-demo
+nodes:
+  - role: control-plane

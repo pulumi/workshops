@@ -1,0 +1,9 @@
+name: api-gateways-workshop-install
+description: >-
+  Provisions the kind cluster for "API gateways as code: kgateway and
+  Gateway API on Kubernetes with Pulumi", applies the upstream Gateway API
+  CRDs, and installs the kgateway controller via its OCI Helm chart.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
