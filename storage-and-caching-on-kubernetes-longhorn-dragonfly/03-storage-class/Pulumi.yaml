@@ -1,0 +1,9 @@
+name: storage-caching-storage-class
+description: >-
+  Defines the Longhorn-backed StorageClass this workshop teaches with, for
+  "Storage and caching as code: Longhorn and Dragonfly on Kubernetes with
+  Pulumi".
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
