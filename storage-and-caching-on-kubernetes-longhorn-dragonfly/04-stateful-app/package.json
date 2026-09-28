@@ -1,0 +1,15 @@
+{
+  "name": "storage-caching-workshop-stateful-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Storage and caching on Kubernetes: PVC and writer workload",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.265.0",
+    "@pulumi/kubernetes": "^4.34.2"
+  }
+}

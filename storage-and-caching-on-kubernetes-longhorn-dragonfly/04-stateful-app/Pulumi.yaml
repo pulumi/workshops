@@ -1,0 +1,9 @@
+name: storage-caching-stateful-app
+description: >-
+  A 1Gi PVC on the Longhorn-backed StorageClass and a small writer workload
+  that appends a timestamped record to it, for "Storage and caching as
+  code: Longhorn and Dragonfly on Kubernetes with Pulumi".
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
