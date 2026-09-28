@@ -154,8 +154,17 @@ cloud account.
 
 ## Run the slides
 
-Built by the following slides run, on this same branch. See `slides/` once
-that run completes.
+```bash
+cd slides
+npm install
+npm run dev     # local preview at http://localhost:3030
+npm run build   # static build
+npm run export  # slides-export.pdf
+```
+
+The deck is 25 slides, with speaker notes carrying time budgets that sum to
+the workshop's 90 minutes. See `slides/AGENTS.md` for the deck's sources and
+the one deviation from the workshop brief's slide outline.
 
 ## Verification (this build)
 
