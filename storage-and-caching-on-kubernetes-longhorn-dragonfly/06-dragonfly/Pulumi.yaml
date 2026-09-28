@@ -1,0 +1,9 @@
+name: storage-caching-dragonfly
+description: >-
+  A pinned Dragonfly cache Deployment and ClusterIP Service, no
+  persistence, for "Storage and caching as code: Longhorn and Dragonfly on
+  Kubernetes with Pulumi".
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
