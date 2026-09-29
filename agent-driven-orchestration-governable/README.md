@@ -8,29 +8,59 @@ end. No cloud account, no AWS/Azure/GCP credentials: the only provider in
 play is `@pulumi/random`, so every `pulumi up` completes in seconds and costs
 $0.
 
-Delivery date: 2026-10-28 (Pulumi's internal delivery calendar; no public
-event page, session times, or speakers assigned as of this build).
+> An agent that scales a fleet or rotates a secret in staging is not
+> remarkable anymore. What is still rare is proving, after the fact, that the
+> change was approved, logged, and reproducible. This workshop builds that
+> proof: a scripted orchestrator drives a Pulumi program through four
+> infrastructure changes, a mandatory policy pack gates every one, and an
+> audit log written by the run itself records what happened and why.
+>
+> — Workshop pitch (event page not yet published)
 
-## What it teaches
+## Sessions and speakers
 
-By the end, participants can orchestrate a multi-step infrastructure change
-through an agent while keeping every action auditable, subject to explicit
-approval, and repeatable on demand — the promise from the workshop brief.
+| Session | Date | Length |
+|---|---|---|
+| TBD | October 28, 2026 | 90 min |
+
+No public event page, session times, or speakers are assigned as of this
+build; the date comes from Pulumi's internal delivery calendar. This section
+will be filled in once the event page goes live.
+
+## What attendees learn
+
+The five outcomes from the workshop brief are the spine of the deck:
+
+1. Describe how Automation API differs from the Pulumi CLI, and identify a
+   use case where driving Pulumi programmatically (rather than via
+   `pulumi up`) is the right choice.
+2. Configure a policy pack rule that blocks a stack update unless an explicit
+   approval flag is present.
+3. Wire a scripted orchestrator that issues a sequence of infrastructure
+   changes through Automation API and observe the policy pack accept or
+   reject each one.
+4. Read an audit trail and state, for a given run, which changes were
+   approved, which were blocked, and why.
+5. Explain the tradeoff between a deterministic scripted stand-in for an
+   agent (used in this workshop) and a live LLM-driven agent (out of scope
+   for the live demo, discussed as a stretch extension).
 
 ## Layout
 
 ```
-.
-├── .gitignore
-├── .shellcheckrc
-├── 01-fleet/            # Target program: WorkerFleet component + configVersion
-├── 02-policy/           # Policy pack: require-approval-flag (mandatory)
-├── 03-orchestrator/     # The "agent": Automation API driver + JSON audit log
-├── 04-audit/            # Audit-trail reader the presenter walks through
-├── 05-llm-stretch/      # Optional: LLM proposes the next action (dry-run, no key needed)
-├── 06-teardown/         # teardown.sh — also the between-runs reset
+agent-driven-orchestration-governable/
+├── README.md            this file
+├── AGENTS.md            conventions for agents (and humans) editing this folder
+├── .gitignore           keeps node_modules, build output, local state, and the audit log out of git
+├── .shellcheckrc        shellcheck config shared by every shell script in this folder
+├── 01-fleet/            target program: WorkerFleet component + configVersion
+├── 02-policy/           policy pack: require-approval-flag (mandatory)
+├── 03-orchestrator/     the "agent": Automation API driver + JSON audit log
+├── 04-audit/            audit-trail reader the presenter walks through
+├── 05-llm-stretch/      optional: LLM proposes the next action (dry-run, no key needed)
+├── 06-teardown/         teardown.sh — also the between-runs reset
 └── scripts/
-    └── setup.sh         # Presenter's one-time setup
+    └── setup.sh         presenter's one-time setup
 ```
 
 Steps 3–6 of the brief (blocked scale-up, approved scale-up, rotation,
@@ -39,6 +69,33 @@ four separate folders: they are four invocations of the *same* orchestrator
 script with different action arguments, and four folders would mean four
 copies of the same Automation API wiring and audit-log code. See
 `03-orchestrator/AGENTS.md`.
+
+## Prerequisites
+
+### Participants
+
+- A laptop with Node.js 20.x LTS and the Pulumi CLI installed before the
+  session (installation instructions distributed in advance; no live
+  install time in the session).
+- No Pulumi Cloud account or cloud provider credentials required — the demo
+  runs entirely on the local backend (`pulumi login --local`).
+- Basic familiarity with a Pulumi program in TypeScript (a `pulumi new`
+  walkthrough is out of scope for this session).
+
+### Presenter
+
+- Build and pin this repo's dependency versions at least 3 business days
+  before 2026-10-28, and verify `pulumi up`, the blocked-action run, and the
+  approved-action run all complete cleanly on a clean machine or container
+  (see [Presenter checklist not covered by this repository](#presenter-checklist-not-covered-by-this-repository)).
+- Rehearse `06-teardown/teardown.sh` at least once end to end to confirm no
+  local state or files persist.
+- Prepare the audit log's expected contents as a reference so you are not
+  reading unfamiliar output live.
+- If including the optional `05-llm-stretch/` segment, obtain and test API
+  access in advance; do not test it for the first time live.
+- Have a pre-recorded screen capture of the full demo ready as a fallback in
+  case live execution fails during the session.
 
 ## Versions (re-verified 2026-09-29)
 
@@ -58,9 +115,26 @@ Node-22-only API, so it is expected to run unchanged on Node 20.x, but that
 has not been verified on this build. Re-verify on Node 20.x before the
 2026-10-28 delivery.
 
-## Running it
+## Run the slides
 
+Not built in this run. A follow-up assignment adds `slides/` on this same
+branch, matching the demo flow below step for step. Once it lands, run it
+the same way every workshop in this repository does:
+
+```bash
+cd slides
+npm install
+npm run dev              # http://localhost:3030, presenter view at /presenter
+npm run build            # static site in dist/
+npm run export           # slides-export.pdf
 ```
+
+## Run the demo
+
+Set up once per machine (or after teardown), then run the four gated
+changes and the audit reader as often as you like:
+
+```bash
 scripts/setup.sh                     # once per machine (or after teardown)
 cd 03-orchestrator
 node bin/orchestrator.js scale-up --replicas 4              # blocked: no approval
@@ -130,3 +204,28 @@ capturing a pre-recorded fallback of the four-step run, re-verifying the
 demo 3 business days before the 2026-10-28 delivery, and a teardown check on
 the actual presenter machine (this build's teardown was verified on the
 build machine's local backend only).
+
+## Sources
+
+Facts in the brief come from these pages, read on September 26, 2026 and
+re-read on September 29, 2026:
+
+- https://www.pulumi.com/docs/ — confirms current top-level doc structure,
+  including Infrastructure AI and Discovery & Governance sections.
+- https://www.pulumi.com/docs/ai/ — confirms Pulumi Neo, Agent Skills, an
+  agent-friendly CLI, the MCP server, and Agent Accounts as current,
+  documented capabilities.
+- https://www.pulumi.com/docs/iac/concepts/automation-api/ — confirms
+  Automation API's purpose as a programmatic SDK for driving the Pulumi
+  engine; this is the mechanism `03-orchestrator/` uses.
+- https://www.pulumi.com/docs/discovery-governance/ — re-read for this run
+  and confirms the current product name is Pulumi Policies (policy as code,
+  policy packs, policy groups; preventative or audit mode). "CrossGuard"
+  does not appear on this page; the workshop brief's use of that name is out
+  of date and is corrected throughout this repository. See `AGENTS.md`.
+- https://www.pulumi.com/docs/reference/pkg/nodejs/pulumi/policy/ — read for
+  this run. Confirms `validateResource`/`validateStack`'s `getConfig<T>()`
+  resolves the *policy pack's own* configuration, never the target stack's
+  `pulumi.Config`. This is why `02-policy/` inspects a resource property
+  instead of stack configuration directly; see
+  `02-policy/AGENTS.md`.
