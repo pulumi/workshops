@@ -60,5 +60,5 @@ force-add it.
 
 ## Slides
 
-Not built in this run. A follow-up assignment adds `slides/` on this same
-branch, matching the demo flow above step for step.
+`slides/` on this branch, built to match the demo flow above step for step.
+See `slides/AGENTS.md` for the story spine, sources, and fact-check log.

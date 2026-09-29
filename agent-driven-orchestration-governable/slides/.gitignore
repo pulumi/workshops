@@ -1,0 +1,8 @@
+node_modules
+dist
+.slidev
+.claude
+*.log
+*.pdf
+export-png/
+qa-pages/

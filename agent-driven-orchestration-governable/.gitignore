@@ -6,6 +6,7 @@
 *.md
 !README.md
 !AGENTS.md
+!slides/slides.md
 
 # Runtime state from running the demo: local Pulumi backend and audit log.
 /.pulumi-local-state/
