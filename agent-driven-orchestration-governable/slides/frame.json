@@ -17,17 +17,12 @@
   ],
   "resources": [
     {
-      "title": "Workshop repository",
-      "url": "https://github.com/pulumi/workshops/tree/main/agent-driven-orchestration-governable",
-      "label": "pulumi/workshops"
-    },
-    {
       "title": "Automation API",
       "url": "https://www.pulumi.com/docs/iac/concepts/automation-api/",
       "label": "pulumi.com/docs/iac/concepts/automation-api"
     },
     {
-      "title": "Discovery & Governance (policy as code)",
+      "title": "Discovery & Governance",
       "url": "https://www.pulumi.com/docs/discovery-governance/",
       "label": "pulumi.com/docs/discovery-governance"
     },
