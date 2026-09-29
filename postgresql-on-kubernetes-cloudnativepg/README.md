@@ -9,6 +9,17 @@ databases. Assumes basic Kubernetes (pods, PVCs, CRDs) and basic Pulumi
 > cluster on Kubernetes with Pulumi, and triggered a failover and a
 > point-in-time restore live.
 
+## Sessions and speakers
+
+| Session | Date | Length |
+|---|---|---|
+| TBD | November 18, 2026 | 90 min |
+
+Speaker and event page not yet assigned. The date is a committed slot; the
+subject was chosen by Compass from an untitled backlog entry and is
+reversible by a person before the demo build starts (see the open questions
+below).
+
 ## What attendees learn
 
 1. What problem the CloudNativePG operator solves versus running Postgres in
