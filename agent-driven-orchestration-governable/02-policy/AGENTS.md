@@ -9,10 +9,12 @@ The brief (§4, step 2) describes the rule as inspecting stack configuration
 directly: "inspects stack configuration for `demo:approved = true`". Pulumi
 Policies validate resources (`validateResource`) or a stack's resource list
 (`validateStack`); there is no documented mechanism, as of the docs read for
-this build (2026-09-26), for a policy to read `pulumi.Config` values
-directly. `StackValidationArgs` exposes `args.resources` (filterable by
-`.type`/`.props`) and `args.stackTags`, not a stack-outputs or stack-config
-accessor. See the PR description for sources.
+this build (2026-09-26) and re-confirmed on 2026-09-29, for a policy to read
+the target stack's `pulumi.Config` values directly. `StackValidationArgs`
+exposes `resources` (filterable by `.type`/`.props`), `stackTags`, and its
+own `getConfig<T>()`, which returns the policy pack's own configuration, not
+the stack's. None of these is a stack-config accessor. See the PR
+description for sources.
 
 ## The workshop's substitute
 

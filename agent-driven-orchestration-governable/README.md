@@ -1,4 +1,4 @@
-# Agent-Driven Orchestration You Can Govern, Trust and Repeat
+# Putting Agents to Work — Agent-Driven Orchestration You Can Govern, Trust and Repeat
 
 A local, credential-free demo: a scripted stand-in agent drives a Pulumi
 program through four infrastructure changes via Automation API, every change
@@ -40,7 +40,7 @@ script with different action arguments, and four folders would mean four
 copies of the same Automation API wiring and audit-log code. See
 `03-orchestrator/AGENTS.md`.
 
-## Versions (resolved at build time, 2026-09-26)
+## Versions (re-verified 2026-09-29)
 
 | Package | Declared | Resolved |
 |---|---|---|

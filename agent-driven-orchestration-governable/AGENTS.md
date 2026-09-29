@@ -22,10 +22,10 @@ force-add it.
 
 - Stay inside this folder. Never modify other workshop folders in this repo.
 - Facts about Pulumi Automation API and Pulumi Policies come from
-  pulumi.com/docs, read for this build on 2026-09-26 (sources in the PR
-  description). If a doc is unclear or a claim could not be confirmed, it is
-  flagged as such rather than guessed at — see `02-policy/AGENTS.md` for the
-  one case where this mattered.
+  pulumi.com/docs, read for this build on 2026-09-26 and re-confirmed on
+  2026-09-29 (sources in the PR description). If a doc is unclear or a claim
+  could not be confirmed, it is flagged as such rather than guessed at — see
+  `02-policy/AGENTS.md` for the one case where this mattered.
 - Canonical names: Pulumi Neo, Pulumi ESC, Pulumi Cloud, Pulumi IaC, Pulumi
   console (lowercase console), Pulumi Policies, policy as code. Never
   "Copilot", "Pulumi Service", "Insights", "CrossGuard" (the brief uses
