@@ -1,0 +1,40 @@
+{
+  "slug": "agent-driven-orchestration-governable",
+  "title": "Putting Agents to Work",
+  "subtitle": "Orchestrate infrastructure changes through an agent, with every action auditable, approved, and repeatable on demand",
+  "demo_title": "Putting Agents to Work",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why agents need a governance gate",
+    "Automation API and policy packs",
+    "The orchestrator we'll build",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Workshop repository",
+      "url": "https://github.com/pulumi/workshops/tree/main/agent-driven-orchestration-governable",
+      "label": "pulumi/workshops"
+    },
+    {
+      "title": "Automation API",
+      "url": "https://www.pulumi.com/docs/iac/concepts/automation-api/",
+      "label": "pulumi.com/docs/iac/concepts/automation-api"
+    },
+    {
+      "title": "Discovery & Governance (policy as code)",
+      "url": "https://www.pulumi.com/docs/discovery-governance/",
+      "label": "pulumi.com/docs/discovery-governance"
+    },
+    {
+      "title": "Infrastructure AI",
+      "url": "https://www.pulumi.com/docs/ai/",
+      "label": "pulumi.com/docs/ai"
+    }
+  ]
+}

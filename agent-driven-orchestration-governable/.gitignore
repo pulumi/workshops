@@ -6,7 +6,18 @@
 *.md
 !README.md
 !AGENTS.md
+!slides/slides.md
+!slides/AGENTS.md
 
 # Runtime state from running the demo: local Pulumi backend and audit log.
 /.pulumi-local-state/
 /.audit/
+
+# Slides: build output and dependencies, never source.
+slides/node_modules/
+slides/dist/
+slides/export-pages/
+slides/export-check/
+slides/slides-export/
+slides/*.pdf
+slides/*.pptx
