@@ -17,6 +17,14 @@ for dir in 01-fleet 02-policy 03-orchestrator 04-audit 05-llm-stretch; do
   (cd "${ROOT_DIR}/${dir}" && npm install --no-audit --no-fund)
 done
 
+# 01-fleet and 02-policy run through the Pulumi CLI, which transpiles their
+# TypeScript itself. 03-orchestrator, 04-audit, and 05-llm-stretch are run
+# directly with `node bin/*.js`, so they need an explicit build here.
+for dir in 03-orchestrator 04-audit 05-llm-stretch; do
+  echo "npx tsc: ${dir}"
+  (cd "${ROOT_DIR}/${dir}" && npx tsc)
+done
+
 export PULUMI_CONFIG_PASSPHRASE="${PULUMI_CONFIG_PASSPHRASE:-agent-driven-orchestration-governable-demo}"
 pulumi login "file://${STATE_DIR}"
 
