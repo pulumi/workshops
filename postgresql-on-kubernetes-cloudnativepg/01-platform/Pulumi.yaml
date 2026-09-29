@@ -1,0 +1,3 @@
+name: cnpg-workshop-platform
+runtime: nodejs
+description: Provisions the shared platform for the CloudNativePG workshop -- a local kind cluster, cert-manager, the CloudNativePG operator, and the Barman Cloud Plugin.
