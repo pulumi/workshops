@@ -1,0 +1,16 @@
+--- a/01-base-stack/index.ts
++++ b/01-base-stack/index.ts
+@@ -37,8 +37,13 @@
+     },
+ });
+ 
++const logs = new aws.s3.Bucket("logs", {
++    bucketPrefix: `${namePrefix}logs-`,
++});
++
+ export const vpcId = vpc.id;
+ export const subnetId = subnet.id;
+ export const artifactsBucketName = artifacts.bucket;
+ export const artifactsBucketArn = artifacts.arn;
++export const logsBucketName = logs.bucket;
+ export const region = aws.getRegionOutput().apply((r) => r.region);
