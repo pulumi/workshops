@@ -7,3 +7,7 @@
 !README.md
 !AGENTS.md
 !slides/slides.md
+!slides/AGENTS.md
+node_modules/
+slides/export-pages/
+slides/dist/
