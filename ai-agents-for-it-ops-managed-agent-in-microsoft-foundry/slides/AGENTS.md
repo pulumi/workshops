@@ -64,6 +64,11 @@ answers a real IT-ops question and names the runbook it used. 06-teardown proves
 clean: reverse-order destroy, then a verification script that checks (and if needed purges)
 Cognitive Services' soft-delete state. Q5 is the question the demo answers, last.
 
+**Time budget.** Every slide, including the nine frame slides (title, speaker,
+housekeeping/agenda divider, housekeeping, agenda, demo divider, resources, continue-your-journey,
+thank-you), carries a speaker-note time in minutes. The 38 notes sum to 87 minutes, inside the
+brief's stated 75-90 minute range.
+
 ## Headlines
 
 Pattern names from `deck_frame.py patterns`. Frame slides (title, speakers, housekeeping,

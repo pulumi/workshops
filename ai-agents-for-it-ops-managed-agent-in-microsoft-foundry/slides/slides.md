@@ -29,6 +29,10 @@ defaults:
   </p>
 </div>
 
+
+<!--
+[0.25 min] Welcome them in and give the room a beat to settle before housekeeping.
+-->
 ---
 
 <div class="absolute inset-0 flex items-center px-24 gap-20">
@@ -52,12 +56,20 @@ defaults:
   </div>
 </div>
 
+
+<!--
+[0.5 min] Speaker introduces themselves: role, what they build day to day, and why this topic matters to them.
+-->
 ---
 
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6.5rem] !leading-tight !font-semibold !tracking-tight !m-0 !max-w-[95%]">Housekeeping and Agenda</h1>
 </div>
 
+
+<!--
+[0.25 min] One-breath transition into logistics and the agenda.
+-->
 ---
 
 # Housekeeping
@@ -77,6 +89,10 @@ defaults:
 .zoom-content { zoom: 1.8; }
 </style>
 
+
+<!--
+[0.75 min] Cover wifi, breaks, the Q&A tab, and where the recording and handouts land.
+-->
 ---
 
 # Today's Agenda
@@ -97,6 +113,10 @@ defaults:
 .zoom-content { zoom: 1.8; }
 </style>
 
+
+<!--
+[0.75 min] Walk the agenda top to bottom so the audience knows the shape of the next 90 minutes.
+-->
 ---
 
 # "I have failed you completely and catastrophically."
@@ -834,6 +854,10 @@ Pulumi: a resource, a dependency, a name.
   </div>
 </div>
 
+<!--
+[0.25 min] Transition line: everything so far has been the plan, this is it running for real.
+-->
+
 <style scoped>
 .sec { position: absolute; inset: 0; overflow: hidden; }
 .sec__lines { position: absolute; width: 30rem; height: auto; opacity: 0.55; pointer-events: none; }
@@ -1182,6 +1206,10 @@ watched it. Thank the room and move to Resources. [3.75 min]
 .res-card__body { font-family: var(--slidev-font-mono); font-size: 0.8rem; color: var(--p-fg-muted); line-height: 1.4; word-break: break-all; }
 </style>
 
+
+<!--
+[0.5 min] Point at the QR codes and say which one to scan first.
+-->
 ---
 
 # Continue your Pulumi journey!
@@ -1218,6 +1246,10 @@ watched it. Thank the room and move to Resources. [3.75 min]
 .journey-card__body { font-size: 1.15rem; line-height: 1.55; margin: 0 !important; color: var(--p-fg); }
 </style>
 
+
+<!--
+[0.25 min] One line on where to keep learning after today.
+-->
 ---
 
 <div class="absolute inset-0 flex flex-col justify-center items-center px-16">
@@ -1261,3 +1293,7 @@ watched it. Thank the room and move to Resources. [3.75 min]
 .thanks__qr { width: 8rem; height: 8rem; margin-top: 1.1rem; padding: 0.45rem; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18); }
 .thanks__qr-label { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.55rem; font-family: var(--slidev-font-mono); font-size: 0.85rem; color: var(--p-fg-muted); }
 </style>
+
+<!--
+[0.5 min] Thank the room and open the floor for questions.
+-->
