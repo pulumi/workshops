@@ -1,0 +1,7 @@
+name: itops-foundry-platform
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+description: Azure AI Foundry platform (resource group, AIServices account, project, model deployment) for the IT-ops managed agent workshop.

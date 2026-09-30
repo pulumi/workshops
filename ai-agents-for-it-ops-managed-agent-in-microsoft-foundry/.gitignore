@@ -1,0 +1,17 @@
+.DS_Store
+*.log
+node_modules/
+dist/
+sdks/
+venv/
+__pycache__/
+
+# Presenter-only working docs (DEMO, REHEARSAL, OPEN-QUESTIONS, FACTCHECK …):
+# the repo publishes the slides, the demo code and the notes that describe them.
+*.md
+!README.md
+!AGENTS.md
+!slides/slides.md
+# Sample runbooks are demo data the agent's file-search tool indexes, not a
+# presenter working doc -- same exception pattern as slides/slides.md above.
+!04-tool-connection/runbooks/*.md

@@ -1,0 +1,4 @@
+# Pinned 2026-09-29 against the versions on PyPI at build time, confirmed
+# with `pip index versions azure-ai-projects` / `pip index versions azure-identity`.
+azure-ai-projects==2.7.0
+azure-identity==1.25.3
