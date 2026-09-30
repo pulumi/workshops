@@ -1,0 +1,10 @@
+name: backstage-demo-oidc-bootstrap
+description: >-
+  One-time setup for step 4 of "Provisioning real infrastructure from a
+  Backstage catalog with Pulumi": the AWS-side OIDC trust that lets Pulumi
+  ESC mint short-lived credentials for the backstage-s3-bucket project,
+  instead of a static AWS key sitting on the Backstage host.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

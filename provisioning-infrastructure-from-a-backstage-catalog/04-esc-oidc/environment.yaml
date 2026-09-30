@@ -1,0 +1,35 @@
+# Pulumi ESC environment for step 4 (04-esc-oidc). Loaded with:
+#   pulumi env init <your-pulumi-org>/backstage-s3-bucket/backstage-demo
+#   pulumi env edit --file environment.yaml <your-pulumi-org>/backstage-s3-bucket/backstage-demo
+#
+# YAML shape confirmed against
+# https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/
+# (read 2026-09-30):
+#   - the duration field is `duration`, nested under `oidc`. NOT `sessionDuration`
+#     -- an error in an earlier draft of this brief. Confirmed directly from the
+#     example on that page, which shows `oidc: { duration: 1h, roleArn: ..., sessionName: ... }`.
+#   - required fields under `oidc` are `roleArn` and `sessionName` (`duration`
+#     defaults if omitted, but this environment sets it explicitly to 1h per
+#     the brief).
+#   - `fn::open::aws-login` exports `accessKeyId` / `secretAccessKey` /
+#     `sessionToken` under whatever key you name it (`aws.login` below). They
+#     are NOT auto-exported as environment variables -- the doc's own example
+#     maps all three explicitly under `environmentVariables`, which this file
+#     does the same way.
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          # Replace with the `roleArn` stack output from ./bootstrap
+          # (`pulumi stack output roleArn` after `pulumi up` in bootstrap/).
+          roleArn: <role-arn-from-bootstrap-stack-output>
+          sessionName: backstage-scaffolder-action
+          duration: 1h
+  environmentVariables:
+    # Consumed by the Automation API program in ../03-scaffolder-action via
+    # ambient AWS SDK credential resolution -- see ./AGENTS.md for exactly
+    # how these reach that process.
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
