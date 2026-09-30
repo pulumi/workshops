@@ -29,6 +29,11 @@ defaults:
   </p>
 </div>
 
+
+<!--
+~1 min: Welcome. Say what the workshop promises: a component another team can use in a few lines.
+-->
+
 ---
 
 <div class="absolute inset-0 flex items-center px-24 gap-20">
@@ -52,11 +57,21 @@ defaults:
   </div>
 </div>
 
+
+<!--
+~1 min: Introduce yourself. Speakers are placeholders until confirmed.
+-->
+
 ---
 
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6.5rem] !leading-tight !font-semibold !tracking-tight !m-0 !max-w-[95%]">Housekeeping and Agenda</h1>
 </div>
+
+
+<!--
+~0.5 min: Divider. Housekeeping next.
+-->
 
 ---
 
@@ -76,6 +91,11 @@ defaults:
 <style scoped>
 .zoom-content { zoom: 1.8; }
 </style>
+
+
+<!--
+~1.5 min: Logistics, where the code lives, what to have installed.
+-->
 
 ---
 
@@ -97,6 +117,11 @@ defaults:
 <style scoped>
 .zoom-content { zoom: 1.8; }
 </style>
+
+
+<!--
+~1.5 min: Walk the agenda as the six questions. The demo comes last.
+-->
 
 ---
 
@@ -169,8 +194,8 @@ defaults:
   <div class="gpu-card gpu-card--primary" v-click>
     <div class="gpu-caption gpu-caption--accent">What is running</div>
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
-      <li>Three teams, three IAM policies</li>
-      <li>Tags present on some resources, missing on others</li>
+      <li>IAM policies that differ from team to team</li>
+      <li>Tags on some resources, missing on others</li>
       <li>Nobody enforcing any of it</li>
     </ul>
   </div>
@@ -263,7 +288,7 @@ defaults:
   <div class="gpu-card gpu-card--primary plan__step" v-click="4">
     <span class="plan__num">4</span>
     <ph-package class="plan__icon" />
-    <p><code>ComplianceWebService</code></p>
+    <p style="font-size:0.72em"><code>ComplianceWebService</code></p>
   </div>
   <ph-arrow-right class="plan__arrow" v-click="5" />
   <div class="gpu-card plan__step" v-click="5">
@@ -783,6 +808,11 @@ outputs:
 .sec__inner h1 { text-wrap: balance; }
 </style>
 
+
+<!--
+~0.5 min: Divider. Everything so far was the why; now the build.
+-->
+
 ---
 
 # What we are going to do
@@ -1022,6 +1052,11 @@ cp Pulumi.fixed.yaml Pulumi.yaml && pulumi preview
 .res-card__body { font-family: var(--slidev-font-mono); font-size: 0.8rem; color: var(--p-fg-muted); line-height: 1.4; word-break: break-all; }
 </style>
 
+
+<!--
+~1 min: Resources. The repo first, then the docs. Open the links after the session.
+-->
+
 ---
 
 # Continue your Pulumi journey!
@@ -1057,6 +1092,11 @@ cp Pulumi.fixed.yaml Pulumi.yaml && pulumi preview
 .journey-card__title { font-size: 1.5rem; font-weight: 600; line-height: 1.25; margin-bottom: 0.9rem; color: var(--p-fg); }
 .journey-card__body { font-size: 1.15rem; line-height: 1.55; margin: 0 !important; color: var(--p-fg); }
 </style>
+
+
+<!--
+~0.5 min: Point to the Pulumi journey links. No pitch.
+-->
 
 ---
 
@@ -1101,3 +1141,8 @@ cp Pulumi.fixed.yaml Pulumi.yaml && pulumi preview
 .thanks__qr { width: 8rem; height: 8rem; margin-top: 1.1rem; padding: 0.45rem; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18); }
 .thanks__qr-label { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.55rem; font-family: var(--slidev-font-mono); font-size: 0.85rem; color: var(--p-fg-muted); }
 </style>
+
+
+<!--
+~1.5 min: Questions. If time is short, take the registry add-syntax question first.
+-->

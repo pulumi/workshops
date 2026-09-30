@@ -1,6 +1,6 @@
 # Slides: Building a Golden Path
 
-Title: "Building a Golden Path". Subtitle: "Self-service infrastructure platforms with Pulumi". 90-120 minutes per the brief. Speaker-note budgets: story and demo slides about 77 minutes, frame slides about 8, total about 85.
+Title: "Building a Golden Path". Subtitle: "Self-service infrastructure platforms with Pulumi". 90-120 minutes per the brief. Speaker-note budgets: every slide carries one, summing to 90.0 minutes.
 
 ## Story
 
@@ -34,7 +34,7 @@ marketing-web slidev-deck skill commit read: 9b37f9afe8c7b0d406f19bc9116b16d5689
 
 ## Fact-check
 
-First pass only. A fact-check and humanizer pass follows after export.
+Humanizer scan (dashes, promotional words, forbidden product names, staging phrases) ran over slides and notes: no hits. Fact-check claims below were checked against sources read 2026-09-30. Code budget: 9 lines of YAML on one slide plus 6 command lines across demo slides = 15 lines.
 
 | Claim | Source | Date read | Outcome |
 | --- | --- | --- | --- |
