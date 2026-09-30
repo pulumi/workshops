@@ -50,6 +50,15 @@ Both gaps are called out in the pull request. Re-run the commands below with
 real AWS credentials and a Pulumi Cloud Pro/Enterprise org before the first
 live delivery, and update this section once that run has happened.
 
+A third open question, found on a 2026-09-30 re-read of
+pulumi.com/docs/iac/cli/commands/pulumi_package_publish/ and the private
+registry concepts page: neither documents the consumer-side `pulumi package
+add` syntax for a package published to the IDP Private Registry (as opposed
+to a local path or a git URL), and no console URL shape for browsing it is
+documented either. `README.md` step 1b covers publishing only; a team
+consuming a registry-published component should confirm the add syntax in
+the Pulumi console before relying on it in a live delivery.
+
 ## Overlap with existing workshop material
 
 `golden-paths-infrastructure-components-and-templates/solution/01-component-microservice`
