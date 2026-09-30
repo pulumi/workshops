@@ -5,6 +5,8 @@ dist/
 sdks/
 venv/
 __pycache__/
+slides/export-pages/
+slides/*.pdf
 
 # Presenter-only working docs (DEMO, REHEARSAL, OPEN-QUESTIONS, FACTCHECK …):
 # the repo publishes the slides, the demo code and the notes that describe them.
