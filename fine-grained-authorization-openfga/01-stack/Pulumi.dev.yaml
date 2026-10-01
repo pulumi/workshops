@@ -1,0 +1,3 @@
+config:
+  fine-grained-authorization-openfga:storeName: pulumi-workshop
+encryptionsalt: v1:oR4zPGfd0MA=:v1:plXSPFW+kog7Px72:WcinRy7AHeV5SnCpjoEzKM7V3Hmz9Q==
