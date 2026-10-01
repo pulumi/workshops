@@ -1,0 +1,10 @@
+name: vms-vm
+description: >-
+  VMs on Kubernetes as Code: the demo VirtualMachine (containerDisk +
+  cloudInitNoCloud, migratable on any storage class) and its NodePort
+  Service, on top of the kind cluster and KubeVirt install from the earlier
+  folders.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

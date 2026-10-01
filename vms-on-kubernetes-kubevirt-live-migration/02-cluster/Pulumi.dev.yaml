@@ -1,0 +1,2 @@
+config:
+  vms-cluster:clusterName: vms-workshop-demo
