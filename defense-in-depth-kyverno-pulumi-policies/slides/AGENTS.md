@@ -1,6 +1,6 @@
 # Slides: Defense in Depth as Code
 
-Working file for the deck builders. Slug: `defense-in-depth-kyverno-pulumi-policies`. Deck: `slides/slides.md`. Brief: workshop brief afeeb0b5 (workspace document, read 2026-10-01). Phase: scaffold done; story and demo slides not yet written.
+Working file for the deck builders. Slug: `defense-in-depth-kyverno-pulumi-policies`. Deck: `slides/slides.md`. Brief: workshop brief afeeb0b5 (workspace document, read 2026-10-01). Deck written; export reviewed on 2026-10-01.
 
 ## Story
 
