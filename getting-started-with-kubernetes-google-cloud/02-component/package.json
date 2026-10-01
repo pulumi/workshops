@@ -7,7 +7,7 @@
         "typescript": "^5.9.0"
     },
     "dependencies": {
-        "@pulumi/gcp": "^9.23.0",
+        "@pulumi/gcp": "10.0.0-rc.1",
         "@pulumi/gke": "file:sdks/gke",
         "@pulumi/pulumi": "^3.237.0",
         "js-yaml": "^4.1.1"
