@@ -1,0 +1,6 @@
+name: policy-demo-kyverno
+runtime: nodejs
+description: >-
+  Steps 2-3 of the defense-in-depth workshop: point the Pulumi Kubernetes
+  provider at the local kind cluster (step 2), then install Kyverno as
+  Pulumi-managed infrastructure via the Helm chart (step 3).
