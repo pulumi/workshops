@@ -215,7 +215,7 @@ Time: 1 min
 </style>
 
 <!--
-Valid means the API server can parse it. Safe means somebody wrote a rule and something enforces it. Take the demo Pod: nothing in a diff looks wrong. It simply has no resource limits. The Privileged level of the Pod Security Standards describes itself as purposely open and entirely unrestricted, in the Kubernetes docs. So safety needs a rule with an enforcer. That is the workshop.
+Valid means the API server can parse it. Safe means somebody wrote a rule and something enforces it. Take the demo Pod: nothing in a diff looks wrong. It simply has no resource limits. The Privileged level of the Pod Security Standards describes itself as purposely open and entirely unrestricted, in the Kubernetes docs. So safety needs a rule with an enforcer.
 Time: 2 min
 -->
 
@@ -839,7 +839,7 @@ Time: 1 min
 </style>
 
 <!--
-Plain limits of this demo. One rule only: resource limits. The brief also mentions privileged containers; the demo code does not enforce that. Pod only: the Kyverno rule matches kind Pod, and the policy pack validates core v1 Pod, not Deployments. A local kind cluster, one node, not a production setup. And ordering: Kyverno has to be Ready before the ClusterPolicy applies, so the demo waits with a small script. Stating these buys more trust than any adjective.
+Plain limits of this demo. One rule only: resource limits. The brief also mentions privileged containers; the demo code does not enforce that. Pod only: the Kyverno rule matches kind Pod, and the policy pack validates core v1 Pod, not Deployments. A local kind cluster, one node, not a production setup. And ordering: Kyverno has to be Ready before the ClusterPolicy applies, so the demo waits with a small script.
 Time: 4 min
 -->
 
@@ -1192,7 +1192,7 @@ pulumi preview --policy-pack ../policy-pack
 </style>
 
 <!--
-Run this in 05-pipeline-policy/workload. The policy pack is written to report a mandatory violation of containers-must-set-resource-limits for the container app in the Pod unsafe-workload, and the preview stops. Nothing is created in the cluster. Check the real output on screen against these three cards.
+Run this in 05-pipeline-policy/workload. The policy pack is written to report a mandatory violation of containers-must-set-resource-limits for the container app in the Pod unsafe-workload, and the preview stops. Nothing is created in the cluster. I ran this offline on 2026-10-01 (local backend, no cloud login). The output lists the policy require-resource-limits, the mandatory violation containers-must-set-resource-limits for Pod unsafe-workload, the message for container app, and then "preview failed". Compare the live output on screen with these three cards.
 Time: 6 min
 -->
 

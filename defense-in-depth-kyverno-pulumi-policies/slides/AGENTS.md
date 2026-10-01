@@ -128,4 +128,28 @@ slidev-deck skill read from pulumi/marketing-web, commit 9b37f9afe8c7b0d406f19bc
 
 ## Fact-check
 
-Not yet run. Phase C fills this in: every claim on every slide and note checked against a source opened that run, the moment first; outputs claimed for slide 29 need a real run or an explicit statement that it was not run.
+Run 2026-10-01. All sources opened that day. Claims: 19. Confirmed: 17. Partial (inference, labelled as such on the slide or in the note): 2. Removed: 0 claims. Wording removed: two closers in speaker notes (humanizer pass).
+
+Slide 35 was checked with a real run: `pulumi preview --policy-pack ../policy-pack` in 05-pipeline-policy/workload, offline (file backend, no Pulumi Cloud login). It printed the policy require-resource-limits, the mandatory violation containers-must-set-resource-limits, and "preview failed". Not run: slides 31 to 34 and 38 (they need a kind cluster and Docker); their claims are checked against the demo scripts only.
+
+| Claim | Source | Outcome |
+|---|---|---|
+| Tesla Kubernetes console was not password protected (quoted, RedLock via Ars) | https://arstechnica.com/information-technology/2018/02/tesla-cloud-resources-are-hacked-to-run-cryptocurrency-mining-malware/ | confirmed |
+| Credentials to Tesla's AWS environment exposed inside one pod | same Ars article | confirmed |
+| Currency-mining software ran in Tesla's cloud account | same Ars article (headline and body) | confirmed |
+| RedLock reported it; systems quickly disinfected; article by Dan Goodin, Feb 20, 2018 | same Ars article | confirmed |
+| 'Nothing at the door asked what was running' (slide 6) | none: presenter's reading, labelled as such in the note | partial (inference, labelled) |
+| Privileged level is 'purposely-open, and entirely unrestricted' | https://kubernetes.io/docs/concepts/security/pod-security-standards/ | confirmed |
+| Admission control runs mutating then validating phases | https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/ | confirmed |
+| Kyverno receives validating and mutating admission webhook callbacks from the API server and returns results that enforce or reject | https://kyverno.io/docs/introduction/how-kyverno-works/ | confirmed |
+| Pulumi Policies written in TypeScript, JavaScript, Python or OPA (Rego) | https://www.pulumi.com/docs/insights/policy/ | confirmed |
+| Policies evaluate resources a Pulumi program declares, before they are provisioned | https://www.pulumi.com/docs/insights/policy/ | confirmed |
+| Enforcement levels: advisory warns, mandatory blocks, remediate fixes | https://www.pulumi.com/docs/insights/policy/ | confirmed |
+| Gap claims on slide 24 (resource created outside Pulumi, or a program run without the pack, is not seen by the pack) | follows from the declared-resources sentence in the Pulumi Policies doc; not stated verbatim | partial (inference, labelled in note) |
+| Kyverno chart 3.9.1 via kubernetes.helm.v4.Chart, repo kyverno.github.io/kyverno | demo 02-kyverno/index.ts | confirmed |
+| ClusterPolicy is a kubernetes.apiextensions.CustomResource, failureAction Enforce, message text | demo 03-cluster-policy/index.ts | confirmed |
+| try-apply.sh prints 'rejected as expected' and always exits 0 | demo 04-admission-denied/try-apply.sh | confirmed |
+| Unsafe pod named unsafe-pod, image nginx:1.27 | demo 04-admission-denied/unsafe-pod.yaml | confirmed |
+| teardown.sh deletes cluster; docker ps / get-contexts checks | demo teardown.sh | confirmed |
+| Slide 35 output: mandatory violation containers-must-set-resource-limits for Container app in Pod unsafe-workload; preview stops | real offline run 2026-10-01: local file backend, pulumi v3.267.0, policy pack built with tsc | confirmed (run) |
+| Slide 26 limits (one rule, Pod only, single kind node, ordering) | demo code and README | confirmed |
