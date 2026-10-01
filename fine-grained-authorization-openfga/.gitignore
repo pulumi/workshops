@@ -15,3 +15,6 @@ __pycache__/
 slides/node_modules/
 slides/dist/
 slides/export-pages/
+*.pdf
+*.pptx
+slides/*.png
