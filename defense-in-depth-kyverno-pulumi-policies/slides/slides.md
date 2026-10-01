@@ -505,7 +505,7 @@ Time: 0.5 min
   <div class="gpu-card chain__node" v-click="1">
     <ph-package class="chain__icon" />
     <div class="gpu-caption">Helm chart</div>
-    <span><code>kubernetes.helm.v4.Chart</code>, kyverno 3.9.1</span>
+    <span>Helm v4 Chart, kyverno 3.9.1</span>
   </div>
   <ph-arrow-right class="chain__arrow" v-click="2" />
   <div class="gpu-card chain__node" v-click="2">
@@ -517,7 +517,7 @@ Time: 0.5 min
   <div class="gpu-card chain__node" v-click="3">
     <ph-gavel class="chain__icon" />
     <div class="gpu-caption">ClusterPolicy</div>
-    <span><code>kubernetes.apiextensions.CustomResource</code></span>
+    <span>Kubernetes CustomResource</span>
   </div>
   <ph-arrow-right class="chain__arrow" v-click="4" />
   <div class="gpu-card gpu-card--primary chain__node" v-click="4">
