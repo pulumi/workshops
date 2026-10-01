@@ -10,3 +10,8 @@ dist/
 !README.md
 !AGENTS.md
 !slides/slides.md
+
+# Slides build output
+slides/export-pages/
+slides/*.pdf
+slides/*.png
