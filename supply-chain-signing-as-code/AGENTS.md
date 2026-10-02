@@ -5,7 +5,7 @@ Guidance for coding agents (and humans) working in this workshop folder of
 
 ## What this folder is
 
-The material for the workshop "Supply chain signing as code — Notation image
+The material for the workshop "Supply chain signing as code, Notation image
 signing, admission enforcement and Kubescape posture scanning with Pulumi".
 No event date is scheduled yet. Demo code only in this run; the Slidev deck
 follows on the same branch in a later run. See `README.md` for the layout and
@@ -38,7 +38,7 @@ for a pre-generated local Notation signing key pair. Those are two different
 signing mechanisms: AWS Signer holds the private key in a managed,
 HSM-backed profile (`aws.signer.SigningProfile`, `platformId:
 "Notation-OCI-SHA384-ECDSA"`, confirmed against AWS's own Signer docs and
-Pulumi's AWS provider docs — see README's Sources), a local key pair does not
+Pulumi's AWS provider docs, see README's Sources), a local key pair does not
 touch AWS at all.
 
 `01-platform/index.ts` provisions the `aws.signer.SigningProfile` as code, so
@@ -56,7 +56,7 @@ key, which would need a rehearsal against a real AWS account to confirm the
 ## Demo code
 
 - `01-platform/`: the one Pulumi TypeScript project this workshop's single
-  `pulumi up` runs — the AWS ECR repository, the `kind` cluster (via
+  `pulumi up` runs, the AWS ECR repository, the `kind` cluster (via
   `@pulumi/command` `local.Command`, since `kind` has no native Pulumi
   provider), the Kyverno Helm chart, and the Kyverno `ClusterPolicy` that
   verifies Notation signatures against the certificate `00-signing-key/`
@@ -64,12 +64,12 @@ key, which would need a rehearsal against a real AWS account to confirm the
 - `00-signing-key/`: presenter pre-step, not part of `pulumi up`. Generates the
   local Notation key pair and self-signed certificate that both `03-sign-and-push/`
   and `01-platform/`'s `ClusterPolicy` consume. Run this before `01-platform/`'s
-  `pulumi up` — the certificate has to exist before the policy that embeds it
+  `pulumi up`, the certificate has to exist before the policy that embeds it
   can be created.
 - `02-image/` through `08-teardown/`: shell scripts, macOS and Linux,
   shellcheck clean (`.shellcheckrc` in this folder). `03-sign-and-push/` and
   `04-unsigned-image/` are grouped because a Notation signature is a
-  registry-side OCI artifact attached by digest — the image has to exist in
+  registry-side OCI artifact attached by digest, the image has to exist in
   the registry first. `07-kubescape-scan/` groups the scan and the finding
   walkthrough because the second is a reading of the first's report, not a
   separate action.

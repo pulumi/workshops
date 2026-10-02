@@ -1,6 +1,6 @@
 # Supply Chain Signing as Code: Notation Image Signing, Kyverno Admission Enforcement and Kubescape Posture Scanning with Pulumi
 
-A container that builds is not a container you should trust. This workshop provisions a signed image pipeline with Pulumi, watches a Kyverno admission policy reject an image that was never signed and admit one that was, then runs a Kubescape posture scan against the resulting cluster — start to finish, from one `pulumi up`.
+A container that builds is not a container you should trust. This workshop provisions a signed image pipeline with Pulumi, watches a Kyverno admission policy reject an image that was never signed and admit one that was, then runs a Kubescape posture scan against the resulting cluster, start to finish, from one `pulumi up`.
 
 > supply chain signing as code — container image signing with Notation, admission-time signature enforcement, and cluster posture scanning with Kubescape, all provisioned through Pulumi.
 > — [Workshop brief](https://workprentice.ai/documents/0a1f7c46-3c0f-4d94-b8aa-ac088ef6ea87)
@@ -55,7 +55,7 @@ Folder roles: `00-signing-key` generates the local Notation test key and certifi
 
 The numbered folders follow the demo flow one step at a time. Two steps from the brief are grouped rather than split into their own folder, each for a reason stated here rather than left implicit:
 
-- **03-sign-and-push** covers both "sign the image" and "push the signed image" from the brief. A Notation signature is an OCI artifact attached to an image by its digest in the registry (see [Notary Project — signing](https://notaryproject.dev/docs/quickstart/), read 2026-10-02), so the image has to exist in the registry before `notation sign` has a digest to sign against. The script therefore pushes first and signs second — the reverse of the brief's stated step order — and says so in its own header comment.
+- **03-sign-and-push** covers both "sign the image" and "push the signed image" from the brief. A Notation signature is an OCI artifact attached to an image by its digest in the registry (see [Notary Project, signing](https://notaryproject.dev/docs/quickstart/), read 2026-10-02), so the image has to exist in the registry before `notation sign` has a digest to sign against. The script therefore pushes first and signs second, the reverse of the brief's stated step order, and says so in its own header comment.
 - **07-kubescape-scan** covers both "run the scan" and "walk a finding" from the brief, because the second is a reading of the first's report, not a separate action against the cluster.
 
 ## Prerequisites
@@ -64,7 +64,7 @@ Participant prerequisites:
 
 - Docker installed and running.
 - `kind` installed (the default path in this folder), or an existing EKS cluster with `kubectl` configured, if you are running the EKS variant described in `01-platform`'s comments.
-- AWS CLI installed and configured with credentials — this demo provisions a real AWS ECR repository.
+- AWS CLI installed and configured with credentials, this demo provisions a real AWS ECR repository.
 - `notation` CLI installed, v1.3.2 or newer (see `lib.sh`).
 - `kubescape` CLI installed, v4.0.15 or newer (see `lib.sh`).
 - Pulumi CLI installed and authenticated.
@@ -119,7 +119,7 @@ Registry credentials: steps 5 and 6 call `ecr_pull_secret` (in `lib.sh`) to crea
 
 ## Cost
 
-Under $5 total for a 2-hour session on the default `kind` path: ECR storage for two small image layers plus negligible local compute. The EKS variant referenced in `01-platform`'s comments adds roughly $0.10/hour for the control plane, plus the cost of whatever worker nodes you attach — neither is provisioned by this folder's default configuration.
+Under $5 total for a 2-hour session on the default `kind` path: ECR storage for two small image layers plus negligible local compute. The EKS variant referenced in `01-platform`'s comments adds roughly $0.10/hour for the control plane, plus the cost of whatever worker nodes you attach, neither is provisioned by this folder's default configuration.
 
 ## Teardown
 
