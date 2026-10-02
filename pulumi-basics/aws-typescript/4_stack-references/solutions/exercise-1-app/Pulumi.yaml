@@ -1,0 +1,5 @@
+name: stack_references_app
+runtime: nodejs
+description: Pulumi Workshop - AWS Typescript stack references app project
+config:
+  baseInfraProjectName: stack_references_base_infra

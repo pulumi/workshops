@@ -1,0 +1,6 @@
+name: stack_advanced_topics
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Stack advanced topics exercises

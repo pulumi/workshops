@@ -1,0 +1,3 @@
+name: stack-basics
+description: Pulumi Workshop - Azure Csharp stack basics
+runtime: dotnet

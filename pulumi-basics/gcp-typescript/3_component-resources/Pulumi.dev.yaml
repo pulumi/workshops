@@ -1,0 +1,8 @@
+config:
+  component_resources:instanceTag: webserver
+  component_resources:machineType: f1-micro
+  component_resources:osImage: debian-11
+  component_resources:servicePort: "80"
+  gcp:project: pulumi-ce-team
+  gcp:region: us-central1
+  gcp:zone: us-central1-a

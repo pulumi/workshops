@@ -1,0 +1,6 @@
+name: stack_references_base_infra
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Pulumi Workshop - AWS Python stack references base infrastructure project

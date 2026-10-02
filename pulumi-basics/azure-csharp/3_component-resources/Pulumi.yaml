@@ -1,0 +1,3 @@
+name: stack-component-resources
+description: Pulumi Workshop - Azure Csharp stack component resources.
+runtime: dotnet

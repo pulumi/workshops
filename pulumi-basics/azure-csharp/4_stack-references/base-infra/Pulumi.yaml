@@ -1,0 +1,3 @@
+name: stack-references-base-infra
+description: Pulumi Workshop - Azure Csharp stack references base infrastructure.
+runtime: dotnet

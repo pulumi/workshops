@@ -1,0 +1,3 @@
+name: stack_references_base_infra
+runtime: nodejs
+description: Pulumi Workshop - GCP Typescript stack references base infrastructure project

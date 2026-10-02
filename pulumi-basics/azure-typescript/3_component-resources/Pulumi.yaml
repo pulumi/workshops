@@ -1,0 +1,3 @@
+name: component_resources
+runtime: nodejs
+description: Pulumi Workshop - Azure Typescript component resources
