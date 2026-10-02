@@ -1,0 +1,11 @@
+name: storage-caching-02-longhorn
+description: >-
+  Step 2: Longhorn distributed block storage, installed as a Pulumi-managed Helm release.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  kubeContext:
+    type: string
+    default: kind-storage-workshop

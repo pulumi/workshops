@@ -1,0 +1,11 @@
+name: storage-caching-04-stateful-app
+description: >-
+  Step 4: a PVC on the Longhorn class and a one-replica app that keeps its record on it.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  kubeContext:
+    type: string
+    default: kind-storage-workshop

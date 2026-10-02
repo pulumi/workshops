@@ -1,0 +1,11 @@
+name: storage-caching-01-cluster
+description: >-
+  Step 1: Pulumi project for the 3-worker kind cluster (Kubernetes provider plus the demo namespace).
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  kubeContext:
+    type: string
+    default: kind-storage-workshop
