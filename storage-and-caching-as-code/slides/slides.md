@@ -797,8 +797,8 @@ Time: 0.5 min
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.2; }
-.steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+.zoom-content { zoom: 1.1; }
+.steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 3rem; }
 .step { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem 1.3rem; }
 .step p { margin: 0 !important; font-size: 1.2rem; line-height: 1.35; }
 .step__icon { font-size: 2rem; color: var(--p-primary); }
