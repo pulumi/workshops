@@ -1,0 +1,7 @@
+name: fine-grained-authorization-openfga
+description: OpenFGA container, store, authorization model and relationship tuples, provisioned as Pulumi code
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
