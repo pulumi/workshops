@@ -14,3 +14,4 @@ slides/dist/
 slides/export-pages/
 node_modules/
 dist/
+slides/*.pdf
