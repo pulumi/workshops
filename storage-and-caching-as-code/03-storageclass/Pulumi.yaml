@@ -1,0 +1,11 @@
+name: storage-caching-03-storageclass
+description: >-
+  Step 3: a non-default Longhorn StorageClass with two replicas.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  kubeContext:
+    type: string
+    default: kind-storage-workshop

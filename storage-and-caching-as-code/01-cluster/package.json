@@ -1,0 +1,15 @@
+{
+  "name": "storage-caching-01-cluster",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Step 1: Pulumi project for the 3-worker kind cluster (Kubernetes provider plus the demo namespace).",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.267.0"
+  }
+}
