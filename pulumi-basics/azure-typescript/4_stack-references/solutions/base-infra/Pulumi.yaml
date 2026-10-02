@@ -1,0 +1,3 @@
+name: stack-references-base-infra 
+runtime: nodejs
+description: Pulumi Workshop - Azure Typescript component resources

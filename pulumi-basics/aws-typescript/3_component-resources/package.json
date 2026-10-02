@@ -1,0 +1,12 @@
+{
+    "name": "stack-basics",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^20"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^7.0.0",
+        "@pulumi/awsx": "^3.0.0",
+        "@pulumi/pulumi": "^3.0.0"
+    }
+}

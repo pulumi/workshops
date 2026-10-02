@@ -1,0 +1,5 @@
+config:
+  gcp:project: pulumi-ce-team
+  gcp:region: us-central1
+  gcp:zone: us-central-1
+  stack_references_base_infra:baseName: shaht

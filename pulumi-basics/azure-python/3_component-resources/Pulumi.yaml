@@ -1,0 +1,6 @@
+name: component_resources
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Pulumi component resource exercises

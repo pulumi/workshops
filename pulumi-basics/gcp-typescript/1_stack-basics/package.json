@@ -1,0 +1,11 @@
+{
+    "name": "stack-basics",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "^16"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.0.0",
+        "@pulumi/gcp": "10.0.0-rc.1"
+    }
+}

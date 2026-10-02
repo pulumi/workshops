@@ -1,0 +1,6 @@
+name: stack-advanced-topics
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Pulumi Workshop - AWS Python stack advanced topics

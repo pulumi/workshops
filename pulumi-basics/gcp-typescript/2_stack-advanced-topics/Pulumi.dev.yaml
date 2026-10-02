@@ -1,0 +1,5 @@
+config:
+  gcp:project: pulumi-ce-team
+  gcp:zone: us-central-1
+  stack-advanced-topics:dbPassword:
+    secure: AAABALBb3pxm65TKQDBjmHu4Hp6I/A7JRRYgviyNfnZXswrDEDZsZdqA/AVS
