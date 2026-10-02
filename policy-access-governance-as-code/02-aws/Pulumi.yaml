@@ -1,0 +1,7 @@
+name: access-aws
+description: The same least-privilege pattern on AWS, an IAM role scoped to one action set
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
