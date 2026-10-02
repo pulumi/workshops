@@ -84,3 +84,27 @@ Total: 36 slides, 90.0 minutes. Every slide has a speaker note ending with its t
 - Story and demo slides are built from the reference patterns. Headlines are claims.
 - Code budget: no program code on slides, one to two commands per demo slide, at most twenty lines of code and commands in the deck.
 - Run `deck_frame.py check` before every commit.
+
+## Fact-check
+
+Read 2026-10-02. Three batches (slides 1-12, 13-24, 25-37) were checked against pages opened that day; full tables were kept outside the repo. Outcome per claim:
+
+| Claim (slide) | Source | Outcome |
+| --- | --- | --- |
+| Opening quote and attribution, wording (7) | https://kubernetes.io/docs/concepts/storage/volumes/ | Confirmed; quote now carries the sentence tail "depending on the durability characteristics of the underlying disk." |
+| Local-volume pod stuck when node is down (10) | https://kubernetes.io/docs/concepts/storage/volumes/ | Confirmed for local volumes; headline bullet narrowed to "Local disk, node down" |
+| Longhorn: controller per volume, replicas on multiple nodes (13) | https://longhorn.io/docs/latest/concepts/ | Confirmed; "synchronously" removed (not in the page) |
+| Longhorn is a CNCF incubating project (16) | https://www.cncf.io/projects/ and CNCF landscape | Confirmed |
+| Rook is a Kubernetes operator for Ceph, CNCF graduated (16) | https://rook.io/ | Confirmed |
+| numberOfReplicas is a StorageClass parameter; provisioner driver.longhorn.io (14, 20) | https://longhorn.io/docs/latest/references/storage-class-parameters/ | Confirmed; demo sets "2" in 03-storageclass/index.ts |
+| Chart pinned to 1.13.0 (19) | demo 02-longhorn/index.ts, Longhorn install docs | Confirmed against the demo code |
+| Replicas on separate nodes (15) | demo: 4-node kind cluster, 2 replicas | Reworded to the demo's setup; default placement policy not claimed |
+| DragonflyDB: Redis-compatible, no code changes, multi-threaded shared-nothing (22, 23) | https://github.com/dragonflydb/dragonfly | Confirmed |
+| DragonflyDB licence BSL 1.1 (23) | https://github.com/dragonflydb/dragonfly/blob/main/LICENSE.md | Confirmed; never called CNCF. Not the CNCF project at https://d7y.io/ |
+| Longhorn needs open-iscsi on every node; nfs-common NFSv4 client (25, 27) | https://longhorn.io/docs/latest/deploy/install/ | Confirmed |
+| 4 kind nodes, 1 control plane + 3 workers (25) | demo 01-cluster/kind.yaml | Confirmed against the demo code |
+| "90 minutes" | brief section 1 | Taken from the brief, no web source |
+| Node-failure step, new pod on another node (31, 32) | none | Unverified live, no cluster here; stated in the PR |
+| Resource links (35, 36) | kubernetes.io, longhorn.io, dragonflydb.io, rook.io, slack.pulumi.com | All opened, HTTP 200 on 2026-10-02 |
+
+Contradiction fixed: the slide 11 note called node failure the last question; it is the third. Slide 17's Failure card now says "Design answer".

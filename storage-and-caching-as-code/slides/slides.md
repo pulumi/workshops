@@ -134,7 +134,7 @@ Time: 1 min
 <div class="grid grid-cols-2 gap-10 mt-6 quote-slide">
   <div class="gpu-card gpu-card--primary quote-card" v-click>
     <div class="gpu-caption gpu-caption--accent">The Kubernetes documentation, "Volumes"</div>
-    <p>"If a node becomes unhealthy, then the local volume becomes inaccessible to the Pod. The Pod using this volume is unable to run. Applications using local volumes must be able to tolerate this reduced availability, as well as potential data loss"</p>
+    <p>"If a node becomes unhealthy, then the local volume becomes inaccessible to the Pod. The Pod using this volume is unable to run. Applications using local volumes must be able to tolerate this reduced availability, as well as potential data loss, depending on the durability characteristics of the underlying disk."</p>
   </div>
   <div>
     <v-clicks>
@@ -160,7 +160,7 @@ Time: 1 min
 </style>
 
 <!--
-Start with what the Kubernetes docs say about local volumes. Read the quote slowly. The node goes unhealthy and the pod cannot run, and the docs mention data loss. Everything today follows from this paragraph.
+Start with what the Kubernetes docs say about local volumes. Read the quote slowly. The node goes unhealthy and the pod cannot run, and the docs mention data loss. The rest of the session starts from this paragraph.
 Time: 2 min
 -->
 
@@ -209,7 +209,7 @@ Time: 1 min
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li>Data sits on one node's disk</li>
       <li>New pod needs that same data</li>
-      <li>Node down: pod stuck or data gone</li>
+      <li>Local disk, node down: pod stuck or data gone</li>
     </ul>
   </div>
 </div>
@@ -251,7 +251,7 @@ Time: 2 min
 </style>
 
 <!--
-These six questions are the spine of the session. We answer them in order. The last one, what happens when a node dies, we answer by killing a node.
+We answer these six questions in order. The third one, what happens when a node dies, we answer by killing a node.
 Time: 3 min
 -->
 
@@ -335,7 +335,7 @@ Time: 0.5 min
 </style>
 
 <!--
-The Longhorn docs say it creates a dedicated storage controller for each volume and synchronously replicates the volume across multiple replicas on multiple nodes. Walk the four boxes. The app never talks to Longhorn directly, only to the PVC.
+The Longhorn docs say it creates a dedicated storage controller for each volume and replicates the volume across multiple replicas on multiple nodes. Walk the four boxes. The app never talks to Longhorn directly, only to the PVC.
 Time: 4.5 min
 -->
 
@@ -399,7 +399,7 @@ Time: 4 min
 </div>
 
 <!--
-The StorageClass asks for two replicas on different nodes. Lose one node and one copy is still running. Lose two at once and this setup does not cover you.
+The StorageClass asks for two replicas, and Longhorn places them on separate nodes in this four-node cluster. Lose one node and one copy is still running. Lose two at once and this setup does not cover you.
 Time: 1.5 min
 -->
 
@@ -450,7 +450,7 @@ Time: 4 min
 <div class="grid grid-cols-3 gap-6 mt-4">
   <div class="gpu-card gpu-card--primary step-card"><ph-hard-drives class="step-icon" /><div class="gpu-caption gpu-caption--accent">Where</div><p>On Longhorn volumes</p></div>
   <div class="gpu-card gpu-card--primary step-card"><ph-copy class="step-icon" /><div class="gpu-caption gpu-caption--accent">Copies</div><p>Replicas on several nodes</p></div>
-  <div class="gpu-card gpu-card--primary step-card"><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--accent">Failure</div><p>A replica takes over</p></div>
+  <div class="gpu-card gpu-card--primary step-card"><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--accent">Failure</div><p>Design answer: a replica takes over</p></div>
   <div class="gpu-card gpu-card--muted step-card"><ph-gear class="step-icon step-icon--muted" /><div class="gpu-caption gpu-caption--muted">Provision</div><p>How is it provisioned?</p></div>
   <div class="gpu-card gpu-card--muted step-card"><ph-lightning class="step-icon step-icon--muted" /><div class="gpu-caption gpu-caption--muted">Speed</div><p>How fast can the app read?</p></div>
   <div class="gpu-card gpu-card--muted step-card"><ph-trash class="step-icon step-icon--muted" /><div class="gpu-caption gpu-caption--muted">Teardown</div><p>What tears it down?</p></div>
@@ -748,7 +748,7 @@ Time: 2 min
 </style>
 
 <!--
-This is the picture we end with. Four Pulumi projects, built in order, each one a folder in the repo. No program code on slides, we read it in the editor.
+This is the picture we end with. Four Pulumi projects, built in order, one folder each. No program code on slides, we read it in the editor.
 Time: 4.5 min
 -->
 
@@ -1004,7 +1004,7 @@ Time: 2.5 min
 
 ---
 
-# 5 · Killing a node loses nothing
+# 5 · A killed node does not lose the record
 
 <div class="zoom-content">
 
@@ -1052,7 +1052,7 @@ Time: 2.5 min
 </style>
 
 <!--
-This is the centerpiece. Predict out loud where the new pod will land. The script allows two attempts at most for the rollout. Print the record and compare the node name with step 4. Then run restore-node.sh to uncordon.
+This is the main step. Predict out loud where the new pod will land. The script allows two attempts at most for the rollout. Print the record and compare the node name with step 4. Then run restore-node.sh to uncordon.
 Time: 8 min
 -->
 
@@ -1105,7 +1105,7 @@ pulumi up
 </style>
 
 <!--
-Same flow as before. PONG is the proof the cache is up.
+Same flow as before. PONG shows the cache is up.
 Time: 1 min
 -->
 
@@ -1151,7 +1151,7 @@ Time: 1 min
 </style>
 
 <!--
-Last step. The client uses plain Redis commands and nothing changed on its side.
+Last step. The client uses plain Redis commands and it is unmodified.
 Time: 1 min
 -->
 
