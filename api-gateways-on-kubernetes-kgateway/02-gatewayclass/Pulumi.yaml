@@ -1,0 +1,9 @@
+name: api-gateways-workshop-gatewayclass
+description: >-
+  The workshop's own GatewayClass, pointed at kgateway's controller name,
+  provisioned separately from the default GatewayClass the kgateway Helm
+  chart already creates.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
