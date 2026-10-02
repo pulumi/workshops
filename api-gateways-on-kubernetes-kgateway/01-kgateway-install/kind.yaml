@@ -4,9 +4,9 @@
 # multi-node scheduling headroom. Config shape:
 # https://kind.sigs.k8s.io/docs/user/configuration/ (read 2026-09-28)
 #
-# No node image is pinned here: this build could not run `kind` on the
-# build workstation to look up a current node-image digest to pin (see
-# AGENTS.md; no docker/kind/kubectl on this workstation). kgateway 2.4.x's
+# No node image is pinned here: the sandbox where this was written had no
+# docker, kind or kubectl, so no current node-image digest could be looked up
+# (see AGENTS.md). kgateway 2.4.x's
 # support matrix covers Kubernetes 1.32-1.36
 # (https://kgateway.dev/docs/envoy/latest/reference/versions/, read
 # 2026-09-28). The presenter should pin `nodes[].image` to a specific
