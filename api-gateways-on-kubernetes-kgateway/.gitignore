@@ -2,6 +2,8 @@
 *.log
 node_modules/
 dist/
+export-pages/
+slides/export-pages/
 sdks/
 rendered-manifests/
 
