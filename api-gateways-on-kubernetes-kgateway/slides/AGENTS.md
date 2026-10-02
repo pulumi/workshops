@@ -1,7 +1,7 @@
 # Slides: API Gateways on Kubernetes with kgateway
 
 ## Story
-1. **The moment.** Kubernetes blog, "Ingress NGINX Retirement: What You Need to Know" (Tabitha Sable, Kubernetes SRC, 2025-11-11): best-effort maintenance until March 2026, then no releases, bugfixes or security updates. https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/ (read 2026-10-02).
+1. **The moment.** Kubernetes blog, "Ingress NGINX Retirement: What You Need to Know" (2025-11-11 per its URL; the page is a mirror of the kubernetes.dev original dated 12 Nov, and shows no byline): best-effort maintenance until March 2026, then no releases, bugfixes or security updates. https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/ (read 2026-10-02).
 2. **The tension.** "Existing installs keep working." / "Nobody will patch the next flaw."
 3. **Why it is hard.** The annotation flexibility that made Ingress useful became the security debt (the post's own words about snippet annotations). Compare: yesterday's flexibility vs today's technical debt.
 4. **The questions.** Six questions about moving off Ingress (card-grid, slide 5 of Act 1).
@@ -58,3 +58,13 @@ marketing-web slidev-deck skill commit: 9b37f9afe8c7b0d406f19bc9116b16d5689389ce
 27. Teardown leaves nothing behind (pattern: demo-step)
 
 Gate: `deck_frame.py check` 24/24, code lines 19.
+
+## Fact-check
+Separate pass after drafting, sources opened 2026-10-02.
+- Retirement post (kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/): best-effort until March 2026, no releases/bugfixes/security updates, existing installs not broken, artifacts stay available, one or two maintainers after hours, snippets annotations, "insurmountable technical debt" quote, label-selector check command. Confirmed. Removed the unsupported "controller most of us copied from a tutorial"; replaced with the post's "example implementation" and popularity. Dropped the author name: no byline on the page.
+- Kubernetes Gateway docs (kubernetes.io/docs/concepts/services-networking/gateway/) and Ingress docs: role-oriented roles, resource model, one GatewayClass per Gateway, header matching and weighting needing custom annotations on Ingress, conformance, no Ingress kind and one-time conversion, request flow with Host header, Ingress API frozen. Confirmed.
+- kgateway docs (kgateway.dev/docs/envoy/latest/about/overview/, install/helm, setup/default): control plane implementing Gateway API for microservices and AI workloads, Envoy proxy, kgateway-system namespace, kgateway GatewayClass created at install, controllerName kgateway.dev/kgateway, CRDs applied separately. Confirmed. Sandbox status confirmed on the kgateway.dev footer.
+- Pulumi registry (Helm Release and apiextensions CustomResource pages opened). Confirmed that both resources exist. The claim "kind has no Pulumi provider" could not be verified and was reworded to what the demo does (a command resource).
+- Counts: 31 claims checked. 28 confirmed as written, 2 corrected (kind wording on slide and note), 1 removed (the tutorial claim, replaced by sourced wording).
+- Humanizer pass: removed a "not X but Y" closer in the slide 9 note and a weak intensifier; no em dashes remain.
+- marketing-web slidev-deck SKILL.md re-read via gh api (raw), commit 9b37f9afe8c7b0d406f19bc9116b16d5689389ce, unchanged since the first read.

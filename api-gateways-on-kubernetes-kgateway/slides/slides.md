@@ -146,7 +146,7 @@ defaults:
 </style>
 
 <!--
-(2 min) Start here. In November 2025 the Kubernetes project announced that Ingress NGINX, the controller most of us copied from a tutorial, was being retired. Best-effort maintenance until March 2026, and after that no releases, no bugfixes, and no security updates. The post puts it plainly: the flexibility turned into technical debt, and for years one or two people maintained it after hours. Ask the room who runs it. Hands up, usually. Source is on the Resources slide.
+(2 min) Start here. In November 2025 the Kubernetes project announced that Ingress NGINX was being retired. It started as an example implementation of the Ingress API and became one of the most popular controllers. Best-effort maintenance until March 2026, and after that no releases, no bugfixes, and no security updates. The post puts it plainly: the flexibility turned into technical debt, and for years one or two people maintained it after hours. Ask the room who runs it. Hands up, usually. Source is on the Resources slide.
 -->
 
 ---
@@ -156,7 +156,7 @@ defaults:
 </div>
 
 <!--
-(0.5 min) The announcement says existing deployments continue to function and the install artifacts stay available. So nothing breaks on the day. That is exactly why people postpone.
+(0.5 min) The announcement says existing deployments continue to function and the install artifacts stay available. So nothing breaks on the day. That is why people postpone.
 -->
 
 ---
@@ -201,7 +201,7 @@ defaults:
 </style>
 
 <!--
-(1.5 min) The blog names the snippets annotations as the example: a helpful option that let people add arbitrary NGINX configuration, later considered a serious security flaw. Left side is how it felt when we adopted it. Right side is what the project says today. The lesson is not that NGINX was bad. It is that an API that needs annotations for everything has no place to put the guard rails.
+(1.5 min) The blog names the snippets annotations as the example: a helpful option that let people add arbitrary NGINX configuration, later considered a serious security flaw. Left side is how it felt when we adopted it. Right side is what the project says today. An API that needs annotations for every special case invites arbitrary configuration, and that is how the snippets annotations became a security problem.
 -->
 
 ---
@@ -597,7 +597,7 @@ defaults:
 <div class="grid grid-cols-2 gap-6 mt-4">
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-arrows-split class="step-icon" /><div class="gpu-caption gpu-caption--muted">Migration</div><p>Gateway API has no Ingress kind, so converting your Ingress resources is a one-time job</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-puzzle-piece class="step-icon" /><div class="gpu-caption gpu-caption--muted">CRDs</div><p>Gateway API ships as custom resources: you install them in every cluster</p></div>
-  <div class="gpu-card gpu-card--muted step-card" v-click><ph-cube class="step-icon" /><div class="gpu-caption gpu-caption--muted">kind</div><p>No kind provider: a command resource runs it, with no drift detection</p></div>
+  <div class="gpu-card gpu-card--muted step-card" v-click><ph-cube class="step-icon" /><div class="gpu-caption gpu-caption--muted">kind</div><p>A command resource creates it, so Pulumi tracks the command, not the cluster</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">Maturity</div><p>kgateway is a CNCF sandbox project, so check it against your risk bar</p></div>
 </div>
 
@@ -611,7 +611,7 @@ defaults:
 </style>
 
 <!--
-(1.5 min) Four honest limits. Migration is manual: Gateway API does not include the Ingress kind. The CRDs are not built into Kubernetes, you install them. The demo cluster is kind, which has no Pulumi provider, so a command resource creates and deletes it and Pulumi cannot see drift on it. And kgateway is a sandbox project in the CNCF. None of these stops the demo, but all four matter before production.
+(1.5 min) Four honest limits. Migration is manual: Gateway API does not include the Ingress kind. The CRDs are not built into Kubernetes, you install them. The demo cluster is kind. A command resource creates and deletes it, so Pulumi tracks that command and not the cluster itself. And kgateway is a sandbox project in the CNCF. None of these stops the demo, but all four matter before production.
 -->
 
 ---
@@ -777,7 +777,7 @@ new k8s.apiextensions.CustomResource("path-routing", {
   <div class="gpu-card gpu-card--accent step" v-click><ph-trash class="step__icon" /><p>Teardown leaves nothing behind</p></div>
 </div>
 
-<aside class="info-card" v-click>
+<aside class="info-card">
   <div class="info-card__label">Every step</div>
   <p><code>npm install</code> then <code>pulumi up</code> in the step folder.</p>
 </aside>
@@ -787,12 +787,12 @@ new k8s.apiextensions.CustomResource("path-routing", {
 <style scoped>
 .zoom-content { zoom: 1.2; }
 .steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
-.step { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem 1.3rem; }
-.step p { margin: 0 !important; font-size: 1.2rem; line-height: 1.35; }
-.step__icon { font-size: 2rem; color: var(--p-primary); }
+.step { display: flex; flex-direction: row; align-items: center; gap: 0.9rem; padding: 0.8rem 1.1rem; }
+.step p { margin: 0 !important; font-size: 1.2rem; line-height: 1.3; }
+.step__icon { font-size: 2rem; color: var(--p-primary); flex: none; }
 
-.steps { grid-template-columns: repeat(2, 1fr); }
-.info-card { margin-top: 1.2rem; }
+.steps { gap: 0.9rem; }
+.info-card { margin-top: 1rem; }
 </style>
 
 <!--
