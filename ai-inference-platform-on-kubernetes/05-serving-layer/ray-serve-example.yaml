@@ -1,0 +1,46 @@
+# ILLUSTRATIVE ONLY — not applied during the workshop, not managed by Pulumi.
+#
+# This is the shape of a Ray Serve deployment (via KubeRay's RayService CRD)
+# once a model-serving layer sits on top of the platform this workshop built.
+# Like KServe, there is no first-party Pulumi package for Ray or KubeRay
+# (confirmed 2026-09-24). A team wanting this as code today would install
+# the KubeRay operator with `pulumi_kubernetes.helm.v4.Chart` and manage
+# `RayService` objects with `pulumi_kubernetes.apiextensions.CustomResource`.
+apiVersion: ray.io/v1
+kind: RayService
+metadata:
+  name: example-ray-serve
+  namespace: gpu-workloads
+spec:
+  serveConfigV2: |
+    applications:
+      - name: example_app
+        route_prefix: /
+        import_path: example:app
+  rayClusterConfig:
+    headGroupSpec:
+      rayStartParams: {}
+      template:
+        spec:
+          containers:
+            - name: ray-head
+              image: rayproject/ray:2.40.0
+    workerGroupSpecs:
+      - groupName: gpu-workers
+        replicas: 1
+        rayStartParams: {}
+        template:
+          spec:
+            tolerations:
+              - key: nvidia.com/gpu
+                operator: Equal
+                value: "true"
+                effect: NoSchedule
+            containers:
+              - name: ray-worker
+                image: rayproject/ray:2.40.0
+                resources:
+                  requests:
+                    nvidia.com/gpu: "1"
+                  limits:
+                    nvidia.com/gpu: "1"

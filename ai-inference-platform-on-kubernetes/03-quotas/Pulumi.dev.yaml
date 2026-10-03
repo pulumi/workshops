@@ -1,0 +1,2 @@
+config:
+  ai-inference-platform-quotas:clusterStackRef: ai-inference-platform-cluster
