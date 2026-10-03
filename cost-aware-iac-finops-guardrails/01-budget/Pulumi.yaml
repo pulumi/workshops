@@ -1,0 +1,6 @@
+name: cost-aware-iac-budget
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: An AWS budget with a monthly limit and an 80%-threshold alert, provisioned as code
