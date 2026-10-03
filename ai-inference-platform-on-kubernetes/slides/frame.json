@@ -1,0 +1,36 @@
+{
+  "slug": "ai-inference-platform-on-kubernetes",
+  "title": "Provisioning the AI Inference Platform on Kubernetes",
+  "subtitle": "Build GPU node pools, autoscaling and quotas as Pulumi code",
+  "demo_title": "AI inference platform",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The cost of idle GPUs",
+    "Why the platform layer is hard",
+    "Pulumi and the GPU platform",
+    "The platform we will build",
+    "Live demo on EKS",
+    "Where this stops today"
+  ],
+  "resources": [
+    {
+      "title": "Pulumi Amazon EKS guide",
+      "url": "https://www.pulumi.com/docs/clouds/aws/guides/eks/",
+      "label": "pulumi.com/docs/clouds/aws/guides/eks"
+    },
+    {
+      "title": "Karpenter NodePools",
+      "url": "https://karpenter.sh/docs/concepts/nodepools/",
+      "label": "karpenter.sh/docs/concepts/nodepools"
+    },
+    {
+      "title": "NVIDIA device plugin",
+      "url": "https://github.com/NVIDIA/k8s-device-plugin",
+      "label": "github.com/NVIDIA/k8s-device-plugin"
+    }
+  ]
+}
