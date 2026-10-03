@@ -111,7 +111,7 @@ defaults:
 </style>
 
 <!--
-[1.0 min] Today's agenda. Six parts, roughly an hour of talk and demo and the rest for questions. Read the six headings out.
+[1.0 min] Today's agenda. Six parts, about ninety minutes of talk and demo and the rest for questions. Read the six headings out.
 -->
 ---
 
@@ -135,7 +135,7 @@ defaults:
 
 <div class="psst" v-click>
   <ph-detective class="psst__icon" />
-  <span><strong>Psssst…</strong> the credential was the way in, not a flaw in the model</span>
+  <span><strong>The credential was how they got in.</strong> The model was not the weak point.</span>
 </div>
 
 <style scoped>
@@ -146,7 +146,7 @@ defaults:
 </style>
 
 <!--
-[2.0 min] Start here. Read the quote slowly. This is Microsoft describing a case it brought against a group abusing generative AI services. The detail that matters for us: the attackers did not break anything clever. They used credentials that were exposed and scraped from public sources. The source is on Microsoft On the Issues, 27 February 2025. Ask the room who has an API key in an environment variable today. Do not blame anyone, just let the question sit. Then move on.
+[2.0 min] Read the quote slowly. This is Microsoft describing a case it brought against a group abusing generative AI services. The attackers used credentials that were exposed and scraped from public sources. The source is on Microsoft On the Issues, 27 February 2025. Ask the room who has an API key in an environment variable today. Do not blame anyone. Let the question sit, then move on.
 -->
 
 ---
@@ -156,7 +156,7 @@ defaults:
 </div>
 
 <!--
-[0.5 min] Short beat. Whatever the agent does, calls the model, reads a cluster, it has to prove who it is. So there is always a credential somewhere.
+[0.5 min] Whatever the agent does, calls the model, reads a cluster, it has to prove who it is. So there is always a credential somewhere.
 -->
 
 ---
@@ -166,12 +166,12 @@ defaults:
 </div>
 
 <!--
-[0.5 min] Second beat. A key does not know who is holding it. Pause, then go to the comparison.
+[0.5 min] A key does not know who is holding it. Pause, then go to the comparison.
 -->
 
 ---
 
-# A key works from anywhere; a federated token works for one pod
+# A key works from anywhere; a federated token works for one service account
 
 <div class="zoom-content">
 
@@ -187,9 +187,9 @@ defaults:
   <div class="gpu-card gpu-card--primary" v-click>
     <div class="gpu-caption gpu-caption--accent">A federated token</div>
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
-      <li>Issued to one pod's service account</li>
+      <li>Issued to one service account</li>
       <li>Expires on its own</li>
-      <li>Nothing to store, nothing to leak</li>
+      <li>Nothing to store or leak</li>
     </ul>
   </div>
 </div>
@@ -211,7 +211,7 @@ defaults:
 </div>
 
 <!--
-[1.0 min] With a managed agent service, the provider picked the identity, the permissions and the runtime. When you run your own agent on your own cluster, you pick. That is the trade: more control, more questions.
+[1.0 min] With a managed agent service, the provider picked the identity, the permissions and the runtime. When you run your own agent on your own cluster, you pick. The trade is more control and more questions.
 -->
 
 ---
@@ -239,7 +239,7 @@ defaults:
 </style>
 
 <!--
-[3.5 min] Walk the six cards. Who is it acting as. What may it do. Where does it run. How does it reach the model without a key. How do we build and change it repeatably. And how do we know it works and leaves nothing running. This is the spine of the next hour. Questions one to five get answers in the tech section. Question six is answered by the demo.
+[3.5 min] Walk the six cards. Who is it acting as. What may it do. Where does it run. How does it reach the model without a key. How do we build and change it repeatably. And how do we know it works and leaves nothing running. The rest of the session follows these questions. Questions one to five get answers in the tech section. Question six is answered by the demo.
 -->
 
 ---
@@ -262,12 +262,12 @@ defaults:
 </style>
 
 <!--
-[0.5 min] Question one. Quick breath.
+[0.5 min] Question one.
 -->
 
 ---
 
-# The agent gets its own identity, not a person's login
+# The agent gets its own identity and uses no person's login
 
 <div class="zoom-content">
 
@@ -299,7 +299,7 @@ defaults:
 
 <aside class="info-card plan__foot" v-click="5">
   <ph-lightning class="plan__foot-icon" />
-  <p><strong>AKS workload identity:</strong> the pod borrows the identity, it does not hold it.</p>
+  <p><strong>AKS workload identity:</strong> the pod borrows the identity and does not hold it.</p>
 </aside>
 
 </div>
@@ -400,7 +400,7 @@ defaults:
 </style>
 
 <!--
-[1.5 min] Quick recap. Who: a managed identity mapped to a service account. What: one role on one account. Four to go.
+[1.5 min] Who: a managed identity mapped to a service account. What: one role on one account. Four to go.
 -->
 
 ---
@@ -474,7 +474,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Two zones. On the left, an AKS cluster you own. The agent runs there, so its blast radius is the namespace you give it. That also means you own the nodes, the upgrades and the network. On the right, Azure OpenAI stays a managed service: we do not host a model, we call one. Be clear on this split, because it explains the cost and the cleanup later.
+[2.5 min] Two zones. On the left, an AKS cluster you own. The agent runs there, so its blast radius is the namespace you give it. That also means you own the nodes, the upgrades and the network. On the right, Azure OpenAI stays a managed service: we do not host a model, we call one. Make this split clear, because it explains the cost and the cleanup later.
 -->
 
 ---
@@ -492,7 +492,7 @@ defaults:
     <div class="piece piece--template" v-click="1"><ph-folder-open />namespace · itops-agent</div>
   </div>
   <ul class="rules" v-click="5">
-    <li><ph-user-circle /><span>The service account is the only link to the identity</span></li>
+    <li><ph-user-circle /><span>The service account names the identity it acts as</span></li>
     <li><ph-key /><span>No secret is mounted into the pod</span></li>
     <li><ph-cloud /><span>The Pulumi kubernetes provider creates all of it</span></li>
     <li><ph-trash /><span>Deleting the namespace deletes the agent</span></li>
@@ -518,7 +518,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Build it bottom up. A namespace. A service account in it, which carries the identity. A deployment with the agent container. A service in front of it. On the right: the rules. The service account is the only link to the Azure identity, and no secret is mounted. The Pulumi kubernetes provider creates all of this in the same program as the cluster.
+[2.5 min] Build it bottom up. A namespace. A service account in it, which carries the identity. A deployment with the agent container. A service in front of it. On the right: the rules. The service account carries the client ID of the Azure identity, the pod carries one workload identity label, and no secret is mounted. A projected token volume is not a secret. The Pulumi kubernetes provider creates all of this in the same program as the cluster.
 -->
 
 ---
@@ -541,7 +541,7 @@ defaults:
 </style>
 
 <!--
-[0.5 min] Question four. This is the heart of the talk.
+[0.5 min] Question four. This is the main question of the talk.
 -->
 
 ---
@@ -637,7 +637,7 @@ defaults:
 
 <aside class="info-card plan__foot" v-click="5">
   <ph-lightning class="plan__foot-icon" />
-  <p><strong>Same idea, other side:</strong> Pulumi does not hold an Azure key either.</p>
+  <p><strong>Pulumi does not hold an Azure key either.</strong></p>
 </aside>
 
 </div>
@@ -777,7 +777,7 @@ defaults:
     <div class="gpu-caption gpu-caption--accent">What can bite you live</div>
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li>Azure OpenAI quota and region approval</li>
-      <li>AKS takes five to ten minutes to create</li>
+      <li>AKS takes several minutes to create</li>
       <li>A soft-deleted account blocks its own name</li>
     </ul>
   </div>
@@ -790,7 +790,7 @@ defaults:
 </style>
 
 <!--
-[3.0 min] Be honest here. On the left, what this workshop is not: it is a small agent on a demo cluster, not a hardened production setup, and it does not decide what the agent should be allowed to do beyond calling the model. On the right, what can bite you live. Quota and region approval for Azure OpenAI can take days, so check it first. The cluster takes five to ten minutes. And a deleted Azure OpenAI account is soft-deleted and keeps its name until you purge it, which is why the teardown script purges it.
+[3.0 min] On the left, what this workshop is not: it is a small agent on a demo cluster, not a hardened production setup, and it does not decide what the agent should be allowed to do beyond calling the model. On the right, what can bite you live. Quota and region availability for Azure OpenAI vary by subscription, so check them first. The cluster typically takes several minutes to create. And a deleted Azure OpenAI account is soft-deleted and keeps its name until you purge it, which is why the teardown script purges it.
 -->
 
 ---
@@ -1036,7 +1036,7 @@ pulumi up --stack dev
   <v-clicks>
   <ul class="s1__facts">
     <li><ph-folder-open /><span>Folder <code>02-aks-cluster</code></span></li>
-    <li><ph-hourglass /><span>Expect five to ten minutes of waiting</span></li>
+    <li><ph-hourglass /><span>Expect several minutes of waiting</span></li>
     <li><ph-shield-check /><span>The OIDC issuer and workload identity are switched on</span></li>
   </ul>
   </v-clicks>
@@ -1101,7 +1101,7 @@ pulumi up --stack dev
 </style>
 
 <!--
-[4.0 min] Folder 03. An Azure OpenAI account and one model deployment, pinned to GPT-4o. Point at the line that disables local authentication: the account will not accept keys. If your subscription has no quota in the region, this is the step that fails, which is why the slide before warned you.
+[4.0 min] Folder 03. An Azure OpenAI account and one model deployment, pinned to GPT-4o. Check the model lifecycle page before the session: version 2024-11-20 is listed as Legacy, retiring 2027-04-14. Point at the line that disables local authentication: the account will not accept keys. If your subscription has no quota in the region, this is the step that fails, which is why the slide before warned you.
 -->
 
 ---
@@ -1186,7 +1186,7 @@ curl -X POST localhost:8080/prompt -H 'Content-Type: application/json' -d '{"pro
 </style>
 
 <!--
-[5.0 min] Folder 05. We set the agent image, run pulumi up, check the pod is running, port-forward the service, and send one prompt. The expected result is a real completion from the model, returned through the agent. If it works, the whole chain worked: pod token, Entra ID, role, model. If it fails, check the role assignment first, because role assignments can take a few minutes to propagate.
+[5.0 min] Folder 05. We set the agent image, run pulumi up, check the pod is running, port-forward the service, and send one prompt. The expected result is a real completion from the model, returned through the agent. If it works, the whole chain worked: pod token, Entra ID, role, model. If it fails, check the role assignment first, because role assignments can take up to five minutes to propagate, sometimes ten.
 -->
 
 ---
@@ -1225,7 +1225,7 @@ curl -X POST localhost:8080/prompt -H 'Content-Type: application/json' -d '{"pro
 </style>
 
 <!--
-[7.0 min] Folder 06. One script. It destroys the stack, checks that the resource group is gone and that nothing is left in it, then purges the soft-deleted Azure OpenAI account so the name can be used again. This is the answer to question six: it leaves nothing running. A session with immediate teardown costs a few dollars, left running for a month it is a few hundred, by the brief. Never skip the purge.
+[7.0 min] Folder 06. One script. It destroys the stack, checks that the resource group is gone and that nothing is left in it, then purges the soft-deleted Azure OpenAI account so the name can be used again. This is the answer to question six: it leaves nothing running. Cost depends on node size and model usage, so price your own setup in the Azure pricing calculator before you leave it running. Run the purge every time.
 -->
 ---
 

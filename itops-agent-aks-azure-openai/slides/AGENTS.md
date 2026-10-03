@@ -116,3 +116,19 @@ Slide numbers above are planned positions inside the story and demo parts, not f
 ### Code budget
 
 Program code: slide 24 only, ten lines at most. Commands: one per demo slide, copied from the demo folder (`pulumi up --stack dev` in steps 2 to 5; `curl` call in step 5; `06-teardown/teardown.sh` in step 6). Whole deck: twenty lines of code and commands at most.
+
+
+## Fact-check
+
+Separate pass, 2026-10-03. Sources read this run: blogs.microsoft.com (Storm-2139 post, 27 Feb 2025, fetched with a browser User-Agent), learn.microsoft.com (built-in roles, model retirement schedule updated 2026-09-21, disable local authentication, AKS workload identity overview, managed identity how-to, RBAC troubleshooting, recover-purge-resources), pulumi.com/docs/esc OIDC Azure guide.
+
+Counts: 24 claims checked. 14 confirmed, 7 corrected, 3 removed or softened as unconfirmed.
+
+- Confirmed: the Storm-2139 quote is verbatim, dated 27 February 2025, Azure OpenAI Service named; Cognitive Services OpenAI User allows inference and reads, no key listing or deployment writes; disableLocalAuth exists for Azure AI accounts; federated credential matches issuer and subject; tokens expire; ESC azure-login uses OIDC; soft-delete keeps the name until purge.
+- Corrected: a federated token is per service account, not per pod; the service account is not the only link (client-id annotation and workload identity pod label are needed); role assignment propagation is up to five minutes, sometimes ten; deck length is about ninety minutes, not one hour; GPT-4o 2024-11-20 is Legacy and retires 2027-04-14 (note added on slide 34).
+- Removed or softened: "quota approval can take days", "AKS takes five to ten minutes", and the cost figures "a few dollars / a few hundred" (unsourced).
+
+Open questions:
+- GPT-4o 2024-11-20 is Legacy. Re-check availability in the chosen region just before the session; replacement per Microsoft is gpt-5.1.
+- The ESC Azure OIDC page warns the default subject does not work with Pulumi IaC on Azure; confirm the demo environment uses subjectAttributes before the live run.
+- Region availability of the model and of federated credentials on managed identities was not verified.
