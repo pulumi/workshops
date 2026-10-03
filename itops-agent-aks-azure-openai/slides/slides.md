@@ -595,7 +595,7 @@ defaults:
 .facts { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.4rem; }
 .fact { display: flex; align-items: flex-start; gap: 0.7rem; }
 .fact svg { flex-shrink: 0; font-size: 1.6rem; color: var(--p-primary); margin-top: 0.1rem; }
-.fact p { margin: 0 !important; font-size: 1.05rem; line-height: 1.35; white-space: nowrap; }
+.fact p { margin: 0 !important; font-size: 1.05rem; line-height: 1.35; white-space: normal; }
 .fact small { display: block; font-size: 0.9rem; color: var(--p-fg-muted); margin-top: 0.2rem; }
 </style>
 
@@ -739,7 +739,7 @@ defaults:
 .zoom-content { zoom: 1.3; }
 .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
 .mode { display: flex; flex-direction: column; gap: 0.9rem; padding-inline: 1.4rem; }
-.mode p { margin: 0 !important; white-space: nowrap; font-size: 1.25rem; }
+.mode p { margin: 0 !important; white-space: normal; font-size: 1.25rem; }
 .mode__head { display: flex; align-items: center; gap: 0.7rem; }
 .mode__icon { font-size: 2rem; color: var(--p-primary); }
 .mode__name { font-size: 1.25rem !important; font-weight: 600; }
@@ -873,7 +873,7 @@ defaults:
 .facts { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.4rem; }
 .fact { display: flex; align-items: flex-start; gap: 0.7rem; }
 .fact svg { flex-shrink: 0; font-size: 1.6rem; color: var(--p-primary); margin-top: 0.1rem; }
-.fact p { margin: 0 !important; font-size: 1.05rem; line-height: 1.35; white-space: nowrap; }
+.fact p { margin: 0 !important; font-size: 1.05rem; line-height: 1.35; white-space: normal; }
 .fact small { display: block; font-size: 0.9rem; color: var(--p-fg-muted); margin-top: 0.2rem; }
 </style>
 
