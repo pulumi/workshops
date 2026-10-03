@@ -1,0 +1,2 @@
+config:
+  ai-inference-platform-device-plugin:clusterStackRef: ai-inference-platform-cluster
