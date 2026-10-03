@@ -1,0 +1,22 @@
+# Pulumi ESC environment: short-lived Azure credentials for Pulumi itself,
+# issued over OIDC. No client secret. Create and attach with:
+#   pulumi env init <org>/itops-agent/azure-login
+#   pulumi env edit --file esc/azure-login.yaml <org>/itops-agent/azure-login
+#   pulumi config env add itops-agent/azure-login
+# Replace the three <placeholders>. Prerequisite: an Entra app registration
+# with a federated credential trusting Pulumi Cloud, see
+# https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/azure-login/
+values:
+  azure:
+    login:
+      fn::open::azure-login:
+        clientId: <entra-app-client-id>
+        tenantId: <entra-tenant-id>
+        subscriptionId: /subscriptions/<subscription-id>
+        oidc: true
+  environmentVariables:
+    ARM_USE_OIDC: "true"
+    ARM_CLIENT_ID: ${azure.login.clientId}
+    ARM_TENANT_ID: ${azure.login.tenantId}
+    ARM_SUBSCRIPTION_ID: ${azure.login.subscriptionId}
+    ARM_OIDC_TOKEN: ${azure.login.oidc.token}

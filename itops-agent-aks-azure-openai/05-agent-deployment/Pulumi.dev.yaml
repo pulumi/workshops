@@ -1,0 +1,6 @@
+config:
+  azure-native:location: eastus2
+  itops-agent-aks-azure-openai:namespace: itops-agent
+  itops-agent-aks-azure-openai:serviceAccountName: itops-agent
+  # Set to the pushed image reference: pulumi config set agentImage <registry>/<repo>:<tag>
+  itops-agent-aks-azure-openai:agentImage: ""
