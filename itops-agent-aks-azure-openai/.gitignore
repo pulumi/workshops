@@ -7,3 +7,11 @@
 !README.md
 !AGENTS.md
 !slides/slides.md
+
+# Deck build output
+slides/node_modules/
+slides/dist/
+slides/export-pages/
+slides/*.pdf
+node_modules/
+__pycache__/

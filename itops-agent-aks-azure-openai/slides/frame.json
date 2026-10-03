@@ -1,0 +1,41 @@
+{
+  "slug": "itops-agent-aks-azure-openai",
+  "title": "AI Agents for IT Ops: Custom Agent on AKS with Azure OpenAI",
+  "subtitle": "Provision AKS and Azure OpenAI from one Pulumi program, run your own agent on it, and tear it down clean",
+  "demo_title": "Custom IT Ops Agent on AKS",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why agents fail in ops",
+    "Credentials without secrets",
+    "AKS and Azure OpenAI as code",
+    "The agent on the cluster",
+    "Demo: from empty to a model call",
+    "Teardown and cost"
+  ],
+  "resources": [
+    {
+      "title": "Microsoft Entra Workload ID on AKS",
+      "url": "https://learn.microsoft.com/en-us/azure/aks/workload-identity-overview",
+      "label": "learn.microsoft.com/azure/aks"
+    },
+    {
+      "title": "Pulumi ESC azure-login provider",
+      "url": "https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/azure-login/",
+      "label": "pulumi.com/docs/esc"
+    },
+    {
+      "title": "azure-native ManagedCluster",
+      "url": "https://www.pulumi.com/registry/packages/azure-native/api-docs/containerservice/managedcluster/",
+      "label": "pulumi.com/registry"
+    },
+    {
+      "title": "Azure OpenAI with Microsoft Entra ID",
+      "url": "https://learn.microsoft.com/en-us/azure/ai-services/openai/how-to/managed-identity",
+      "label": "learn.microsoft.com/azure/openai"
+    }
+  ]
+}
