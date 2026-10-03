@@ -1,0 +1,13 @@
+{
+  "slug": "observability-as-code-otel-prometheus-grafana",
+  "title": "Observability as Code: OpenTelemetry, Prometheus and Grafana on Kubernetes with Pulumi",
+  "subtitle": "Build a self-hosted observability stack where the dashboard and the alert are reviewed code",
+  "demo_title": "Observability as Code",
+  "speakers": [{"placeholder": true}],
+  "agenda": ["The pain: blind when it counts", "Why observability drifts", "OpenTelemetry, Prometheus, Grafana", "The stack we build", "Demo: seven steps", "Wrap-up and Q&A"],
+  "resources": [
+    {"title": "OpenTelemetry Collector docs", "url": "https://opentelemetry.io/docs/collector/", "label": "opentelemetry.io/docs/collector"},
+    {"title": "Prometheus overview", "url": "https://prometheus.io/docs/introduction/overview/", "label": "prometheus.io/docs"},
+    {"title": "Pulumi Kubernetes Helm Release", "url": "https://www.pulumi.com/registry/packages/kubernetes/api-docs/helm/v3/release/", "label": "pulumi.com/registry"}
+  ]
+}
