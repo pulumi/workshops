@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: hello-unsigned
+  namespace: default
+spec:
+  imagePullSecrets:
+    - name: ecr-pull
+  containers:
+    - name: hello
+      image: __IMAGE__
+      ports:
+        - containerPort: 8080
