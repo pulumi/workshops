@@ -1,0 +1,10 @@
+name: observability-collector
+description: >-
+  "Observability as code" workshop, step 3: the OpenTelemetry Collector
+  pipeline (receive OTLP, export metrics to Prometheus and traces to Tempo).
+  No Helm chart -- plain Kubernetes resources, so this project renders
+  offline with `renderYamlToDirectory`.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
