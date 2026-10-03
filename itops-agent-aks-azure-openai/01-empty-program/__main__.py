@@ -1,6 +1,6 @@
 """Step 1: the output of `pulumi new azure-native-python`.
 
-An empty Pulumi program targeting Azure — one resource group, nothing else.
+An empty Pulumi program targeting Azure, one resource group, nothing else.
 Every later step in this workshop starts from this stack and adds resources
 to it; run `pulumi up` here first so the resource group exists before
 `02-aks-cluster` provisions the AKS cluster inside it.

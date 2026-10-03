@@ -15,11 +15,15 @@ Exposes:
 """
 
 import os
+import sys
 
 from azure.identity import DefaultAzureCredential, get_bearer_token_provider
 from flask import Flask, jsonify, request
 from openai import AzureOpenAI
 
+_missing = [n for n in ("AZURE_OPENAI_ENDPOINT", "AZURE_OPENAI_DEPLOYMENT") if not os.environ.get(n)]
+if _missing:
+    sys.exit(f"itops-agent: missing required environment variable(s): {', '.join(_missing)}")
 AZURE_OPENAI_ENDPOINT = os.environ["AZURE_OPENAI_ENDPOINT"]
 AZURE_OPENAI_DEPLOYMENT = os.environ["AZURE_OPENAI_DEPLOYMENT"]
 # Pinned API version current for the Azure OpenAI chat completions surface

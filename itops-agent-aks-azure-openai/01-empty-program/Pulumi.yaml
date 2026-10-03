@@ -4,5 +4,5 @@ runtime:
   options:
     virtualenv: venv
 description: >-
-  Step 1 — the output of `pulumi new azure-native-python`: an empty Pulumi
+  Step 1, the output of `pulumi new azure-native-python`: an empty Pulumi
   program targeting Azure, before any infrastructure exists.

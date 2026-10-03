@@ -1,8 +1,8 @@
 Source for the container image `05-agent-deployment/__main__.py` deploys.
-This is source only — the image is not built during `pulumi up`.
+This is source only, the image is not built during `pulumi up`.
 
 Build and push it once before the session, to a registry the workshop
-subscription can pull from (which registry is an open question — see the
+subscription can pull from (which registry is an open question, see the
 root README):
 
 ```

@@ -1,10 +1,6 @@
 config:
   azure-native:location: eastus2
-  itops-agent-deployment:resourceGroupName: rg-itops-agent-aks-azure-openai
-  itops-agent-deployment:clusterName: itops-agent-aks
-  itops-agent-deployment:namespace: itops-agent
-  itops-agent-deployment:serviceAccountName: itops-agent
-  itops-agent-deployment:identityClientId: ""
-  itops-agent-deployment:openaiEndpoint: ""
-  itops-agent-deployment:openaiDeploymentName: itops-agent-gpt-4o
-  itops-agent-deployment:agentImage: ""
+  itops-agent-aks-azure-openai:namespace: itops-agent
+  itops-agent-aks-azure-openai:serviceAccountName: itops-agent
+  # Set to the pushed image reference: pulumi config set agentImage <registry>/<repo>:<tag>
+  itops-agent-aks-azure-openai:agentImage: ""

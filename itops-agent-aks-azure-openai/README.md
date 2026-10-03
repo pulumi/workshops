@@ -8,7 +8,7 @@ agent workload on Azure, rather than a managed agent service.
 > deployment yourself, from one Pulumi program, deploy a small containerized
 > agent onto that cluster, and tear the whole thing down without leaving a
 > bill running. No packaged Pulumi component exists yet for this exact
-> pattern (checked 2026-09-22) — that gap is the reason this workshop is
+> pattern (checked 2026-09-22), that gap is the reason this workshop is
 > useful.
 
 ## Sessions and speakers
@@ -34,19 +34,26 @@ Speakers: not yet assigned.
 
 ## Layout
 
+Steps 1-5 are one Pulumi project (`itops-agent-aks-azure-openai`) and one
+stack (`dev`). Each folder is cumulative: it contains everything from the
+folder before it plus the new resources, so running `pulumi up` in the next
+folder only creates what is new.
+
 ```
 itops-agent-aks-azure-openai/
 ├── README.md                    this file
 ├── AGENTS.md                    conventions for agents (and humans) editing this folder
 ├── .gitignore                   *.md ignored except README.md/AGENTS.md/slides/slides.md
 ├── .shellcheckrc                shellcheck config shared by every *.sh below
-├── 01-empty-program/            step 1 — `pulumi new azure-native-python`, one resource group
-├── 02-aks-cluster/              step 2 — the AKS cluster (ManagedCluster)
-├── 03-azure-openai/             step 3 — the Cognitive Services account (kind OpenAI) + GPT-4o deployment
-├── 04-workload-identity/        step 4 — managed identity + OIDC federation + role assignment, no static secret
-├── 05-agent-deployment/         step 5 — Kubernetes provider, namespace, deployment, service
+├── 01-empty-program/            step 1: `pulumi new azure-native-python`, one resource group
+├── 02-aks-cluster/              step 2: step 1 + the AKS cluster (ManagedCluster)
+├── 03-azure-openai/             step 3: step 2 + Cognitive Services account (kind OpenAI) + GPT-4o deployment
+├── 04-workload-identity/        step 4: step 3 + managed identity + OIDC federation + role assignment;
+│   └── esc/azure-login.yaml     ESC environment (azure-login over OIDC) for Pulumi's own credentials
+├── 05-agent-deployment/         step 5: step 4 + Kubernetes provider, namespace, deployment, service
+│   ├── esc/azure-login.yaml     same ESC environment definition
 │   └── agent-app/               source + Dockerfile for the pre-built agent container image
-└── 06-teardown/                 step 6 — `teardown.sh`: destroy + verify + purge
+└── 06-teardown/                 step 6: `teardown.sh`: destroy + verify + purge
 ```
 
 ## Prerequisites
@@ -54,7 +61,7 @@ itops-agent-aks-azure-openai/
 ### Participants
 
 - An Azure subscription with Owner or Contributor, **and Azure OpenAI access
-  enabled**. Some subscriptions require prior approval for this — flag it in
+  enabled**. Some subscriptions require prior approval for this, flag it in
   registration materials, since approval can take days.
 - Pulumi CLI 3.263.0 or later.
 - Python 3.11+.
@@ -65,12 +72,16 @@ itops-agent-aks-azure-openai/
 
 - **Pre-verify Azure OpenAI quota** in the demo region/subscription well
   before the session. Approval can take days and this is the single most
-  likely live failure — see Risks below.
+  likely live failure, see Risks below.
 - **Pre-build and push the agent container image** to a registry the
   workshop subscription can pull from (see
   `05-agent-deployment/agent-app/AGENTS.md`), so step 5 does not depend on a
-  live container build. Which registry to use is an open question — see
+  live container build. Which registry to use is an open question, see
   below.
+
+## Run the slides
+
+The deck is not on this branch yet. A separate change adds `slides/`.
 
 ## Run the demo
 
@@ -79,74 +90,77 @@ One-time setup, before the session:
 1. Verify Azure OpenAI quota is approved in the target subscription/region.
 2. Build and push the agent container image (see
    `05-agent-deployment/agent-app/AGENTS.md`).
-3. `cd 01-empty-program && pulumi up --stack dev` — creates the resource
-   group `rg-itops-agent-aks-azure-openai`.
+3. Create the stack once and give Pulumi short-lived Azure credentials
+   through Pulumi ESC (no client secret): in `04-workload-identity/esc/`
+   fill in `azure-login.yaml`, then `pulumi env init <org>/itops-agent/azure-login`,
+   `pulumi env edit --file esc/azure-login.yaml <org>/itops-agent/azure-login`,
+   and `pulumi config env add itops-agent/azure-login` in the folder you run
+   from. For a quick local run, `az login` also works.
+4. `cd 01-empty-program && pulumi stack init dev && pulumi up` creates the
+   resource group `rg-itops-agent-aks-azure-openai`.
 
-Live, in session order:
+Live, in session order. Every folder uses the same `dev` stack, so move to
+the next folder and run `pulumi up`; nothing is copied between configs.
 
-4. **Step 2 — AKS cluster**: `cd 02-aks-cluster && pulumi up --stack dev`.
+5. **Step 2, AKS cluster**: `cd 02-aks-cluster && pulumi up --stack dev`.
    Verify: `az aks show --resource-group rg-itops-agent-aks-azure-openai
-   --name itops-agent-aks`. Takes 5-10 minutes — see Risks below for the
-   pre-staged fallback.
-5. **Step 3 — Azure OpenAI**: `cd 03-azure-openai && pulumi up --stack dev`.
+   --name itops-agent-aks`. Takes 5-10 minutes, see Risks below.
+6. **Step 3, Azure OpenAI**: `cd 03-azure-openai && pulumi up --stack dev`.
    Verify: `az cognitiveservices account show` and `az cognitiveservices
-   account deployment list` both show the account and the `gpt-4o`
+   account deployment list` show the account and the `itops-agent-gpt-4o`
    deployment.
-6. **Step 4 — workload identity**: copy the `oidcIssuerUrl` output from step
-   2 and the `accountId` output from step 3 into
-   `04-workload-identity/Pulumi.dev.yaml`'s `oidcIssuerUrl` /
-   `openaiAccountId`, then `cd 04-workload-identity && pulumi up --stack
-   dev`. Verify: `az role assignment list --assignee <identityClientId
-   output>` shows "Cognitive Services OpenAI User", and grepping this
-   program and `05-agent-deployment/` for `accessKey` or `apiKey` returns
-   nothing.
-7. **Step 5 — agent deployment**: copy the `identityClientId` output from
-   step 4 and the `endpoint` output from step 3, plus the pushed image
-   reference, into `05-agent-deployment/Pulumi.dev.yaml`, then `cd
-   05-agent-deployment && pulumi up --stack dev`. Verify: `kubectl get pods
-   -n itops-agent` shows the agent running, then `kubectl port-forward
-   svc/itops-agent 8080:80 -n itops-agent` and, in another terminal, `curl
-   -X POST localhost:8080/prompt -H 'Content-Type: application/json' -d
+7. **Step 4, workload identity**: `cd 04-workload-identity && pulumi up
+   --stack dev`. The cluster's OIDC issuer URL and the account ID come
+   from the resources in the same program. Verify: `az role assignment list
+   --assignee <identityClientId output>` shows "Cognitive Services OpenAI
+   User", and grepping the program and `05-agent-deployment/` for
+   `accessKey` or `apiKey` returns nothing.
+8. **Step 5, agent deployment**: `cd 05-agent-deployment && pulumi config
+   set agentImage <pushed image reference> && pulumi up --stack dev`. The
+   identity client ID, endpoint and deployment name come from the same
+   program. Verify: `kubectl get pods -n itops-agent` shows the agent
+   running, then `kubectl port-forward svc/itops-agent 8080:80 -n
+   itops-agent` and, in another terminal, `curl -X POST
+   localhost:8080/prompt -H 'Content-Type: application/json' -d
    '{"prompt": "Say hello from AKS"}'` returns a real model response.
 
 Teardown, at the end of the session (and after the second regional
 delivery):
 
-8. **Step 6 — teardown**: `06-teardown/teardown.sh`. Verify: `az resource
-   list --resource-group rg-itops-agent-aks-azure-openai` returns empty.
+9. **Step 6, teardown**: `06-teardown/teardown.sh` (one `pulumi destroy`,
+   then `az group show`, `az resource list`, and `az cognitiveservices
+   account list-deleted` with a purge). Verify: `az resource list
+   --resource-group rg-itops-agent-aks-azure-openai` returns empty.
 
-Between the two deliveries, run step 6 after the first session, and repeat
-steps 3-8 fresh for the second — including the Cognitive Services purge
+Between the two deliveries, run step 6 after the first session and repeat
+steps 4-9 fresh for the second, including the Cognitive Services purge
 check, since a soft-deleted account blocks reusing the same name.
 
 ## Cost
 
-Directional only — not a Pulumi-published figure. From
+Directional only, not a Pulumi-published figure. From
 azure.microsoft.com/pricing/details/kubernetes-service and
 azure.microsoft.com/pricing/details/cognitive-services/openai-service (read
 2026-09-22): a small 2-3 node AKS cluster plus a few dollars of
 workshop-scale GPT-4o tokens runs roughly $150-$300 for a full month if left
 running. A single workshop session with immediate teardown (step 6) is
 closer to a few dollars total. The monthly figure only matters if teardown
-is skipped — which is exactly what step 6 exists to prevent.
+is skipped, which is exactly what step 6 exists to prevent.
 
 ## Risks and fallbacks
 
-- **Azure OpenAI quota/region approval can take days** — the single most
-  likely live failure. Pre-provision the account and deployment before the
-  session; set `itops-agent-openai:createOpenAI` to `"false"` and
-  `existingResourceGroup` / `existingAccountName` / `existingDeploymentName`
-  in `03-azure-openai/Pulumi.dev.yaml`, run steps 1-2 and 4-6 live, and
-  narrate step 3 instead of running it.
-- **AKS cluster provisioning takes 5-10 minutes** — pre-provision the
-  cluster before the session; set `itops-agent-aks-cluster:createCluster` to
-  `"false"` and `existingClusterName` in `02-aks-cluster/Pulumi.dev.yaml`,
-  and start the live portion of the demo at step 3 instead.
-- **OIDC federation is fiddly live** — if `04-workload-identity` does not
+- **Azure OpenAI quota/region approval can take days** and is the single
+  most likely live failure. Run `pulumi up` in `03-azure-openai` before the
+  session, in a subscription and region where quota is approved, and narrate
+  step 3 instead of running it live.
+- **AKS cluster provisioning takes 5-10 minutes.** Run `pulumi up` in
+  `02-aks-cluster` before the session and start the live portion at step 3.
+  The stack state is shared, so the later folders pick the cluster up.
+- **OIDC federation is fiddly live**, if `04-workload-identity` does not
   come together in front of the room, fall back to a short-lived key minted
   by Pulumi ESC and shown once on screen. Never fall back to a persisted
   static secret in the program or the container spec.
-- **Soft-deleted Cognitive Services accounts block name reuse** —
+- **Soft-deleted Cognitive Services accounts block name reuse** -
   `06-teardown/teardown.sh` purges the account after every delivery,
   including the second regional one; skipping this on any delivery blocks
   the next one from reusing the same account name.
@@ -157,13 +171,14 @@ is skipped — which is exactly what step 6 exists to prevent.
   named in the brief; `05-agent-deployment/agent-app/AGENTS.md` documents
   build-and-push commands against a placeholder and leaves the registry a
   required config value rather than inventing one.
+- Whether gpt-4o `2024-11-20` and the `GlobalStandard` SKU are deployable in the delivery region and subscription, and whether the pinned AKS `kubernetes_version` (1.31) is still offered; not verifiable without an Azure subscription.
 - Whether a live AKS + GPT-4o deployment fits the 90-minute session length
   end-to-end, or whether cluster provisioning needs to be pre-staged before
   every delivery (see Risks above) rather than only as a fallback.
 
 ## Sources
 
-Read 2026-09-22 unless noted otherwise.
+Registry and docs pages below were read 2026-09-22. The package versions, ESC `azure-login` syntax, role GUID, model retirement dates and `az cognitiveservices` purge syntax were re-checked on 2026-10-03 against PyPI, pulumi.com/docs/esc and learn.microsoft.com (Azure OpenAI model retirements, built-in roles, AKS workload identity).
 
 | Topic | Source |
 |---|---|

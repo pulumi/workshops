@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-# teardown.sh — tear the whole stack down and verify nothing billable remains.
+# teardown.sh: tear the whole stack down and verify nothing billable remains.
 #
 #   06-teardown/teardown.sh
 #
-# Destroys the five stacks in reverse dependency order, then checks the
-# resource group is empty and purges any soft-deleted Cognitive Services
-# account (AKS and Cognitive Services can both leave soft-deleted state
-# behind that blocks name reuse on the next delivery, including the second
-# regional one — see the root README's Risks section).
+# Steps 1-5 are one cumulative project and stack, so one `pulumi destroy` in
+# 05-agent-deployment removes everything in reverse dependency order. Then:
+# `az group show` (the group should be gone), `az resource list` (should
+# return empty), and `az cognitiveservices account list-deleted` + `purge`
+# for the soft-deleted OpenAI account, which would otherwise block reusing
+# its name for the next delivery.
 #
-# Needs: pulumi login on the host with access to each stack, az CLI logged
-# in to the workshop subscription. Run from the workshop's root folder.
+# Needs: pulumi login with access to the stack, az CLI logged in to the
+# workshop subscription. Run it from anywhere; it locates the folders itself.
 set -euo pipefail
 
 WORKSHOP_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
@@ -19,38 +20,32 @@ OPENAI_ACCOUNT="itops-agent-openai"
 
 say() { printf '\n=== %s ===\n' "$1"; }
 
-say "destroying 05-agent-deployment"
+# Read the location now: the group is gone after the destroy and purge needs it.
+LOCATION="$(az group show --name "$RESOURCE_GROUP" --query location --output tsv 2>/dev/null || echo eastus2)"
+
+say "destroying the stack (05-agent-deployment holds steps 1-5)"
 (cd "$WORKSHOP_DIR/05-agent-deployment" && pulumi destroy --yes --stack dev)
 
-say "destroying 04-workload-identity"
-(cd "$WORKSHOP_DIR/04-workload-identity" && pulumi destroy --yes --stack dev)
+say "az group show: the resource group should be gone"
+if az group show --name "$RESOURCE_GROUP" --output table 2>/dev/null; then
+  echo "WARNING: $RESOURCE_GROUP still exists"
+else
+  echo "clean: $RESOURCE_GROUP not found"
+fi
 
-say "destroying 03-azure-openai"
-(cd "$WORKSHOP_DIR/03-azure-openai" && pulumi destroy --yes --stack dev)
-
-say "destroying 02-aks-cluster"
-(cd "$WORKSHOP_DIR/02-aks-cluster" && pulumi destroy --yes --stack dev)
-
-say "destroying 01-empty-program"
-(cd "$WORKSHOP_DIR/01-empty-program" && pulumi destroy --yes --stack dev)
-
-say "verifying the resource group is empty"
+say "az resource list: should be empty"
 remaining="$(az resource list --resource-group "$RESOURCE_GROUP" --output tsv 2>/dev/null || true)"
 if [ -n "$remaining" ]; then
   echo "WARNING: resources remain in $RESOURCE_GROUP:"
   echo "$remaining"
 else
-  echo "clean: az resource list returns empty for $RESOURCE_GROUP"
+  echo "clean: nothing listed for $RESOURCE_GROUP"
 fi
 
 say "purging any soft-deleted Cognitive Services account"
-# Cognitive Services accounts soft-delete for a retention period; purge so
-# the same account name can be reused for the next delivery of this
-# workshop (there is a second, undated regional session — purge after
-# every delivery, not just the last one).
 if az cognitiveservices account list-deleted --output tsv 2>/dev/null | grep -q "$OPENAI_ACCOUNT"; then
   az cognitiveservices account purge \
-    --location "$(az group show --name "$RESOURCE_GROUP" --query location -o tsv 2>/dev/null || echo eastus2)" \
+    --location "$LOCATION" \
     --resource-group "$RESOURCE_GROUP" \
     --name "$OPENAI_ACCOUNT"
   echo "purged soft-deleted account $OPENAI_ACCOUNT"
