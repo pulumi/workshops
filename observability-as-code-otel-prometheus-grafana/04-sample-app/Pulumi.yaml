@@ -1,0 +1,8 @@
+name: observability-sample-app
+description: >-
+  "Observability as code" workshop, step 4: deploy the instrumented sample
+  app into the demo namespace, pointed at step 3's Collector.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

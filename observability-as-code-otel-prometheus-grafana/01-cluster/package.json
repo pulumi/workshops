@@ -1,0 +1,16 @@
+{
+  "name": "observability-cluster",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Observability as code workshop: step 1, a local kind cluster",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/command": "^1.2.1",
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.265.0"
+  }
+}
