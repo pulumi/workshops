@@ -10,3 +10,10 @@ __pycache__/
 !README.md
 !AGENTS.md
 !slides/slides.md
+
+# Deck build output
+slides/node_modules/
+slides/dist/
+slides/export-pages/
+slides/exports/
+slides/*.pdf
