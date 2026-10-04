@@ -151,7 +151,7 @@ Five parts: the problem, budgets and tags, Pulumi Policies, what we build, the d
 </style>
 
 <!--
-Start here. This is the FinOps Foundation's own wording on the Allocation capability. It is a framework statement, not a horror story, and I want to be clear about that. It says ownership and metadata should be enforced at the moment a resource is created, not rebuilt later in a tagging cleanup. Crawl is the level where ownership is recorded by hand after deployment. Walk makes the fields a precondition for provisioning. Today we build the Walk behaviour with code. Time: 2 min 55 sec
+Start here. This is the FinOps Foundation's own wording on the Allocation capability. It is a framework statement, not an incident. It says ownership and metadata should be enforced at the moment a resource is created, not rebuilt later in a tagging cleanup. Crawl is the level where ownership is recorded by hand after deployment. Walk makes the fields a precondition for provisioning. Today we build the Walk behaviour with code. Time: 2 min 55 sec
 -->
 
 ---
@@ -162,7 +162,7 @@ Start here. This is the FinOps Foundation's own wording on the Allocation capabi
 </div>
 
 <!--
-This is how the same page describes the Crawl level. Every month, somebody hunts for who owns the untagged thing. If you have run that hunt, you know the feeling. Hold on to it. Time: 1 min
+This is how the same page describes the Crawl level. Every month, somebody hunts for who owns the untagged thing. If you have run that hunt, you know the feeling. Time: 1 min
 -->
 
 ---
@@ -172,7 +172,7 @@ This is how the same page describes the Crawl level. Every month, somebody hunts
 </div>
 
 <!--
-First tension. The deploy takes minutes. The bill shows up weeks later. Time: 30 sec
+First tension. The deploy takes minutes. The bill shows up after it. Time: 30 sec
 -->
 
 ---
@@ -182,7 +182,7 @@ First tension. The deploy takes minutes. The bill shows up weeks later. Time: 30
 </div>
 
 <!--
-Second tension. By the time anyone asks who owns this, the money is spent and the person has moved teams. Pause here for a second before moving on. Time: 30 sec
+Second tension. By the time anyone asks who owns this, the money is spent and the owner is hard to find. Time: 30 sec
 -->
 
 ---
@@ -447,7 +447,7 @@ A tag is a label with a key and a value. AWS says you can use tags to organize r
 </style>
 
 <!--
-Three down. We know how much, when we hear, and what the owner label is. Now the hard part: a tag that nobody has to apply is a tag nobody applies. Time: 1 min
+Three down. We know how much, when we hear, and what the owner label is. Now the hard part: a tag that nothing enforces depends on people remembering it. Time: 1 min
 -->
 
 ---
@@ -664,7 +664,7 @@ Pulumi has two enforcement modes, chosen per policy group. Preventative groups e
 </style>
 
 <!--
-Be honest about the limits. One: cost allocation tags still have to be activated in billing. Two: our budget sends email and attaches no action. Three: both packs only look at EC2 instances, so a tagged-but-wrong resource type slips by. Four: we pass the pack with a flag on the CLI. Enforcing it org-wide on stacks is what Pulumi Cloud policy groups are for. The docs describe that, we do not demo it. Time: 2 min
+Four limits. One: cost allocation tags still have to be activated in billing. Two: our budget sends email and attaches no action. Three: both packs only look at EC2 instances, so a tagged-but-wrong resource type slips by. Four: we pass the pack with a flag on the CLI. Enforcing it org-wide on stacks is what Pulumi Cloud policy groups are for. The docs describe that, we do not demo it. Time: 2 min
 -->
 
 ---
@@ -889,7 +889,7 @@ pulumi up
 </style>
 
 <!--
-Step one, folder 01-budget. Before this I set the region, the alert email and a limit of fifty. Run pulumi up. Five resources come up, including the budget with its eighty percent alert. Confirm the SNS email so alerts can be delivered, then open the Billing console and find the budget. Nobody clicked a form. Time: 8 min
+Step one, folder 01-budget. Before this I set the region, the alert email and a limit of fifty. Run pulumi up. Five resources come up, including the budget with its eighty percent alert. Confirm the SNS email so alerts can be delivered, then open the Billing console and find the budget. Time: 8 min
 -->
 
 ---
@@ -933,7 +933,7 @@ pulumi up
 </style>
 
 <!--
-Step two. A t3.micro with no CostCenter tag. pulumi up succeeds. This is the gap: no policy exists yet, so nothing in the pipeline objects. Remember the monthly hunt for owners from the start. This is where that hunt is born. Time: 6 min
+Step two. A t3.micro with no CostCenter tag. pulumi up succeeds. This is the gap: no policy exists yet, so nothing in the pipeline objects. Remember the monthly hunt for owners from the start. Time: 6 min
 -->
 
 ---
@@ -1019,7 +1019,7 @@ pulumi up --policy-pack ../03-tagging-policy
 </style>
 
 <!--
-Step four. I destroy the untagged instance in folder 02, move to 04, and run preview with the same pack flag first. It passes, because the instance now carries the CostCenter tag. Then pulumi up with the flag. The same rule that blocked the bad case allows the good case. A check that only says no is not worth much. Time: 8 min
+Step four. I destroy the untagged instance in folder 02, move to 04, and run preview with the same pack flag first. It passes, because the instance now carries the CostCenter tag. Then pulumi up with the flag. The same rule that blocked the bad case allows the good case. Time: 8 min
 -->
 
 ---
@@ -1039,7 +1039,7 @@ pulumi preview --policy-pack ../05-size-guardrail
 
 <div class="checks">
   <div class="gpu-card check" v-click><ph-prohibit /><div><div class="gpu-caption gpu-caption--accent">1 · Blocked</div><span>Violation: <code>instance-size-guardrail</code></span></div></div>
-  <div class="gpu-card check" v-click><ph-gavel /><div><div class="gpu-caption gpu-caption--accent">2 · Distinct</div><span>A second rule, not the tag rule</span></div></div>
+  <div class="gpu-card check" v-click><ph-gavel /><div><div class="gpu-caption gpu-caption--accent">2 · Distinct</div><span>A second rule, separate from the tag rule</span></div></div>
   <div class="gpu-card check" v-click><ph-check-circle /><div><div class="gpu-caption gpu-caption--accent">3 · Allowed</div><span>Back at <code>t3.micro</code>, it passes</span></div></div>
   <div class="gpu-card check" v-click><ph-scales /><div><div class="gpu-caption gpu-caption--accent">4 · Limit</div><span>Anything above <code>t3.large</code> is blocked</span></div></div>
 </div>
@@ -1103,7 +1103,7 @@ pulumi destroy
 </style>
 
 <!--
-Teardown. Run pulumi destroy in 04, then in 01-budget. Then check in the Billing console that the budget called cost-aware-iac-workshop is gone. Budgets have no soft delete, so confirm it. Resource left running is exactly the story we started with. Time: 5 min
+Teardown. Run pulumi destroy in 04, then in 01-budget. Then check in the Billing console that the budget called cost-aware-iac-workshop is gone. Budgets have no soft delete, so confirm it. Time: 5 min
 -->
 
 ---
