@@ -1,0 +1,7 @@
+name: gpu-batch-queues
+description: >-
+  Two Volcano Queues, one per simulated team, each capped at four GPUs.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
