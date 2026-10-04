@@ -1,7 +1,7 @@
 # Slides: cost-aware-iac-finops-guardrails
 
 ## Story
-1. The moment: the FinOps Foundation's Allocation page names "Monthly challenges identifying the owners of unknown, untagged, unidentified accounts" as a typical problem. It is a framework statement, not an incident. Source: notes/moment.md (FinOps Foundation Allocation page); fact-check pending.
+1. The moment: the FinOps Foundation's Allocation page names "Monthly challenges identifying the owners of unknown, untagged, unidentified accounts" as a typical problem. It is a framework statement, not an incident. Source: https://www.finops.org/framework/capabilities/allocation/, re-opened 2026-10-04; quote confirmed verbatim.
 2. The tension: the bill arrives after the deploy. The tagging cleanup arrives after the bill.
 3. Why it is hard: cleanup finds the owner after the spend; a gate finds it before.
 4. The questions: how much and when do we hear about it, who owns it, what if nobody tags it, what about what is already deployed, what stops an oversized instance.
@@ -63,4 +63,24 @@ Frame comes from frame.json via deck_frame.py. Patterns copied whole, no theme l
 34. Teardown leaves no budget behind
 
 ## Fact-check
-Pending.
+Separate pass on 2026-10-04, after the humanizer pass. 38 claims checked: 33 confirmed, 4 corrected, 1 removed, 0 unverified on a slide.
+
+Confirmed (source, read 2026-10-04):
+- Moment quote "Shifting Left in Allocation means ownership and metadata standards are enforced at the point a resource is created, not reconstructed later through tagging cleanup": verbatim. Crawl "recorded manually and inconsistently after deployment", Walk "required ownership and metadata fields as a precondition for provisioning", Crawl bullets "Tagging strategy compliance is inconsistent" and "Monthly challenges identifying the owners of unknown, untagged, unidentified accounts" (6 claims). https://www.finops.org/framework/capabilities/allocation/
+- Policies enforced during preview and up before anything changes in the cloud; a mandatory violation stops the deployment; four levels advisory, mandatory, remediate, disabled with the stated meanings; preventative vs audit groups; audit needs Pulumi Cloud; `--policy-pack` flag on preview and up; policy groups apply packs without the flag (9 claims). https://www.pulumi.com/docs/insights/policy/
+- `ResourceValidationPolicy`, `EnforcementLevel.MANDATORY` (Python SDK name), `enforcement_level=`, name and description fields (4 claims). https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/
+- `aws.budgets.Budget` with limitAmount, timeUnit, budgetType, notifications with thresholdType, subscriberEmailAddresses, subscriberSnsTopicArns, ACTUAL and FORECASTED types (3 claims). https://www.pulumi.com/registry/packages/aws/api-docs/budgets/budget/
+- Tags organize resources; cost allocation tags track costs; user-defined tags must be activated separately before they appear in Cost Explorer or the cost allocation report (3 claims). https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html
+- Budgets alert on actual (after accruing) and forecasted (before accruing) spend; notify by email and SNS (2 claims). https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html
+- Against the demo code on disk (6 claims): 50 USD monthly limit, 80% ACTUAL threshold, SNS topic plus email subscriber; budget name cost-aware-iac-workshop; policy names cost-center-tag-required and instance-size-guardrail; allowed sizes t3.nano to t3.large; the slide 26 code is identical to 03-tagging-policy/__main__.py; every command and flag on slides 29 to 34 matches README.md steps 1 to 5 and teardown.
+
+Corrected:
+- Slide 29: "Five resources: budget, SNS topic, email subscriber" listed three of five. Now stack, budget, SNS topic and policy, email subscriber (01-budget/__main__.py; README preview plans five).
+- Slide 14 notes: "a budget informs, it does not block" generalised. Now "our budget informs and does not block".
+- Slide 8 notes: "weeks later" had no source. Now "after it".
+- Slide 9 notes: "the person has moved teams" was an invented detail. Now "the owner is hard to find".
+
+Removed:
+- Slide 34 and notes: "AWS Budgets has no soft delete". Not found in the AWS docs read. Slide now says the budget is real until destroyed.
+
+Unverified and not on a slide: none. Limits of the check: the demo's `pulumi up` and `pulumi destroy` against AWS were not run (no AWS account); the README lists what was and was not run. The Pulumi Cloud audit group behaviour is stated from the docs and is not demonstrated.

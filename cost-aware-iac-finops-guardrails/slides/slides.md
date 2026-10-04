@@ -360,7 +360,7 @@ In Pulumi IaC the AWS Budget is the aws.budgets.Budget resource. It has a limit,
 </style>
 
 <!--
-AWS Budgets supports alerts for both actual spend, after it accrues, and forecasted spend, before it accrues. A forecast alert is the early one. The AWS Budgets page says this directly. Our demo uses the actual-spend type at eighty percent, so it is the late alert, and I will say so when we get there. The point for now: a budget informs, it does not block. Time: 1 min 30 sec
+AWS Budgets supports alerts for both actual spend, after it accrues, and forecasted spend, before it accrues. A forecast alert is the early one. The AWS Budgets page says this directly. Our demo uses the actual-spend type at eighty percent, so it is the late alert, and I will say so when we get there. The point for now: our budget informs and does not block. Time: 1 min 30 sec
 -->
 
 ---
@@ -866,7 +866,7 @@ pulumi up
   </div>
   <v-clicks>
   <ul class="s1__facts">
-    <li><ph-seal-check /><span>Five resources: budget, SNS topic, email subscriber</span></li>
+    <li><ph-seal-check /><span>Five resources: stack, budget, SNS topic and policy, email subscriber</span></li>
     <li><ph-paper-plane-tilt /><span>Confirm the SNS email</span></li>
     <li><ph-eye /><span>Check the Billing console for the budget</span></li>
     <li><ph-sliders-horizontal /><span>Alert at 80% of the limit</span></li>
@@ -1083,7 +1083,7 @@ pulumi destroy
   <ul class="s1__facts">
     <li><ph-trash /><span>Destroy 04, then destroy 01</span></li>
     <li><ph-eye /><span>Confirm <code>cost-aware-iac-workshop</code> is gone in Billing</span></li>
-    <li><ph-warning /><span>AWS Budgets has no soft delete</span></li>
+    <li><ph-warning /><span>The budget is real until you destroy it</span></li>
   </ul>
   </v-clicks>
 </div>
@@ -1103,7 +1103,7 @@ pulumi destroy
 </style>
 
 <!--
-Teardown. Run pulumi destroy in 04, then in 01-budget. Then check in the Billing console that the budget called cost-aware-iac-workshop is gone. Budgets have no soft delete, so confirm it. Time: 5 min
+Teardown. Run pulumi destroy in 04, then in 01-budget. Then check in the Billing console that the budget called cost-aware-iac-workshop is gone. Confirm it in the console. Time: 5 min
 -->
 
 ---
