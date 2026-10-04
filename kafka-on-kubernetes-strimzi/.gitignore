@@ -16,3 +16,4 @@ rendered/
 *.mp4
 *.mov
 slides/export-pages/
+*.pdf
