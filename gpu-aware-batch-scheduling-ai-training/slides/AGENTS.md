@@ -83,8 +83,8 @@ Read alone, in order, these tell the story. Each line: headline, pattern, minute
 24. A driver publishes devices and the scheduler matches claims to them — pattern: zones (2.5 min)
 25. Where this breaks today: starvation, driver mismatch, and a GPU we cannot show live — pattern: card-grid (3.5 min)
 26. Five questions answered, one to go — pattern: recap-grid (1 min)
-27. The cluster, the scheduler, two queues and the jobs all come from one Pulumi program — pattern: flow (2 min)
-28. The gang is one field: minAvailable — pattern: big-code in zoom-content, 10 lines max (2 min)
+27. The cluster, Volcano, two queues and the jobs all come from Pulumi IaC — pattern: flow (2 min)
+28. The gang is one field: minAvailable — pattern: big-code in zoom-content (2 min)
 29. Demo divider: Demo: GPU-aware batch scheduling — pattern: frame (0.5 min)
 30. Six steps take us from an empty laptop to a proven gang — pattern: demo-overview (2 min)
 31. Step 1: One pulumi up gives us a cluster with Volcano running — pattern: demo-step (7 min)
@@ -99,6 +99,15 @@ Read alone, in order, these tell the story. Each line: headline, pattern, minute
 40. Thank you / Questions? — pattern: frame (4.5 min)
 
 Total: 90 minutes.
+
+## Uncertain claims
+
+- Slide 17: "Volcano admission, controllers and scheduler" as the three components; the demo shows them in volcano-system, confirm names against the Volcano docs.
+- Slide 18: Armada "CNCF sandbox" status comes from the brief; confirm on cncf.io.
+- Slides 23 and 24: DRA description (claims, device classes, resource slices, driver) is general; confirm against the Kubernetes DRA docs read this run.
+- Slide 25: Volcano 1.15.0 and 1.15.1 DRA capacity-check bypass, fixed in 1.15.2/1.15.3, comes from the demo README; confirm against Volcano release notes.
+- Slide 31: "Scheduler, controllers and admission are Running" assumes the chart's default pods.
+- Slide 36: recording of two jobs sharing one GPU is referenced but not part of this folder.
 
 ## Fact-check
 
