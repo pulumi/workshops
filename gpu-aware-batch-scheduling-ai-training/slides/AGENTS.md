@@ -17,9 +17,9 @@ A workshop brief titled "GPU-aware batch job scheduling for AI training workload
 
 1. The moment. Lambda's post "Your Kubernetes scheduler is quietly wasting GPUs": "A distributed training job asks for 16 GPUs. Four are free. The default scheduler grabs those four, then sits and waits for the other twelve. Nobody else can use them. Your job isn't training. The cluster is busy doing absolutely nothing. It's a partial-scheduling deadlock." Source: https://www.linkedin.com/posts/lambda-cloud_your-kubernetes-scheduler-is-quietly-wasting-activity-7483517180957872129-eNmX (original post, read 2026-10-04; LinkedIn showed it as about two months old, exact date not shown).
 2. The tension. "Your job asked for 16 GPUs." / "It holds 4 and trains nothing."
-3. Why it is hard. The default scheduler places pods one at a time. A distributed training job needs every pod at once. A partial start holds GPUs, blocks everyone else and trains nothing, and those GPUs bill by the hour. A workload that is wrong in code reverts with one command; a GPU gang stuck half started has no revert, it only costs.
+3. Why it is hard. The default scheduler decides pod by pod. A distributed training job needs every pod at once. A partial start holds GPUs, blocks everyone else and trains nothing, and the held GPUs cost money. A workload that is wrong in code reverts with one command; a GPU gang stuck half started has no revert, it only costs.
 4. The questions. (1) What has to start together? (2) Whose turn is it? (3) Which scheduler decides? (4) How do we install it and keep it reproducible? (5) How does one GPU serve two jobs? (6) What does it look like when it runs?
-5. The answers, in order. (1) Gang scheduling: a PodGroup with minAvailable, all or nothing. (2) Volcano queues: weight, capability and reclaim per team. (3) Volcano, a CNCF incubating project, with Armada and Kueue as the alternatives. (4) Pulumi IaC: three small projects, typed resources, one `pulumi up` each, one teardown. (5) Dynamic Resource Allocation: claims for devices instead of whole GPUs; recorded, not live. (6) The demo.
+5. The answers, in order. (1) Gang scheduling: a PodGroup with minAvailable, all or nothing. (2) Volcano queues: weight, capability and reclaim per team. (3) Volcano, a CNCF incubating project, next to Armada and Kueue. (4) Pulumi IaC: three small projects, typed resources, one `pulumi up` each, one teardown. (5) Dynamic Resource Allocation: claims for devices instead of whole GPUs; recorded, not live. (6) The demo.
 6. The proof. Steps 3 to 4 of the demo: the default scheduler strands 2 of 10 pods, the gang keeps all 10 Pending together, then starts when GPUs grow; team-b's 6-GPU job waits behind its cap of 4. The demo answers question 6 last.
 
 ## Structure and time budget
@@ -81,7 +81,7 @@ Read alone, in order, these tell the story. Each line: headline, pattern, minute
 22. Question 5: How does one GPU serve two jobs? — pattern: section-opener (0.5 min)
 23. DRA lets a pod claim a device by what it needs, not a whole GPU — pattern: compare (2.5 min)
 24. A driver publishes devices and the scheduler matches claims to them — pattern: zones (2.5 min)
-25. Where this breaks today: starvation, driver mismatch, and a GPU we cannot show live — pattern: card-grid (3.5 min)
+25. Where this breaks today: caps, versions, no live GPU — pattern: card-grid (3.5 min)
 26. Five questions answered, one to go — pattern: recap-grid (1 min)
 27. The cluster, Volcano, two queues and the jobs all come from Pulumi IaC — pattern: flow (2 min)
 28. The gang is one field: minAvailable — pattern: big-code in zoom-content (2 min)
@@ -100,15 +100,39 @@ Read alone, in order, these tell the story. Each line: headline, pattern, minute
 
 Total: 90 minutes.
 
-## Uncertain claims
-
-- Slide 17: "Volcano admission, controllers and scheduler" as the three components; the demo shows them in volcano-system, confirm names against the Volcano docs.
-- Slide 18: Armada "CNCF sandbox" status comes from the brief; confirm on cncf.io.
-- Slides 23 and 24: DRA description (claims, device classes, resource slices, driver) is general; confirm against the Kubernetes DRA docs read this run.
-- Slide 25: Volcano 1.15.0 and 1.15.1 DRA capacity-check bypass, fixed in 1.15.2/1.15.3, comes from the demo README; confirm against Volcano release notes.
-- Slide 31: "Scheduler, controllers and admission are Running" assumes the chart's default pods.
-- Slide 36: recording of two jobs sharing one GPU is referenced but not part of this folder.
-
 ## Fact-check
 
-To be filled by the fact-check pass: every claim on the slides and in the notes against a source read this run, the moment first.
+Run 2026-10-04, after the humanizer pass. Sources were opened this run. The Kubernetes v1.37, KubeCon and 2026-04-08 article items from the brief are not used on any slide.
+
+| Claim | Slide | Source | Date read | Outcome |
+|---|---|---|---|---|
+| Quote: "A distributed training job asks for 16 GPUs. Four are free. The default scheduler grabs those four, then sits and waits for the other twelve." | 6 | https://www.linkedin.com/posts/lambda-cloud_your-kubernetes-scheduler-is-quietly-wasting-activity-7483517180957872129-eNmX | 2026-10-04 | confirmed, text matches the opened post (shown as 2 months old, date not shown) |
+| Lambda calls it a partial-scheduling deadlock | 6 | same Lambda post | 2026-10-04 | confirmed |
+| Default scheduler decides pod by pod | 6, 9 | https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/ | 2026-10-04 | corrected: was 'places them one at a time'; docs say the scheduler finds a node for each Pod it discovers |
+| Held GPUs cost money (was 'bill by the hour') | 9 | none found for hourly billing | 2026-10-04 | corrected to 'cost money'; hourly billing removed |
+| Gang scheduling: all tasks of a job start simultaneously | 12 | https://volcano.sh/en/docs/ | 2026-10-04 | confirmed |
+| minAvailable on a Volcano Job is the minimum number of running pods the job needs | 12, 28 | https://volcano.sh/en/docs/vcjob/ | 2026-10-04 | confirmed |
+| schedulerName: volcano opts a pod in; default scheduler can still be used | 17, 28 | https://volcano.sh/en/docs/vcjob/ | 2026-10-04 | confirmed (value is volcano or default-scheduler) |
+| Queue weight is the relative share under contention (soft constraint) | 14 | https://volcano.sh/en/docs/queue/ | 2026-10-04 | confirmed |
+| Queue capability is a hard upper limit | 14, 25 | https://volcano.sh/en/docs/queue/ | 2026-10-04 | confirmed |
+| reclaimable: others can borrow idle share | 14 | https://volcano.sh/en/docs/queue/ | 2026-10-04 | corrected: docs say other queues may reclaim extra resources a queue holds beyond its allocation |
+| Volcano is a CNCF incubating project | 17, 18 | https://volcano.sh/en/docs/ | 2026-10-04 | confirmed |
+| Volcano components: admission, controllers, scheduler | 17, 31 | https://volcano.sh/en/docs/architecture/ | 2026-10-04 | corrected: docs name scheduler, controllermanager, admission (and vcctl); slides say 'controller manager' |
+| Armada is CNCF sandbox | 18 | https://armadaproject.io/ (CNCF Sandbox badge); https://github.com/armadaproject/armada | 2026-10-04 | confirmed |
+| Armada solves the same problem | 18 | https://github.com/armadaproject/armada | 2026-10-04 | corrected: now 'A multi-cluster batch queuing system' (repo description) |
+| Kueue solves the same problem | 18 | https://kueue.sigs.k8s.io/docs/overview/ | 2026-10-04 | corrected: now 'Manages quotas and when jobs start' |
+| Lambda compared Kueue and Volcano (note) | 18 | Lambda post | 2026-10-04 | confirmed (it compared Kueue, KAI Scheduler and Volcano) |
+| 'a KubeCon NA 2026 session' as a reason for Volcano | 18 | search found no session page | 2026-10-04 | removed; replaced by 'runs next to the default scheduler' |
+| 'Same Pulumi program shape would work for either' (note) | 18 | none | 2026-10-04 | removed |
+| DRA lets pods request and share resources such as GPUs; claims name device classes defined by drivers and admins | 23 | https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/ | 2026-10-04 | confirmed |
+| Device plugins do not support device sharing | 23 | same DRA page | 2026-10-04 | confirmed |
+| 'A driver decides what satisfies it' | 23 | same DRA page | 2026-10-04 | corrected: Kubernetes allocates matching devices to claims |
+| Drivers create ResourceSlices; DeviceClasses are optionally created by drivers | 24 | same DRA page | 2026-10-04 | confirmed |
+| Volcano 1.15.0 and 1.15.1 had a DRA capacity-check bypass fixed in 1.15.2/1.15.3 | 25 (and demo README) | https://github.com/volcano-sh/volcano/releases (v1.15.2, v1.15.3) | 2026-10-04 | corrected: 1.15.0/1.15.1 had excessive iteration in DRA capacity accounting that can stall scheduling (GHSA-j38h-7pfq-cxmw, fixed 1.15.2); the int64 overflow that bypassed the quota check is fixed in 1.15.3. README fixed too |
+| Volcano 1.15.3 exists (released 2026-09-30) and is pinned | 17, 21, 25 | same releases page; 01-cluster/index.ts | 2026-10-04 | confirmed (release shown 30 Sep) |
+| Starvation: a big gang can wait while smaller jobs keep fitting | 25, 40 note | no source opened | 2026-10-04 | removed; replaced by 'Hard caps' (queue capability) |
+| Eight fake GPUs, four per worker, ten pods; kind has no GPU | 14, 25, 27 | demo README and 01-cluster/index.ts | 2026-10-04 | confirmed against the demo |
+| Stack outputs pass kubeconfig on; teardown destroys in reverse | 21, 37 | 02-queues/index.ts, 03-jobs/index.ts, 05-teardown/teardown.sh | 2026-10-04 | confirmed against the demo |
+| Demo commands on slides 31 to 37 (pulumi up per folder, scenario.sh x3, grow-gpus.sh 5, check-dra.sh, teardown.sh) | 31-37 | README.md of the demo, 03-jobs/*.sh | 2026-10-04 | confirmed, identical to the demo's commands |
+
+Could not be verified and left unclaimed: recording of two jobs sharing one GPU (slide 36) is referenced, not part of this folder.

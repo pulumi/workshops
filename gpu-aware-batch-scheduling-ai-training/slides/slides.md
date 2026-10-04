@@ -132,7 +132,7 @@ defaults:
     <v-clicks>
     <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-3">
       <li>The job needs all of its pods at once</li>
-      <li>The scheduler places them one at a time</li>
+      <li>The default scheduler decides pod by pod</li>
       <li>Lambda calls it a partial-scheduling deadlock</li>
     </ul>
     </v-clicks>
@@ -152,7 +152,7 @@ defaults:
 </style>
 
 <!--
-[2 min] Open on Lambda's own words. Read the quote slowly: sixteen asked, four free, the scheduler takes the four and waits for twelve. Then the three facts on the right. The post is about two months old on LinkedIn, the exact date is not shown, so do not quote a date.
+[2 min] Open on Lambda's own words. Read the quote slowly: sixteen asked, four free, the scheduler takes the four and waits for twelve. Then the three facts on the right. Lambda calls it a partial-scheduling deadlock. The post is about two months old on LinkedIn, the exact date is not shown, so do not quote a date.
 -->
 
 ---
@@ -195,7 +195,7 @@ defaults:
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li>No diff to review</li>
       <li>No revert, it only costs</li>
-      <li>GPUs bill by the hour while it waits</li>
+      <li>The GPUs cost money while it waits</li>
     </ul>
   </div>
 </div>
@@ -207,7 +207,7 @@ defaults:
 </style>
 
 <!--
-[2 min] The contrast. A wrong change in code you revert and move on. A gang stuck half started has no revert. It sits there and bills by the hour. That is why we want the scheduler to prevent it, not clean it up.
+[2 min] The contrast. A wrong change in code you revert and move on. A gang stuck half started has no revert. It sits there and keeps costing money. That is why we want the scheduler to prevent it, not clean it up.
 -->
 
 ---
@@ -353,7 +353,7 @@ defaults:
     <ul class="zone__list">
       <li><ph-sliders-horizontal /><span><code>weight</code>: its share when the cluster is contended</span></li>
       <li><ph-prohibit /><span><code>capability</code>: a hard ceiling</span></li>
-      <li><ph-arrows-clockwise /><span><code>reclaimable</code>: others can borrow idle share</span></li>
+      <li><ph-arrows-clockwise /><span><code>reclaimable</code>: others may take back what a queue borrowed</span></li>
     </ul>
   </div>
   <div class="setup__link" v-click><ph-arrows-left-right /></div>
@@ -388,7 +388,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Three fields per queue: weight, capability, reclaimable. Weight is the share under contention. Capability is the ceiling. Reclaimable lets others borrow what a team is not using. In the demo each of two queues has a capability of 4 GPUs.
+[2.5 min] Three fields per queue: weight, capability, reclaimable. Weight is the share under contention. Capability is the ceiling. Reclaimable lets other queues take back resources a queue holds beyond its share. In the demo each of two queues has a capability of 4 GPUs.
 -->
 
 ---
@@ -453,7 +453,7 @@ defaults:
   <div class="compose__stack">
     <div class="gpu-caption">Your cluster</div>
     <div class="piece piece--mixin" v-click="4"><ph-wrench />Volcano admission</div>
-    <div class="piece piece--mixin" v-click="3"><ph-users-three />Volcano controllers</div>
+    <div class="piece piece--mixin" v-click="3"><ph-users-three />Volcano controller manager</div>
     <div class="piece piece--sandbox" v-click="2"><ph-cube />Volcano scheduler · gangs and queues</div>
     <div class="piece piece--template" v-click="1"><ph-package />Default scheduler · stays installed</div>
   </div>
@@ -461,7 +461,7 @@ defaults:
     <li><ph-check-circle /><span>A CNCF incubating project</span></li>
     <li><ph-note-pencil /><span>A pod opts in with <code>schedulerName: volcano</code></span></li>
     <li><ph-scales /><span>Gang scheduling and queues are built in</span></li>
-    <li><ph-terminal-window /><span>Admission, controllers and scheduler run in <code>volcano-system</code></span></li>
+    <li><ph-terminal-window /><span>Admission, controller manager and scheduler run in <code>volcano-system</code></span></li>
   </ul>
 </div>
 
@@ -484,7 +484,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Volcano is a CNCF incubating project. It runs next to the default scheduler, it does not replace it. Pods opt in by naming it. Gang scheduling and queues are built in. In the demo you will see the admission, controllers and scheduler pods in the volcano-system namespace, Volcano version 1.15.3.
+[2.5 min] Volcano is a CNCF incubating project. It runs next to the default scheduler, it does not replace it. Pods opt in by naming it. Gang scheduling and queues are built in. In the demo you will see the admission, controller manager and scheduler pods in the volcano-system namespace, Volcano version 1.15.3.
 -->
 
 ---
@@ -501,12 +501,12 @@ defaults:
   </div>
   <div class="gpu-card gpu-card--accent mode" v-click>
     <div class="mode__head"><ph-scales class="mode__icon" /><code class="mode__name">Armada</code></div>
-    <p>Solves the same problem</p>
+    <p>A multi-cluster batch queuing system</p>
     <div class="mode__note">CNCF sandbox, not compared hands on</div>
   </div>
   <div class="gpu-card mode" v-click>
     <div class="mode__head"><ph-list-numbers class="mode__icon" /><code class="mode__name">Kueue</code></div>
-    <p>Solves the same problem</p>
+    <p>Manages quotas and when jobs start</p>
     <div class="mode__note">Not compared hands on</div>
   </div>
 </div>
@@ -517,7 +517,7 @@ defaults:
   <ph-caret-right class="gates__sep" />
   <span class="gate"><ph-users-three />queues built in</span>
   <ph-caret-right class="gates__sep" />
-  <span class="gate"><ph-scroll />a KubeCon NA 2026 session</span>
+  <span class="gate"><ph-check />runs next to the default scheduler</span>
 </div>
 
 </div>
@@ -526,7 +526,7 @@ defaults:
 .zoom-content { zoom: 1.3; }
 .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
 .mode { display: flex; flex-direction: column; gap: 0.9rem; padding-inline: 1.4rem; }
-.mode p { margin: 0 !important; white-space: nowrap; font-size: 1.25rem; }
+.mode p { margin: 0 !important; font-size: 1.1rem; }
 .mode__head { display: flex; align-items: center; gap: 0.7rem; }
 .mode__icon { font-size: 2rem; color: var(--p-primary); }
 .mode__name { font-size: 1.25rem !important; font-weight: 600; }
@@ -542,7 +542,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Be plain: Armada and Kueue solve the same problem and we did not compare them hands on. Volcano is a judgment call, not a community consensus. If someone in the room runs Kueue or Armada, ask them to say why. Same Pulumi program shape would work for either.
+[2.5 min] Armada is a batch queuing system for many clusters. Kueue manages quotas and decides when a job starts. Lambda compared Kueue and Volcano in the same post as the moment. We did not compare any of them hands on, so Volcano is our judgment call and not a community consensus. If someone in the room runs Kueue or Armada, ask them to say why.
 -->
 
 ---
@@ -600,7 +600,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Say what Pulumi IaC does here, no adjectives. The Helm chart, the queues and the jobs are resources in a program. You preview, you apply, and you tear down with one script that destroys in reverse order.
+[2.5 min] The Helm chart, the queues and the jobs are resources in a program. You preview, you apply, and you tear down with one script that destroys in reverse order.
 -->
 
 ---
@@ -705,7 +705,7 @@ defaults:
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li>A pod makes a claim for a device</li>
       <li>The claim says what it needs</li>
-      <li>A driver decides what satisfies it</li>
+      <li>Kubernetes allocates a matching device</li>
     </ul>
   </div>
 </div>
@@ -717,7 +717,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Dynamic Resource Allocation, DRA, is a Kubernetes API. The pod stops asking for a count and makes a claim. Read the Kubernetes DRA page before presenting and keep to what it says. We do not run it live.
+[2.5 min] Dynamic Resource Allocation, DRA, is a Kubernetes API. The pod stops asking for a count and makes a claim. Devices come with classes that a claim can name, and Kubernetes places the pod where the device is. Device plugins, by comparison, do not support device sharing. We do not run it live.
 -->
 
 ---
@@ -772,13 +772,13 @@ defaults:
 
 ---
 
-# Where this breaks today: starvation, driver mismatch, and a GPU we cannot show live
+# Where this breaks today: caps, versions, no live GPU
 
 <div class="zoom-content">
 
 <div class="grid grid-cols-3 gap-6 mt-4">
-  <div class="gpu-card gpu-card--muted step-card" v-click><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">Starvation</div><p>A big gang can wait while smaller jobs keep fitting</p></div>
-  <div class="gpu-card gpu-card--muted step-card" v-click><ph-shield-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">Driver mismatch</div><p>Volcano 1.15.0 and 1.15.1 had a DRA capacity-check bypass; we pin 1.15.3</p></div>
+  <div class="gpu-card gpu-card--muted step-card" v-click><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">Hard caps</div><p>A queue cannot go past its capability</p></div>
+  <div class="gpu-card gpu-card--muted step-card" v-click><ph-shield-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">Version risk</div><p>Volcano 1.15.0 and 1.15.1 had a DRA capacity flaw; we pin 1.15.3</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-prohibit class="step-icon" /><div class="gpu-caption gpu-caption--muted">No live GPU</div><p>kind has fake GPUs; DRA is a recording</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-sliders-horizontal class="step-icon" /><div class="gpu-caption gpu-caption--muted">Rehearsed numbers</div><p>Eight GPUs and ten pods make the contrast</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-scales class="step-icon" /><div class="gpu-caption gpu-caption--muted">A judgment call</div><p>Armada and Kueue not compared hands on</p></div>
@@ -795,7 +795,7 @@ defaults:
 </style>
 
 <!--
-[3.5 min] Real limits, said plainly. A large gang can wait while small jobs keep fitting, this is the usual cost of all-or-nothing. Versions matter: Volcano 1.15.0 and 1.15.1 are affected by a DRA capacity-check bypass fixed in 1.15.2 and 1.15.3, so we pin 1.15.3. And kind has no GPU: the numbers are fake and the GPU sharing part is recorded. Rehearse the eight-GPU, ten-pod sizing before you deliver.
+[3.5 min] Real limits, said plainly. A queue capability is a hard ceiling, so a team stops at its cap. Versions matter: Volcano 1.15.0 and 1.15.1 have a flaw in DRA capacity accounting that can stall scheduling, fixed in 1.15.2. Version 1.15.3 also fixes an integer overflow that could bypass the capacity plugin quota check. We pin 1.15.3. And kind has no GPU: the numbers are fake and the GPU sharing part is recorded. Rehearse the eight-GPU, ten-pod sizing before you deliver.
 -->
 
 ---
@@ -991,7 +991,7 @@ cd 01-cluster && pulumi up
     <li><ph-cube /><span>One control plane, two workers</span></li>
     <li><ph-sliders-horizontal /><span>Four fake GPUs per worker</span></li>
     <li><ph-package /><span>Volcano 1.15.3 from its Helm chart</span></li>
-    <li><ph-check-circle /><span>Scheduler, controllers and admission are Running</span></li>
+    <li><ph-check-circle /><span>Scheduler, controller manager and admission are Running</span></li>
   </ul>
   </v-clicks>
 </div>
@@ -1397,5 +1397,5 @@ cd 02-queues && pulumi up
 </style>
 
 <!--
-[4.5 min] Questions. If nobody asks, pick the starvation case from the limits slide, or the Armada and Kueue choice. Be plain that Volcano was a judgment call.
+[4.5 min] Questions. If nobody asks, pick the hard-cap case from the limits slide, or the Armada and Kueue choice. Be plain that Volcano was a judgment call.
 -->

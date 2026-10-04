@@ -66,7 +66,7 @@ Volcano is a CNCF incubating project with gang scheduling and queues built in, a
 
 ## Pinned versions
 
-- Volcano Helm chart and app 1.15.3 (released 2026-09-30). Versions 1.15.0 and 1.15.1 are affected by a DRA capacity-check bypass fixed in 1.15.2/1.15.3.
+- Volcano Helm chart and app 1.15.3 (released 2026-09-30). Versions 1.15.0 and 1.15.1 have a flaw in DRA capacity accounting that can stall scheduling (fixed in 1.15.2); 1.15.3 also fixes an int64 overflow that could bypass the capacity plugin quota check.
 - kind v0.33.0 default node image.
 - `@pulumi/kubernetes` `^4.30.0`, `@pulumi/command` `^1.2.0`, `@pulumi/pulumi` `^3.262.0`.
 
