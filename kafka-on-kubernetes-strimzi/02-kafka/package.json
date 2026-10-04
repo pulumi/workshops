@@ -1,0 +1,14 @@
+{
+  "name": "kafka-workshop-kafka",
+  "version": "0.1.0",
+  "private": true,
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.262.0",
+    "@pulumi/kubernetes": "^4.30.0"
+  }
+}
