@@ -1,0 +1,15 @@
+{
+  "name": "vms-kubevirt",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VMs on Kubernetes as Code: installs the KubeVirt operator and its CR onto the kind cluster from 02-cluster",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.265.0",
+    "@pulumi/kubernetes": "^4.34.2"
+  }
+}

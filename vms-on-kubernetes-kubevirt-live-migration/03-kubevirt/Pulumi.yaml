@@ -1,0 +1,9 @@
+name: vms-kubevirt
+description: >-
+  Installs the KubeVirt operator (v1.9.0 pinned release manifests, no
+  official Helm chart) and its KubeVirt custom resource onto the kind
+  cluster provisioned by 02-cluster.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
