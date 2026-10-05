@@ -1,0 +1,41 @@
+{
+  "slug": "platform-engineering-golden-path",
+  "title": "Building a Golden Path",
+  "subtitle": "Self-service infrastructure platforms with Pulumi",
+  "demo_title": "A golden-path component, published and consumed",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The pain: every team ships differently",
+    "What a team gets",
+    "Getting it to the team that needs it",
+    "Guardrails and versions",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Components",
+      "url": "https://www.pulumi.com/docs/iac/concepts/components/",
+      "label": "pulumi.com/docs/iac/concepts/components"
+    },
+    {
+      "title": "Packaging Components",
+      "url": "https://www.pulumi.com/docs/iac/guides/building-extending/components/packaging-components/",
+      "label": "Packaging Components guide"
+    },
+    {
+      "title": "Private Registry",
+      "url": "https://www.pulumi.com/docs/idp/concepts/private-registry/",
+      "label": "IDP Private Registry"
+    },
+    {
+      "title": "pulumi package publish",
+      "url": "https://www.pulumi.com/docs/iac/cli/commands/pulumi_package_publish/",
+      "label": "pulumi package publish"
+    }
+  ]
+}
