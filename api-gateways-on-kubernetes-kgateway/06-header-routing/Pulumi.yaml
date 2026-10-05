@@ -1,0 +1,8 @@
+name: api-gateways-workshop-header-routing
+description: >-
+  A second HTTPRoute rule on the same path that routes to app-b only when a
+  custom header is present, and to app-a otherwise.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

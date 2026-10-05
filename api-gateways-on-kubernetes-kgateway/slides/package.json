@@ -1,0 +1,22 @@
+{
+  "name": "api-gateways-on-kubernetes-kgateway-slides",
+  "version": "0.1.0",
+  "description": "API Gateways on Kubernetes with kgateway: Provision a Gateway API controller, a Gateway and HTTPRoutes as code with Pulumi IaC",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}
