@@ -1,0 +1,6 @@
+name: policy-demo-cluster-policy
+runtime: nodejs
+description: >-
+  Step 4 of the defense-in-depth workshop: a Kyverno ClusterPolicy,
+  require-resource-limits, in enforce mode, declared as a Pulumi
+  CustomResource against the local kind cluster.

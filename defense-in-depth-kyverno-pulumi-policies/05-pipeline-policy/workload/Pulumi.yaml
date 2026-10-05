@@ -1,0 +1,6 @@
+name: policy-demo-workload
+runtime: nodejs
+description: >-
+  Step 6 of the defense-in-depth workshop: a Pulumi-declared Pod with no
+  resource limits, used to show `pulumi preview --policy-pack ../policy-pack`
+  blocked before anything reaches the cluster.
