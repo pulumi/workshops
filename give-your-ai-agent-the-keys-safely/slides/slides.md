@@ -118,6 +118,7 @@ defaults:
 -->
 
 ---
+
 # An agent with write access to production reportedly deleted the database, then admitted it
 
 <div class="grid grid-cols-2 gap-10 mt-6 quote-slide">
@@ -151,7 +152,9 @@ defaults:
 <!--
 [2.5 min] Start with a real incident, not a hypothetical. July 2025, Jason Lemkin of SaaStr is vibe coding on Replit. The agent deletes his production database. Then it admits it, in its own words: a catastrophic error of judgement, it violated his explicit trust and instructions. It also told him rollback was impossible. That was wrong, the rollback worked. Lemkin's conclusion on 20 July: there is no way to enforce a code freeze. The deletion is his account, reported by The Register. Source is The Register, July 2025. We are not piling on one vendor. This is what an agent does when the only thing between its idea and your database is its own judgement.
 -->
+
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">A reviewed diff is a safety net.</h1>
 </div>
@@ -159,7 +162,9 @@ defaults:
 <!--
 [0.5 min] Two lines. First one. You can read a proposed change, reject it, revert it.
 -->
+
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">An applied change is not.</h1>
 </div>
@@ -167,7 +172,9 @@ defaults:
 <!--
 [0.5 min] Second line. Once the tool call has run, there is no diff left to review. Only the damage and the cleanup.
 -->
+
 ---
+
 # A pull request waits for a human; an agent's tool call does not
 
 <div class="zoom-content">
@@ -200,7 +207,9 @@ defaults:
 <!--
 [2 min] Why is this hard? Because the pause in a pull request is not in the tool. It is in the workflow around it. Somebody has to click merge. An agent that holds an apply tool skips all of that: the call is the change. So the safety has to live in what the agent can call, and in who it acts as.
 -->
+
 ---
+
 # Six questions decide whether you can hand an agent the keys
 
 <div class="zoom-content">
@@ -226,7 +235,9 @@ defaults:
 <!--
 [3 min] These are the six questions we will answer, and they are the spine of the next hour. What can the agent call. Who is it acting as. What may that identity change. When must a human step in. What must a reviewer check on an agent's diff. And the last one, the one that matters: does the boundary still hold when the agent pushes against it? The first five are design. The sixth we prove in the demo.
 -->
+
 ---
+
 <div class="sec">
   <img class="sec__lines sec__lines--tr" src="/lines/bg-top-right-1.svg" alt="" />
   <img class="sec__lines sec__lines--bl" src="/lines/bg-bottom-left-1.svg" alt="" />
@@ -247,7 +258,9 @@ defaults:
 <!--
 [0.5 min] Question one. Before identity, before approvals: what is on the menu.
 -->
+
 ---
+
 # An MCP server turns your stack into a list of tools the agent can call
 
 <div class="zoom-content">
@@ -286,7 +299,9 @@ defaults:
 <!--
 [2 min] MCP is the protocol that lets an agent discover and call tools. The Pulumi MCP server is one such tool provider. Per the Pulumi docs it lets an assistant query stacks, search resources, read the Registry, see policy violations, manage members, and hand work to Pulumi Neo. The agent never touches your cloud directly. It sees a list of tools and picks. So the list is the first boundary. Source: the Pulumi MCP server page on pulumi.com/docs, read 6 October 2026.
 -->
+
 ---
+
 # The stock server hands over everything, including the tool that applies
 
 <div class="zoom-content">
@@ -319,7 +334,9 @@ defaults:
 <!--
 [2 min] The npm package we run, @pulumi/mcp-server version 0.2.0, has no allow-list and no read-only mode. Twelve tools, including pulumi-cli-up and deploy-to-aws. So for the demo we put our own proxy in front, guard.mjs. It lets eight tools through and refuses the rest. Be clear with the room: guard.mjs is workshop code, not a Pulumi feature. The demo shows both lists side by side.
 -->
+
 ---
+
 <div class="sec">
   <img class="sec__lines sec__lines--tr" src="/lines/bg-top-right-1.svg" alt="" />
   <img class="sec__lines sec__lines--bl" src="/lines/bg-bottom-left-1.svg" alt="" />
@@ -340,7 +357,9 @@ defaults:
 <!--
 [0.5 min] Question two. Even a perfect tool list runs as somebody.
 -->
+
 ---
+
 # The agent acts as whatever token you hand it
 
 <div class="zoom-content">
@@ -382,7 +401,9 @@ defaults:
 <!--
 [1.5 min] On the wire the agent has no identity of its own. The MCP server starts with an access token, and Pulumi Cloud sees that token. So the question 'who is the agent' becomes 'which token did you give the server'. Pick it on purpose. Do not let it inherit whatever was lying in your shell.
 -->
+
 ---
+
 # Personal, organization and team tokens carry different amounts of power
 
 <div class="zoom-content">
@@ -436,7 +457,9 @@ defaults:
 <!--
 [2 min] Pulumi Cloud has three kinds of access token. A personal token acts as you, with all your permissions. An organization token acts as the organization and is limited by an RBAC role you choose, and the audit log shows the organization rather than a person. A team token acts as a team. For an agent that nobody supervises second by second, the organization token with a deliberately small role is the right default. Source: the access tokens page on pulumi.com/docs, read 6 October 2026. Mention editions: organization tokens are in Essentials, Pro and Enterprise, team tokens in Pro and Enterprise, so check yours.
 -->
+
 ---
+
 # Two questions covered, four to go
 
 <div class="zoom-content">
@@ -463,7 +486,9 @@ defaults:
 <!--
 [0.5 min] Quick recap. One: the tool list is the first boundary. Two: the agent is whoever the token says, so pick the token on purpose. Four to go.
 -->
+
 ---
+
 <div class="sec">
   <img class="sec__lines sec__lines--tr" src="/lines/bg-top-right-1.svg" alt="" />
   <img class="sec__lines sec__lines--bl" src="/lines/bg-bottom-left-1.svg" alt="" />
@@ -484,7 +509,9 @@ defaults:
 <!--
 [0.5 min] Question three. Now we decide how much the token may do.
 -->
+
 ---
+
 # A read-only role makes Pulumi Cloud refuse the write even if the proxy fails
 
 <div class="zoom-content">
@@ -511,7 +538,9 @@ defaults:
 <!--
 [2.5 min] Two layers, and the second does not trust the first. Layer one is guard.mjs, which refuses the apply tool call. Layer two is Pulumi Cloud: give the token a role built on the Stack Read permission set and an update is refused by the service even if the proxy had a bug. The caveat, stated up front: custom roles and permission sets need the Pulumi Pro or Enterprise edition. Without that, the guard is your only enforced layer. Sources: the permission sets page on pulumi.com/docs, read 6 October 2026.
 -->
+
 ---
+
 <div class="sec">
   <img class="sec__lines sec__lines--tr" src="/lines/bg-top-right-1.svg" alt="" />
   <img class="sec__lines sec__lines--bl" src="/lines/bg-bottom-left-1.svg" alt="" />
@@ -532,7 +561,9 @@ defaults:
 <!--
 [0.5 min] Question four. Who clicks the button.
 -->
+
 ---
+
 # Neo ships the same idea as task modes and a read-only mode
 
 <div class="zoom-content">
@@ -586,7 +617,9 @@ defaults:
 <!--
 [2 min] Pulumi Neo is the product version of this idea. A task runs in one of three approval modes. Review asks before it previews, updates, or opens a pull request. Balanced asks before an update. Auto never asks. There is also a read-only mode that removes write access in Pulumi Cloud, though it does not cut off ESC. And Neo never has more access than the user who started it. We are not demoing Neo today. We use it to show that the pause point is a design choice the product makes explicit. Sources: the Neo tasks, get-started and permissions pages on pulumi.com/docs, read 6 October 2026.
 -->
+
 ---
+
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6rem] !leading-tight !font-semibold !tracking-tight !m-0 text-[var(--p-primary)] !max-w-[95%]">Propose is cheap. Apply needs a person.</h1>
 </div>
@@ -594,7 +627,9 @@ defaults:
 <!--
 [0.5 min] This is the one rule the demo enforces. The agent may read, may propose, may show a diff. A human applies.
 -->
+
 ---
+
 <div class="sec">
   <img class="sec__lines sec__lines--tr" src="/lines/bg-top-right-1.svg" alt="" />
   <img class="sec__lines sec__lines--bl" src="/lines/bg-bottom-left-1.svg" alt="" />
@@ -615,7 +650,9 @@ defaults:
 <!--
 [0.5 min] Question five. The diff is on the table. Who reads it, and for what.
 -->
+
 ---
+
 # An agent's diff needs two checks a human's does not
 
 <div class="zoom-content">
@@ -646,7 +683,9 @@ defaults:
 <!--
 [2.5 min] A human colleague knows your tagging rule and would not add a surprise resource. An agent knows neither unless the diff shows it. So there are two extra checks. One: did it follow the conventions already in the file, tags, naming, outputs. Two: did it ask for more than the task needed, a wider policy, an extra resource. Hold on to check one. In the demo the agent's diff really does miss something.
 -->
+
 ---
+
 # Where this breaks today: the guard is ours, the audit trail is thin, and read-only still decrypts
 
 <div class="zoom-content">
@@ -672,7 +711,9 @@ defaults:
 <!--
 [3 min] One: the stock MCP server version we pin has no allow-list, so the guard is workshop code. Two: the Pulumi Cloud audit log, a Pro and Enterprise feature, records the user, the event, the time and the source IP. The docs describe no field that marks a call as agent or human, so do not promise that. Three: the Stack Read permission set includes stack:decrypt, so a read-only token can still decrypt. Treat it as a secrets question too. Four, about this build specifically: the apply and destroy steps and the token layer were not run against live AWS or Pulumi Cloud when we built the demo, so rehearse them before you present. Five: the docs now point at the hosted server, we pin the local package so a guard can sit in front. Say all of that out loud.
 -->
+
 ---
+
 # Five questions answered, one to go: does the boundary hold?
 
 <div class="zoom-content">
@@ -699,7 +740,9 @@ defaults:
 <!--
 [1 min] Five answers. Tool list filtered by the guard. An organization token. A read-only role. Approval before apply. Two extra review checks. The sixth question, does the boundary hold when the agent pushes against it, is what the demo is for.
 -->
+
 ---
+
 # The agent we build proposes through a guard and a read-only token
 
 <div class="zoom-content">
@@ -745,7 +788,9 @@ defaults:
 <!--
 [2 min] This is the architecture we end up with. The agent, either Claude Desktop or the probe script, talks to guard.mjs. The guard forwards allowed calls to the Pulumi MCP server. The server talks to Pulumi Cloud with a read-only organization token. Behind that is the AWS stack. Two enforcers, as we said: the proxy and Pulumi Cloud.
 -->
+
 ---
+
 # The stack the agent will change is a VPC, a subnet and one bucket
 
 <div class="zoom-content">
@@ -785,6 +830,7 @@ defaults:
 <!--
 [1.5 min] Deliberately small. A VPC, one subnet, and one S3 bucket for artifacts, written in TypeScript with Pulumi IaC in us-east-1. The agent will be asked to add a log bucket for it. Small stack, so the interesting part is the boundary and not the infrastructure.
 -->
+
 ---
 
 <div class="sec">
@@ -809,6 +855,7 @@ defaults:
 -->
 
 ---
+
 # Eight steps take us from a stack to a human-approved change
 
 <div class="zoom-content">
@@ -837,7 +884,9 @@ defaults:
 <!--
 [2 min] Eight steps, one folder each, numbered the same way in the repo. The stack. The raw server with twelve tools. The guarded server with eight. The agent proposes a log bucket. We review the diff. The apply is refused. A human fixes and applies. Teardown. Each step slide names the folder and what you should see.
 -->
+
 ---
+
 # 01 · The stack exists before any agent touches it
 
 <div class="zoom-content">
@@ -879,7 +928,9 @@ pulumi up --stack dev
 <!--
 [5 min] Step one, folder 01-base-stack. Run pulumi up in that folder on the dev stack. You should see a VPC, a subnet and the artifacts bucket. Be honest: this step was not run against AWS when we built the demo, so rehearse it before you present.
 -->
+
 ---
+
 # 02 · The raw server lists twelve tools, including the one that applies
 
 <div class="zoom-content">
@@ -915,7 +966,9 @@ node 02-mcp-server/probe.mjs -- npx -y @pulumi/mcp-server@0.2.0 stdio
 <!--
 [5 min] Step two, folder 02-mcp-server. The probe script speaks MCP over stdio and asks the stock server for its tool list. Twelve tools. Find pulumi-cli-up and deploy-to-aws in that list. That is what an agent would get by default.
 -->
+
 ---
+
 # 03 · Through the guard the agent sees eight tools, and apply is not one
 
 <div class="zoom-content">
@@ -951,7 +1004,9 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 <!--
 [5 min] Step three, folder 03-scoped-access. Same probe, but pointed at guard.mjs, which starts the same server behind its allow-list. Eight tools. The apply tool is not in the list. Registry lookups, preview, stack output and refresh remain.
 -->
+
 ---
+
 # 04 · Asked for a log bucket, the agent returns a diff, not a change
 
 <div class="zoom-content">
@@ -989,7 +1044,9 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 <!--
 [6 min] Step four, folder 04-propose-change. The prompt is in PROMPT.md and we give it to the agent word for word: add a second S3 bucket for access logs, export its name, change nothing else. What comes back is a diff file, not a change to the live stack. One honesty point: AGENT-SESSION.md in the folder is an illustrative walk-through, not a recording of a real session. Do not present it as one.
 -->
+
 ---
+
 # 05 · The review finds the new bucket is missing the stack's tags
 
 <div class="zoom-content">
@@ -1017,7 +1074,9 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 <!--
 [6 min] Step five, folder 05-review-the-diff. We run the two agent-specific checks from the REVIEW.md checklist. Check one, did it keep the file's own conventions: it fails, the new bucket has no tags. Check two, did it ask for more than the task needed: it passes, but you still verify. This is a real flaw in this build's diff, which is the point.
 -->
+
 ---
+
 # 06 · The apply attempt is refused at the proxy
 
 <div class="zoom-content">
@@ -1059,7 +1118,9 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 <!--
 [4 min] Step six, folder 06-blocked-apply. The script asks for pulumi-cli-up through the guard. The answer is a proper JSON-RPC error that says the call was blocked by the workshop guard. That answers question six. The second attempt in the script, with a real read-only Pulumi Cloud token, is documented but we did not execute it in the build, so say so and rehearse it.
 -->
+
 ---
+
 # 07 · A human fixes the tags and applies the corrected change
 
 <div class="zoom-content">
@@ -1101,7 +1162,9 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 <!--
 [5 min] Step seven, folder 07-approve-and-apply. A human fixes what the review found, the tags, runs a preview, and only then runs the update. The approval is a person running the command. Not run live in the build, so rehearse.
 -->
+
 ---
+
 # 08 · Teardown ends with a look at the console, not just an exit code
 
 <div class="zoom-content">
@@ -1143,6 +1206,7 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 <!--
 [3 min] Step eight, folder 08-teardown. The script destroys the resources and then removes the stack. Do not stop at the exit code: open the Pulumi Cloud console and see it is empty. Not run live in the build, so rehearse.
 -->
+
 ---
 
 # Resources
