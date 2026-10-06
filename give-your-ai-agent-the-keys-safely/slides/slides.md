@@ -149,7 +149,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Start with a real incident, not a hypothetical. July 2025, Jason Lemkin of SaaStr is vibe coding on Replit. The agent deletes his production database. Then it admits it, in its own words: a catastrophic error of judgement, it violated his explicit trust and instructions. It also told him rollback was impossible. That was wrong, the rollback worked. Lemkin's conclusion on 20 July: there is no way to enforce a code freeze. Source is The Register, July 2025. Say plainly: we are not here to pile on one vendor. This is what an agent does when the only thing between its idea and your database is its own judgement.
+[2.5 min] Start with a real incident, not a hypothetical. July 2025, Jason Lemkin of SaaStr is vibe coding on Replit. The agent deletes his production database. Then it admits it, in its own words: a catastrophic error of judgement, it violated his explicit trust and instructions. It also told him rollback was impossible. That was wrong, the rollback worked. Lemkin's conclusion on 20 July: there is no way to enforce a code freeze. Source is The Register, July 2025. We are not piling on one vendor. This is what an agent does when the only thing between its idea and your database is its own judgement.
 -->
 ---
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
@@ -157,7 +157,7 @@ defaults:
 </div>
 
 <!--
-[0.5 min] Two lines. First one. You can read a proposed change, reject it, revert it. Let it sit for a second.
+[0.5 min] Two lines. First one. You can read a proposed change, reject it, revert it.
 -->
 ---
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
@@ -198,7 +198,7 @@ defaults:
 </style>
 
 <!--
-[2 min] Why is this hard? Because the pause in a pull request is not in the tool. It is in the workflow around it. Somebody has to click merge. An agent that holds an apply tool skips all of that: the call is the change. So the safety has to live in what the agent can call, and in who it acts as. That is the whole workshop in one sentence.
+[2 min] Why is this hard? Because the pause in a pull request is not in the tool. It is in the workflow around it. Somebody has to click merge. An agent that holds an apply tool skips all of that: the call is the change. So the safety has to live in what the agent can call, and in who it acts as.
 -->
 ---
 # Six questions decide whether you can hand an agent the keys
@@ -317,7 +317,7 @@ defaults:
 </style>
 
 <!--
-[2 min] Here is the catch. The npm package we run, @pulumi/mcp-server version 0.2.0, has no allow-list and no read-only mode. Twelve tools, including pulumi-cli-up and deploy-to-aws. So for the demo we put our own proxy in front, guard.mjs. It lets eight tools through and refuses the rest. Be clear with the room: guard.mjs is workshop code, not a Pulumi feature. The demo shows both lists side by side.
+[2 min] The npm package we run, @pulumi/mcp-server version 0.2.0, has no allow-list and no read-only mode. Twelve tools, including pulumi-cli-up and deploy-to-aws. So for the demo we put our own proxy in front, guard.mjs. It lets eight tools through and refuses the rest. Be clear with the room: guard.mjs is workshop code, not a Pulumi feature. The demo shows both lists side by side.
 -->
 ---
 <div class="sec">
@@ -541,17 +541,17 @@ defaults:
   <div class="gpu-card gpu-card--primary mode" v-click>
     <div class="mode__head"><ph-hand-palm class="mode__icon" /><code class="mode__name">Review</code></div>
     <p>Approval before preview, up and pull request</p>
-    
+
   </div>
   <div class="gpu-card gpu-card--accent mode" v-click>
     <div class="mode__head"><ph-scales class="mode__icon" /><code class="mode__name">Balanced</code></div>
     <p>Approval before <code>up</code></p>
-    
+
   </div>
   <div class="gpu-card  mode" v-click>
     <div class="mode__head"><ph-lightning class="mode__icon" /><code class="mode__name">Auto</code></div>
     <p>Never asks</p>
-    
+
   </div>
 </div>
 
@@ -670,7 +670,7 @@ defaults:
 </style>
 
 <!--
-[3 min] Now the honest slide. One: the stock MCP server version we pin has no allow-list, so the guard is workshop code. Two: the Pulumi Cloud activity log records who ran an update and when, but does not on its own tell you whether a person typed it or an agent proposed it. Three: state locking prevents two applies from corrupting state, it does not stop a human and an agent from disagreeing. Four, about this build specifically: the apply and destroy steps and the token layer were not run against live AWS or Pulumi Cloud when we built the demo, so rehearse them before you present. Five: the docs now point at the hosted server, we pin the local package so a guard can sit in front. Say all of that out loud.
+[3 min] One: the stock MCP server version we pin has no allow-list, so the guard is workshop code. Two: the Pulumi Cloud activity log records who ran an update and when, but does not on its own tell you whether a person typed it or an agent proposed it. Three: state locking prevents two applies from corrupting state, it does not stop a human and an agent from disagreeing. Four, about this build specifically: the apply and destroy steps and the token layer were not run against live AWS or Pulumi Cloud when we built the demo, so rehearse them before you present. Five: the docs now point at the hosted server, we pin the local package so a guard can sit in front. Say all of that out loud.
 -->
 ---
 # Five questions answered, one to go: does the boundary hold?
