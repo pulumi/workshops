@@ -78,3 +78,9 @@ The brief gave no story spine; it was built from brief §1 to §3 and §7, the d
 30. 06: The apply attempt is refused at the proxy — pattern: demo-step. Folder 06-blocked-apply; try-apply.sh; JSON-RPC refusal. Token layer documented, not executed. (4 min)
 31. 07: A human fixes the tags and applies the corrected change — pattern: demo-step. Folder 07-approve-and-apply; approve-and-apply.sh; not executed live in build. (5 min)
 32. 08: Teardown ends with a look at the console, not just an exit code — pattern: demo-step. Folder 08-teardown; destroy.sh; not executed live in build. (3 min)
+
+## Stage B notes (2026-10-06)
+
+- 32 story and demo slides plus 9 frame slides; notes carry time budgets summing to 90 min (Thank you slide holds 8 min Q&A).
+- Where-breaks claims to fact-check against docs this run: activity log does not distinguish agent from human; docs now point to the hosted MCP server; org/team tokens and custom permission sets depend on edition.
+- Demo slide 4 says AGENT-SESSION.md is illustrative; slide 5 states the tags flaw from REVIEW.md.
