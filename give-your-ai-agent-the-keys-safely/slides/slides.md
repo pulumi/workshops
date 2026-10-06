@@ -571,7 +571,7 @@ defaults:
 <div class="modes">
   <div class="gpu-card gpu-card--primary mode" v-click>
     <div class="mode__head"><ph-hand-palm class="mode__icon" /><code class="mode__name">Review</code></div>
-    <p>Approval before preview, up and pull request</p>
+    <p>Approval before preview, up, PR</p>
 
   </div>
   <div class="gpu-card gpu-card--accent mode" v-click>
@@ -686,7 +686,7 @@ defaults:
 
 ---
 
-# Where this breaks today: the guard is ours, the audit trail is thin, and read-only still decrypts
+# Where this breaks today: six limits to know
 
 <div class="zoom-content">
 
@@ -856,7 +856,7 @@ defaults:
 
 ---
 
-# Eight steps take us from a stack to a human-approved change
+# Eight steps, from a stack to an approved change
 
 <div class="zoom-content">
 
@@ -875,7 +875,7 @@ defaults:
 
 <style scoped>
 .zoom-content { zoom: 1.2; }
-.steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+.steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; margin-top: 3rem; }
 .step { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem 1.3rem; }
 .step p { margin: 0 !important; font-size: 1.2rem; line-height: 1.35; }
 .step__icon { font-size: 2rem; color: var(--p-primary); }
