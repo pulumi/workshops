@@ -16,3 +16,10 @@ dist/
 !04-propose-change/PROMPT.md
 !04-propose-change/AGENT-SESSION.md
 !05-review-the-diff/REVIEW.md
+!slides/slides.md
+
+# Slidev export output
+slides/export-pages/
+slides/*.pdf
+slides/*.png
+slides/.slidev/
