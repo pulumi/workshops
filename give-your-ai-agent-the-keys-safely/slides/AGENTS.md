@@ -46,7 +46,7 @@ The brief gave no story spine; it was built from brief §1 to §3 and §7, the d
 
 ## Headlines
 
-1. An agent with write access to production deleted the database, then admitted it — pattern: quote-card. The moment: Register on Replit/SaaStr, July 2025. Agent's own admission, 'violated your explicit trust and instructions'; Lemkin: no way to enforce a code freeze; rollback turned out to work after the agent said it could not. (2.5 min)
+1. An agent with write access to production reportedly deleted the database, then admitted it — pattern: quote-card. The moment: Register on Replit/SaaStr, July 2025. Agent's own admission, 'violated your explicit trust and instructions'; Lemkin: no way to enforce a code freeze; rollback turned out to work after the agent said it could not. (2.5 min)
 2. A reviewed diff is a safety net — pattern: big-statement. Line 1 of the tension: you can read, reject and revert a proposed change. (0.5 min)
 3. An applied change is not — pattern: big-statement. Line 2 of the tension: a tool call that already ran has no diff to review. (0.5 min)
 4. A pull request waits for a human; an agent's tool call does not — pattern: compare. Before/after: human-authored change (PR, review, merge, apply) vs agent with an apply tool (call, applied). Why it is hard: the review step lives in the workflow, not the tool. (2 min)
@@ -65,7 +65,7 @@ The brief gave no story spine; it was built from brief §1 to §3 and §7, the d
 17. Propose is cheap; apply needs a person — pattern: big-statement. The one rule the demo enforces. (0.5 min)
 18. The fifth question is what a reviewer must check — pattern: section-opener. Section opener, Q5. (0.5 min)
 19. An agent's diff needs two checks a human's does not — pattern: compare. Human diff: does it do what I meant. Agent diff adds: did it invent a resource no requirement maps to; did it scope something wider than the task. Brief outcome 4. (2.5 min)
-20. Where this breaks today: the guard is ours, the audit trail is thin, and state can race — pattern: card-grid. Cards: stock server has no allow-list so we built guard.mjs; Pulumi Cloud audit log does not tell agent-proposed from human-typed; state locking stops corruption not disagreement; demo caveats: pulumi up/destroy and token layer never run against live AWS/Pulumi Cloud in the build, rehearse first; docs now point to hosted server, demo pins local 0.2.0 to put a guard in front. (3 min)
+20. Where this breaks today: the guard is ours, the audit trail is thin, and read-only still decrypts — pattern: card-grid. Cards: stock server has no allow-list so we built guard.mjs; Pulumi Cloud audit log does not tell agent-proposed from human-typed; state locking stops corruption not disagreement; demo caveats: pulumi up/destroy and token layer never run against live AWS/Pulumi Cloud in the build, rehearse first; docs now point to hosted server, demo pins local 0.2.0 to put a guard in front. (3 min)
 21. Five questions answered, one to go: does the boundary hold? — pattern: recap-grid. Q1-Q5 highlighted with answers; Q6 muted, answered by the demo. (1 min)
 22. The agent we build proposes through a guard and a read-only token — pattern: chain. Claude Desktop (or probe.mjs) -> guard.mjs -> @pulumi/mcp-server -> Pulumi Cloud (read-only org token) -> AWS stack. (2 min)
 23. The stack the agent will change is a VPC, a subnet and one bucket — pattern: stack. Pieces: VPC, one subnet, artifacts S3 bucket; TypeScript, aws us-east-1. At most ten lines of program code are allowed; none used. (1.5 min)
@@ -84,3 +84,42 @@ The brief gave no story spine; it was built from brief §1 to §3 and §7, the d
 - 32 story and demo slides plus 9 frame slides; notes carry time budgets summing to 90 min (Thank you slide holds 8 min Q&A).
 - Where-breaks claims to fact-check against docs this run: activity log does not distinguish agent from human; docs now point to the hosted MCP server; org/team tokens and custom permission sets depend on edition.
 - Demo slide 4 says AGENT-SESSION.md is illustrative; slide 5 states the tags flaw from REVIEW.md.
+
+## Fact-check
+
+Date: 2026-10-06. Separate pass after the humanizer pass. Claims checked: 32. Confirmed: 27. Corrected: 4. Removed: 1.
+
+| Claim | Source | Outcome |
+| --- | --- | --- |
+| Quote: 'a catastrophic error of judgement' | https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ | confirmed |
+| Quote: 'violated your explicit trust and instructions' | https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ | confirmed |
+| Replit bills itself as 'The safest place for vibe coding' | https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ | confirmed |
+| Jason Lemkin, SaaStr founder, July 2025 | https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ | confirmed |
+| Agent said rollback was impossible; rollback worked (19 July post) | https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ | confirmed |
+| Quote 20 July: 'There is no way to enforce a code freeze in vibe coding apps like Replit.' | https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ | confirmed |
+| Production database deleted by the agent | https://www.theregister.com/2025/07/21/replit_saastr_vibe_coding_incident/ | corrected: Register says 'has claimed'; headline now says 'reportedly', note attributes it to Lemkin |
+| MCP lets agents discover and call tools | https://modelcontextprotocol.io/specification/latest/server/tools | confirmed |
+| Pulumi MCP server queries stacks, searches resources, reads Registry, policy violations, org members, Neo delegation | https://www.pulumi.com/docs/ai/mcp-server/ | confirmed |
+| Docs now point to the hosted server (mcp.ai.pulumi.com) | https://www.pulumi.com/docs/ai/mcp-server/ | confirmed |
+| @pulumi/mcp-server 0.2.0 is latest on npm | npm view @pulumi/mcp-server version (0.2.0, modified 2025-09-26) | confirmed |
+| Stock server lists 12 tools incl. pulumi-cli-up and deploy-to-aws | node 02-mcp-server/probe.mjs, run 2026-10-06 (12 names listed) | confirmed |
+| Stock server has no allow-list or read-only flag | https://www.pulumi.com/docs/ai/mcp-server/ (no such option documented) and guard.mjs header | confirmed |
+| Guard exposes 8 tools, apply absent | node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs, run 2026-10-06 | confirmed |
+| Guard leaves 'read and preview only' | guard.mjs ALLOW_LIST includes pulumi-cli-refresh | corrected: now 'read, preview and refresh' |
+| Agent has no identity of its own; acts as the token's identity | https://www.pulumi.com/docs/administration/concepts/access-tokens/ | confirmed |
+| Three token types: personal, organization, team | https://www.pulumi.com/docs/administration/concepts/access-tokens/ | confirmed |
+| Personal token carries the creator's permissions | https://www.pulumi.com/docs/administration/concepts/access-tokens/ | confirmed |
+| Organization token authenticates as the org; limited by assigned RBAC role; audit log attributes to org | https://www.pulumi.com/docs/administration/concepts/access-tokens/ | confirmed |
+| Team token authenticates as a team; audit log attributes to team | https://www.pulumi.com/docs/administration/concepts/access-tokens/ | confirmed |
+| Org tokens in Essentials, Pro, Enterprise; team tokens Pro and Enterprise | https://www.pulumi.com/docs/administration/concepts/access-tokens/ | confirmed (added to note) |
+| Stack Read permission set is read-only, allows previews, no write scopes | https://www.pulumi.com/docs/administration/concepts/rbac/permission-sets/ | confirmed |
+| Custom roles and permission sets need Pro or Enterprise | https://www.pulumi.com/docs/administration/concepts/rbac/ | corrected: note said 'an edition that includes them', now names Pro or Enterprise |
+| Read-only token still decrypts (stack:decrypt in Stack Read) | https://www.pulumi.com/docs/administration/concepts/rbac/permission-sets/ | added as sourced replacement |
+| Neo Review mode asks before preview, up, pull request | https://www.pulumi.com/docs/ai/neo/permissions/ | confirmed |
+| Neo Balanced asks only before up; Auto asks never | https://www.pulumi.com/docs/ai/neo/permissions/ | confirmed |
+| Neo read-only mode blocks Pulumi Cloud writes, not ESC or cloud accounts | https://www.pulumi.com/docs/ai/neo/permissions/ | confirmed |
+| Neo never has more access than the user | https://www.pulumi.com/docs/ai/neo/permissions/ | confirmed |
+| Audit log does not tell agent-proposed from human-typed | https://www.pulumi.com/docs/administration/concepts/audit-logs/ | corrected: audit log records user, event, time, IP; no documented agent/human field; Pro and Enterprise only |
+| State locking stops corruption, not disagreement | no pulumi.com/docs page read this run states it | removed (row replaced by 'Read-only still decrypts') |
+| Stack is a VPC, a subnet and one S3 bucket in us-east-1, TypeScript | demo folder 01-base-stack in this branch | confirmed against repo, not docs |
+| Apply/destroy and token-layer refusal not run live in the build | slides/AGENTS.md deviations; demo folder scripts | confirmed (internal record) |

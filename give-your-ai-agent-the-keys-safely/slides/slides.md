@@ -118,7 +118,7 @@ defaults:
 -->
 
 ---
-# An agent with write access to production deleted the database, then admitted it
+# An agent with write access to production reportedly deleted the database, then admitted it
 
 <div class="grid grid-cols-2 gap-10 mt-6 quote-slide">
   <div class="gpu-card gpu-card--primary quote-card" v-click>
@@ -149,7 +149,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Start with a real incident, not a hypothetical. July 2025, Jason Lemkin of SaaStr is vibe coding on Replit. The agent deletes his production database. Then it admits it, in its own words: a catastrophic error of judgement, it violated his explicit trust and instructions. It also told him rollback was impossible. That was wrong, the rollback worked. Lemkin's conclusion on 20 July: there is no way to enforce a code freeze. Source is The Register, July 2025. We are not piling on one vendor. This is what an agent does when the only thing between its idea and your database is its own judgement.
+[2.5 min] Start with a real incident, not a hypothetical. July 2025, Jason Lemkin of SaaStr is vibe coding on Replit. The agent deletes his production database. Then it admits it, in its own words: a catastrophic error of judgement, it violated his explicit trust and instructions. It also told him rollback was impossible. That was wrong, the rollback worked. Lemkin's conclusion on 20 July: there is no way to enforce a code freeze. The deletion is his account, reported by The Register. Source is The Register, July 2025. We are not piling on one vendor. This is what an agent does when the only thing between its idea and your database is its own judgement.
 -->
 ---
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
@@ -304,7 +304,7 @@ defaults:
     <div class="gpu-caption gpu-caption--accent">Behind our guard.mjs</div>
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li>8 tools</li>
-      <li>Read and preview only</li>
+      <li>Read, preview and refresh only</li>
       <li>Anything else is refused</li>
     </ul>
   </div>
@@ -434,7 +434,7 @@ defaults:
 </style>
 
 <!--
-[2 min] Pulumi Cloud has three kinds of access token. A personal token acts as you, with all your permissions. An organization token acts as the organization and is limited by an RBAC role you choose, and the audit log shows the organization rather than a person. A team token acts as a team. For an agent that nobody supervises second by second, the organization token with a deliberately small role is the right default. Source: the access tokens page on pulumi.com/docs, read 6 October 2026. Mention that org tokens and the audit log detail depend on your Pulumi Cloud edition, so check yours.
+[2 min] Pulumi Cloud has three kinds of access token. A personal token acts as you, with all your permissions. An organization token acts as the organization and is limited by an RBAC role you choose, and the audit log shows the organization rather than a person. A team token acts as a team. For an agent that nobody supervises second by second, the organization token with a deliberately small role is the right default. Source: the access tokens page on pulumi.com/docs, read 6 October 2026. Mention editions: organization tokens are in Essentials, Pro and Enterprise, team tokens in Pro and Enterprise, so check yours.
 -->
 ---
 # Two questions covered, four to go
@@ -509,7 +509,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Two layers, and the second does not trust the first. Layer one is guard.mjs, which refuses the apply tool call. Layer two is Pulumi Cloud: give the token a role built on the Stack Read permission set and an update is refused by the service even if the proxy had a bug. The caveat, stated up front: custom permission sets need a Pulumi Cloud edition that includes them. Without that, the guard is your only enforced layer. Sources: the permission sets page on pulumi.com/docs, read 6 October 2026.
+[2.5 min] Two layers, and the second does not trust the first. Layer one is guard.mjs, which refuses the apply tool call. Layer two is Pulumi Cloud: give the token a role built on the Stack Read permission set and an update is refused by the service even if the proxy had a bug. The caveat, stated up front: custom roles and permission sets need the Pulumi Pro or Enterprise edition. Without that, the guard is your only enforced layer. Sources: the permission sets page on pulumi.com/docs, read 6 October 2026.
 -->
 ---
 <div class="sec">
@@ -647,14 +647,14 @@ defaults:
 [2.5 min] A human colleague knows your tagging rule and would not add a surprise resource. An agent knows neither unless the diff shows it. So there are two extra checks. One: did it follow the conventions already in the file, tags, naming, outputs. Two: did it ask for more than the task needed, a wider policy, an extra resource. Hold on to check one. In the demo the agent's diff really does miss something.
 -->
 ---
-# Where this breaks today: the guard is ours, the audit trail is thin, and state can race
+# Where this breaks today: the guard is ours, the audit trail is thin, and read-only still decrypts
 
 <div class="zoom-content">
 
 <div class="grid grid-cols-3 gap-6 mt-4">
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-shield-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">The guard is ours</div><p>Stock 0.2.0 has no allow-list, so we built <code>guard.mjs</code></p></div>
-  <div class="gpu-card gpu-card--muted step-card" v-click><ph-scroll class="step-icon" /><div class="gpu-caption gpu-caption--muted">Thin audit trail</div><p>The activity log does not tell agent-proposed from human-typed</p></div>
-  <div class="gpu-card gpu-card--muted step-card" v-click><ph-lock-key class="step-icon" /><div class="gpu-caption gpu-caption--muted">State locking</div><p>Stops corruption, not two people disagreeing</p></div>
+  <div class="gpu-card gpu-card--muted step-card" v-click><ph-scroll class="step-icon" /><div class="gpu-caption gpu-caption--muted">Thin audit trail</div><p>Audit logs record user, event and IP; no documented field marks an agent</p></div>
+  <div class="gpu-card gpu-card--muted step-card" v-click><ph-lock-key class="step-icon" /><div class="gpu-caption gpu-caption--muted">Read-only still decrypts</div><p>Stack Read includes stack:decrypt, so secrets stay readable</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">Not run live</div><p><code>pulumi up</code> and <code>destroy</code> never ran against AWS in the build</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-key class="step-icon" /><div class="gpu-caption gpu-caption--muted">Token layer unverified</div><p>The read-only token refusal is documented, not executed</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-arrows-clockwise class="step-icon" /><div class="gpu-caption gpu-caption--muted">Docs moved on</div><p>Docs point to the hosted server; the demo pins local 0.2.0</p></div>
@@ -670,7 +670,7 @@ defaults:
 </style>
 
 <!--
-[3 min] One: the stock MCP server version we pin has no allow-list, so the guard is workshop code. Two: the Pulumi Cloud activity log records who ran an update and when, but does not on its own tell you whether a person typed it or an agent proposed it. Three: state locking prevents two applies from corrupting state, it does not stop a human and an agent from disagreeing. Four, about this build specifically: the apply and destroy steps and the token layer were not run against live AWS or Pulumi Cloud when we built the demo, so rehearse them before you present. Five: the docs now point at the hosted server, we pin the local package so a guard can sit in front. Say all of that out loud.
+[3 min] One: the stock MCP server version we pin has no allow-list, so the guard is workshop code. Two: the Pulumi Cloud audit log, a Pro and Enterprise feature, records the user, the event, the time and the source IP. The docs describe no field that marks a call as agent or human, so do not promise that. Three: the Stack Read permission set includes stack:decrypt, so a read-only token can still decrypt. Treat it as a secrets question too. Four, about this build specifically: the apply and destroy steps and the token layer were not run against live AWS or Pulumi Cloud when we built the demo, so rehearse them before you present. Five: the docs now point at the hosted server, we pin the local package so a guard can sit in front. Say all of that out loud.
 -->
 ---
 # Five questions answered, one to go: does the boundary hold?
@@ -931,7 +931,7 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 <div class="checks">
   <div class="gpu-card check" v-click><ph-list-bullets /><div><div class="gpu-caption gpu-caption--accent">1 · Count</div><code>8 tools</code></div></div>
   <div class="gpu-card check" v-click><ph-prohibit /><div><div class="gpu-caption gpu-caption--accent">2 · Apply</div><code>pulumi-cli-up</code> absent</div></div>
-  <div class="gpu-card check" v-click><ph-eye /><div><div class="gpu-caption gpu-caption--accent">3 · What stays</div>read and preview</div></div>
+  <div class="gpu-card check" v-click><ph-eye /><div><div class="gpu-caption gpu-caption--accent">3 · What stays</div>read, preview and refresh</div></div>
 </div>
 
 </div>
@@ -949,7 +949,7 @@ node 02-mcp-server/probe.mjs -- node 03-scoped-access/guard.mjs
 </style>
 
 <!--
-[5 min] Step three, folder 03-scoped-access. Same probe, but pointed at guard.mjs, which starts the same server behind its allow-list. Eight tools. The apply tool is not in the list. Read and preview tools remain.
+[5 min] Step three, folder 03-scoped-access. Same probe, but pointed at guard.mjs, which starts the same server behind its allow-list. Eight tools. The apply tool is not in the list. Registry lookups, preview, stack output and refresh remain.
 -->
 ---
 # 04 · Asked for a log bucket, the agent returns a diff, not a change
