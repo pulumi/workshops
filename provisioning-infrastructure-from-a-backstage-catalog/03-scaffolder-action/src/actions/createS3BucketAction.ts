@@ -48,15 +48,33 @@ export const createS3BucketAction = () => {
       // Credentials are not configured here: this action assumes the
       // Backstage backend process already has AWS/Pulumi Cloud access,
       // bootstrapped in steps 4-5 of this workshop (ESC + OIDC).
+      // Step 6 toggle: set WORKSHOP_OMIT_TEAM_TAG=true on the Backstage
+      // backend to request a bucket without the `team` tag.
+      const team =
+        process.env.WORKSHOP_OMIT_TEAM_TAG === 'true'
+          ? undefined
+          : process.env.WORKSHOP_TEAM ?? 'platform';
+
       const stack = await LocalWorkspace.createOrSelectStack({
         stackName: bucketName,
         projectName: PULUMI_PROJECT_NAME,
-        program: createS3BucketProgram({ bucketName }),
+        program: createS3BucketProgram({ bucketName, team }),
       });
+
+      // Step 4: short-lived AWS credentials come from an ESC environment
+      // (<org>/backstage-s3-bucket/backstage-demo) linked to the stack.
+      const escEnvironment = process.env.PULUMI_ESC_ENVIRONMENT;
+      if (escEnvironment) {
+        await stack.addEnvironments(escEnvironment);
+      }
+
+      // Step 6: a local policy pack path turns on policy checks at up().
+      const policyPack = process.env.PULUMI_POLICY_PACK_PATH;
 
       await stack.setConfig('aws:region', { value: 'us-east-1' });
 
       const upResult = await stack.up({
+        ...(policyPack ? { policyPacks: [policyPack] } : {}),
         onOutput: message => ctx.logger.info(message.trimEnd()),
       });
 

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Tears down everything this workshop's demo can have created.
 #
-# The brief's own teardown note blurs two different Pulumi stacks together: the
+# The workshop plan's own teardown note blurs two different Pulumi stacks together: the
 # per-bucket demo stack the scaffolder action creates (project
 # backstage-s3-bucket, one stack per bucket name) only ever holds a bucket and a
 # bucket policy, never the IAM role or OIDC provider. Those two live in the

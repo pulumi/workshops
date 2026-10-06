@@ -1,8 +1,8 @@
-In this step we tear down everything the workshop can have created, in the order the brief specifies (brief §4, step 7): the Pulumi-managed resources first, then the stack record, then the EC2 host that sits outside the Pulumi-managed stack.
+In this step we tear down everything the workshop can have created, in the order the workshop plan specifies (workshop plan): the Pulumi-managed resources first, then the stack record, then the EC2 host that sits outside the Pulumi-managed stack.
 
 ## Why teardown is two tiers, not one
 
-The brief's teardown note blurs two different Pulumi stacks together. Each participant's "Create" click produces its own stack in the `backstage-s3-bucket` project (one bucket + one bucket policy per stack); the IAM role and OIDC provider from `04-esc-oidc` live in a separate, presenter-run-once bootstrap stack under `04-esc-oidc/bootstrap`. Destroying the bootstrap stack mid-workshop would strand every participant's Automation API call without credentials, so `teardown.sh` keeps the two tiers apart and defaults to the safe one.
+The workshop plan's teardown note blurs two different Pulumi stacks together. Each participant's "Create" click produces its own stack in the `backstage-s3-bucket` project (one bucket + one bucket policy per stack); the IAM role and OIDC provider from `04-esc-oidc` live in a separate, presenter-run-once bootstrap stack under `04-esc-oidc/bootstrap`. Destroying the bootstrap stack mid-workshop would strand every participant's Automation API call without credentials, so `teardown.sh` keeps the two tiers apart and defaults to the safe one.
 
 ## Usage
 

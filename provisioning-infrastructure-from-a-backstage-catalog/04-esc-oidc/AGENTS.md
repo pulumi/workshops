@@ -73,7 +73,7 @@ pulumi env open <your-pulumi-org>/backstage-s3-bucket/backstage-demo
 
 ## Wiring: how these credentials actually reach the Automation API program
 
-This is the part of the brief most likely to be assumed rather than
+This is the part of the workshop plan most likely to be assumed rather than
 checked, so it is stated plainly here.
 
 The Backstage backend process (whatever starts `03-scaffolder-action`'s
@@ -159,6 +159,6 @@ outlive even the hour `pulumi env run` is naturally limited to.
   against dummy/mocked credentials because Pulumi's AWS provider does not
   validate credentials during `preview` for simple resource shapes, but
   `bootstrap/`'s program does not need real AWS access to typecheck either
-  — the distinction the brief draws (preview vs. up both needing real
+  — the distinction the workshop plan draws (preview vs. up both needing real
   credentials here) applies to actually resolving whether the OIDC trust
   relationship is well-formed against AWS, which only real `up` can confirm.

@@ -14,7 +14,7 @@
  * available (via Pulumi ESC) -- it is deliberately not part of this
  * program.
  *
- * Deviation from the workshop brief, confirmed 2026-09-30: the brief's
+ * Deviation from the workshop plan, confirmed 2026-09-30: the workshop plan's
  * sources call the bucket resource `aws.s3.BucketV2`. The Pulumi registry
  * page for that resource (https://www.pulumi.com/registry/packages/aws/api-docs/s3/bucketv2/,
  * read 2026-09-30) now reads "Deprecated: s3.BucketV2 has been deprecated
@@ -33,6 +33,8 @@ const WORKSHOP_TAG = 'provisioning-infrastructure-from-a-backstage-catalog';
 export interface S3BucketProgramArgs {
   /** Name of the S3 bucket to create. Must be a valid, globally-unique S3 bucket name. */
   bucketName: string;
+  /** Value of the `team` tag. Omit it and the step 6 policy pack blocks the update. */
+  team?: string;
 }
 
 /**
@@ -42,12 +44,13 @@ export interface S3BucketProgramArgs {
  * Pulumi engine -- it is not a separate CLI invocation.
  */
 export function createS3BucketProgram(args: S3BucketProgramArgs): PulumiFn {
-  const { bucketName } = args;
+  const { bucketName, team } = args;
 
   return async () => {
     const tags = {
       workshop: WORKSHOP_TAG,
       Name: `backstage-${bucketName}`,
+      ...(team ? { team } : {}),
     };
 
     const bucket = new aws.s3.Bucket('scaffolded-bucket', {

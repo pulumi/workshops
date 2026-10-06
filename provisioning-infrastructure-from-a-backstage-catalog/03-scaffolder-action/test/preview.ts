@@ -45,7 +45,10 @@ async function main() {
     {
       stackName,
       projectName: PULUMI_PROJECT_NAME,
-      program: createS3BucketProgram({ bucketName }),
+      program: createS3BucketProgram({
+        bucketName,
+        team: process.env.PREVIEW_OMIT_TEAM === 'true' ? undefined : 'platform',
+      }),
     },
     {
       envVars: {
@@ -69,7 +72,9 @@ async function main() {
   console.log('Running `pulumi preview` (no `up`, no real AWS calls)...\n');
 
   try {
+    const policyPack = process.env.PULUMI_POLICY_PACK_PATH;
     const previewResult = await stack.preview({
+      ...(policyPack ? { policyPacks: [policyPack] } : {}),
       onOutput: message => process.stdout.write(message),
     });
 

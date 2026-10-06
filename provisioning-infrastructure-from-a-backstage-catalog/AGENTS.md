@@ -14,7 +14,7 @@ for the layout, the prerequisites and how to run the whole flow end to end.
 
 The repo carries what an attendee or a future presenter needs: the demo code
 and these notes (slides follow in a later run on this same branch). Working
-documents — brief drafts, fact-check logs, open questions — stay off this
+documents — plan drafts, fact-check logs, open questions — stay off this
 branch; `.gitignore` keeps every `*.md` out except `README.md` and the
 `AGENTS.md` files. If you write a new working document, it is ignored by
 default; that is deliberate, do not force-add it.
@@ -25,7 +25,7 @@ default; that is deliberate, do not force-add it.
 - Facts about Backstage and Pulumi products come from the docs listed under
   "Sources" in `README.md`, read the day this folder was built. If a doc is
   unclear or a brief's claim does not match the current docs, say so in the
-  pull request rather than guessing or silently following the brief.
+  pull request rather than guessing or silently following the workshop plan.
 - Canonical names: Pulumi Neo (or Neo), Pulumi ESC, Pulumi Cloud, Pulumi IaC,
   Pulumi Policies, pulumi console (lowercase console). Never "Copilot",
   "Pulumi Service", "Insights", or "CrossGuard" as a product name.
@@ -60,7 +60,7 @@ subsequent run on this same branch, built from the demo flow documented here.
   credentials on the build workstation).
 - `04-esc-oidc/environment.yaml`: ESC environment definition. Check: valid
   YAML; the `aws-login` provider's fields (`roleArn`, `sessionName`,
-  `duration`) match the current ESC docs, not the brief's assumed field name.
+  `duration`) match the current ESC docs, not the workshop plan's assumed field name.
 - `05-pulumi-cloud/`: no code, a presenter walkthrough only.
 - `06-policy/`: Pulumi Policies pack. Check: `npm install && npx tsc --noEmit`
   must pass, and `npx tsc && node bin/test/rules-test.js` must report

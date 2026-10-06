@@ -15,9 +15,7 @@ developer clicks "Create."
 
 ## Sessions and speakers
 
-Not yet scheduled. The board card for this workshop tracks `Event page`,
-`Sessions` and `Speakers` as `unknown`; update this section once a session is
-booked rather than inventing a date here.
+Not yet scheduled. Speakers are to be announced.
 
 ## What attendees learn
 
@@ -58,79 +56,101 @@ up (`05`), the guardrail that can block it (`06`), and cleanup (`07`).
 
 ## Prerequisites
 
-- A Pulumi Cloud organization and a personal access token (`pulumi login`).
-  The demo's stacks are Pulumi Cloud stacks; nothing here needs a Pulumi Cloud
-  Neo entitlement.
-- An AWS account you are willing to create a handful of S3 buckets and one IAM
-  role in, and permission to create an OIDC identity provider for the
-  `04-esc-oidc/bootstrap` step.
-- Docker and Docker Compose, to run `01-backstage-host`.
-- Node.js ≥ 20 and npm, for the scaffolder action, the ESC bootstrap and the
-  policy pack (each is its own TypeScript project with its own
-  `package.json`).
-- The Pulumi CLI. Pinned in the brief at v3.265.0; this build was verified
-  against the workstation's installed v3.263.0, so confirm the CLI version
-  behaves the same before presenting, or upgrade to v3.265.0 first.
+For participants:
+
+- An AWS account where you can create S3 buckets, IAM roles and an IAM OIDC identity provider (about \$1 in total, see [Cost](#teardown-and-cost)).
+- Node.js 20 or later and npm.
+- The Pulumi CLI, v3.265.0 (this folder was checked against that exact version).
+- A Pulumi Cloud account and organization, logged in with `pulumi login`.
+- Enough TypeScript to read a short function.
+
+For the presenter, in addition:
+
+- Docker and Docker Compose, to run `01-backstage-host` on one EC2 host (t3.medium, us-east-1).
+- The OIDC identity provider and IAM role from `04-esc-oidc/bootstrap`, created before the session.
+- A fallback ESC environment holding a pre-minted short-lived credential, in case live OIDC fails.
+
+## Run the slides
+
+The slides are added in a follow-up commit on this branch; there is nothing to run yet.
 
 ## Run the demo
 
+Set up once, before the session:
+
 ```bash
-# 1. Stand up Backstage (one time per workshop run)
-cd 01-backstage-host
-./setup.sh                    # scaffolds the Backstage app and builds it
-docker compose up --build     # Backstage on :7007, seeded with the catalog entry
-cd ..
+# Backstage host (step 1). Needs Docker.
+cd 01-backstage-host && ./setup.sh && docker compose up --build -d && cd ..
 
-# 2. Bootstrap the ESC OIDC role (one time, before the workshop, against your own AWS account)
-cd 04-esc-oidc/bootstrap
-npm install
-npx tsc --noEmit
-pulumi up                     # creates the IAM role + OIDC provider; see AGENTS.md for the two placeholders to replace first
-cd ../..
-pulumi env init <org>/<project>/backstage-demo   # then `pulumi env edit` with 04-esc-oidc/environment.yaml's contents
+# OIDC trust for ESC (step 4). Replace PULUMI_ORG in index.ts first; see 04-esc-oidc/AGENTS.md.
+cd 04-esc-oidc/bootstrap && npm install && pulumi stack init dev && pulumi config set aws:region us-east-1 && pulumi up && cd ../..
+pulumi env init <org>/backstage-s3-bucket/backstage-demo
+pulumi env edit --file 04-esc-oidc/environment.yaml <org>/backstage-s3-bucket/backstage-demo
 
-# 3. Install the scaffolder action's dependencies and add it to the Backstage backend
-cd 03-scaffolder-action
-npm install
-npx tsc --noEmit
-cd ..
-
-# 4. Publish and enable the policy pack (one time)
-cd 06-policy
-npm install
-npx tsc --noEmit
-pulumi policy publish <org>
-pulumi policy enable <org>/backstage-demo-guardrails latest
-cd ..
-
-# 5. In the Backstage UI: open the "s3-bucket-pulumi" template, enter a bucket
-#    name, click Create. Watch the action's logs show `pulumi up` running
-#    in-process. Then open the stack in Pulumi Cloud (05-pulumi-cloud) to show
-#    its resources and history, and retry with no `team` tag to show the
-#    policy pack blocking the request (06-policy).
-
-# 6. Tear down
-cd 07-teardown
-./teardown.sh                 # destroys every per-bucket demo stack
-./teardown.sh --full          # also destroys the bootstrap stack and stops Backstage
+# Action dependencies and policy pack (steps 3 and 6)
+cd 03-scaffolder-action && npm install && cd ..
+cd 06-policy && npm install && cd ..
 ```
+
+The scaffolder action reads four optional environment variables from the Backstage backend process:
+
+| Variable | Used in step | Effect |
+|---|---|---|
+| `PULUMI_ESC_ENVIRONMENT` | 4 | `<org>/backstage-s3-bucket/backstage-demo`; links the ESC environment to each stack so AWS credentials are short-lived |
+| `PULUMI_POLICY_PACK_PATH` | 6 | Absolute path to `06-policy`; runs the pack on every `up()` |
+| `WORKSHOP_TEAM` | 6 | Value of the `team` tag (default `platform`) |
+| `WORKSHOP_OMIT_TEAM_TAG` | 6 | `true` leaves the tag off, which the policy pack blocks |
+
+Per step, with the end state and a proof command:
+
+1. Backstage is up. Open `http://<host>:7007`, browse the catalog, open Create. Proof: `curl -fsS http://<host>:7007/api/catalog/entities | head -c 200`.
+2. The template renders and Create fails because the action is not registered yet. Proof: the task log in Backstage names the missing action `pulumi:s3-bucket`.
+3. Register the module in the Backstage backend (see `03-scaffolder-action/AGENTS.md`) and click Create. A real bucket, bucket policy and tags exist. Proof: `aws s3api get-bucket-tagging --bucket <name>`.
+4. Remove static AWS keys from the host, set `PULUMI_ESC_ENVIRONMENT`, restart Backstage, click Create again. Same result with no long-lived credential. Proof: `env | grep -c AWS_ACCESS_KEY_ID` prints `0` inside the backend container.
+5. Show the stack in Pulumi Cloud. Proof: `05-pulumi-cloud/show-history.sh <org> <bucket-name>`.
+6. Set `PULUMI_POLICY_PACK_PATH` and `WORKSHOP_OMIT_TEAM_TAG=true`, restart, click Create. The update is blocked and Backstage shows `s3-bucket-require-team-tag`. Proof: the same violation prints offline with `PREVIEW_OMIT_TEAM=true PULUMI_POLICY_PACK_PATH=$PWD/../06-policy npx tsx test/preview.ts` from `03-scaffolder-action`.
+7. Teardown, below.
+
+Between runs, reset with `07-teardown/teardown.sh` (per-bucket stacks only) and unset `WORKSHOP_OMIT_TEAM_TAG`.
+
+### Teardown and cost
+
+```bash
+cd 07-teardown
+./teardown.sh          # destroys each bucket stack and removes its record
+./teardown.sh --full   # also destroys the bootstrap stack; then stop or terminate the EC2 host
+```
+
+Expected cost is under \$1: a t3.medium for about two hours (about \$0.10), one bucket per run, and IAM objects at no charge.
+
+## Checks that ran offline
+
+No AWS credentials, Docker or live Backstage were available, so the live steps are not verified here. These ran against Pulumi CLI v3.265.0 with a local file backend and dummy credentials:
+
+- `npx tsc --noEmit` in `03-scaffolder-action`, `04-esc-oidc/bootstrap` and `06-policy`.
+- `npx tsx test/rules-test.ts` in `06-policy`: 4 passed.
+- `npx tsx test/preview.ts` in `03-scaffolder-action`: 3 resources to create; with the policy pack and no `team` tag the preview fails with the `s3-bucket-require-team-tag` violation.
+- `pulumi preview` in `04-esc-oidc/bootstrap`: 4 resources to create.
+- `shellcheck` on every `.sh` file; YAML parse of every YAML file.
 
 ## Sources
 
-Facts in this demo come from these pages, read on 2026-09-30 unless noted:
+Read on 2026-10-06 unless noted. The first read of each page was 2026-09-30.
 
-- Backstage getting started: https://backstage.io/docs/getting-started/
-- Backstage Docker deployment: https://backstage.io/docs/deployment/docker
-- Backstage software catalog descriptor format: https://backstage.io/docs/features/software-catalog/descriptor-format
-- Backstage guest auth provider: https://backstage.io/docs/auth/guest/provider
-- Backstage software templates, writing templates: https://backstage.io/docs/features/software-templates/writing-templates/
+- Pulumi Automation API: https://www.pulumi.com/docs/iac/concepts/automation-api/
+- Pulumi ESC `aws-login` provider: https://www.pulumi.com/docs/esc/providers/login/aws-login/
+- Configuring OIDC for AWS: https://www.pulumi.com/docs/esc/guides/configuring-oidc/aws/
+- Pulumi Policies: https://www.pulumi.com/docs/discovery-governance/concepts/policy-as-code/
+- State and backends: https://www.pulumi.com/docs/iac/concepts/state-and-backends/
+- Registry, `aws.s3.BucketV2` (deprecated in favor of `aws.s3.Bucket`): https://www.pulumi.com/registry/packages/aws/api-docs/s3/bucketv2/
+- Registry, `aws.s3.Bucket`: https://www.pulumi.com/registry/packages/aws/api-docs/s3/bucket/
+- Registry, `aws.s3.BucketPolicy`: https://www.pulumi.com/registry/packages/aws/api-docs/s3/bucketpolicy/
+- Registry, `aws.iam.OpenIdConnectProvider`: https://www.pulumi.com/registry/packages/aws/api-docs/iam/openidconnectprovider/
+- Registry, `aws.iam.Role`: https://www.pulumi.com/registry/packages/aws/api-docs/iam/role/
+- Pulumi v3.265.0 release: https://github.com/pulumi/pulumi/releases/tag/v3.265.0
 - Backstage custom scaffolder actions: https://backstage.io/docs/features/software-templates/writing-custom-actions/
-- Pulumi registry, `aws.s3.BucketV2` (confirmed deprecated in favor of `aws.s3.Bucket`): https://www.pulumi.com/registry/packages/aws/api-docs/s3/bucketv2/
-- Pulumi registry, `aws.s3.Bucket`: https://www.pulumi.com/registry/packages/aws/api-docs/s3/bucket/
-- Pulumi ESC `aws-login` OIDC provider: https://www.pulumi.com/docs/esc/providers/login/aws-login/
-- Pulumi Policies (policy as code): https://www.pulumi.com/docs/discovery-governance/concepts/policy-as-code/
-- Pulumi CLI `pulumi policy`/`pulumi console`/`pulumi stack`/`pulumi destroy` command reference: read from the installed CLI's own `--help` output (v3.263.0), 2026-09-30.
-
-Read 2026-09-29 as part of the workshop brief: the original brief document
-(linked from the board card that tracks this workshop) and its own source
-list, including the Guidewire engineering write-up that motivates the opening.
+- Backstage software templates: https://backstage.io/docs/features/software-templates/writing-templates/
+- Backstage Docker deployment: https://backstage.io/docs/deployment/docker
+- Backstage catalog descriptor format: https://backstage.io/docs/features/software-catalog/descriptor-format
+- Backstage guest auth provider: https://backstage.io/docs/auth/guest/provider
+- CLI commands (`pulumi policy`, `pulumi stack`, `pulumi console`): `--help` output of v3.265.0, 2026-10-06.

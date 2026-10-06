@@ -10,7 +10,7 @@
 #     example on that page, which shows `oidc: { duration: 1h, roleArn: ..., sessionName: ... }`.
 #   - required fields under `oidc` are `roleArn` and `sessionName` (`duration`
 #     defaults if omitted, but this environment sets it explicitly to 1h per
-#     the brief).
+#     the workshop plan).
 #   - `fn::open::aws-login` exports `accessKeyId` / `secretAccessKey` /
 #     `sessionToken` under whatever key you name it (`aws.login` below). They
 #     are NOT auto-exported as environment variables -- the doc's own example

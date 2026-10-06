@@ -73,7 +73,7 @@ needs no per-stack setup at all.
 
 ## How this actually gets enforced against an Automation-API-driven stack
 
-The brief's original framing was "bound to this project." That is not quite
+The workshop plan's original framing was "bound to this project." That is not quite
 how Pulumi Cloud's policy groups work, and the correction matters for
 getting the demo right, so here is what the docs actually say (read
 2026-09-30, https://www.pulumi.com/docs/discovery-governance/concepts/policy-as-code/policy-groups/):

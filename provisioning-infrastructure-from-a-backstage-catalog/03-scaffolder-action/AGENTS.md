@@ -86,7 +86,7 @@ credentials this backend process assumes it already has (via Pulumi ESC) --
 they are prerequisite infrastructure for this action to run, not resources
 this action itself creates.
 
-## Deviation from the brief: `aws.s3.Bucket`, not `aws.s3.BucketV2`
+## Deviation from the workshop plan: `aws.s3.Bucket`, not `aws.s3.BucketV2`
 
 The workshop brief's sources call for `aws.s3.BucketV2`. As of 2026-09-30,
 https://www.pulumi.com/registry/packages/aws/api-docs/s3/bucketv2/ states:
