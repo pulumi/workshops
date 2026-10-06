@@ -1,0 +1,8 @@
+name: give-your-ai-agent-the-keys-safely-base-stack
+description: >-
+  Base stack for "Give your AI agent the keys, safely": a VPC and an S3
+  artifacts bucket that an MCP-connected agent later proposes a change to.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

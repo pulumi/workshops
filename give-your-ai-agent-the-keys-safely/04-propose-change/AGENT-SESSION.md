@@ -1,0 +1,10 @@
+# Agent session (illustrative)
+
+This is a walkthrough, not a captured transcript. No live agent-plus-MCP-client session ran during this build: that needs a real LLM client (for example Claude Desktop) wired to the `03-scoped-access` MCP server, plus AWS credentials for the stack it reads. This build environment has neither. What follows is the plausible sequence of tool calls the guard's allow-list permits, narrated so a workshop participant can see the shape of it before running the real thing themselves.
+
+1. **Look at what exists.** The agent calls `pulumi-cli-stack-output` against `01-base-stack` to see the stack's current outputs (`vpcId`, `subnetId`, `artifactsBucketName`, `artifactsBucketArn`, `region`). It calls `pulumi-cli-refresh` to reconcile that state against the real cloud resources before trusting it, then `pulumi-cli-preview` to confirm the stack has no pending drift before proposing anything on top of it.
+2. **Check the resource shape.** The agent calls `pulumi-registry-get-resource` for `aws:s3/bucket:Bucket` to confirm the real input shape, `bucketPrefix`, `tags`, and so on, rather than guess at property names from training data. It could also call `pulumi-registry-list-resources` first if it were not already sure of the exact type token.
+3. **Write the change.** With the stack's real state and the resource's real shape in hand, the agent edits `01-base-stack/index.ts`: a new `logs` bucket, and a new `logsBucketName` export alongside the existing ones.
+4. **Try to go further, and stop.** The natural next step for the agent would be to run the update. `pulumi-cli-up` is not on the guard's allow-list from `03-scoped-access`, so that call is not available to it at all, not denied at request time, simply not a tool it has. The agent's only remaining move is to hand back what it wrote: `proposed.diff` in this folder, offered as a suggested edit, not applied to any stack.
+
+This is the concrete mechanism behind the workshop's promise: the agent proposes, it cannot silently apply.
