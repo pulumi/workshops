@@ -131,4 +131,20 @@ Commit read: 9b37f9afe8c7b0d406f19bc9116b16d5689389ce (pulumi/marketing-web, rea
 
 ## Fact-check log
 
-(Filled by the fact-check pass.)
+Separate pass run 2026-10-07 after the deck was drafted. 27 claims extracted from slides and speaker notes, moment first.
+
+Sources opened this run (2026-10-07):
+- https://www.pulumi.com/docs/iac/automation-api/ (Automation API: strongly typed SDK for up, preview, destroy, stack init; inline programs)
+- https://www.pulumi.com/docs/esc/environments/configuring-oidc/aws/ (ESC authenticates to AWS with OpenID Connect through an IAM role)
+- https://www.pulumi.com/docs/esc/providers/login/ (login providers issue short-lived credentials)
+- https://www.pulumi.com/docs/insights/policy/ (policies, policy packs, policy groups in Pulumi Cloud)
+- https://backstage.io/docs/features/software-templates/ and https://backstage.io/docs/features/software-templates/writing-custom-actions/ (templates, parameters, tasks, custom actions)
+- Demo folder and its teardown.sh, README.md in this branch (commands, cost, teardown modes)
+- Medium blocked page body again (HTTP 403, 2026-10-07). The Guidewire title text was read in the search snippet of a Medium listing page only.
+
+Results:
+- Moment: the quoted line "How KubeVela & Crossplane helped us eliminate state files, drift, and deliver infrastructure faster." is confirmed as Guidewire engineering blog text via the Medium listing snippet. The article body was not read. Slides claim only what that line says. Open question for review: confirm the post date and whether the line is a title or subtitle.
+- Confirmed against docs: Automation API as a typed SDK with up, preview and destroy; inline programs; ESC and OIDC to AWS; login providers issue short-lived credentials; policies, packs and policy groups; scaffolder templates, tasks and custom actions.
+- Confirmed against the demo folder: commands and flags on the demo slides, the under-$1 cost line, teardown modes.
+- Corrected: "Many platform teams make the same trade for the same reasons" removed (unsupported). Step 7 headline said teardown leaves nothing but the host; the default script keeps the OIDC bootstrap stack, so the headline now says every bucket stack is removed and --full removes the rest, and the note says --full also stops the Compose host.
+- Not demonstrated, stated as pattern claims only: use with other providers (slide 25 marks them as not shown).

@@ -133,7 +133,6 @@ defaults:
     <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-3">
       <li>Guidewire's engineering blog, on platform engineering with KubeVela</li>
       <li>The post is about getting infrastructure to developers faster</li>
-      <li>Many platform teams make the same trade for the same reasons</li>
     </ul>
     </v-clicks>
   </div>
@@ -152,7 +151,7 @@ defaults:
 </style>
 
 <!--
-[3 min] Open on a real sentence from a platform team. Read the subtitle aloud. Say that Guidewire answered with KubeVela and Crossplane, and that we will answer with Backstage and Pulumi. Ask the room how many run a portal today and what Create does behind it. Keep it short, the point is the question at the end.
+[3 min] Open on a real sentence from a platform team. Read the subtitle aloud. Say that Guidewire answered with KubeVela and Crossplane, and that we will answer with Backstage and Pulumi. Ask the room how many run a portal today and what Create does behind it. Keep it short. The question at the end is what matters.
 -->
 
 ---
@@ -207,7 +206,7 @@ defaults:
 </style>
 
 <!--
-[3 min] Walk the two cards. The left side is the portal as a front door with nothing behind it. The right side is the same portal where the form is the program's input. The rest of the workshop is how to build the right side. Say plainly that a portal is good at catalogs and forms, and that state, credentials, policy and history belong to whatever runs the infrastructure.
+[3 min] Walk the two cards. The left side is the portal as a front door with nothing behind it. The right side is the same portal where the form is the program's input. The rest of the workshop is how to build the right side. Say that a portal is good at catalogs and forms, and that state, credentials, policy and history belong to whatever runs the infrastructure.
 -->
 
 ---
@@ -502,7 +501,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] The Automation API supports both. We pick inline because the platform team owns the portal and the action together. If an application team owns the program, local source keeps the release cycles apart. Do not belabor this, it is a design choice, not a requirement.
+[2.5 min] The Automation API supports both. We pick inline because the platform team owns the portal and the action together. If an application team owns the program, local source keeps the release cycles apart. Do not belabor this. It is a design choice.
 -->
 
 ---
@@ -820,7 +819,7 @@ defaults:
   </div>
   <div class="gpu-card gpu-card--accent mode" v-click>
     <div class="mode__head"><ph-cloud-arrow-up class="mode__icon" /><code class="mode__name">azure-native, gcp</code></div>
-    <p>Swap the resources, keep the action</p>
+    <p>Swap the resources</p>
     <div class="mode__track"><i /><i /><i /><i /><i /><b>up</b></div>
     <div class="mode__note">Not shown in the demo</div>
   </div>
@@ -882,7 +881,7 @@ defaults:
 </style>
 
 <!--
-[2.5 min] Say the limits plainly. This is a pattern with moving parts, not a product button. Each card is a thing a platform team still owns. Invite the room to say which one worries them most.
+[2.5 min] Say the limits as they are. This is a pattern with moving parts. Each card is a thing a platform team still owns. Invite the room to say which one worries them most.
 -->
 
 ---
@@ -1004,7 +1003,7 @@ const upResult = await stack.up({ policyPacks: [policyPack] });
 </style>
 
 <!--
-[2 min] The only program code in the deck. Abridged from the action in 03-scaffolder-action: the real code reads the ESC environment and the policy pack path from environment variables and only applies them when set. Stack per bucket, ESC environment, policy pack, up. That is the whole shape.
+[2 min] The only program code in the deck. Abridged from the action in 03-scaffolder-action: the real code reads the ESC environment and the policy pack path from environment variables and only applies them when set. Stack per bucket, ESC environment, policy pack, up.
 -->
 
 ---
@@ -1032,11 +1031,11 @@ const upResult = await stack.up({ policyPacks: [policyPack] });
 
 ---
 
-# Seven steps take a catalog entry to a policy-checked bucket and back
+# Seven steps take a catalog entry to a checked bucket
 
-<div class="zoom-content">
+<div class="zoom-content" style="padding-top: 0.6rem">
 
-<div class="steps">
+<div class="steps" style="gap: 0.5rem">
   <div class="gpu-card step" v-click><ph-browser class="step__icon" /><p>Backstage is up and the catalog is browsable</p></div>
   <div class="gpu-card step" v-click><ph-note-pencil class="step__icon" /><p>The template renders, Create fails</p></div>
   <div class="gpu-card gpu-card--primary step" v-click><ph-cube class="step__icon" /><p>Registering the action makes a real bucket</p></div>
@@ -1322,7 +1321,7 @@ PREVIEW_OMIT_TEAM=true PULUMI_POLICY_PACK_PATH=$PWD/../06-policy npx tsx test/pr
 
 ---
 
-# 7 · Teardown leaves nothing behind but the host you stop
+# 7 · Teardown removes every bucket stack, and --full removes the rest
 
 <div class="zoom-content">
 
@@ -1368,7 +1367,7 @@ PREVIEW_OMIT_TEAM=true PULUMI_POLICY_PACK_PATH=$PWD/../06-policy npx tsx test/pr
 </style>
 
 <!--
-[4 min] Run teardown from 07-teardown. It destroys each bucket stack and removes its record. The full flag also removes the bootstrap stack, so use it only at the end. Stop the EC2 host afterward. Expected cost is under a dollar. Then go to questions.
+[4 min] Run teardown from 07-teardown. It destroys each bucket stack and removes its record. The full flag also destroys the bootstrap stack (IAM role and OIDC provider) and stops the Compose host, so use it only at the end. Stop the EC2 host afterward. Expected cost is under a dollar. Then go to questions.
 -->
 
 ---
