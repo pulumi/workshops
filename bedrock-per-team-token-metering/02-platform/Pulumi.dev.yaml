@@ -1,0 +1,7 @@
+# The stack imports the ESC environment created in 01-credentials. ESC mints
+# short-lived AWS credentials through OIDC on every run, so no AWS key is stored
+# here. The organization is implied by the stack (<org>/dev).
+environment:
+  - bedrock-metering/aws-login
+config:
+  aws:region: us-east-1

@@ -1,0 +1,19 @@
+{
+  "name": "bedrock-metering-guardrails",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Policy pack for the per-team Amazon Bedrock metering workshop",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc -p tsconfig.test.json && node --test \"dist/test/*.js\""
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.48.0",
+    "@pulumi/policy": "1.21.0",
+    "@pulumi/pulumi": "3.267.0"
+  }
+}
