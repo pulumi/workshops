@@ -1,0 +1,21 @@
+{
+    "name": "backstage-demo-guardrails",
+    "version": "0.1.0",
+    "private": true,
+    "description": "Pulumi Policies pack for the Backstage catalog provisioning demo: S3 buckets must carry a team tag",
+    "main": "index.ts",
+    "scripts": {
+        "build": "tsc",
+        "typecheck": "tsc --noEmit",
+        "test": "tsc && node bin/test/rules-test.js"
+    },
+    "dependencies": {
+        "@pulumi/aws": "7.48.0",
+        "@pulumi/policy": "^1.21.0",
+        "@pulumi/pulumi": "^3.266.0"
+    },
+    "devDependencies": {
+        "@types/node": "^22.10.0",
+        "typescript": "5.9.3"
+    }
+}

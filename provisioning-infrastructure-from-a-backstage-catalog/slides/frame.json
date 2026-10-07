@@ -1,0 +1,21 @@
+{
+  "slug": "provisioning-infrastructure-from-a-backstage-catalog",
+  "title": "Provisioning real infrastructure from a Backstage catalog with Pulumi",
+  "subtitle": "Turn a developer's click on Create into a tagged, policy-checked AWS resource, with no ticket and no static key",
+  "demo_title": "Backstage to AWS with Pulumi",
+  "speakers": [{"placeholder": true}],
+  "agenda": [
+    "The pain: Create opens a ticket",
+    "Backstage and the Automation API",
+    "Short-lived credentials with Pulumi ESC",
+    "Pulumi Cloud and policies",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {"title": "Backstage: writing custom scaffolder actions", "url": "https://backstage.io/docs/features/software-templates/writing-custom-actions/", "label": "backstage.io/docs"},
+    {"title": "Pulumi Automation API", "url": "https://www.pulumi.com/docs/iac/packages-and-automation/automation-api/", "label": "pulumi.com/docs/automation-api"},
+    {"title": "Pulumi ESC: AWS login with OIDC", "url": "https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/", "label": "pulumi.com/docs/esc"},
+    {"title": "Pulumi Policies", "url": "https://www.pulumi.com/docs/insights/policy/", "label": "pulumi.com/docs/policy"}
+  ]
+}

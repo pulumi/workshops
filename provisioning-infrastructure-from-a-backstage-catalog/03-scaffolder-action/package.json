@@ -1,0 +1,30 @@
+{
+  "name": "@internal/plugin-scaffolder-backend-module-pulumi-s3-bucket",
+  "version": "0.1.0",
+  "description": "Backstage scaffolder backend module that provisions an S3 bucket via the Pulumi Automation API",
+  "private": true,
+  "backstage": {
+    "role": "backend-plugin-module",
+    "pluginId": "scaffolder",
+    "pluginPackage": "@backstage/plugin-scaffolder-backend"
+  },
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "license": "Apache-2.0",
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "preview": "tsx test/preview.ts"
+  },
+  "dependencies": {
+    "@backstage/backend-plugin-api": "^1.10.1",
+    "@backstage/plugin-scaffolder-node": "^0.13.7",
+    "@pulumi/aws": "7.48.0",
+    "@pulumi/pulumi": "^3.266.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "5.9.3"
+  }
+}
