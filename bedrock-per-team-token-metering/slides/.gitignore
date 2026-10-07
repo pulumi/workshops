@@ -1,0 +1,5 @@
+node_modules/
+dist/
+export-pages/
+*.pdf
+.DS_Store

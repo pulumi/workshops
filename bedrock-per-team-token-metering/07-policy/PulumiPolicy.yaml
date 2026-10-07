@@ -1,0 +1,7 @@
+name: bedrock-metering-guardrails
+runtime: nodejs
+description: >-
+  Guardrails for the per-team Amazon Bedrock metering workshop. Every Bedrock
+  inference profile carries a Team and a CostCenter tag, and no IAM policy
+  grants bedrock:InvokeModel on every resource. Mandatory, so a violation stops
+  `pulumi up` before anything reaches AWS.

@@ -1,0 +1,22 @@
+{
+  "name": "bedrock-per-team-token-metering-slides",
+  "version": "0.1.0",
+  "description": "Meter every token: per-team Amazon Bedrock cost tracking and guardrails as code: Give each team its own tagged inference profile, count its tokens in CloudWatch, and block untagged profiles before they exist",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}
