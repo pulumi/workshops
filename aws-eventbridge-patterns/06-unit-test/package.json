@@ -1,0 +1,21 @@
+{
+  "name": "aws-eventbridge-patterns-unit-test",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo project for the workshop aws-eventbridge-patterns.",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3",
+    "@types/mocha": "10.0.10",
+    "mocha": "12.0.3",
+    "tsx": "4.23.15"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.49.0",
+    "@pulumi/pulumi": "3.268.0"
+  },
+  "scripts": {
+    "test": "mocha --require tsx test/eventRouter.test.ts"
+  }
+}

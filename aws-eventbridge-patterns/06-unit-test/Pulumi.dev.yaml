@@ -1,0 +1,6 @@
+# Credentials come from the ESC environment created in step 1 (01-credentials/environment.yaml).
+# Create it first: pulumi env init <org>/aws-eventbridge-patterns/dev
+environment:
+  - aws-eventbridge-patterns/dev
+config:
+  aws:region: eu-central-1

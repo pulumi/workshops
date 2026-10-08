@@ -1,0 +1,8 @@
+name: aws-eventbridge-patterns
+description: >-
+  Demo project for "Event routing as code on AWS". Step 2: a custom bus, one rule on detail-type and a Lambda target.
+  All steps share one project and one stack, so each step updates the previous one.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
