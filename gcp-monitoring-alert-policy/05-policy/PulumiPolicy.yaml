@@ -1,0 +1,5 @@
+runtime: nodejs
+description: >-
+  Guardrail for the "Monitoring as code on Google Cloud" workshop. A stack that
+  has a Cloud Monitoring custom service must also have an alert policy.
+  Mandatory, so a violation stops the update before any cloud API call.

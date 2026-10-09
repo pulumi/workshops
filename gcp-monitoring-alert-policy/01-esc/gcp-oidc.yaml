@@ -1,0 +1,16 @@
+# Step 1: a Pulumi ESC environment that logs in to Google Cloud through OIDC.
+# No service account key is stored anywhere. Replace the four values with the
+# ones `pulumi env setup gcp` (or the Google Cloud console) gave you; see
+# create-env.sh. GOOGLE_CLOUD_PROJECT takes the project NUMBER.
+values:
+  gcp:
+    login:
+      fn::open::gcp-login:
+        project: 123456789012
+        oidc:
+          workloadPoolId: pulumi-esc
+          providerId: pulumi-esc
+          serviceAccount: pulumi-esc@my-project-id.iam.gserviceaccount.com
+  environmentVariables:
+    GOOGLE_CLOUD_PROJECT: ${gcp.login.project}
+    GOOGLE_OAUTH_ACCESS_TOKEN: ${gcp.login.accessToken}

@@ -1,0 +1,21 @@
+{
+  "name": "gcp-monitoring-guardrails",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Step 8: Pulumi Policies pack that requires an alert policy next to every custom service",
+  "main": "index.ts",
+  "scripts": {
+    "test": "mocha -r ts-node/register test/rules-test.ts"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.0.0",
+    "mocha": "^11.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/policy": "1.21.0",
+    "@pulumi/pulumi": "3.268.0"
+  }
+}

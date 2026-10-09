@@ -1,0 +1,40 @@
+{
+  "slug": "gcp-monitoring-alert-policy",
+  "title": "Monitoring as code on Google Cloud",
+  "subtitle": "An SLO and burn-rate alert component with a dashboard and a policy guardrail",
+  "demo_title": "Monitoring as code on Google Cloud",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The alert nobody wrote",
+    "SLOs and burn rates",
+    "Components, tests and policies",
+    "Credentials with Pulumi ESC",
+    "The demo"
+  ],
+  "resources": [
+    {
+      "title": "Alerting on your burn rate (Google Cloud)",
+      "url": "https://docs.cloud.google.com/stackdriver/docs/solutions/slo-monitoring/alerting-on-budget-burn-rate",
+      "label": "cloud.google.com burn-rate alerting"
+    },
+    {
+      "title": "gcp.monitoring.Slo (Pulumi Registry)",
+      "url": "https://www.pulumi.com/registry/packages/gcp/api-docs/monitoring/slo/",
+      "label": "pulumi.com/registry gcp Slo"
+    },
+    {
+      "title": "Authoring policy packs",
+      "url": "https://www.pulumi.com/docs/insights/policy/policy-packs/authoring/",
+      "label": "pulumi.com/docs policy packs"
+    },
+    {
+      "title": "Pulumi ESC gcp-login provider",
+      "url": "https://www.pulumi.com/docs/esc/providers/login/gcp-login/",
+      "label": "pulumi.com/docs gcp-login"
+    }
+  ]
+}
