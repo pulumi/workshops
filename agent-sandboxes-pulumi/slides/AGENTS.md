@@ -77,19 +77,19 @@ The `slidev-deck` skill lives in the private repository `pulumi/marketing-web`. 
 
 ## Headlines
 
-Every slide, in order, with its pattern and time budget. Read alone, the headlines tell the story.
+Every slide, in order, with its pattern and time budget, taken from `slides.md` on 2026-10-10 (40 slides). Read alone, the headlines tell the story. Step 1 (`01-setup/setup.sh`) has no slide of its own: its command sits on "What we are going to do".
 
 ### Opening frame (generated)
 
-1. Title: Disposable Cloud Sandboxes for AI Agents — pattern: frame — 0.5 min
-2. Speaker (placeholder) — pattern: frame — 1 min
-3. Housekeeping and Agenda (divider) — pattern: frame — 0.25 min
+1. Disposable Cloud Sandboxes for AI Agents: One Pulumi Stack per Task — pattern: frame — 0.5 min
+2. Speaker Name — pattern: frame — 1 min
+3. Housekeeping and Agenda — pattern: frame — 0.25 min
 4. Housekeeping — pattern: frame — 1 min
 5. Today's Agenda — pattern: frame — 1 min
 
 ### Act 1: the pain
 
-6. At least ten conference sessions this summer had 'sandbox' in the title — pattern: quote-card — 2.75 min
+6. At least ten conference sessions this summer had "sandbox" in the title — pattern: quote-card — 2.75 min
 7. An agent with your long-lived key is an incident waiting for a prompt. — pattern: big-statement — 0.5 min
 8. A shared, wide-open sandbox is the same incident, slower. — pattern: big-statement — 0.5 min
 9. Disposable means one environment per task, scoped and deleted on schedule — pattern: compare — 2.5 min
@@ -110,39 +110,47 @@ Every slide, in order, with its pattern and time budget. Read alone, the headlin
 21. Pulumi Cloud keeps one record per sandbox — pattern: stack — 2 min
 22. Four questions answered, one to go — pattern: recap-grid — 1 min
 23. Where this breaks today: the sandbox is S3 and IAM, nothing more — pattern: compare — 2 min
+24. Give every task its own cloud, and take it back on schedule. — pattern: big-statement — 0.5 min
 
 ### The solution we will build
 
-24. TTL stacks need Pro, so we build our own reaper — pattern: options — 2 min
-25. One orchestrator, three stacks, one reaper — pattern: zones — 2 min
-26. The orchestrator is a handful of Automation API calls — pattern: terminal — 2 min
+25. TTL stacks need Pro, so we build our own reaper — pattern: options — 2 min
+26. One orchestrator, three stacks, one reaper — pattern: zones — 2 min
+27. The orchestrator is a handful of Automation API calls — pattern: terminal — 2 min
 
 ### Demo divider (generated)
 
-27. Demo: Agent Sandboxes — pattern: frame — 0.25 min
+28. Demo: Agent Sandboxes. — pattern: frame — 0.25 min
 
 ### Act 3: the demo
 
-28. Nine steps take us from an empty account to a reaped sandbox — pattern: demo-overview — 1.5 min
-29. Step 1 (01-setup): One base role is the only thing we create by hand — pattern: demo-checks — 4 min
-30. Step 2 (02-esc): The ESC environment hands out one-hour credentials — pattern: demo-step — 4 min
-31. Step 3 (03-boundary): The boundary is a ceiling the agent's role cannot exceed — pattern: demo-step — 4 min
-32. Step 4 (04-sandbox): One task previews as five resources — pattern: demo-step — 5 min
-33. Step 5 (05-orchestrator): Three tasks spawn at once, each with its own stack — pattern: demo-outcome — 7 min
-34. Step 6 (06-agent): An agent writes to its bucket and is denied its neighbour's — pattern: demo-checks — 5 min
-35. Step 7 (07-policy): A sandbox without a boundary fails at preview — pattern: demo-step — 5 min
-36. Step 8 (08-reaper): The reaper deletes the expired sandbox and keeps the other three — pattern: demo-outcome — 7 min
-37. Step 9 (09-teardown): Teardown leaves nothing behind — pattern: demo-step — 4 min
+29. What we are going to do — pattern: demo-overview — 5 min
+30. Step 2 · The ESC environment hands out one-hour credentials — pattern: demo-step — 4 min
+31. Step 3 · The boundary is a ceiling the agent's role cannot exceed — pattern: demo-step — 4 min
+32. Step 4 · One task previews as five resources — pattern: frame — 5 min
+33. Step 5 · Three tasks spawn at once, each with its own stack — pattern: demo-outcome — 7 min
+34. Step 6 · An agent writes to its bucket and is denied its neighbour's — pattern: demo-checks — 5 min
+35. Step 7 · A sandbox without a boundary fails at preview — pattern: demo-step — 5 min
+36. Step 8 · The reaper deletes the expired sandbox and keeps the other three — pattern: demo-outcome — 7 min
+37. Step 9 · Teardown leaves nothing behind — pattern: demo-step — 4 min
 
 ### Closing frame (generated)
 
 38. Resources — pattern: frame — 1 min
 39. Continue your Pulumi journey! — pattern: frame — 0.5 min
-40. Thank you / Questions? — pattern: frame — 4.5 min
+40. Thank you — pattern: frame — 4.5 min
+
+### Time budget
+
+Computed by script from the `[N min]` note on every slide: 90 minutes across 40 slides, the 90 minutes of brief §1. Every slide carries a note, frame slides included.
+
+### Code budget
+
+Counted from the fenced blocks in `slides.md`: program code on 0 slides (the solution slide, "The orchestrator is a handful of Automation API calls", lists call names only, no code block). Commands: 12 lines in total across 8 demo slides, at most 3 lines on one slide (step 4), well inside the 20-line limit. Every command is copied from `../README.md` with the same flags.
 
 ### Demo commands (copied from `../README.md`)
 
-1. `01-setup/setup.sh`
+1. `01-setup/setup.sh` (on "What we are going to do", no slide of its own)
 2. `02-esc/create-env.sh`
 3. `03-boundary/apply.sh`
 4. `cd 04-sandbox && pulumi stack init demo`, `pulumi config set taskId a && pulumi config set boundaryArn "$(cat ../.state/boundary-arn)"`, `pulumi preview`
@@ -154,8 +162,39 @@ Every slide, in order, with its pattern and time budget. Read alone, the headlin
 
 ### Questions return at the close
 
-Slide 22 ("Four questions answered, one to go") and the step 8 slide (question 5 answered). The closing notes name all five.
+Slide 22 ("Four questions answered, one to go") and the step 8 slide, slide 36 (question 5 answered). The closing notes name all five.
 
 ## Fact-check
 
-Filled in after the humanizer pass: claim, link, date read, outcome.
+Separate pass after the humanizer pass. Every claim below was checked against a source opened on 2026-10-10: Pulumi docs for product facts, the two conference pages for the opening moment, the demo files for what the demo does. Pulumi names used: Pulumi Neo is not on the slides; Pulumi IaC, Pulumi ESC, Pulumi Cloud and Pulumi Policies are.
+
+| Claim | Source | Date read | Outcome |
+| --- | --- | --- | --- |
+| At least ten sessions with sandbox in the title at AI Engineer World's Fair 2026 (10 counted) | [ai](https://ai.engineer/worldsfair/2026/sessions.json) | 2026-10-10 | confirmed |
+| The fair ran this summer (June 29 to July 2, 2026) | [ai](https://ai.engineer/worldsfair/2026/sessions.json) | 2026-10-10 | confirmed |
+| Session title "Sandboxes Aren't Optional: Runtime Isolation Patterns for Coding Agents at Scale" | [ai](https://ai.engineer/worldsfair/2026/sessions.json) | 2026-10-10 | confirmed |
+| Keynote title "Sandbox Your Agents" at KubeCon + CloudNativeCon NA 2026 | [kc](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/program/schedule/?id=1301749) | 2026-10-10 | confirmed |
+| Keynote on November 10 (9:55 AM, Salt Lake City) | [kc](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/program/schedule/?id=1301749) | 2026-10-10 | confirmed; slide changed from "KubeCon opens on November 10" to "KubeCon has the keynote", since the main days are November 10 to 12 and November 9 is a co-located day |
+| Abstract quote "A problematic agent with too much access, either through choice or a lack of knowledge, can take down entire production stacks and wipe databases." | [kc](https://events.linuxfoundation.org/kubecon-cloudnativecon-north-america/program/schedule/?id=1301749) | 2026-10-10 | confirmed word for word |
+| Pulumi Cloud exchanges an OIDC token for temporary AWS credentials by assuming an IAM role | [aws](https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/) | 2026-10-10 | confirmed |
+| ESC aws-login provider with oidc duration option (1h) | [aws](https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/) | 2026-10-10 | confirmed |
+| OIDC is the recommended way to log in to AWS from ESC (no static key) | [aws](https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/) | 2026-10-10 | confirmed |
+| TTL stacks are Pulumi Cloud managed expiry, Pro and Enterprise editions only | [ttl](https://www.pulumi.com/docs/deployments/deployments/ttl/) | 2026-10-10 | confirmed |
+| Stack tags available in all editions ("works on any edition") | [stk](https://www.pulumi.com/docs/iac/concepts/stacks/) | 2026-10-10 | confirmed |
+| Policy enforcement level mandatory blocks the deployment | [pol](https://www.pulumi.com/docs/insights/policy/policy-packs/) | 2026-10-10 | confirmed |
+| A custom policy pack is tested with pulumi preview --policy-pack, so rules run at preview | [pol](https://www.pulumi.com/docs/insights/policy/policy-packs/) | 2026-10-10 | confirmed |
+| Pulumi Cloud keeps the update history of a stack (pulumi stack history) | [his](https://www.pulumi.com/docs/iac/cli/commands/pulumi_stack_history/) | 2026-10-10 | confirmed |
+| Deleting a stack removes its history from Pulumi Cloud (so reaper removes the stack after destroy) | [stk](https://www.pulumi.com/docs/iac/concepts/stacks/) | 2026-10-10 | confirmed, not stated on slides |
+| Five resources in one preview: stack, bucket, scoped policy, role, attachment | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Three tags: agent-task, owner, expires-at; role carries the boundary and 3600 s session | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Boundary allows S3 on agent-sandbox-* only; IAM and EC2 denied by omission | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Policy pack has two mandatory rules: role boundary, agent-task and expires-at tags on buckets and roles | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Orchestrator calls create_or_select_stack, add_environments, set_tag (expires-at, owner), up with policy packs; three tasks in parallel (ThreadPoolExecutor, 3 workers) | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Reaper calls list_stacks, list_tags, destroy, remove_stack; keeps unexpired and skips stacks without a tag | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| ESC environment agent-sandboxes/aws, aws-login, one hour, sessionName agent-sandboxes; create-env.sh runs sts get-caller-identity and prints the key id prefix (ASIA = temporary); changed the step 2 note from session token to key id prefix | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Base role agent-sandbox-provisioner and OIDC provider created by setup.sh; README step 1 check is pulumi whoami | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Teardown and leftovers scripts list agent-sandbox-* buckets, agent-* roles and policies | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Step 4 slide listed four resources under 'Five to create'; changed to 'Five to create, the stack included' | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+| Step 5 slide said buckets and roles 'appear in Pulumi Cloud'; changed to 'in AWS', stacks are what Pulumi Cloud shows | demo files in `agent-sandboxes-pulumi/` | 2026-10-10 | confirmed (or changed, as noted) |
+
+Total claims checked: 26. Not run: the demo scripts need an AWS account and a Pulumi Cloud login, so the slide claims about their output come from the code and README, not from a run in this pass.

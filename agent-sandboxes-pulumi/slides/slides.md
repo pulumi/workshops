@@ -29,6 +29,10 @@ defaults:
   </p>
 </div>
 
+<!--
+[0.5 min] Welcome. Title slide: one Pulumi stack per agent task, deleted on schedule. Wait for people to settle.
+-->
+
 ---
 
 <div class="absolute inset-0 flex items-center px-24 gap-20">
@@ -52,11 +56,19 @@ defaults:
   </div>
 </div>
 
+<!--
+[1 min] Introduce yourself in a sentence. Say who you are and which part of the demo you will run.
+-->
+
 ---
 
 <div class="absolute inset-0 flex flex-col justify-center items-center px-20 text-center">
   <h1 class="!text-[6.5rem] !leading-tight !font-semibold !tracking-tight !m-0 !max-w-[95%]">Housekeeping and Agenda</h1>
 </div>
+
+<!--
+[0.25 min] Divider. Housekeeping first, then the agenda.
+-->
 
 ---
 
@@ -76,6 +88,10 @@ defaults:
 <style scoped>
 .zoom-content { zoom: 1.8; }
 </style>
+
+<!--
+[1 min] Where to chat, where to ask questions, where to find the slides and scripts, and that the recording comes by email.
+-->
 
 ---
 
@@ -97,6 +113,10 @@ defaults:
 .zoom-content { zoom: 1.8; }
 </style>
 
+<!--
+[1 min] Five parts: why sandboxes leak, one stack per task, credentials and boundaries, rules and expiry, then the demo. Say that the demo answers the last question.
+-->
+
 ---
 
 # At least ten conference sessions this summer had "sandbox" in the title
@@ -111,7 +131,7 @@ defaults:
     <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-3">
       <li>AI Engineer World's Fair 2026 listed at least ten sessions with "sandbox" in the title</li>
       <li>One of them: "Sandboxes Aren't Optional: Runtime Isolation Patterns for Coding Agents at Scale"</li>
-      <li>KubeCon opens on November 10 with the keynote "Sandbox Your Agents"</li>
+      <li>KubeCon has the keynote "Sandbox Your Agents"</li>
     </ul>
     </v-clicks>
   </div>
@@ -130,7 +150,7 @@ defaults:
 </style>
 
 <!--
-[2.75 min] I don't have a famous incident for this one, and I won't make one up. What I have is the conference programme. I counted at least ten session titles with sandbox in them at the AI Engineer World's Fair this summer. KubeCon opens in November with a keynote called Sandbox Your Agents. Read the abstract: an agent with too much access can take down production stacks and wipe databases. When a whole industry schedules talks about the same word, the problem is real. The question is what a good sandbox looks like.
+[2.75 min] I don't have a famous incident for this one, and I won't make one up. What I have is the conference programme. I counted at least ten session titles with sandbox in them at the AI Engineer World's Fair this summer. KubeCon has a keynote in November called Sandbox Your Agents. Read the abstract: an agent with too much access can take down production stacks and wipe databases. When a whole industry schedules talks about the same word, the problem is real. The question is what a good sandbox looks like.
 -->
 
 ---
@@ -320,7 +340,7 @@ defaults:
 </style>
 
 <!--
-[2 min] The answer to question one starts with a unit. One task gets one Pulumi stack. A small Python program, using the Pulumi Automation API, creates that stack when the task arrives. The stack holds a bucket, a role and a policy. Because the stack knows every resource it made, deleting the sandbox means destroying the stack. Nothing to remember, nothing to hunt for.
+[2 min] The answer to question one starts with a unit. One task gets one Pulumi stack. A small Python program, using the Pulumi Automation API, creates that stack when the task arrives. The stack holds a bucket, a role and a policy. Because the stack knows every resource it made, deleting the sandbox means destroying the stack. You do not have to remember or hunt for anything.
 -->
 
 ---
@@ -354,7 +374,7 @@ defaults:
 </aside>
 
 <div class="facts" v-click="5">
-  <div class="fact"><ph-lock-key /><p>The boundary is a ceiling, not a grant</p></div>
+  <div class="fact"><ph-lock-key /><p>The boundary sets a ceiling and grants nothing</p></div>
   <div class="fact"><ph-prohibit /><p>IAM and EC2 are denied by omission</p></div>
   <div class="fact"><ph-eye-slash /><p>A neighbour's bucket is out of reach</p></div>
 </div>
@@ -690,7 +710,7 @@ defaults:
 </style>
 
 <!--
-[2 min] I want to be plain about the limits. The sandbox in this workshop is S3 and IAM. It has no compute, no network and no database. If your agent needs a VM, you widen the boundary deliberately. And the reaper is a script. In the demo I run it by hand. In real life you put it on cron or a CI schedule. Those are the edges of what we build today.
+[2 min] The sandbox in this workshop is S3 and IAM. It has no compute, no network and no database. If your agent needs a VM, you widen the boundary deliberately. And the reaper is a script. In the demo I run it by hand. In real life you put it on cron or a CI schedule. Those are the edges of what we build today.
 -->
 
 ---
@@ -877,6 +897,10 @@ That is the whole idea in one line. Four answers so far; now we add the fifth an
 .sec__inner h1 { text-wrap: balance; }
 </style>
 
+<!--
+[0.25 min] Demo divider. Switch to the terminal and the editor.
+-->
+
 ---
 
 # What we are going to do
@@ -906,7 +930,7 @@ That is the whole idea in one line. Four answers so far; now we add the fifth an
 </style>
 
 <!--
-[5 min] Nine steps. We start from an empty account and end with a reaped sandbox. One: a base role, by hand. Two: ESC credentials. Three: the boundary. Four: preview one sandbox. Five: spawn three. Six: an agent gets denied. Seven: a bad sandbox fails at preview. Eight: the reaper. Nine: teardown. Each step has one command and one thing to watch for. Step one, the base role, is the only manual step: the script creates an OIDC provider so AWS trusts Pulumi Cloud, and a role called agent-sandbox-provisioner. In a live session I run it beforehand, because the OIDC setup eats time, and show you the output. Watch for the role name and for pulumi whoami working at the end.
+[5 min] Nine steps. We start from an empty account and end with a reaped sandbox. One: a base role, by hand. Two: ESC credentials. Three: the boundary. Four: preview one sandbox. Five: spawn three. Six: an agent gets denied. Seven: a bad sandbox fails at preview. Eight: the reaper. Nine: teardown. Each step has one command and one thing to watch for. Step one, the base role, is the only manual step: the script creates an OIDC provider so AWS trusts Pulumi Cloud, and a role called agent-sandbox-provisioner. In a live session I run it beforehand, because the OIDC setup takes a while, and show you the output. Watch for the role name and for pulumi whoami working at the end.
 -->
 
 ---
@@ -950,7 +974,7 @@ That is the whole idea in one line. Four answers so far; now we add the fifth an
 </style>
 
 <!--
-[4 min] Step two. The script creates the ESC environment agent-sandboxes slash aws, using aws-login over OIDC with a one-hour duration. Then it proves the credentials work by running the AWS identity call inside pulumi env run. Look at the session token in the output. There is no access key stored anywhere on this laptop.
+[4 min] Step two. The script creates the ESC environment agent-sandboxes slash aws, using aws-login over OIDC with a one-hour duration. Then it proves the credentials work by running the AWS identity call inside pulumi env run. Look at the key id prefix in the output: ASIA means a temporary key. There is no access key stored anywhere on this laptop.
 -->
 
 ---
@@ -1018,7 +1042,7 @@ pulumi preview
   </div>
   <v-clicks>
   <ul class="s1__facts">
-    <li><ph-cube /><span>Five to create</span></li>
+    <li><ph-cube /><span>Five to create, the stack included</span></li>
     <li><ph-package /><span>A bucket, a policy, a role and an attachment</span></li>
     <li><ph-note-pencil /><span>Three tags on the resources</span></li>
   </ul>
@@ -1063,7 +1087,7 @@ python 05-orchestrator/orchestrator.py spawn task-a task-b task-c --ttl-minutes 
     <ph-arrow-down class="s5__arrow" v-click="2" />
     <div class="s5__step" v-click="2"><ph-stack /><span>Three stacks start in parallel</span></div>
     <ph-arrow-down class="s5__arrow" v-click="3" />
-    <div class="s5__step s5__step--stop" v-click="3"><ph-cloud-check /><span>Three buckets and three roles appear in Pulumi Cloud</span></div>
+    <div class="s5__step s5__step--stop" v-click="3"><ph-cloud-check /><span>Three buckets and three roles in AWS</span></div>
   </div>
   <div class="s5__side">
     <aside class="info-card" v-click="4"><div class="info-card__label">In Pulumi Cloud</div><p>Stacks <code>sandbox-task-a</code>, <code>-b</code> and <code>-c</code></p></aside>
@@ -1311,6 +1335,10 @@ python 08-reaper/reaper.py
 .res-card__body { font-family: var(--slidev-font-mono); font-size: 0.8rem; color: var(--p-fg-muted); line-height: 1.4; word-break: break-all; }
 </style>
 
+<!--
+[1 min] Resources. The repo QR code first: it holds every script from today. Then the docs links. Pause so people can scan.
+-->
+
 ---
 
 # Continue your Pulumi journey!
@@ -1346,6 +1374,10 @@ python 08-reaper/reaper.py
 .journey-card__title { font-size: 1.5rem; font-weight: 600; line-height: 1.25; margin-bottom: 0.9rem; color: var(--p-fg); }
 .journey-card__body { font-size: 1.15rem; line-height: 1.55; margin: 0 !important; color: var(--p-fg); }
 </style>
+
+<!--
+[0.5 min] Pointers for after the workshop: the Pulumi docs and the community.
+-->
 
 ---
 
@@ -1390,3 +1422,7 @@ python 08-reaper/reaper.py
 .thanks__qr { width: 8rem; height: 8rem; margin-top: 1.1rem; padding: 0.45rem; background: #ffffff; border-radius: 10px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18); }
 .thanks__qr-label { display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 0.55rem; font-family: var(--slidev-font-mono); font-size: 0.85rem; color: var(--p-fg-muted); }
 </style>
+
+<!--
+[4.5 min] Thank you. Questions: the best ones are about widening the boundary for a real workload and where to run the reaper.
+-->
