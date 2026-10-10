@@ -1,0 +1,7 @@
+name: agent-sandboxes
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: ../.venv
+description: One disposable sandbox for one agent task (standalone form of the inline program)
