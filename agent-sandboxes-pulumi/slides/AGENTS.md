@@ -30,10 +30,10 @@ Total 90 minutes over 40 slides. Every slide's speaker notes carry its budget.
 
 - Opening frame: 5 slides, 3.75 min
 - Act 1, the pain: 6 slides, 11.25 min
-- Act 2, the tech: 12 slides, 16.25 min
+- Act 2, the tech: 13 slides, 16.75 min
 - The solution we will build: 3 slides, 6 min
 - Demo divider: 1 slide, 0.25 min
-- Act 3, the demo: 10 slides, 46.5 min (a quarter of the deck)
+- Act 3, the demo: 9 slides, 46 min (with the divider, 10 of 40 slides, a quarter of the deck)
 - Closing frame: 3 slides, 6 min (Resources 1, Continue your journey 0.5, Thank you / Questions 4.5)
 
 ## Sources
