@@ -1,0 +1,41 @@
+{
+  "slug": "secret-versioning-rotation-aws",
+  "title": "Secret versioning and rotation patterns on AWS",
+  "subtitle": "Make an AWS secret rotate on its own, read it without a static key, and block secrets that never rotate",
+  "demo_title": "Secret rotation on AWS",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why old secrets hurt",
+    "Versions and rotation",
+    "Pulumi ESC and policies",
+    "The system we build",
+    "Live demo",
+    "Questions"
+  ],
+  "resources": [
+    {
+      "title": "AWS rotation Lambda functions",
+      "url": "https://docs.aws.amazon.com/secretsmanager/latest/userguide/rotate-secrets_lambda-functions.html",
+      "label": "docs.aws.amazon.com"
+    },
+    {
+      "title": "Pulumi ESC aws-secrets provider",
+      "url": "https://www.pulumi.com/docs/esc/providers/aws-secrets/",
+      "label": "pulumi.com/docs/esc"
+    },
+    {
+      "title": "Pulumi ESC rotators",
+      "url": "https://www.pulumi.com/docs/esc/providers/rotators/",
+      "label": "pulumi.com/docs/esc"
+    },
+    {
+      "title": "Write a Pulumi policy pack",
+      "url": "https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/",
+      "label": "pulumi.com/docs"
+    }
+  ]
+}
