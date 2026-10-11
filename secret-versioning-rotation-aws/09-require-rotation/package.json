@@ -1,0 +1,18 @@
+{
+  "name": "require-secret-rotation",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Policy pack for the secret rotation workshop demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node --test bin/test/rules.test.js"
+  },
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@pulumi/policy": "1.21.0",
+    "@pulumi/pulumi": "3.268.0"
+  }
+}

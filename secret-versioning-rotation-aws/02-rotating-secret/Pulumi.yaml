@@ -1,0 +1,14 @@
+name: secret-rotation-app
+description: >-
+  Demo project for "Secret versioning and rotation patterns on AWS": the OIDC
+  trust and roles Pulumi ESC needs, a Secrets Manager secret with a rotation
+  Lambda, and an IAM user for the ESC aws-iam rotator. `demoStep` stages the
+  build: 2 foundation, 3 adds the secret, 4 adds the rotation.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  aws:region: us-east-1
+  secret-rotation-app:demoStep: "4"
+  secret-rotation-app:extraSecret: none
