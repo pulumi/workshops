@@ -1,0 +1,14 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": {"Federated": "arn:aws:iam::__ACCOUNT__:oidc-provider/api.pulumi.com/oidc"},
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {"api.pulumi.com/oidc:aud": "aws:__ORG__"},
+        "StringLike": {"api.pulumi.com/oidc:sub": "pulumi:environments:org:__ORG__:env:*"}
+      }
+    }
+  ]
+}

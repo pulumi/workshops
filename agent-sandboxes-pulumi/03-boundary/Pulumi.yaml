@@ -1,0 +1,7 @@
+name: agent-sandbox-boundary
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: ../.venv
+description: The permissions boundary every agent sandbox role must carry

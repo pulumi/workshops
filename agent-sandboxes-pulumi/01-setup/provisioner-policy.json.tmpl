@@ -1,0 +1,50 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "SandboxBuckets",
+      "Effect": "Allow",
+      "Action": "s3:*",
+      "Resource": ["arn:aws:s3:::agent-sandbox-*", "arn:aws:s3:::agent-sandbox-*/*"]
+    },
+    {
+      "Sid": "ListBuckets",
+      "Effect": "Allow",
+      "Action": ["s3:ListAllMyBuckets", "s3:GetBucketLocation"],
+      "Resource": "*"
+    },
+    {
+      "Sid": "CreateRolesOnlyWithBoundary",
+      "Effect": "Allow",
+      "Action": "iam:CreateRole",
+      "Resource": "arn:aws:iam::__ACCOUNT__:role/agent-*",
+      "Condition": {"StringEquals": {"iam:PermissionsBoundary": "arn:aws:iam::__ACCOUNT__:policy/agent-sandbox-boundary"}}
+    },
+    {
+      "Sid": "ManageSandboxRoles",
+      "Effect": "Allow",
+      "Action": [
+        "iam:GetRole", "iam:DeleteRole", "iam:TagRole", "iam:UntagRole", "iam:ListRoleTags",
+        "iam:AttachRolePolicy", "iam:DetachRolePolicy", "iam:ListAttachedRolePolicies",
+        "iam:ListRolePolicies", "iam:ListInstanceProfilesForRole", "iam:UpdateAssumeRolePolicy"
+      ],
+      "Resource": "arn:aws:iam::__ACCOUNT__:role/agent-*"
+    },
+    {
+      "Sid": "ManageSandboxPolicies",
+      "Effect": "Allow",
+      "Action": [
+        "iam:CreatePolicy", "iam:DeletePolicy", "iam:GetPolicy", "iam:GetPolicyVersion",
+        "iam:ListPolicyVersions", "iam:CreatePolicyVersion", "iam:DeletePolicyVersion",
+        "iam:TagPolicy", "iam:UntagPolicy", "iam:ListPolicyTags"
+      ],
+      "Resource": "arn:aws:iam::__ACCOUNT__:policy/agent-*"
+    },
+    {
+      "Sid": "AssumeSandboxRoles",
+      "Effect": "Allow",
+      "Action": "sts:AssumeRole",
+      "Resource": "arn:aws:iam::__ACCOUNT__:role/agent-*"
+    }
+  ]
+}

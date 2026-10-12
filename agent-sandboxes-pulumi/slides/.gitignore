@@ -1,0 +1,8 @@
+node_modules/
+dist/
+export-pages/
+*.pdf
+*.pptx
+*.png
+!public/**/*.png
+.slidev/
