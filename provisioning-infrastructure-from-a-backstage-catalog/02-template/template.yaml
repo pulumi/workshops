@@ -1,0 +1,50 @@
+# Software template for step 2 of "Provisioning real infrastructure from a
+# Backstage catalog with Pulumi".
+#
+# Schema confirmed against https://backstage.io/docs/features/software-templates/writing-templates/
+# (read 2026-09-30).
+#
+# End state for this step alone: the template appears in the Backstage
+# catalog and the form renders one field (the bucket name), but clicking
+# "Create" fails because the `pulumi:s3-bucket` action referenced below does
+# not exist yet. Step 3 (../03-scaffolder-action/) implements that action.
+apiVersion: scaffolder.backstage.io/v1beta3
+kind: Template
+metadata:
+  name: s3-bucket-pulumi
+  title: S3 bucket (Pulumi)
+  description: >-
+    Provision a tagged Amazon S3 bucket in AWS through Pulumi, from a single
+    form field in the Backstage catalog.
+  tags:
+    - aws
+    - pulumi
+    - s3
+spec:
+  owner: group:default/platform-engineering
+  type: resource
+  parameters:
+    - title: Bucket details
+      required:
+        - bucketName
+      properties:
+        bucketName:
+          title: S3 bucket name
+          type: string
+          description: >-
+            Globally-unique Amazon S3 bucket name (lowercase letters,
+            numbers, dots, and hyphens only).
+          pattern: '^[a-z0-9][a-z0-9.-]{1,61}[a-z0-9]$'
+          minLength: 3
+          maxLength: 63
+          ui:autofocus: true
+  steps:
+    - id: provision-bucket
+      name: "Provision S3 bucket"
+      action: pulumi:s3-bucket
+      input:
+        bucketName: ${{ parameters.bucketName }}
+  output:
+    links:
+      - title: Open bucket in AWS console
+        url: https://s3.console.aws.amazon.com/s3/buckets/${{ steps['provision-bucket'].output.bucketName }}
