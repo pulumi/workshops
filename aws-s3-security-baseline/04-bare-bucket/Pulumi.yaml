@@ -1,0 +1,7 @@
+name: s3-baseline
+description: >-
+  One bare S3 bucket with no baseline. Preview only, never deployed.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

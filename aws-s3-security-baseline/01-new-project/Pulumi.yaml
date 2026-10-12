@@ -1,0 +1,7 @@
+name: s3-baseline
+description: >-
+  Workshop starting point: an empty Pulumi program on the dev stack.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

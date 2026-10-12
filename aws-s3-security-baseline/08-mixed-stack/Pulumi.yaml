@@ -1,0 +1,7 @@
+name: s3-baseline
+description: >-
+  SecureBucket next to a bare bucket: the policy pack blocks only the bare one.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

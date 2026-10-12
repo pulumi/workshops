@@ -1,0 +1,41 @@
+{
+  "slug": "aws-s3-security-baseline",
+  "title": "Automating the S3 security baseline as code",
+  "subtitle": "Package the S3 controls into one component and block buckets that skip them before they deploy",
+  "demo_title": "S3 security baseline",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The pain: public buckets",
+    "Why it keeps happening",
+    "The baseline as a component",
+    "Credentials and policy",
+    "What we build",
+    "The demo"
+  ],
+  "resources": [
+    {
+      "title": "Write your own policy packs",
+      "url": "https://www.pulumi.com/docs/insights/policy/policy-packs/authoring/",
+      "label": "pulumi.com/docs/insights/policy"
+    },
+    {
+      "title": "Component resources",
+      "url": "https://www.pulumi.com/docs/iac/concepts/components/",
+      "label": "pulumi.com/docs/iac/concepts/components"
+    },
+    {
+      "title": "Pulumi ESC: AWS login with OIDC",
+      "url": "https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/",
+      "label": "pulumi.com/docs/esc"
+    },
+    {
+      "title": "AWS: S3 security best practices",
+      "url": "https://docs.aws.amazon.com/AmazonS3/latest/userguide/security-best-practices.html",
+      "label": "docs.aws.amazon.com/AmazonS3"
+    }
+  ]
+}
