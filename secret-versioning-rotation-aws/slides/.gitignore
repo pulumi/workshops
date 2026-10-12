@@ -1,0 +1,4 @@
+node_modules/
+dist/
+export-pages/
+*.pdf
