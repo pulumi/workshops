@@ -1,0 +1,20 @@
+# ESC environment template for the workshop.
+# Replace roleArn with the role that "pulumi env setup aws" created, or with your own OIDC role.
+#   pulumi env init <org>/aws-eventbridge-patterns/dev
+#   pulumi env edit <org>/aws-eventbridge-patterns/dev --file environment.yaml
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          roleArn: arn:aws:iam::123456789012:role/pulumi-esc-workshop
+          sessionName: aws-eventbridge-patterns
+          duration: 1h
+  region: eu-central-1
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: ${region}
+  pulumiConfig:
+    aws:region: ${region}

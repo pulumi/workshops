@@ -1,0 +1,8 @@
+name: aws-eventbridge-patterns
+description: >-
+  Demo project for "Event routing as code on AWS". Step 5: steps 2 to 4 refactored into the EventRouter component.
+  All steps share one project and one stack, so each step updates the previous one.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
