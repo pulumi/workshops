@@ -1,0 +1,16 @@
+{
+  "name": "bedrock-metering-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Per-team Amazon Bedrock token metering: application inference profiles, scoped roles, invocation logging and CloudWatch metrics",
+  "main": "index.ts",
+  "engines": { "node": ">=24" },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.48.0",
+    "@pulumi/pulumi": "3.267.0"
+  }
+}

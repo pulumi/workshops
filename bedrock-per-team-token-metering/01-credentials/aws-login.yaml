@@ -1,0 +1,15 @@
+# ESC environment definition for bedrock-metering/aws-login.
+# create-env.sh fills in the two placeholders and uploads it.
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: __ROLE_ARN__
+          sessionName: pulumi-esc
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: us-east-1
