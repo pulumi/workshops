@@ -100,7 +100,7 @@ All read 2026-10-12.
 ## Deviations from the brief section 5
 
 - The brief outline is a guide; the deck follows the workshop-deck skill (three acts inside the generated frame). The five questions come from the brief section 5 and the demo plan in section 4.
-- Demo slides 34 to 38 each show one command (three lines at most), taken from the demo folder with the same flags. Slides 35 and 37 cover two demo steps and show only the command that proves the step. The deck has about 12 lines of commands and no program code, under the budget of 20.
+- Demo slides 33 to 41 each show one command, three lines at most (the two bare-bucket and secure-bucket previews wrap one flag onto a second line), taken from the demo folder with the same flags. Slides that cover two demo steps show only the command that proves the step. The deck has 12 lines of commands and no program code, under the budget of 20.
 - Step 11 (policy group) is optional. Two docs pages list different editions for policy groups: the policy groups page says Pro and Enterprise, the policy overview says Essentials, Pro and Enterprise. The slide says so; the pull request lists it as an open question.
 
 ## Binding rules
@@ -146,4 +146,4 @@ All read 2026-10-12.
 | Slide 16: public access block first, the rest wait with dependsOn | 06-secure-bucket/secureBucket.ts | 2026-10-12 | Corrected: four companions depend on it, lifecycle depends on versioning |
 | Step 10 runs six aws s3api reads and a plain HTTP upload; step 12 runs destroy, stack rm, list-buckets | 10-verify-controls/verify-controls.sh, 12-teardown/teardown.sh | 2026-10-12 | Confirmed against scripts |
 
-Counts: 29 claim groups checked (about 55 individual statements). 23 confirmed as written, 4 corrected or narrowed (quote case, "No exploit", registerOutputs, dependsOn), 2 removed (cost per participant, "we ran that"). Not executed in this pass: the demo itself; code counts were verified by reading the code.
+Counts: 30 claim groups checked (about 55 individual statements). 24 confirmed as written, 4 corrected or narrowed (quote case, "No exploit", registerOutputs, dependsOn), 2 removed (cost per participant, "we ran that"). Not executed in this pass: the demo itself; code counts were verified by reading the code.
