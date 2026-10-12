@@ -1,0 +1,7 @@
+name: gcp-monitoring-demo
+description: >-
+  Steps 6 and 7: the monitoring packaged as a ServiceMonitoring component, with a unit test.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

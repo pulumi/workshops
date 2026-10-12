@@ -1,0 +1,15 @@
+{
+  "name": "gcp-monitoring-demo-inline",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Steps 3 to 5: monitoring written inline",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/gcp": "10.1.0",
+    "@pulumi/pulumi": "3.268.0"
+  }
+}

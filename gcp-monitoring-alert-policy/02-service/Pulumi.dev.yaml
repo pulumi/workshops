@@ -1,0 +1,9 @@
+# The stack imports a Pulumi ESC environment (01-esc). ESC mints a short-lived
+# Google Cloud access token through OIDC every time this stack runs, so no
+# service account key lives on disk. The organization is implied by the stack
+# (<org>/dev). GOOGLE_CLOUD_PROJECT (the project number) comes from ESC too.
+environment:
+  - gcp-monitoring-workshop/gcp-oidc
+config:
+  gcp:region: europe-west3
+  gcp-monitoring-demo:serviceName: hello-api
