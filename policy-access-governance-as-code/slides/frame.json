@@ -1,0 +1,36 @@
+{
+  "slug": "policy-access-governance-as-code",
+  "title": "Access governance as code: BigQuery, Secret Manager and service-account bindings without console clicks",
+  "subtitle": "Model least-privilege IAM on Google Cloud and AWS as Pulumi IaC, read the diff before it applies, and block an over-broad binding with a policy pack",
+  "demo_title": "Access governance as code",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why console IAM goes wrong",
+    "Pulumi IaC and the preview diff",
+    "Pulumi Policies as a gate",
+    "The access model we build",
+    "Demo: bind, mirror, block, tear down",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Authoring a policy pack",
+      "url": "https://www.pulumi.com/docs/insights/policy/policy-packs/authoring/",
+      "label": "pulumi.com/docs/insights/policy"
+    },
+    {
+      "title": "gcp.bigquery.DatasetIamMember in the Pulumi Registry",
+      "url": "https://www.pulumi.com/registry/packages/gcp/api-docs/bigquery/datasetiammember/",
+      "label": "pulumi.com/registry (gcp)"
+    },
+    {
+      "title": "Google Cloud: Using IAM securely",
+      "url": "https://cloud.google.com/iam/docs/using-iam-securely",
+      "label": "cloud.google.com/iam"
+    }
+  ]
+}
