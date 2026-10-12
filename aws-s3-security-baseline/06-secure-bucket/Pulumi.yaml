@@ -1,0 +1,7 @@
+name: s3-baseline
+description: >-
+  SecureBucket component: one bucket plus the six baseline resources.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
