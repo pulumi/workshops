@@ -11,3 +11,9 @@ dist/
 !README.md
 !AGENTS.md
 !slides/slides.md
+
+# Slide exports
+export-pages/
+*.pdf
+slides/export-pages/
+slides/*.png
