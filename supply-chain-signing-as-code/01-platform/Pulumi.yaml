@@ -1,0 +1,9 @@
+name: supply-chain-signing-platform
+description: >-
+  supply-chain-signing-as-code: an AWS ECR repository, a kind cluster, the
+  Kyverno Helm chart, and a Kyverno ClusterPolicy that verifies Notation
+  signatures at admission time, all in one `pulumi up`.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
