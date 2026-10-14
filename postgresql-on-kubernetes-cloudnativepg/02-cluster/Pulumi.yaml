@@ -1,0 +1,15 @@
+name: cnpg-workshop-cluster
+runtime: nodejs
+description: "CloudNativePG workshop step 02: the Postgres Cluster itself, with optional S3-backed WAL archiving/backups via the Barman Cloud plugin."
+config:
+  backupsEnabled:
+    description: "When true, provisions an S3 bucket, a least-privilege IAM user, an ObjectStore, and wires WAL archiving/backups into the Cluster via spec.plugins. Presenter-only -- participants leave this false and need zero cloud credentials."
+    default: false
+  awsRegion:
+    description: "AWS region for the backup bucket and IAM resources. Only read when backupsEnabled is true."
+    default: us-east-1
+  storageClass:
+    description: "StorageClass for the Cluster's PVCs. Defaults to kind's bundled local-path-provisioner default StorageClass."
+    default: standard
+  renderToDirectory:
+    description: "When set, render Kubernetes manifests to this local directory instead of talking to a live cluster, and construct the AWS provider in offline/skip-validation mode. Presenter dry-run / offline-verification aid."
