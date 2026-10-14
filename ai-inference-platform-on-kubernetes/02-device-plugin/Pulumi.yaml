@@ -1,0 +1,6 @@
+name: ai-inference-platform-device-plugin
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: NVIDIA device plugin Helm release that exposes GPUs to the scheduler

@@ -1,0 +1,26 @@
+# Demo pod for step 4: requests 2 GPUs against a namespace quota of 1.
+# `kubectl apply -f manifests/oversized-gpu-pod.yaml -n gpu-workloads` must be
+# rejected by the API server with an "exceeded quota" error naming
+# `requests.nvidia.com/gpu`. This pod is never expected to run.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: oversized-gpu-request
+  labels:
+    app: oversized-gpu-request
+spec:
+  restartPolicy: Never
+  tolerations:
+    - key: nvidia.com/gpu
+      operator: Equal
+      value: "true"
+      effect: NoSchedule
+  containers:
+    - name: cuda-probe
+      image: nvidia/cuda:12.6.0-base-ubuntu22.04
+      command: ["nvidia-smi"]
+      resources:
+        requests:
+          nvidia.com/gpu: "2"
+        limits:
+          nvidia.com/gpu: "2"

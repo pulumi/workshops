@@ -1,0 +1,31 @@
+# ILLUSTRATIVE ONLY — not applied during the workshop, not managed by Pulumi.
+#
+# This is the shape of a KServe InferenceService once a model-serving layer
+# sits on top of the platform this workshop built (01-cluster through
+# 04-autoscaling). KServe itself is not installed by anything in this repo:
+# there is no first-party Pulumi package for it (confirmed 2026-09-24,
+# https://www.pulumi.com/registry/packages/kserve/ returns 404). A team that
+# wants this managed as code today would express it via
+# `pulumi_kubernetes.helm.v4.Chart` (for the KServe controller) and
+# `pulumi_kubernetes.apiextensions.CustomResource` (for InferenceService
+# objects), the same pattern `04-autoscaling` uses for Karpenter's CRDs.
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: example-llm
+  namespace: gpu-workloads
+spec:
+  predictor:
+    tolerations:
+      - key: nvidia.com/gpu
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+    model:
+      modelFormat:
+        name: huggingface
+      resources:
+        requests:
+          nvidia.com/gpu: "1"
+        limits:
+          nvidia.com/gpu: "1"

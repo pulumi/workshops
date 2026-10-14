@@ -1,0 +1,6 @@
+name: ai-inference-platform-quotas
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Namespace, ResourceQuota and LimitRange that share GPU capacity predictably
