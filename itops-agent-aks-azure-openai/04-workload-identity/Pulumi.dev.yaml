@@ -1,0 +1,4 @@
+config:
+  azure-native:location: eastus2
+  itops-agent-aks-azure-openai:namespace: itops-agent
+  itops-agent-aks-azure-openai:serviceAccountName: itops-agent
