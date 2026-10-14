@@ -1,0 +1,16 @@
+name: acme-checkout
+description: >-
+  A consuming team's checkout service, instantiated from the platform team's
+  compliance-web-service golden path.
+runtime: yaml
+packages:
+  compliance-web-service: ../01-component
+resources:
+  checkout:
+    type: compliance-web-service:ComplianceWebService
+    properties:
+      serviceName: checkout
+      image: nginx:latest
+      port: 80
+outputs:
+  url: ${checkout.url}

@@ -1,0 +1,15 @@
+name: acme-checkout
+description: >-
+  The consuming team's program updated for v2: serviceName renamed to name.
+runtime: yaml
+packages:
+  compliance-web-service: ./component-v2
+resources:
+  checkout:
+    type: compliance-web-service:ComplianceWebService
+    properties:
+      name: checkout
+      image: nginx:latest
+      port: 80
+outputs:
+  url: ${checkout.url}
