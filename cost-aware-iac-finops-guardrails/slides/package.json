@@ -1,0 +1,22 @@
+{
+  "name": "cost-aware-iac-finops-guardrails-slides",
+  "version": "0.1.0",
+  "description": "Cost-aware infrastructure as code: tagging, budgets and FinOps guardrails with Pulumi: Provision a budget as code and block untagged or oversized instances at preview",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}

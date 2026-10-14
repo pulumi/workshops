@@ -1,0 +1,41 @@
+{
+  "slug": "cost-aware-iac-finops-guardrails",
+  "title": "Cost-aware infrastructure as code: tagging, budgets and FinOps guardrails with Pulumi",
+  "subtitle": "Provision a budget as code and block untagged or oversized instances at preview",
+  "demo_title": "Cost-aware IaC",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The cost problem",
+    "Budgets and tags as code",
+    "Pulumi Policies",
+    "The guardrails we build",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Write a policy pack",
+      "url": "https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/",
+      "label": "pulumi.com/docs"
+    },
+    {
+      "title": "aws.budgets.Budget",
+      "url": "https://www.pulumi.com/registry/packages/aws/api-docs/budgets/budget/",
+      "label": "pulumi.com/registry"
+    },
+    {
+      "title": "AWS Budgets",
+      "url": "https://docs.aws.amazon.com/cost-management/latest/userguide/budgets-managing-costs.html",
+      "label": "docs.aws.amazon.com"
+    },
+    {
+      "title": "Cost allocation tags",
+      "url": "https://docs.aws.amazon.com/awsaccountbilling/latest/aboutv2/cost-alloc-tags.html",
+      "label": "docs.aws.amazon.com"
+    }
+  ]
+}
