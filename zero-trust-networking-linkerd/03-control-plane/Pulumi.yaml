@@ -1,0 +1,6 @@
+name: mesh-demo-control-plane
+runtime: nodejs
+description: >-
+  Step 3 of the zero-trust-networking workshop: install the Linkerd CRDs and
+  control plane via Helm, wired to the trust anchor and issuer certificate
+  generated in 02-trust-anchor through a StackReference.

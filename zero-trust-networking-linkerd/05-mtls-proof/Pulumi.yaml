@@ -1,0 +1,6 @@
+name: mesh-demo-viz
+runtime: nodejs
+description: >-
+  Step 5 of the zero-trust-networking workshop: install the linkerd-viz
+  extension via Helm so `linkerd viz edges` and `linkerd viz tap` can prove
+  the mutual TLS nobody configured by hand.

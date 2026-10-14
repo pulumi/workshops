@@ -1,0 +1,6 @@
+name: mesh-demo-services
+runtime: nodejs
+description: >-
+  Step 4 of the zero-trust-networking workshop: deploy two echo services
+  into a namespace annotated for automatic proxy injection, so both pick up
+  the Linkerd data-plane proxy and mutual TLS with no per-pod configuration.
