@@ -1,0 +1,7 @@
+name: gpu-batch-jobs
+description: >-
+  Training jobs for the three scenarios: default scheduler, gang scheduling and fair-share queues.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

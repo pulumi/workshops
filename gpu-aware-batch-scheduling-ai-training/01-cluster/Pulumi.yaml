@@ -1,0 +1,7 @@
+name: gpu-batch-cluster
+description: >-
+  kind cluster with advertised fake GPUs plus the Volcano scheduler.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

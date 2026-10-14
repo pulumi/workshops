@@ -1,0 +1,36 @@
+{
+  "slug": "gpu-aware-batch-scheduling-ai-training",
+  "title": "GPU-aware batch scheduling for AI training on Kubernetes with Pulumi",
+  "subtitle": "Provision a gang scheduler with Pulumi, start a training job all-or-nothing, and enforce fair share between two teams",
+  "demo_title": "GPU-aware batch scheduling",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The idle GPU problem",
+    "Gang scheduling and queues",
+    "Volcano on Kubernetes",
+    "What we build with Pulumi",
+    "Demo: gangs, queues, DRA",
+    "Teardown and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Volcano queue docs",
+      "url": "https://volcano.sh/en/docs/queue/",
+      "label": "volcano.sh/en/docs/queue"
+    },
+    {
+      "title": "Dynamic Resource Allocation in Kubernetes",
+      "url": "https://kubernetes.io/docs/concepts/scheduling-eviction/dynamic-resource-allocation/",
+      "label": "kubernetes.io/docs DRA"
+    },
+    {
+      "title": "Pulumi Kubernetes provider",
+      "url": "https://www.pulumi.com/registry/packages/kubernetes/",
+      "label": "pulumi.com/registry/kubernetes"
+    }
+  ]
+}
