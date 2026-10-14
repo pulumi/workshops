@@ -1,0 +1,41 @@
+{
+  "slug": "fine-grained-authorization-openfga",
+  "title": "Fine-grained authorization as code: OpenFGA relationship-based access control with Pulumi",
+  "subtitle": "Define a ReBAC model as Pulumi code and check access for a human user and an AI agent",
+  "demo_title": "OpenFGA with Pulumi",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why agents break RBAC",
+    "Relationship-based access control",
+    "OpenFGA and Pulumi",
+    "The solution we build",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "OpenFGA documentation",
+      "url": "https://openfga.dev/docs",
+      "label": "openfga.dev/docs"
+    },
+    {
+      "title": "OpenFGA: perform a check",
+      "url": "https://openfga.dev/docs/getting-started/perform-check",
+      "label": "openfga.dev/perform-check"
+    },
+    {
+      "title": "Pulumi dynamic providers",
+      "url": "https://www.pulumi.com/docs/iac/concepts/resources/dynamic-providers/",
+      "label": "pulumi.com/dynamic-providers"
+    },
+    {
+      "title": "Pulumi Docker provider",
+      "url": "https://www.pulumi.com/registry/packages/docker/",
+      "label": "pulumi.com/registry/docker"
+    }
+  ]
+}
