@@ -1,0 +1,6 @@
+# 06-teardown/ has no package.json and produces no build output — teardown.sh
+# only removes the root-level state that ../.gitignore already ignores. This
+# file exists for parity with the sibling folders, so it catches editor
+# swap files that the repo root's patterns do not.
+*.swp
+*.swo

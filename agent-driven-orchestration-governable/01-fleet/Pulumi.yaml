@@ -1,0 +1,24 @@
+name: agent-fleet
+description: >-
+  Target program for "Agent-Driven Orchestration You Can Govern, Trust and
+  Repeat": a worker fleet component (`replicaCount`) and a `configVersion`
+  random string standing in for a rotated secret. No real cloud resources —
+  the random provider is a local mock, so `pulumi up` completes in seconds
+  and costs nothing.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  agent-fleet:replicaCount:
+    description: How many workers the fleet should run.
+    default: "2"
+  agent-fleet:rotateTrigger:
+    description: Changing this value forces configVersion to rotate.
+    default: "initial"
+  agent-fleet:approved:
+    description: >-
+      Workshop simplification of an external approval source: the value the
+      require-approval-flag policy rule inspects. Set programmatically by the
+      orchestrator via Automation API, never by hand-editing this file.
+    default: "false"
