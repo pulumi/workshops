@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "pulumi-scoped": {
+      "command": "node",
+      "args": ["/absolute/path/to/give-your-ai-agent-the-keys-safely/03-scoped-access/guard.mjs"]
+    }
+  }
+}
