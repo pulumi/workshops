@@ -1,0 +1,15 @@
+{
+  "name": "vms-vm",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VMs on Kubernetes as Code: the demo VirtualMachine and its NodePort Service",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.265.0"
+  }
+}

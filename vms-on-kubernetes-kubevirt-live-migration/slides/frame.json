@@ -1,0 +1,36 @@
+{
+  "slug": "vms-on-kubernetes-kubevirt-live-migration",
+  "title": "VMs on Kubernetes as code",
+  "subtitle": "Provision and live-migrate a KubeVirt VM with Pulumi",
+  "demo_title": "KubeVirt live migration",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The VM problem on Kubernetes",
+    "What KubeVirt adds",
+    "Where Pulumi fits",
+    "The solution we build",
+    "Demo: provision and live-migrate",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "KubeVirt user guide: live migration",
+      "url": "https://kubevirt.io/user-guide/compute/live_migration/",
+      "label": "kubevirt.io/user-guide"
+    },
+    {
+      "title": "KubeVirt installation guide",
+      "url": "https://kubevirt.io/user-guide/cluster_admin/installation/",
+      "label": "kubevirt.io installation"
+    },
+    {
+      "title": "Pulumi Kubernetes provider",
+      "url": "https://www.pulumi.com/registry/packages/kubernetes/",
+      "label": "pulumi.com/registry"
+    }
+  ]
+}
