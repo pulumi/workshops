@@ -1,0 +1,8 @@
+name: observability-alert-rule
+description: >-
+  "Observability as code" workshop, step 6: a PrometheusRule alerting on
+  sample-app latency, evaluated by step 2's Prometheus.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

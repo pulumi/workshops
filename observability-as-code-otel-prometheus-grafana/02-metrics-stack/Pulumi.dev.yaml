@@ -1,0 +1,4 @@
+config:
+  observability-metrics-stack:clusterStackRef: organization/observability-cluster/dev
+  observability-metrics-stack:grafanaAdminPassword:
+    secure: v1:REPLACE_WITH_PULUMI_CONFIG_SET_SECRET
