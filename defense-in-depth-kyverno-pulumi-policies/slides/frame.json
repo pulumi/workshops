@@ -1,0 +1,36 @@
+{
+  "slug": "defense-in-depth-kyverno-pulumi-policies",
+  "title": "Defense in Depth as Code: Kyverno Admission Control and Pulumi Policies",
+  "subtitle": "Block an unsafe workload at the cluster door and in the Pulumi pipeline, with one rule at two layers",
+  "demo_title": "Kyverno and Pulumi Policies",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The incident and the tension",
+    "Two places to stop a bad Pod",
+    "Admission control with Kyverno",
+    "Policies in the Pulumi pipeline",
+    "Live demo",
+    "Side by side and takeaways"
+  ],
+  "resources": [
+    {
+      "title": "Kyverno documentation",
+      "url": "https://kyverno.io/docs/",
+      "label": "kyverno.io/docs"
+    },
+    {
+      "title": "Pulumi Policies documentation",
+      "url": "https://www.pulumi.com/docs/insights/policy/",
+      "label": "pulumi.com/docs/insights/policy"
+    },
+    {
+      "title": "Kubernetes admission controllers",
+      "url": "https://kubernetes.io/docs/reference/access-authn-authz/admission-controllers/",
+      "label": "kubernetes.io admission controllers"
+    }
+  ]
+}
