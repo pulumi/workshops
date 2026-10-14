@@ -1,0 +1,7 @@
+name: kafka-workshop-topic
+description: >-
+  The demo-events KafkaTopic and an in-cluster Kafka client pod.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

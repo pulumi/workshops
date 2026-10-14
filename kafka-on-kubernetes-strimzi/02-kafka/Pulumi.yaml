@@ -1,0 +1,7 @@
+name: kafka-workshop-kafka
+description: >-
+  KRaft-mode Kafka cluster (two KafkaNodePools plus the Kafka resource) managed by Strimzi.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

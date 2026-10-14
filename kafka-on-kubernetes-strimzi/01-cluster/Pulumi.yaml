@@ -1,0 +1,7 @@
+name: kafka-workshop-cluster
+description: >-
+  kind cluster plus the Strimzi cluster operator for the Kafka on Kubernetes workshop.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
