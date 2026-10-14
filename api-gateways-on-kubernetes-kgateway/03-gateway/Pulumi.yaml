@@ -1,0 +1,8 @@
+name: api-gateways-workshop-gateway
+description: >-
+  The workshop's demo namespace and its Gateway resource, with a single
+  HTTP listener on port 80.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
