@@ -36,7 +36,7 @@ Azure Policy as code with Pulumi: management groups, initiatives, assignments an
 
 ## Rules
 
-Frame slides come from `deck_frame.py`; never edit them by hand. Story and demo slides are copied from `deck_frame.py patterns`. No Mermaid, no theme layouts except `image`, no hard-coded colours. No Gauge or competitor material.
+Frame slides come from `deck_frame.py`; never edit them by hand. Story and demo slides are copied from `deck_frame.py patterns`. No Mermaid, no theme layouts except `image`, no hard-coded colours.
 
 ## marketing-web slidev-deck skill
 
