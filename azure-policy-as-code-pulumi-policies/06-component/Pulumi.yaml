@@ -1,0 +1,6 @@
+name: azure-policy-workshop
+description: "AzureStorageBaseline component, no replacements"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
