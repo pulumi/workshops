@@ -1,0 +1,41 @@
+{
+  "slug": "azure-policy-as-code-pulumi-policies",
+  "title": "Azure Policy as code with Pulumi",
+  "subtitle": "Management groups, initiatives, assignments and preventive Pulumi Policies",
+  "demo_title": "Azure Policy as code",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why a public storage account is still easy to ship",
+    "How Azure Policy governs",
+    "Managing it as code with Pulumi IaC",
+    "Preventive Pulumi Policies",
+    "Where each layer breaks",
+    "The demo"
+  ],
+  "resources": [
+    {
+      "title": "Pulumi Policies",
+      "url": "https://www.pulumi.com/docs/discovery-governance/concepts/policy-as-code/",
+      "label": "pulumi.com/docs/discovery-governance"
+    },
+    {
+      "title": "Write your own policy packs",
+      "url": "https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/",
+      "label": "pulumi.com/docs/.../write-a-policy-pack"
+    },
+    {
+      "title": "Azure Policy effects",
+      "url": "https://learn.microsoft.com/en-us/azure/governance/policy/concepts/effect-basics",
+      "label": "learn.microsoft.com/.../effect-basics"
+    },
+    {
+      "title": "Azure Native setup",
+      "url": "https://www.pulumi.com/registry/packages/azure-native/installation-configuration/",
+      "label": "pulumi.com/registry/.../azure-native"
+    }
+  ]
+}

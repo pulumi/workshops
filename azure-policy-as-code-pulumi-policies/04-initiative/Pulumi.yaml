@@ -1,0 +1,6 @@
+name: azure-policy-workshop
+description: "Initiative with deny and modify definitions"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

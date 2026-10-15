@@ -1,0 +1,6 @@
+name: azure-policy-workshop
+description: "Empty program: proves login, plugin and config work"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

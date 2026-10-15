@@ -1,0 +1,6 @@
+name: azure-policy-workshop
+description: "Pulumi Policies pack that blocks the violation before Azure is called"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

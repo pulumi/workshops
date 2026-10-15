@@ -1,0 +1,6 @@
+name: azure-policy-workshop
+description: "Custom policy definition at management group scope"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

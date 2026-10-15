@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "outDir": "bin",
+    "target": "es2022",
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "types": [
+      "node"
+    ],
+    "experimentalDecorators": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "files": [
+    "index.ts"
+  ]
+}

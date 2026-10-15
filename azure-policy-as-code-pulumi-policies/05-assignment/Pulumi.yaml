@@ -1,0 +1,6 @@
+name: azure-policy-workshop
+description: "Assignment at management group scope with managed identity"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
