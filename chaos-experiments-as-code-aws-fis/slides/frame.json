@@ -1,0 +1,35 @@
+{
+  "slug": "chaos-experiments-as-code-aws-fis",
+  "title": "Chaos experiments as code with Pulumi IaC and AWS Fault Injection Service",
+  "subtitle": "Define a chaos experiment as a Pulumi resource, run it on AWS, and block any experiment without a stop condition",
+  "demo_title": "Chaos experiments as code",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why manual chaos fails",
+    "Fault injection and Pulumi",
+    "The solution we build",
+    "Demo: experiments as code",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "AWS FIS user guide",
+      "url": "https://docs.aws.amazon.com/fis/latest/userguide/what-is.html",
+      "label": "docs.aws.amazon.com/fis"
+    },
+    {
+      "title": "Pulumi Policies docs",
+      "url": "https://www.pulumi.com/docs/discovery-governance/concepts/policy-as-code/",
+      "label": "pulumi.com/docs/policy"
+    },
+    {
+      "title": "Pulumi ESC OIDC for AWS",
+      "url": "https://www.pulumi.com/docs/esc/environments/configuring-oidc/aws/",
+      "label": "pulumi.com/docs/esc"
+    }
+  ]
+}
