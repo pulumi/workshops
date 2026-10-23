@@ -100,7 +100,7 @@ defaults:
 
 ---
 
-# An AI agent deleted a production database during a code freeze
+# An AI agent deleted a live company database during a code freeze
 
 <div class="grid grid-cols-2 gap-10 mt-6 quote-slide">
   <div class="gpu-card gpu-card--primary quote-card" v-click>
@@ -161,12 +161,12 @@ defaults:
 </div>
 
 <!--
-[1.5 min] Quote from the KubeCon + CloudNativeCon North America 2026 abstract for session 1250982, "Progressive Delivery for Trust: How Agents Earn the Right to Merge", by Darian DeFalco. The full sentence: "As agentic systems become more effective, human review becomes the next scaling bottleneck." A second session, 1334820, says write access for non-deterministic systems "risks turning minor incidents into P0 disasters". Both abstracts read 2026-10-23. Point: reviewing every change by hand does not scale. Also mention, in a sentence, the devopsdays Boston 2026 talk "We Gave the Agent Production Credentials" by Anish Puthuraya, as the same story from the field.
+[1.5 min] Quote from the KubeCon + CloudNativeCon North America 2026 abstract for session 1250982, "Progressive Delivery for Trust: How Agents Earn the Right to Merge", by Darian DeFalco. The full sentence: "As agentic systems become more effective, human review becomes the next scaling bottleneck." A second session, 1334820, says giving non-deterministic systems write-access to production "risks turning minor incidents into P0 disasters". Both abstracts read 2026-10-23. Point: reviewing every change by hand does not scale. Also mention, in a sentence, the devopsdays Boston 2026 talk "We Gave the Agent Production Credentials" by Anish Puthuraya, as the same story from the field.
 -->
 
 ---
 
-# Scoped access limits where an agent can reach, not what it changes
+# Scoped access limits where an agent can reach and leaves what it changes open
 
 <div class="zoom-content">
 
@@ -583,7 +583,7 @@ defaults:
 
 ---
 
-# The approval sits on the credential, not on every command
+# One approval on the credential replaces a review of every command
 
 <div class="zoom-content">
 
@@ -1245,7 +1245,7 @@ defaults:
 </style>
 
 <!--
-[2 min] Nine steps, numbered 01 to 09 in the demo folder. Name them, do not explain them. Fallback: every step has a script and an expected-output note, so a failed step can be shown from the recorded output; say which step is recorded.
+[2 min] Nine steps, numbered 01 to 09 in the demo folder. Name them, do not explain them. Fallback: every step has a script and an expected-output note, so a failed step can be shown from the recorded output; say which step is recorded. If the org lacks ESC approvals or audit logs, run steps 1 to 3 live and show steps 4, 5 and 7 from recordings. A policy pack needs Node.js or Python where it runs; check that before the session.
 -->
 
 ---
@@ -1558,7 +1558,7 @@ pulumi org audit-log list --org "$ORG" --start-time "$START" --all --output json
 
 ---
 
-# 8 · An automated deployment slips past an open grant
+# 8 · An automated deployment cannot hold an open grant
 
 <div class="zoom-content">
 
@@ -1653,7 +1653,7 @@ pulumi destroy --cwd "$PROGRAM_DIR" --stack "$STACK"
   <div class="gpu-card gpu-card--primary step-card"><ph-pause-circle class="step-icon" /><div class="gpu-caption gpu-caption--accent">Pauses</div><p>Review, Balanced or Auto</p></div>
   <div class="gpu-card gpu-card--primary step-card"><ph-door-open class="step-icon" /><div class="gpu-caption gpu-caption--accent">Left open</div><p>Reads stay open; RBAC bounds them</p></div>
   <div class="gpu-card gpu-card--primary step-card"><ph-scroll class="step-icon" /><div class="gpu-caption gpu-caption--accent">Records</div><p>Audit log, exported by user and time</p></div>
-  <div class="gpu-card gpu-card--primary step-card"><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--accent">Limits</div><p>Automated deployments slip past a grant</p></div>
+  <div class="gpu-card gpu-card--primary step-card"><ph-warning class="step-icon" /><div class="gpu-caption gpu-caption--accent">Limits</div><p>Automated deployments cannot hold a grant</p></div>
 </div>
 
 </div>
