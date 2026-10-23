@@ -23,12 +23,12 @@ require_org
 require_cmd pulumi
 
 PROGRAM_DIR="${PROGRAM_DIR:-$(folder_dir 01-baseline)}"
-POLICY_GROUP="${POLICY_GROUP:-agent-gates}"
-POLICY_PACK="${POLICY_PACK:-agent-gates-pack}"
-ROLE_NAME="${ROLE_NAME:-agent-gates-esc-oidc}"
+POLICY_GROUP="${POLICY_GROUP:-}"   # empty: the org's default policy group, as in 02-policy-pack/publish.sh
+POLICY_PACK="${POLICY_PACK:-agent-gates-s3}"
+ROLE_NAME="${ROLE_NAME:-agent-gates-esc}"
 [ -f "$PROGRAM_DIR/Pulumi.yaml" ] || die "no Pulumi.yaml in $PROGRAM_DIR; set PROGRAM_DIR"
 
-info "org: $ORG  stack: $STACK  environment: $(esc_fqn)  policy pack: $ORG/$POLICY_PACK (group $POLICY_GROUP)"
+info "org: $ORG  stack: $STACK  environment: $(esc_fqn)  policy pack: $ORG/$POLICY_PACK (group ${POLICY_GROUP:-default})"
 
 info "step 1: disable the Open ruleset on $(esc_fqn)"
 echo "  Console > environment > Settings > Approval Rulesets > the Open ruleset > disable."
@@ -47,13 +47,17 @@ confirm "Delete environment $(esc_fqn)?" || die "stopped before env rm"
 pulumi env remove "$(esc_fqn)"
 echo "  If you created other environments for the workshop, remove them the same way: pulumi env remove $ORG/$ESC_PROJECT/<name>"
 
-info "step 5: disable the policy pack in group $POLICY_GROUP, then remove it"
-confirm "Disable $ORG/$POLICY_PACK in policy group $POLICY_GROUP?" || die "stopped before policy disable"
-pulumi policy disable "$ORG/$POLICY_PACK" --policy-group "$POLICY_GROUP"
+info "step 5: disable the policy pack in group ${POLICY_GROUP:-default}, then remove it"
+confirm "Disable $ORG/$POLICY_PACK in policy group ${POLICY_GROUP:-default}?" || die "stopped before policy disable"
+if [[ -n "$POLICY_GROUP" ]]; then
+  pulumi policy disable "$ORG/$POLICY_PACK" --policy-group "$POLICY_GROUP"
+else
+  pulumi policy disable "$ORG/$POLICY_PACK"
+fi
 confirm "Remove all versions of $ORG/$POLICY_PACK?" || die "stopped before policy rm"
 pulumi policy remove "$ORG/$POLICY_PACK" all
-echo "  The policy group itself is deleted in the console: Policies > Policy Groups > $POLICY_GROUP > delete."
-confirm "Policy group $POLICY_GROUP deleted (if you created one)?" || die "delete the group, then re-run the final checks by hand"
+echo "  The policy group itself is deleted in the console: Policies > Policy Groups > ${POLICY_GROUP:-<your group>} > delete (the default group stays)."
+confirm "Policy group deleted (if you created one)?" || die "delete the group, then re-run the final checks by hand"
 
 info "step 6: delete the IAM OIDC role $ROLE_NAME (and the OIDC provider if you created it for this workshop)"
 echo "  AWS console > IAM > Roles > $ROLE_NAME > delete. Provider: IAM > Identity providers."
