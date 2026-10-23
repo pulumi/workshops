@@ -560,7 +560,7 @@ defaults:
 
 <div class="zoom-content">
 
-<div class="chain" style="grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;">
+<div class="chain" style="grid-template-columns: 1fr auto 1fr auto 1.25fr auto 1fr;">
   <div class="gpu-card chain__node" v-click="1">
     <ph-key class="chain__icon" />
     <div class="gpu-caption">IAM role</div>
@@ -570,13 +570,13 @@ defaults:
   <div class="gpu-card chain__node" v-click="2">
     <ph-lock-key class="chain__icon" />
     <div class="gpu-caption">Policy</div>
-    <span>RolePolicyAttachment</span>
+    <span style="font-size:0.95rem; overflow-wrap:anywhere">RolePolicy<wbr>Attachment</span>
   </div>
   <ph-arrow-right class="chain__arrow" v-click="3" />
   <div class="gpu-card gpu-card--primary chain__node" v-click="3">
     <ph-flask class="chain__icon" />
     <div class="gpu-caption gpu-caption--accent">Template</div>
-    <span>aws.fis.ExperimentTemplate</span>
+    <span style="font-size:0.95rem; overflow-wrap:anywhere">aws.fis.<wbr>ExperimentTemplate</span>
   </div>
   <ph-arrow-right class="chain__arrow" v-click="4" />
   <div class="gpu-card chain__node" v-click="4">
@@ -1101,7 +1101,7 @@ defaults:
 
 <div class="zoom-content">
 
-<div class="chain" style="grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;">
+<div class="chain" style="grid-template-columns: 1fr auto 1fr auto 1.25fr auto 1fr;">
   <div class="gpu-card chain__node" v-click="1">
     <ph-cloud class="chain__icon" />
     <div class="gpu-caption">Pulumi IaC</div>
