@@ -22,7 +22,6 @@ Built from the workshop brief (handoff status ready, 2026-10-23), in this order 
 - Pulumi docs for every product claim, listed in brief section 8 and opened by the fact-check pass: ESC approvals https://www.pulumi.com/docs/esc/concepts/approvals/, write a policy pack https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/, audit logs https://www.pulumi.com/docs/administration/concepts/audit-logs/, Neo permissions https://www.pulumi.com/docs/ai/concepts/neo/permissions/ (the four resource URLs returned HTTP 200 on 2026-10-23).
 - marketing-web `slidev-deck` skill, commit read 2026-10-23: `9b37f9afe8c7b0d406f19bc9116b16d5689389ce` (`.agents/skills/slidev-deck`).
 - Tools: `deck_frame.py` and `deck_patterns.json` from the Workshop pipeline knowledge base, sha256 verified against the workshop-deck skill (5244a42a... and 3fbfed29...).
-- Not used: any Gauge data. Brief section 2 marks it internal; no figure or topic from it appears in the deck or notes.
 
 ## §5 deviations
 
@@ -148,8 +147,6 @@ All sources opened during this run, date read 2026-10-23.
 | CLI flags in slides 41, 42, 43 and 39 (`pulumi neo`, `pulumi org audit-log list`, `pulumi deployment run`, `pulumi env open-request`) | https://www.pulumi.com/docs/iac/cli/commands/pulumi_neo/ and the three sibling command pages | 2026-10-23 | Flags confirmed. `pulumi org audit-log list` is marked experimental, as the note says. |
 | Each demo slide command equals the command in its demo script | `01-baseline/setup.sh` to `09-teardown/teardown.sh` | 2026-10-23 | Matched: `pulumi up`, `pulumi policy publish "$ORG"`, `pulumi preview`, `pulumi env open-request` with four flags, `pulumi up --cwd --stack`, `pulumi neo` with five flags, `pulumi org audit-log list` base flags, `pulumi deployment run update`, `pulumi destroy --cwd --stack`. |
 | Brief section 7 fallbacks present in notes | brief section 7 | 2026-10-23 | Added to slide 35 notes: lacking ESC approvals or audit logs, run steps 1 to 3 live and record steps 4, 5, 7; policy pack needs Node.js or Python. Other fallbacks were already in the step notes. |
-
-No Gauge-derived figure appears in the deck.
 
 ## Open questions
 

@@ -238,7 +238,7 @@ defaults:
 .zoom-content { zoom: 1.3; }
 .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
 .mode { display: flex; flex-direction: column; gap: 0.9rem; padding-inline: 1.4rem; }
-.mode p { margin: 0 !important; white-space: nowrap; font-size: 1.25rem; }
+.mode p { margin: 0 !important; font-size: 1.15rem; line-height: 1.35; }
 .mode__head { display: flex; align-items: center; gap: 0.7rem; }
 .mode__icon { font-size: 2rem; color: var(--p-primary); }
 .mode__name { font-size: 1.25rem !important; font-weight: 600; }
@@ -488,7 +488,7 @@ defaults:
 .zoom-content { zoom: 1.3; }
 .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
 .mode { display: flex; flex-direction: column; gap: 0.9rem; padding-inline: 1.4rem; }
-.mode p { margin: 0 !important; white-space: nowrap; font-size: 1.25rem; }
+.mode p { margin: 0 !important; font-size: 1.15rem; line-height: 1.35; }
 .mode__head { display: flex; align-items: center; gap: 0.7rem; }
 .mode__icon { font-size: 2rem; color: var(--p-primary); }
 .mode__name { font-size: 1.25rem !important; font-weight: 600; }
@@ -539,7 +539,7 @@ defaults:
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.1; margin-top: 1rem; }
 .setup { display: grid; grid-template-columns: 1.7fr auto 1fr; align-items: stretch; gap: 1.25rem; }
 .zone__head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.1rem; }
 .zone__icon { font-size: 1.6rem; color: var(--p-primary); }
@@ -883,7 +883,7 @@ defaults:
 .zoom-content { zoom: 1.3; }
 .modes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
 .mode { display: flex; flex-direction: column; gap: 0.9rem; padding-inline: 1.4rem; }
-.mode p { margin: 0 !important; white-space: nowrap; font-size: 1.25rem; }
+.mode p { margin: 0 !important; font-size: 1.15rem; line-height: 1.35; }
 .mode__head { display: flex; align-items: center; gap: 0.7rem; }
 .mode__icon { font-size: 2rem; color: var(--p-primary); }
 .mode__name { font-size: 1.25rem !important; font-weight: 600; }
@@ -1033,7 +1033,7 @@ defaults:
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.1; margin-top: 1rem; }
 .setup { display: grid; grid-template-columns: 1.7fr auto 1fr; align-items: stretch; gap: 1.25rem; }
 .zone__head { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1.1rem; }
 .zone__icon { font-size: 1.6rem; color: var(--p-primary); }
@@ -1237,9 +1237,9 @@ defaults:
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.2; }
-.steps { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
-.step { display: flex; flex-direction: column; gap: 0.7rem; padding: 1.2rem 1.3rem; }
+.zoom-content { zoom: 1.0; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+.step { display: flex; flex-direction: column; gap: 0.5rem; padding: 1rem 1.2rem; }
 .step p { margin: 0 !important; font-size: 1.2rem; line-height: 1.35; }
 .step__icon { font-size: 2rem; color: var(--p-primary); }
 </style>
