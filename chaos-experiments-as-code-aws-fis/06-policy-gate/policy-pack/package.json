@@ -1,0 +1,13 @@
+{
+  "name": "chaos-policies",
+  "version": "0.1.0",
+  "private": true,
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@pulumi/policy": "1.21.0",
+    "@pulumi/pulumi": "3.272.0"
+  }
+}
