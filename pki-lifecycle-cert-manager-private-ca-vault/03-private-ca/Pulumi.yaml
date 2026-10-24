@@ -1,0 +1,6 @@
+name: pki-03-private-ca
+description: "PKI lifecycle workshop: AWS Private CA"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
