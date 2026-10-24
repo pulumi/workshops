@@ -1,0 +1,17 @@
+{
+  "name": "kbind-provider",
+  "version": "0.1.0",
+  "private": true,
+  "description": "kbind workshop: the provider cluster, the kbind backend and the exported API",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.51.1",
+    "@pulumi/eks": "4.4.0",
+    "@pulumi/kubernetes": "4.34.2",
+    "@pulumi/pulumi": "^3.262.0"
+  }
+}
