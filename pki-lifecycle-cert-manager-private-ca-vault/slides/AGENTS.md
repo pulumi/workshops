@@ -32,7 +32,7 @@ The story spine was built from the brief §1 to §3 and §7 plus the demo folder
 11. A Certificate resource becomes a Secret on its own (flow)
 12. Each issuer proves itself to its CA in its own way (compare)
 13. Section: what renews it (section-opener)
-14. cert-manager renews before expiry, not after (flow)
+14. cert-manager renews a certificate before it expires (flow)
 15. Three questions covered, three to go (recap-grid)
 16. Section: how I know it failed (section-opener)
 17. Four signals watch one certificate (stack)

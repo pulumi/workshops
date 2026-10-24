@@ -151,7 +151,7 @@ defaults:
 </style>
 
 <!--
-[2 min] Start here. Nobody hacked a certificate. A certificate expired, a monitoring device went blind, and the company did not see data leaving for nineteen months. The House Oversight report says so in its own words. Point at the last bullet: the day they renewed the certificate, they saw the traffic. One renewal date was the whole difference. Source: oversight.house.gov Equifax-Report.pdf, read 2026-10-24.
+[2 min] Start here. Nobody hacked a certificate. A certificate expired, a monitoring device went blind, and the company did not see data leaving for nineteen months. The House Oversight report says so in its own words. Point at the last bullet: the day they renewed the certificate, they saw the traffic. Source: oversight.house.gov Equifax-Report.pdf, read 2026-10-24.
 -->
 
 ---
@@ -161,7 +161,7 @@ defaults:
 </div>
 
 <!--
-[0.75 min] That is the pattern. Not a clever attack, a date that passed. Ask the room who has a certificate expiry in a shared calendar. Let the hands go up. That is our starting point.
+[0.75 min] That is the pattern: a date passed. Ask the room who has a certificate expiry in a shared calendar. Let the hands go up. That is our starting point.
 -->
 
 ---
@@ -487,7 +487,7 @@ defaults:
 </style>
 
 <!--
-[2.25 min] The AWS issuer can use an EC2 instance role or IAM Roles for Service Accounts. The demo binds the issuer service account to an IAM role through IRSA. The Vault issuer in cert-manager supports AppRole, token and Kubernetes auth, per the cert-manager Vault page I read on 2026-10-24. Our demo uses a dev-mode Vault with a root token, which is fine for a workshop and wrong for production. Say that out loud.
+[2.25 min] The AWS issuer can use an EC2 instance role or IAM Roles for Service Accounts. The demo binds the issuer service account to an IAM role through IRSA. The Vault issuer in cert-manager supports AppRole, token and Kubernetes auth, per the cert-manager Vault page I read on 2026-10-24. Our demo uses a dev-mode Vault with a root token, which is fine for a workshop and wrong for production.
 -->
 
 ---
@@ -515,7 +515,7 @@ defaults:
 
 ---
 
-# cert-manager renews before expiry, not after
+# cert-manager renews a certificate before it expires
 
 <div class="zoom-content">
 
@@ -803,7 +803,7 @@ defaults:
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-shield-warning class="step-icon" /><div class="gpu-caption gpu-caption--muted">Dev Vault</div><p>A dev server and a root token</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-currency-dollar class="step-icon" /><div class="gpu-caption gpu-caption--muted">CA fees</div><p>Two general-purpose CAs bill by the month</p></div>
   <div class="gpu-card gpu-card--muted step-card" v-click><ph-flask class="step-icon" /><div class="gpu-caption gpu-caption--muted">Unverified strings</div><p>Template ARNs and cmctl flags not yet run live</p></div>
-  <div class="gpu-card gpu-card--muted step-card" v-click><ph-timer class="step-icon" /><div class="gpu-caption gpu-caption--muted">Alarm timing</div><p>A forced ALARM state, not a real expiry</p></div>
+  <div class="gpu-card gpu-card--muted step-card" v-click><ph-timer class="step-icon" /><div class="gpu-caption gpu-caption--muted">Alarm timing</div><p>The ALARM state is forced</p></div>
 </div>
 
 </div>
@@ -1113,7 +1113,7 @@ kubectl get awspcaclusterissuer
   <ul class="s1__facts">
     <li><ph-file-text /><span>A two-hour certificate for demo.internal.example</span></li>
     <li><ph-seal-check /><span>The issuer line shows the Private CA</span></li>
-    <li><ph-clock /><span>Not before, not after: two hours apart</span></li>
+    <li><ph-clock /><span>Not Before and Not After are two hours apart</span></li>
   </ul>
   </v-clicks>
 </div>
@@ -1168,7 +1168,7 @@ kubectl get certificate --namespace default
 </style>
 
 <!--
-[7 min] Step 06. Two phases: install Vault, then run the port-forward in its own terminal and set vaultConfigure to true. Then compare the issuers on the two Secrets using the same openssl pipe as verify.sh. If the port-forward drops, restart it and run pulumi up again. The Vault is a dev server with root as the token. Say that.
+[7 min] Step 06. Two phases: install Vault, then run the port-forward in its own terminal and set vaultConfigure to true. Then compare the issuers on the two Secrets using the same openssl pipe as verify.sh. If the port-forward drops, restart it and run pulumi up again. The Vault is a dev server with root as the token.
 -->
 
 ---
@@ -1206,7 +1206,7 @@ kubectl get certificate --namespace default
 </style>
 
 <!--
-[8 min] Step 07. renew.sh runs cmctl renew, or deletes the Secret if cmctl is missing, then waits for Ready and prints both serials. No redeploy. For the alarm, set alarmThresholdDays to 400 above the remaining days, run pulumi up, then describe-alarms. This forces the ALARM state. It is not a real expiry, and DaysToExpiry updates twice a day. The cmctl flags are unverified until rehearsal.
+[8 min] Step 07. renew.sh runs cmctl renew, or deletes the Secret if cmctl is missing, then waits for Ready and prints both serials. No redeploy. For the alarm, set alarmThresholdDays to 400 above the remaining days, run pulumi up, then describe-alarms. This forces the ALARM state. No certificate expires, and DaysToExpiry updates only twice a day. The cmctl flags are unverified until rehearsal.
 -->
 
 ---
