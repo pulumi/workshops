@@ -12,3 +12,5 @@ bin/
 !slides/slides.md
 slides/export-pages/
 slides/dist/
+*.pdf
+slides/*.png

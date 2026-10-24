@@ -348,7 +348,7 @@ defaults:
 
 ---
 
-# A root CA signs a subordinate CA, and the issuer uses the subordinate
+# A root CA signs a subordinate CA
 
 <div class="zoom-content">
 
@@ -821,7 +821,7 @@ defaults:
 
 ---
 
-# One Pulumi stack per step builds two CAs, a cluster and an alarm
+# One stack per step builds the whole estate
 
 <div class="zoom-content">
 
@@ -949,11 +949,12 @@ const payments = new PkiCertificate("payments", {
 
 <div class="zoom-content">
 
-<div class="s1">
+<div class="s1 s1--stack">
   <div class="big-code code-sm">
 
 ```bash
-pulumi env open "${ORG}/pki-workshop/aws-vault" --format json | jq '.environmentVariables | keys'
+pulumi env open "${ORG}/pki-workshop/aws-vault" --format json \
+  | jq '.environmentVariables | keys'
 ```
 
 </div>
@@ -975,6 +976,9 @@ pulumi env open "${ORG}/pki-workshop/aws-vault" --format json | jq '.environment
 .s1__facts { list-style: none; padding: 0; margin: 0; }
 .s1__facts li { display: flex; align-items: center; gap: 0.8rem; font-size: 1.25rem; margin: 0 0 1rem; }
 .s1__facts li svg { flex-shrink: 0; font-size: 1.5rem; color: var(--p-primary); }
+.s1--stack { grid-template-columns: 1fr; gap: 1rem; }
+.s1--stack .s1__facts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.s1--stack .s1__facts li { margin: 0; font-size: 1.05rem; }
 </style>
 
 <!--
@@ -1025,11 +1029,13 @@ kubectl get nodes
 
 <div class="zoom-content">
 
-<div class="s1">
+<div class="s1 s1--stack">
   <div class="big-code code-sm">
 
 ```bash
-aws acm-pca describe-certificate-authority --certificate-authority-arn "$(pulumi stack output rootCaArn)" --query CertificateAuthority.Status
+aws acm-pca describe-certificate-authority \
+  --certificate-authority-arn "$(pulumi stack output rootCaArn)" \
+  --query CertificateAuthority.Status
 ```
 
 </div>
@@ -1051,6 +1057,9 @@ aws acm-pca describe-certificate-authority --certificate-authority-arn "$(pulumi
 .s1__facts { list-style: none; padding: 0; margin: 0; }
 .s1__facts li { display: flex; align-items: center; gap: 0.8rem; font-size: 1.25rem; margin: 0 0 1rem; }
 .s1__facts li svg { flex-shrink: 0; font-size: 1.5rem; color: var(--p-primary); }
+.s1--stack { grid-template-columns: 1fr; gap: 1rem; }
+.s1--stack .s1__facts { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+.s1--stack .s1__facts li { margin: 0; font-size: 1.05rem; }
 </style>
 
 <!--
