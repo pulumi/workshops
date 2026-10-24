@@ -130,8 +130,8 @@ defaults:
   <div>
     <v-clicks>
     <ul class="!mt-2 !text-[1.2rem] !leading-relaxed space-y-3">
-      <li>The monitoring device sat on the path of the breached web application</li>
-      <li>The report counts over 300 expired security certificates</li>
+      <li>The device monitored network traffic for the breached ACIS web application</li>
+      <li>The report says Equifax let over 300 security certificates expire</li>
       <li>The certificate was renewed on July 29, 2017, and the traffic looked suspicious at once</li>
     </ul>
     </v-clicks>
@@ -172,7 +172,7 @@ defaults:
 
 <div class="grid grid-cols-2 gap-10 mt-6">
   <div class="gpu-card gpu-card--muted" v-click>
-    <div class="gpu-caption gpu-caption--muted">Today</div>
+    <div class="gpu-caption gpu-caption--muted">Until March 2026</div>
     <ul class="!mt-4 !text-[1.2rem] !leading-relaxed space-y-2">
       <li>Public TLS certificates: up to 398 days</li>
       <li>One renewal a year, easy to forget</li>
@@ -196,7 +196,7 @@ defaults:
 </style>
 
 <!--
-[1.5 min] This comes from a CA/Browser Forum ballot, SC-081v3. It reduces the maximum validity of public TLS certificates from 398 days to 47 days, in steps from March 2026 to March 2029. Be clear it is about public certificates. Our workshop is about private ones, and the ballot does not bind them. My argument, and it is an opinion, is that teams copy the habits of the public web, and the habit is going to be short lifetimes. Source: cabforum.org ballot SC081v3 page, read 2026-10-24.
+[1.5 min] This comes from a CA/Browser Forum ballot, SC-081v3. It reduces the maximum validity of public TLS certificates from 398 days to 47 days, in steps: 200 days from March 15, 2026, 100 days from March 15, 2027 and 47 days from March 15, 2029. Be clear it is about public certificates. Our workshop is about private ones, and the ballot does not bind them. My argument, and it is an opinion, is that teams copy the habits of the public web, and the habit is going to be short lifetimes. Sources: cabforum.org ballot SC081v3 page for the 398 to 47 days and March 2026 to March 2029 span, theregister.com 2025-04-14 for the step dates, read 2026-10-24.
 -->
 
 ---
@@ -644,7 +644,7 @@ defaults:
 </style>
 
 <!--
-[2.25 min] Two paths. The AWS path: an ACM certificate signed by our Private CA, a CloudWatch alarm on its DaysToExpiry metric, and an SNS topic that sends email. The cluster path: cert-manager exposes a certificate expiration timestamp metric and a PrometheusRule alerts on it. One caveat for the room: the cert-manager metrics page I read does not list that exact metric name, so we confirm the name on the controller's /metrics endpoint in rehearsal.
+[2.25 min] Two paths. The AWS path: an ACM certificate signed by our Private CA, a CloudWatch alarm on its DaysToExpiry metric, and an SNS topic that sends email. The cluster path: cert-manager exposes a certificate expiration timestamp metric and a PrometheusRule alerts on it. One caveat for the room: the cert-manager.io metrics page I read does not list the metric name. The cert-manager metrics package on pkg.go.dev lists certificate_expiration_timestamp_seconds, so we confirm the full name on the controller's /metrics endpoint in rehearsal.
 -->
 
 ---
@@ -816,7 +816,7 @@ defaults:
 </style>
 
 <!--
-[2.25 min] Honesty slide. The Vault is a dev server with a root token. Two general-purpose CAs cost money by the month and keep billing during the deletion window. The code has not been run live: the template ARN strings and the cmctl flags are unverified. And the alarm you see is forced. The README of the repo lists every unverified item.
+[2.25 min] Honesty slide. The Vault is a dev server with a root token. Two general-purpose CAs cost money by the month. Check the pricing page for what happens after deletion. The code has not been run live: the template ARN strings are unverified and the cmctl script has not run. And the alarm you see is forced. The README of the repo lists every unverified item.
 -->
 
 ---
@@ -1206,7 +1206,7 @@ kubectl get certificate --namespace default
 </style>
 
 <!--
-[8 min] Step 07. renew.sh runs cmctl renew, or deletes the Secret if cmctl is missing, then waits for Ready and prints both serials. No redeploy. For the alarm, set alarmThresholdDays to 400 above the remaining days, run pulumi up, then describe-alarms. This forces the ALARM state. No certificate expires, and DaysToExpiry updates only twice a day. The cmctl flags are unverified until rehearsal.
+[8 min] Step 07. renew.sh runs cmctl renew, or deletes the Secret if cmctl is missing, then waits for Ready and prints both serials. No redeploy. For the alarm, set alarmThresholdDays to 400 above the remaining days, run pulumi up, then describe-alarms. This forces the ALARM state. No certificate expires, and DaysToExpiry updates only twice a day. cmctl renew is documented on cert-manager.io, but this script has not run live.
 -->
 
 ---
