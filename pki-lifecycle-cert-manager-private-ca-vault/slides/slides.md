@@ -1011,7 +1011,7 @@ kubectl get nodes
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.6; }
 .s1 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center; }
 .s1 pre { margin: 0 !important; }
 .s1__facts { list-style: none; padding: 0; margin: 0; }
@@ -1092,7 +1092,7 @@ kubectl get awspcaclusterissuer
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.6; }
 .s1 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center; }
 .s1 pre { margin: 0 !important; }
 .s1__facts { list-style: none; padding: 0; margin: 0; }
@@ -1130,7 +1130,7 @@ kubectl get awspcaclusterissuer
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.6; }
 .s1 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center; }
 .s1 pre { margin: 0 !important; }
 .s1__facts { list-style: none; padding: 0; margin: 0; }
@@ -1168,7 +1168,7 @@ kubectl get certificate --namespace default
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.6; }
 .s1 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center; }
 .s1 pre { margin: 0 !important; }
 .s1__facts { list-style: none; padding: 0; margin: 0; }
@@ -1206,7 +1206,7 @@ kubectl get certificate --namespace default
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.6; }
 .s1 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center; }
 .s1 pre { margin: 0 !important; }
 .s1__facts { list-style: none; padding: 0; margin: 0; }
@@ -1244,7 +1244,7 @@ pulumi preview
 </div>
 
 <style scoped>
-.zoom-content { zoom: 1.3; }
+.zoom-content { zoom: 1.6; }
 .s1 { display: grid; grid-template-columns: 1.6fr 1fr; gap: 2rem; align-items: center; }
 .s1 pre { margin: 0 !important; }
 .s1__facts { list-style: none; padding: 0; margin: 0; }
