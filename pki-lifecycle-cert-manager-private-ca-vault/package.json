@@ -1,0 +1,17 @@
+{
+  "name": "pki-lifecycle-workshop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PKI lifecycle with cert-manager, AWS Private CA and Vault: demo steps 01-04",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.51.1",
+    "@pulumi/eks": "4.4.0",
+    "@pulumi/kubernetes": "4.34.2",
+    "@pulumi/pulumi": "3.272.0",
+    "@pulumi/vault": "7.14.0"
+  }
+}
