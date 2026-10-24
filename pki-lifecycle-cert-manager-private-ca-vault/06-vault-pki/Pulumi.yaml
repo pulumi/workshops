@@ -1,0 +1,6 @@
+name: pki-06-vault-pki
+description: "PKI lifecycle workshop: Vault PKI engine and a cert-manager Vault issuer"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

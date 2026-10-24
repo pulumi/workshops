@@ -1,0 +1,6 @@
+name: pki-07-renewal-and-monitoring
+description: "PKI lifecycle workshop: forced renewal, ACM certificate, alarms and Prometheus rule"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
