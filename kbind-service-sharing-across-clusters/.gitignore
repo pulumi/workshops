@@ -1,0 +1,16 @@
+.DS_Store
+*.log
+
+# Local state: kubeconfigs, the kubectl-bind binary. Never committed.
+.state/
+
+# Presenter-only working docs (DEMO, REHEARSAL, OPEN-QUESTIONS, FACTCHECK …):
+# the repo publishes the slides, the demo code and the notes that describe them.
+*.md
+!README.md
+!AGENTS.md
+!0*/README.md
+!fallback/kind/README.md
+!slides/slides.md
+slides/export-pages/
+slides/dist/

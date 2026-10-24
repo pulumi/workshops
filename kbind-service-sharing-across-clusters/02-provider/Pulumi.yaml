@@ -1,0 +1,10 @@
+name: kbind-provider
+description: >-
+  Provider side of the kbind workshop: an EKS cluster, the kbind backend as a
+  Helm release (chart 0.8.1, embedded OIDC, LoadBalancer service) and the
+  exported API (CRD, APIServiceExportTemplate, Collection). AWS credentials come
+  from the Pulumi ESC environment kbind-workshop/provider-dev.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
