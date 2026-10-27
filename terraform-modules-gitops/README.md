@@ -53,7 +53,7 @@ terraform-modules-gitops/
     └── teardown.sh            destroys the stack, removes it, checks us-west-2 for leftovers
 ```
 
-The slides follow on this branch in `slides/`.
+The Slidev deck is in `slides/`.
 
 ## Prerequisites
 
@@ -86,7 +86,14 @@ Tested versions, all pinned in the project files:
 
 ## Run the slides
 
-The deck is added on this branch after the demo. This section will carry its commands then.
+The deck is a Slidev project in `slides/` (41 slides, 90 minutes). Run these from `slides/`:
+
+```bash
+npm install
+npm run dev      # presenter view at http://localhost:3030
+npm run build    # static build in dist/
+npm run export   # PDF, one page per slide
+```
 
 ## Run the demo
 
