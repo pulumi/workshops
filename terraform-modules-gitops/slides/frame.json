@@ -1,0 +1,36 @@
+{
+  "slug": "terraform-modules-gitops",
+  "title": "Keep your Terraform modules, change the pipeline",
+  "subtitle": "Terraform modules in Pulumi with push-to-deploy and drift detection",
+  "demo_title": "Terraform modules in Pulumi",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The pipeline is the problem",
+    "Modules without a rewrite",
+    "Credentials, deploys and drift",
+    "What we build",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Use Terraform modules in Pulumi",
+      "url": "https://www.pulumi.com/docs/integrations/terraform/modules/",
+      "label": "pulumi.com/docs/integrations/terraform/modules"
+    },
+    {
+      "title": "Configure OIDC for AWS in Pulumi ESC",
+      "url": "https://www.pulumi.com/docs/esc/guides/configuring-oidc/aws/",
+      "label": "pulumi.com/docs/esc/guides/configuring-oidc/aws"
+    },
+    {
+      "title": "Detect and reconcile drift",
+      "url": "https://www.pulumi.com/docs/iac/operations/stack-management/drift/",
+      "label": "pulumi.com/docs/iac/operations/stack-management/drift"
+    }
+  ]
+}
