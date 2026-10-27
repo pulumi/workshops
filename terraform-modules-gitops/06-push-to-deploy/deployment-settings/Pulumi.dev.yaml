@@ -1,0 +1,2 @@
+config:
+  tf-modules-gitops-deploy-settings:repository: your-github-user/tf-modules-gitops
