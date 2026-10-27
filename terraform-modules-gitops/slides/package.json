@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "slidev slides.md --open",
     "build": "slidev build slides.md",
-    "export": "slidev export slides.md"
+    "export": "slidev export slides.md --per-slide --wait 1500 --timeout 120000"
   },
   "devDependencies": {
     "@pulumi/slidev-theme": "latest",
