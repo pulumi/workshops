@@ -2,6 +2,8 @@
 
 Keep functional validation separate from performance measurement. The historical export records what happened during earlier debugging; it is not the baseline for a controlled comparison.
 
+The [October 29 controlled results](results/2026-10-29-controlled/README.md) include 29 managed deployments, phase breakdowns, and preparation costs. The [historical export](results/2026-10-28-functional/README.md) preserves earlier functional observations separately.
+
 ## Export retained deployment history
 
 Supply a Pulumi access token through the process environment, then run the read-only collector:

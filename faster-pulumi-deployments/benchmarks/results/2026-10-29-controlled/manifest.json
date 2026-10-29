@@ -1,0 +1,613 @@
+{
+  "runs": [
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "05aebff8-f09c-4e97-99ae-ebf40eec653a",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.36490887400000815
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "a1fce9b6-b362-4d88-9aa5-632e89e145a2",
+      "variant": "source-no-cache",
+      "cohort": "controlled-no-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.38503253700000073
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "90d74977-819d-4eb3-996c-3962141df19c",
+      "variant": "source-no-cache",
+      "cohort": "controlled-no-change",
+      "sample": 2,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.437410658999994
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "4117dd9d-be3d-45e7-b591-6c565235a0f4",
+      "variant": "source-no-cache",
+      "cohort": "controlled-no-change",
+      "sample": 3,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.3849737829999924
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "83c237fd-89de-4256-805e-bb0990c5b421",
+      "variant": "cache-population",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "miss",
+      "include_in_comparison": false,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "miss",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.4738334780000173
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "eee6ee79-8475-43ec-b128-acde57044d87",
+      "variant": "source-cache-warm",
+      "cohort": "controlled-no-change",
+      "sample": 1,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.34131717100001424
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "a6c2d415-5ce6-4ed1-807d-1cdbd1d8e1de",
+      "variant": "source-cache-warm",
+      "cohort": "controlled-no-change",
+      "sample": 2,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.34795797900000025
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "90f0aa0a-b080-4ebb-b9b7-36a9dd4bb924",
+      "variant": "source-cache-warm",
+      "cohort": "controlled-no-change",
+      "sample": 3,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.35017777300001285
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "bec0b870-90c2-4b36-972e-07a0c3ae4427",
+      "variant": "program-artifact",
+      "cohort": "controlled-no-change",
+      "sample": 1,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.42029787900000315,
+        "artifact_download": 3.040120868999992,
+        "artifact_verification": 0.029869095999998763,
+        "artifact_extraction": 0.21587024499999075
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "1f87f653-087e-4bd0-822e-1bf0cf42f04e",
+      "variant": "program-artifact",
+      "cohort": "controlled-no-change",
+      "sample": 2,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.3999638009999984,
+        "artifact_download": 3.0847142329999997,
+        "artifact_verification": 0.027397204999999758,
+        "artifact_extraction": 0.16595768799999178
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "a8b037b9-cfbd-4cd0-9363-a2546a6d87d5",
+      "variant": "program-artifact",
+      "cohort": "controlled-no-change",
+      "sample": 3,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.4737492309999993,
+        "artifact_download": 2.98407150700001,
+        "artifact_verification": 0.030251431000010598,
+        "artifact_extraction": 0.19366559100001268
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "7e42f35c-bd98-4beb-afee-5041be532fe4",
+      "variant": "complete-artifact",
+      "cohort": "controlled-no-change",
+      "sample": 1,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.4148935270000038,
+        "artifact_download": 2.9717774140000017,
+        "artifact_verification": 0.08184641599999054,
+        "artifact_extraction": 0.2583119399999987,
+        "plugin_installation": 0.2593627749999996
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "49016a10-5988-44ed-ad69-811324ddcae7",
+      "variant": "complete-artifact",
+      "cohort": "controlled-no-change",
+      "sample": 2,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.39325743599999896,
+        "artifact_download": 3.0576414109999916,
+        "artifact_verification": 0.08075595399998292,
+        "artifact_extraction": 0.25816967400001545,
+        "plugin_installation": 0.3066362360000028
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "963f0734-cc45-417e-9c06-a82d36045f44",
+      "variant": "complete-artifact",
+      "cohort": "controlled-no-change",
+      "sample": 3,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.4154838070000011,
+        "artifact_download": 2.7346413200000086,
+        "artifact_verification": 0.06859050200000638,
+        "artifact_extraction": 0.21776834399999245,
+        "plugin_installation": 0.23700952199999392
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "9f54c78f-7172-42ab-b50c-de13dbaa463f",
+      "variant": "skip-install",
+      "cohort": "controlled-no-change",
+      "sample": 1,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.35510685900000283,
+        "artifact_download": 2.9627523740000044,
+        "artifact_verification": 0.06979263700000615,
+        "artifact_extraction": 0.22735218200000418,
+        "plugin_installation": 0.26174223299999255
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "d7ceeb66-e3ae-4e11-b75c-4199177b58c8",
+      "variant": "skip-install",
+      "cohort": "controlled-no-change",
+      "sample": 2,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.6642062669999973,
+        "artifact_download": 2.627939284000007,
+        "artifact_verification": 0.06402842600002145,
+        "artifact_extraction": 0.20413361699999655,
+        "plugin_installation": 0.23861704899999836
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "8c791eb6-725c-4719-9af3-4ba93939ce96",
+      "variant": "skip-install",
+      "cohort": "controlled-no-change",
+      "sample": 3,
+      "cache_expectation": "hit",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "hit",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.42148714699999346,
+        "artifact_download": 3.253083644,
+        "artifact_verification": 0.0642662730000012,
+        "artifact_extraction": 0.20966816899999685,
+        "plugin_installation": 0.2593995929999977
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "1ca7f111-1cf2-4b34-bef7-05d8451fddec",
+      "variant": "skip-cache",
+      "cohort": "controlled-no-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.4061759580000057,
+        "artifact_download": 2.516617552999989,
+        "artifact_verification": 0.06396977400000026,
+        "artifact_extraction": 0.20172266899999158,
+        "plugin_installation": 0.6101438419999994
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "af4fae60-ef49-4916-9bfd-e7596f7229db",
+      "variant": "skip-cache",
+      "cohort": "controlled-no-change",
+      "sample": 2,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.3591696180000099,
+        "artifact_download": 2.697038374999977,
+        "artifact_verification": 0.06485853399999542,
+        "artifact_extraction": 0.20634457400001338,
+        "plugin_installation": 0.5944540899999993
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "283729bc-b53b-4870-8714-08b467cc0803",
+      "variant": "skip-cache",
+      "cohort": "controlled-no-change",
+      "sample": 3,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.3747507160000012,
+        "artifact_download": 2.6022119040000007,
+        "artifact_verification": 0.07178278899999668,
+        "artifact_extraction": 0.2178597819999979,
+        "plugin_installation": 0.6301677379999973
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "365340ad-6b51-4f17-9db9-2a50b43239eb",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-no-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.4969453999999871
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "b71f732e-af63-48a3-a8b1-16b2c008422b",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-no-change",
+      "sample": 2,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.36021690799999817
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/repeat",
+      "deployment_id": "3064f4c2-f6ba-4209-a137-e5125759825c",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-no-change",
+      "sample": 3,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.3575144649999942
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/source-no-cache-1",
+      "deployment_id": "83704999-9e26-493d-9f03-9f7606190af3",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.346357710999996
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/source-no-cache-2",
+      "deployment_id": "fe31fd82-e399-4715-a760-28b2b46f66ba",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 2,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.34339273699998785
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/source-no-cache-3",
+      "deployment_id": "457106f7-0c44-4cc5-aaff-a5ed8a130f86",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 3,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.3674047549999955
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/prebuilt-image-1",
+      "deployment_id": "10f3eb46-42e5-487f-9f55-822f52340b8d",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-new-stack",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.3667839340000114
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/prebuilt-image-2",
+      "deployment_id": "4d58a63d-cc3a-452a-8650-81dcc51455d1",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-new-stack",
+      "sample": 2,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.3399412279999865
+      },
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261029-psdrj8/prebuilt-image-3",
+      "deployment_id": "2bf40dcc-051e-4f21-a5ec-ab383168c60a",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-new-stack",
+      "sample": 3,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "executor_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.520727585000003
+      },
+      "validated": true
+    }
+  ],
+  "config_fingerprint": "267e7249c73c772b446b18cfaac6c4188af76285de09833951f587c047edcc26",
+  "metadata": {
+    "source": {
+      "repoUrl": "https://github.com/pulumi/workshops.git",
+      "commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+      "repoDir": "faster-pulumi-deployments/programs/go"
+    },
+    "platform": "linux/amd64",
+    "program_sha256": "8f8b6eb11926678ee0226567486bc68695d9fdda094e7bcfee53d5fe155d0c74",
+    "tools_image": "deployment-timings-20261029-psdrj8@sha256:7a46d79cbf1f5f6c6a35f261d210bfd71e953c1cabed062eb05675294b17ac25",
+    "prepared_image": "deployment-timings-20261029-psdrj8@sha256:c90f1efe98ba1c8651a93691fdb7e55f0b20246ea3d9e5933fa39f454d657ddc",
+    "image_cache": "Not force-controlled; setup time includes runner and image preparation."
+  }
+}

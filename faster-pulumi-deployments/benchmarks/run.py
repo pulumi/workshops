@@ -73,6 +73,11 @@ def inspect(api_url, base, deployment, run):
     run["pre_run_measurements_s"] = custom
     if run["cohort"] == "controlled-no-change" and not no_change:
         raise ValueError(f"Expected a no-change update, got {changes}")
+    if run["cohort"] == "controlled-new-stack" and not (
+        changes.get("create") == 2
+        and all(v == 0 for k, v in changes.items() if k != "create")
+    ):
+        raise ValueError(f"Expected a new-stack deployment with two creates, got {changes}")
     expected = run["cache_expectation"]
     if expected in ("hit", "miss") and observation != expected:
         raise ValueError(f"Expected cache {expected}, got {observation}")
