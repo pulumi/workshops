@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Feedback · __STACK__</title>
+<style>
+  :root {
+    --bg: #f6f7f9; --card: #ffffff; --text: #1d2330; --muted: #5c6577;
+    --border: #dfe3ea; --accent: #4d5bd9; --on-accent: #ffffff; --ok: #1f8a4c;
+    --badge-bg: __BADGE_BG__; --badge-fg: __BADGE_FG__;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #12151c; --card: #1b1f29; --text: #e8ebf2; --muted: #9aa3b5;
+            --border: #2c3240; --accent: #8c96ff; --on-accent: #12151c; --ok: #5fd08f; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+         font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+         display: grid; place-items: start center; min-height: 100vh; padding: 48px 16px; }
+  main { width: 100%; max-width: 560px; }
+  header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  h1 { font-size: 24px; margin: 0; }
+  .meta { display: flex; gap: 8px; align-items: center; font-size: 13px; color: var(--muted); }
+  .badge { background: var(--badge-bg); color: var(--badge-fg); font-weight: 600;
+           padding: 2px 10px; border-radius: 999px; text-transform: uppercase; letter-spacing: .04em; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 20px; }
+  label { display: block; font-weight: 600; margin-bottom: 8px; }
+  textarea { width: 100%; min-height: 110px; resize: vertical; padding: 10px 12px; font: inherit;
+             color: inherit; background: transparent; border: 1px solid var(--border); border-radius: 8px; }
+  textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .row { display: flex; justify-content: space-between; align-items: center; margin-top: 12px; }
+  .count { font-size: 13px; color: var(--muted); }
+  button { background: var(--accent); color: var(--on-accent); border: 0; border-radius: 8px;
+           padding: 10px 18px; font: inherit; font-weight: 600; cursor: pointer; }
+  button:disabled { opacity: .6; cursor: default; }
+  #result { margin-top: 16px; display: none; }
+  #result.show { display: block; }
+  .saved { color: var(--ok); font-weight: 600; margin-bottom: 6px; }
+  .entry { border-left: 3px solid var(--accent); padding: 4px 0 4px 12px; }
+  .entry small { color: var(--muted); display: block; margin-top: 4px; font-family: ui-monospace, monospace; }
+  .error { color: #c0392b; font-weight: 600; }
+  footer { margin-top: 16px; font-size: 13px; color: var(--muted); text-align: center; }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Feedback</h1>
+    <div class="meta"><span class="badge">__STACK__</span><span>v__VERSION__</span></div>
+  </header>
+
+  <form class="card" id="form">
+    <label for="message">What should we know?</label>
+    <textarea id="message" maxlength="500" placeholder="Type a short note…" required></textarea>
+    <div class="row">
+      <span class="count" id="count">0 / 500</span>
+      <button type="submit" id="submit">Send</button>
+    </div>
+    <div id="result" aria-live="polite"></div>
+  </form>
+
+  <footer>Stored in DynamoDB · served by Lambda · deployed with Pulumi</footer>
+</main>
+
+<script>
+  const form = document.getElementById("form");
+  const box = document.getElementById("message");
+  const result = document.getElementById("result");
+  const button = document.getElementById("submit");
+  box.addEventListener("input", () => {
+    document.getElementById("count").textContent = box.value.length + " / 500";
+  });
+
+  function show(html) { result.innerHTML = html; result.classList.add("show"); }
+  function esc(s) { const d = document.createElement("div"); d.textContent = s; return d.innerHTML; }
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    button.disabled = true;
+    try {
+      const created = await fetch(location.pathname, {
+        method: "POST",
+        headers: { "content-type": "application/json", accept: "application/json" },
+        body: JSON.stringify({ message: box.value }),
+      }).then((r) => r.json());
+      if (!created.id) throw new Error(created.error || "could not save");
+
+      // Read it back from the table, the same way the smoke test does.
+      const item = await fetch("?id=" + encodeURIComponent(created.id), {
+        headers: { accept: "application/json" },
+      }).then((r) => r.json());
+
+      const when = new Date(item.createdAt * 1000).toLocaleString();
+      show(`<div class="saved">Saved and read back from the table</div>
+            <div class="entry">${esc(item.message)}<small>${esc(item.id)} · ${esc(when)}</small></div>`);
+      box.value = "";
+      box.dispatchEvent(new Event("input"));
+    } catch (err) {
+      show(`<div class="error">Something went wrong: ${esc(err.message)}</div>`);
+    } finally {
+      button.disabled = false;
+    }
+  });
+</script>
+</body>
+</html>

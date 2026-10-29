@@ -1,0 +1,13 @@
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          roleArn: arn:aws:iam::123456789:role/feedback-agent-read  # from `pulumi stack output` in iam/
+          sessionName: feedback-agent-read      # appears in CloudTrail as the session name
+          duration: 15m
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: us-west-2
