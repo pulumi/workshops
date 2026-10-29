@@ -1,0 +1,16 @@
+{
+  "organization": "your-org",
+  "project": "deployment-timings-your-run-id",
+  "stack": "repeat",
+  "source": {
+    "repoUrl": "https://github.com/pulumi/workshops.git",
+    "commit": "FULL_COMMIT_SHA",
+    "repoDir": "faster-pulumi-deployments/programs/go"
+  },
+  "tools_image": "YOUR_ECR_REGISTRY/benchmark@sha256:TOOLS_DIGEST",
+  "prepared_image": "YOUR_ECR_REGISTRY/benchmark@sha256:PREPARED_DIGEST",
+  "release_uri": "s3://YOUR_BUCKET/YOUR_RELEASE",
+  "program_sha256": "BINARY_SHA256",
+  "credential_environment": "your-org/build/artifact-reader",
+  "ecr_region": "us-west-2"
+}

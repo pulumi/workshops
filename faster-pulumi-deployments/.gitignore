@@ -1,5 +1,7 @@
 dist/
 workspaces/
+benchmarks/image/payload/
+benchmarks/results/**/*.log
 **/node_modules/
 **/bin/
 **/obj/
