@@ -1,0 +1,12 @@
+{
+    "name": "tf-modules-gitops-deploy-settings",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "24.19.2",
+        "typescript": "5.9.3"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "3.272.0",
+        "@pulumi/pulumiservice": "1.5.0"
+    }
+}

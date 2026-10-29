@@ -1,0 +1,6 @@
+name: tf-modules-gitops-deploy-settings
+description: Optional. Sets the Deployments settings of tf-modules-gitops/dev in code instead of in the console.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
