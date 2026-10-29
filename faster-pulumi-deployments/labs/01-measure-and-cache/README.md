@@ -2,7 +2,7 @@
 
 Choose one [language program](../../programs) and install its dependencies with that language's package manager. Connect its directory to Pulumi Deployments and configure two disposable stacks with different `environment` values. Keep the source revision, runtime image, and dependency resolution files constant during comparisons.
 
-For TypeScript, run `npm ci` in `programs/typescript`; for Go, run `go mod download`. For .NET, use `dotnet restore --locked-mode`; for Java, use `mvn package`; for Python, use `uv sync --frozen`.
+For TypeScript, run `npm ci` in `programs/typescript`; for Go, run `go mod download`. For .NET, use `dotnet restore --locked-mode`; for Java, use `mvn package`; for Python, use `uv sync --locked`.
 
 Record a first deployment and a repeated deployment without resource changes. Keep queue time, runner setup, cache restore/save, dependency installation, and the Pulumi operation separate. A new-stack deployment and a no-change update are different workloads.
 

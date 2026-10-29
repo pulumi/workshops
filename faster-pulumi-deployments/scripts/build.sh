@@ -26,8 +26,8 @@ case "$language" in
         cp "$source_dir/target/program.jar" "$output/program.jar"
         ;;
     python)
-        (cd "$source_dir" && uv export --frozen --no-dev --format requirements-txt --output-file "$output/requirements.txt" > /dev/null && \
-            uv run --frozen --no-dev --with pip==25.3 python -m pip download \
+        (cd "$source_dir" && uv export --locked --no-dev --format requirements-txt --output-file "$output/requirements.txt" > /dev/null && \
+            uv run --locked --no-dev --with pip==25.3 python -m pip download \
                 --only-binary=:all: --require-hashes --dest "$output/wheels" --requirement "$output/requirements.txt")
         cp "$source_dir/__main__.py" "$root/scripts/prepare-python.sh" "$output/"
         ;;

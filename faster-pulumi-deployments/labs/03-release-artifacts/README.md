@@ -14,6 +14,14 @@ The [plugin downloader](../../scripts/fetch-plugins.sh) defaults to the current 
 
 ## Publish and retrieve
 
+Build an artifact-runner image with the selected runtime, Pulumi CLI, AWS CLI, and checksum tools:
+
+```bash
+IMAGE_TARGET=artifact-runner make image LANGUAGE=typescript
+```
+
+This builds `faster-pulumi-deployments:typescript-tools` by default. Set `IMAGE` to your registry reference before building and publishing it. Match `PLATFORM` to your deployment runner; the default is Linux AMD64. This target supplies tools without embedding the program, which will be retrieved from the release store.
+
 Choose a new immutable release prefix that identifies the source revision, language, and platform:
 
 ```bash
@@ -29,7 +37,7 @@ Configure the deployment's project directory as `faster-pulumi-deployments/progr
 pulumi env run <org>/build/artifact-reader -- bash ../../scripts/prepare-release.sh
 ```
 
-The executor needs the AWS CLI, Python 3.11+ for checksum verification, and the language runtime described in the root README. The [retrieval script](../../scripts/prepare-release.sh) verifies the archive, installs the provider archives, and replaces the source project's runtime definition with the artifact's prebuilt definition. Existing stack configuration files remain external. Python additionally needs Python 3.12 selected through `PYTHON` if `python3` is another version.
+Select the published artifact-runner image in deployment settings. The [retrieval script](../../scripts/prepare-release.sh) verifies the archive, installs the provider archives, and replaces the source project's runtime definition with the artifact's prebuilt definition. Existing stack configuration files remain external. If you use another image, it needs the AWS CLI, Python 3.11+ for checksums, and the selected language runtime. Python artifacts additionally need Python 3.12 selected through `PYTHON` if `python3` is another version.
 
 Run a deployment from a fresh execution environment and confirm that it uses the published artifact and expected provider version. Check an existing stack update as well as a first deployment; older state can require additional provider versions.
 

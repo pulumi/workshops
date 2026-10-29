@@ -10,13 +10,20 @@ case "$language" in
     java) runtime=maven:3.9.9-eclipse-temurin-17 ;;
     *) exit 2 ;;
 esac
+target="${IMAGE_TARGET:-runtime}"
+case "$target" in runtime|artifact-runner) ;; *) exit 2 ;; esac
+tag="$language"
+if [ "$target" = artifact-runner ]; then tag="$language-tools"; fi
 docker buildx build --load --platform "${PLATFORM:-linux/amd64}" \
     --build-arg "RUNTIME_IMAGE=${RUNTIME_IMAGE:-$runtime}" \
     --build-arg "PULUMI_VERSION=${PULUMI_VERSION:-3.259.0}" \
     --build-arg "LANGUAGE=$language" \
-    --tag "${IMAGE:-faster-pulumi-deployments:$language}" \
+    --target "$target" \
+    --tag "${IMAGE:-faster-pulumi-deployments:$tag}" \
     --file "$root/images/Dockerfile" "$root"
-config="$root/workspaces/image/$language"
-mkdir -p "$config"
-cp "$root/programs/$language/Pulumi.image.yaml" "$config/Pulumi.yaml"
-printf 'External project configuration: %s\n' "$config"
+if [ "$target" = runtime ]; then
+    config="$root/workspaces/image/$language"
+    mkdir -p "$config"
+    cp "$root/programs/$language/Pulumi.image.yaml" "$config/Pulumi.yaml"
+    printf 'External project configuration: %s\n' "$config"
+fi

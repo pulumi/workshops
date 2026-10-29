@@ -16,6 +16,8 @@ Automatic provider acquisition was disabled during these runs. The matching Rand
 
 The Go release archive and checksum were generated and verified. The archive contains the program, prebuilt project definition, provider manifest, and platform-matched plugin archive. Source stack files and virtual environments are excluded by the packaging script.
 
+The Linux ARM64 TypeScript artifact-runner target also built successfully and executed `aws --version`. It supplies the AWS CLI needed by the S3 preparation path without embedding the program.
+
 Checksum tests cover valid artifacts, changed contents, and manifests that attempt to select a parent-directory file. All test resources were destroyed after validation; empty stacks retain their update history.
 
 The preceding blog validation also exercised S3 retrieval through ESC, configuration-only changes to a reused Go image, Kubernetes npm cache persistence, concurrent cache consumers, and queue consolidation. The exact new cross-language images were executed through the CLI, not through the managed Deployments service.
