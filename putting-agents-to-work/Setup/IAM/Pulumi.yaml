@@ -1,0 +1,23 @@
+name: infra-agents-iam
+description: >-
+  Pulumi Cloud OIDC trust and the three IAM roles the agents use
+  (read, dev-deploy, prod-deploy). A person deploys this, not an agent.
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  pulumiOrg:
+    type: string
+    description: Your Pulumi organization name (used in the OIDC audience and subject).
+  escProject:
+    type: string
+    default: infra-agents
+    description: The ESC project that holds the read, dev-deploy, and prod-deploy environments.
+  existingOidcProviderArn:
+    type: string
+    default: ""
+    description: >-
+      ARN of an existing api.pulumi.com/oidc identity provider, if your account
+      already has one (AWS allows only one per URL). Leave empty to create it.

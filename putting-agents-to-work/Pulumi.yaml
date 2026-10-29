@@ -1,0 +1,38 @@
+name: feedback-api
+description: >-
+  A tiny feedback service: one Lambda function behind a function URL, storing
+  entries in one DynamoDB table. The demo app for the governed-agents webinar.
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+config:
+  execRoleArn:
+    type: string
+    description: >-
+      ARN of this stack's Lambda execution role (feedback-<stack>-exec), created
+      by the iam/ program. Agents use this role; they can't create roles.
+  appVersion:
+    type: string
+    default: "1.0.0"
+    description: Version string the service reports at GET /.
+  memorySize:
+    type: integer
+    default: 256
+    description: Lambda memory in MB. Pulumi Policies cap this at 512.
+  timeout:
+    type: integer
+    default: 10
+    description: Lambda timeout in seconds. Pulumi Policies cap this at 30.
+  logRetentionDays:
+    type: integer
+    default: 7
+    description: How long CloudWatch keeps the function's logs.
+  publicUrl:
+    type: boolean
+    default: true
+    description: >-
+      true = function URL with no auth (anyone can call it). false = AWS_IAM
+      auth, for orgs that block public endpoints; the smoke test then signs
+      its requests with the read role.

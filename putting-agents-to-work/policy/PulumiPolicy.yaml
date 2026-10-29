@@ -1,0 +1,7 @@
+description: Guardrails for feedback-api (cost caps and required tags)
+version: 1.1.0
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv

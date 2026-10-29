@@ -1,0 +1,4 @@
+config:
+  pulumiOrg: 
+  escProject: "infra-agents"
+  existingOidcProviderArn: ""
