@@ -1,0 +1,14 @@
+spec:
+  template:
+    spec:
+      containers:
+        - name: agent
+          volumeMounts:
+            - name: workflow-cache-template
+              mountPath: /mnt/worker-pod.json
+              subPath: worker-pod.json
+              readOnly: true
+      volumes:
+        - name: workflow-cache-template
+          configMap:
+            name: workflow-cache-template

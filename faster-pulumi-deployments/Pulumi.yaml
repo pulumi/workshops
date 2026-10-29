@@ -1,0 +1,17 @@
+name: faster-pulumi-deployments
+runtime: yaml
+description: Optional YAML baseline for the deployment preparation workshop.
+config:
+  environment:
+    type: string
+resources:
+  name:
+    type: random:RandomPet
+    properties:
+      prefix: ${environment}
+      length: 2
+    options:
+      version: 4.18.2
+outputs:
+  environment: ${environment}
+  name: ${name.id}
