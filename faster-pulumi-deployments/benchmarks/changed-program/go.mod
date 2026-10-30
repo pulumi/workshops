@@ -3,7 +3,7 @@ module deployment-timings-changes
 go 1.25.11
 
 require (
-	github.com/hashicorp/go-version v1.8.0
+	github.com/hashicorp/go-version v1.9.0
 	github.com/pulumi/pulumi-random/sdk/v4 v4.18.2
 	github.com/pulumi/pulumi/sdk/v3 v3.259.0
 )
