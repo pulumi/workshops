@@ -21,17 +21,19 @@ org() {
   pulumi org get-default 2>/dev/null | head -n1 | tr -d '[:space:]'
 }
 esc_env() { printf '%s/%s/%s' "$(org)" "$ESC_PROJECT" "$ESC_NAME"; }
+# The stack lives in the same organization as the ESC environment it imports.
+stack_ref() { printf '%s/%s' "$(org)" "$STACK"; }
 
 # Run the AWS CLI with the credentials the ESC environment mints.
 aws_admin() { pulumi env run "$(esc_env)" -- aws "$@"; }
 
 # Run a pulumi command in the platform project on the demo stack.
-pulumi_stack() { (cd "$PROJECT_DIR" && pulumi --stack "$STACK" "$@"); }
+pulumi_stack() { (cd "$PROJECT_DIR" && pulumi --stack "$(stack_ref)" "$@"); }
 
 # Make sure node_modules exist, then set the account id the program needs.
 prepare_project() {
   [ -d "$PROJECT_DIR/node_modules" ] || (cd "$PROJECT_DIR" && npm ci)
-  (cd "$PROJECT_DIR" && pulumi stack select --create "$STACK")
+  (cd "$PROJECT_DIR" && pulumi stack select --create "$(stack_ref)")
   local account
   account="$(aws_admin sts get-caller-identity --query Account --output text)"
   pulumi_stack config set accountId "$account"

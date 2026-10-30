@@ -7,7 +7,9 @@ need pulumi; need npm
 [ -d "$POLICY_DIR/node_modules" ] || (cd "$POLICY_DIR" && npm ci)
 pulumi_stack config set demoViolations true
 say "pulumi preview --policy-pack ../07-policy (expected to fail)"
-if pulumi_stack preview --policy-pack ../07-policy; then
-  die "the preview passed; the policy pack did not catch the violations"
+out="$(pulumi_stack preview --policy-pack ../07-policy 2>&1)" && { printf '%s\n' "$out"; die "the preview passed; the policy pack did not catch the violations"; }
+printf '%s\n' "$out"
+if ! grep -q bedrock-profile-required-tags <<<"$out" || ! grep -q bedrock-no-wildcard-invoke <<<"$out"; then
+  die "the preview failed, but not on the two policies (see output above)"
 fi
 say "Blocked by policy, as intended"

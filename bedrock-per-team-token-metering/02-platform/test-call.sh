@@ -12,4 +12,4 @@ aws_admin bedrock-runtime converse --region "$REGION" --model-id "$model_id" \
   --query '{text: output.message.content[0].text, usage: usage}' --output json
 say "Waiting for the invocation record (delivery takes up to a minute)"
 sleep 45
-aws_admin logs tail "$LOG_GROUP" --region "$REGION" --since 5m --format short | head -n 40
+aws_admin logs tail "$LOG_GROUP" --region "$REGION" --since 5m --format short | head -n 40 || true

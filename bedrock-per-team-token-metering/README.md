@@ -6,7 +6,7 @@ Demo code for the workshop. One Pulumi program gives each team its own Amazon Be
 
 - A Pulumi Cloud account and the Pulumi CLI 3.267.0
 - Node.js 24 (v24.21.0 was used) and npm
-- AWS CLI v2, `jq`, `bc`, `bash`
+- AWS CLI v2, `jq`, `bash`
 - An AWS account with Amazon Bedrock enabled and access to Amazon Nova 2 Lite. The demo runs in `us-east-1` unless you `export AWS_REGION=<region>` before step 1 (verified in `us-east-1` and `ca-central-1`)
 - An IAM OIDC provider for `https://api.pulumi.com/oidc` (audience `aws:<your Pulumi org>`) and a role it can assume. Create both before the session.
 - Pulumi organization: `export PULUMI_ORG=<org>` or run `pulumi org set-default <org>`

@@ -1134,7 +1134,7 @@ defaults:
 .s1__facts li svg { flex-shrink: 0; font-size: 1.5rem; color: var(--p-primary); }
 </style>
 
-<!-- [5 min] The alarm sums a team's output tokens in one minute against a threshold, 2000 by default. The script reads the alarm state. Expect it to change after a few minutes. The alarm has no action, so nothing else happens. -->
+<!-- [5 min] The alarm sums a team's output tokens in one minute against a threshold, 3000 by default. The script reads the alarm state. Expect it to change after a few minutes. The alarm has no action, so nothing else happens. -->
 
 ---
 

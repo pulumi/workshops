@@ -17,7 +17,7 @@ words=(alpha bravo charlie delta echo foxtrot golf hotel india juliet kilo lima)
     prompt="Write one sentence about ${words[i % ${#words[@]}]} and then continue with about $n words on cloud cost."
     out="$(aws bedrock-runtime converse --region "$REGION" --model-id "$profile" \
       --messages "$(jq -nc --arg t "$prompt" '[{role:"user",content:[{text:$t}]}]')" \
-      --inference-config '{"maxTokens":300}' --query 'usage' --output json)"
+      --inference-config '{"maxTokens":150}' --query 'usage' --output json)"
     printf 'call %02d: %s\n' "$i" "$(jq -c . <<<"$out")"
   done
 )
