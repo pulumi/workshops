@@ -1,0 +1,1204 @@
+[
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "b3d5c781-7790-46b0-81ef-69e3f734b620",
+    "version": 1,
+    "status": "failed",
+    "requested_at": "2026-10-28 17:12:27.869",
+    "jobs": [
+      {
+        "status": "failed",
+        "started": "2026-10-28T17:12:29.455921501Z",
+        "lastUpdated": "2026-10-28T17:12:52.690613829Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:12:29.455921501Z",
+            "lastUpdated": "2026-10-28T17:12:50.664607529Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:12:50.771025071Z",
+            "lastUpdated": "2026-10-28T17:12:51.941596175Z"
+          },
+          {
+            "name": "Get source",
+            "status": "failed",
+            "started": "2026-10-28T17:12:52.108426054Z",
+            "lastUpdated": "2026-10-28T17:12:52.690613829Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          },
+          {
+            "name": "pulumi update",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "30ef36bf-4ea4-465c-9d4e-846f7d7b558a",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:15:04.751",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:15:06.456060212Z",
+        "lastUpdated": "2026-10-28T17:18:03.17567072Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:15:06.456060212Z",
+            "lastUpdated": "2026-10-28T17:15:29.042035005Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:15:29.203874878Z",
+            "lastUpdated": "2026-10-28T17:15:30.189328247Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:15:30.527813985Z",
+            "lastUpdated": "2026-10-28T17:15:31.950485362Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-28T17:15:33.213763257Z",
+            "lastUpdated": "2026-10-28T17:15:49.865303721Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:15:50.047053336Z",
+            "lastUpdated": "2026-10-28T17:18:03.17567072Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "63e0dcef-fd02-4760-9500-16fb39f6628b",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:22:41.188",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:22:42.889430378Z",
+        "lastUpdated": "2026-10-28T17:25:46.068098424Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:22:42.889430378Z",
+            "lastUpdated": "2026-10-28T17:23:01.354660921Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:23:01.455311764Z",
+            "lastUpdated": "2026-10-28T17:23:02.349294213Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:23:02.540185788Z",
+            "lastUpdated": "2026-10-28T17:23:03.629526047Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:23:03.877205576Z",
+            "lastUpdated": "2026-10-28T17:23:04.388098327Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-28T17:23:04.604784293Z",
+            "lastUpdated": "2026-10-28T17:23:25.300963137Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:23:25.565306549Z",
+            "lastUpdated": "2026-10-28T17:25:31.142151502Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:25:31.359365368Z",
+            "lastUpdated": "2026-10-28T17:25:46.068098424Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "7e7d25f9-0418-4ef9-870e-9c200629f329",
+    "version": 4,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:27:41.385",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:27:43.928336909Z",
+        "lastUpdated": "2026-10-28T17:28:27.47074577Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:27:43.928336909Z",
+            "lastUpdated": "2026-10-28T17:28:06.064323981Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:28:06.193567886Z",
+            "lastUpdated": "2026-10-28T17:28:07.028399332Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:28:07.197314339Z",
+            "lastUpdated": "2026-10-28T17:28:07.917195994Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:28:08.12424613Z",
+            "lastUpdated": "2026-10-28T17:28:17.185643134Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-28T17:28:17.392255659Z",
+            "lastUpdated": "2026-10-28T17:28:18.53055981Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:28:18.753110203Z",
+            "lastUpdated": "2026-10-28T17:28:22.573179091Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:28:22.734425243Z",
+            "lastUpdated": "2026-10-28T17:28:26.90744555Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:28:27.14271157Z",
+            "lastUpdated": "2026-10-28T17:28:27.47074577Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "a13d2df2-20fb-4e44-91a9-cdeaea962660",
+    "version": 5,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:35:47.127",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:35:48.512844118Z",
+        "lastUpdated": "2026-10-28T17:36:37.071905165Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:35:48.512844118Z",
+            "lastUpdated": "2026-10-28T17:36:12.94799766Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:36:13.063564602Z",
+            "lastUpdated": "2026-10-28T17:36:14.048163006Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:36:14.219916304Z",
+            "lastUpdated": "2026-10-28T17:36:15.501120551Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:36:15.669381784Z",
+            "lastUpdated": "2026-10-28T17:36:21.155485039Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:36:21.355217365Z",
+            "lastUpdated": "2026-10-28T17:36:37.071905165Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "483fe1e8-4896-46a1-95b3-fecda67204a3",
+    "version": 6,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:38:06.957",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:38:08.626409041Z",
+        "lastUpdated": "2026-10-28T17:38:46.21219433Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:08.626409041Z",
+            "lastUpdated": "2026-10-28T17:38:29.017322581Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:29.148047935Z",
+            "lastUpdated": "2026-10-28T17:38:30.197180025Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:30.46714143Z",
+            "lastUpdated": "2026-10-28T17:38:31.589488685Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:32.145301914Z",
+            "lastUpdated": "2026-10-28T17:38:33.027736275Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:33.255919553Z",
+            "lastUpdated": "2026-10-28T17:38:46.21219433Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "8745aa6d-96ab-4212-a457-8166ef5c3189",
+    "version": 7,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:40:04.006",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:40:06.161742767Z",
+        "lastUpdated": "2026-10-28T17:41:27.918810384Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:40:06.161742767Z",
+            "lastUpdated": "2026-10-28T17:40:25.570095929Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:40:25.681635054Z",
+            "lastUpdated": "2026-10-28T17:40:26.492804136Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:40:26.701215845Z",
+            "lastUpdated": "2026-10-28T17:40:27.894556594Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:40:28.173065822Z",
+            "lastUpdated": "2026-10-28T17:41:13.551575203Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:41:13.729341694Z",
+            "lastUpdated": "2026-10-28T17:41:27.918810384Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "623f27b7-96a4-4366-9fe3-7f4a34e76e70",
+    "version": 8,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:41:37.585",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:41:39.4274705Z",
+        "lastUpdated": "2026-10-28T17:42:17.676248304Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:41:39.4274705Z",
+            "lastUpdated": "2026-10-28T17:41:59.325987582Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:41:59.399716766Z",
+            "lastUpdated": "2026-10-28T17:42:00.597534696Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:00.859495397Z",
+            "lastUpdated": "2026-10-28T17:42:01.6335837Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:01.843604223Z",
+            "lastUpdated": "2026-10-28T17:42:02.243087998Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:02.407792326Z",
+            "lastUpdated": "2026-10-28T17:42:17.676248304Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "31484156-c2e0-4e6b-9e22-ca4e0d71bf4c",
+    "version": 9,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:41:40.007",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:42:22.476268332Z",
+        "lastUpdated": "2026-10-28T17:42:57.012230935Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:22.476268332Z",
+            "lastUpdated": "2026-10-28T17:42:40.629849141Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:40.738988403Z",
+            "lastUpdated": "2026-10-28T17:42:41.662855709Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:41.85432788Z",
+            "lastUpdated": "2026-10-28T17:42:42.572335971Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:42.737295387Z",
+            "lastUpdated": "2026-10-28T17:42:43.122078845Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:42:43.347882564Z",
+            "lastUpdated": "2026-10-28T17:42:57.012230935Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "f2e52bd3-6b4f-40fb-98d3-70437a6029ae",
+    "version": 10,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:44:41.226",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:44:42.796721875Z",
+        "lastUpdated": "2026-10-28T17:46:05.426696154Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:44:42.796721875Z",
+            "lastUpdated": "2026-10-28T17:45:01.314054361Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:45:01.392880927Z",
+            "lastUpdated": "2026-10-28T17:45:02.541069629Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:45:02.7533978Z",
+            "lastUpdated": "2026-10-28T17:45:03.814296347Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:45:04.072039339Z",
+            "lastUpdated": "2026-10-28T17:45:49.529863129Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:45:49.752236023Z",
+            "lastUpdated": "2026-10-28T17:46:05.426696154Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "0778bb2f-0e53-40bf-82b8-86e3d295c77c",
+    "version": 11,
+    "status": "skipped",
+    "requested_at": "2026-10-28 17:44:44.086",
+    "jobs": []
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-a",
+    "deployment_id": "4cc8a687-b3dd-45a0-9ca7-1448286f9cf9",
+    "version": 12,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:44:44.550",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:46:07.146449641Z",
+        "lastUpdated": "2026-10-28T17:46:39.9685294Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:07.146449641Z",
+            "lastUpdated": "2026-10-28T17:46:25.077096899Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:25.204961477Z",
+            "lastUpdated": "2026-10-28T17:46:26.009530261Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:26.206471884Z",
+            "lastUpdated": "2026-10-28T17:46:27.113282022Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:27.311185259Z",
+            "lastUpdated": "2026-10-28T17:46:27.659639449Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:27.857488918Z",
+            "lastUpdated": "2026-10-28T17:46:39.9685294Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-b",
+    "deployment_id": "6098423c-9972-4163-a79d-e1858d40af15",
+    "version": 1,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:26:59.665",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:27:01.6673355Z",
+        "lastUpdated": "2026-10-28T17:30:10.772692033Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:27:01.6673355Z",
+            "lastUpdated": "2026-10-28T17:27:21.480851067Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:27:21.560010052Z",
+            "lastUpdated": "2026-10-28T17:27:22.460880846Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:27:22.67372516Z",
+            "lastUpdated": "2026-10-28T17:27:23.928310426Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:27:24.16428337Z",
+            "lastUpdated": "2026-10-28T17:27:24.663639872Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-28T17:27:24.845690422Z",
+            "lastUpdated": "2026-10-28T17:27:39.81667161Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:27:39.988069017Z",
+            "lastUpdated": "2026-10-28T17:29:54.088412968Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:29:54.343887588Z",
+            "lastUpdated": "2026-10-28T17:30:10.772692033Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-b",
+    "deployment_id": "2777d43c-35d2-4eff-9170-a226e3b01fff",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:37:07.786",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:37:09.539373193Z",
+        "lastUpdated": "2026-10-28T17:37:48.324167383Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:09.539373193Z",
+            "lastUpdated": "2026-10-28T17:37:25.988478721Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:26.097168368Z",
+            "lastUpdated": "2026-10-28T17:37:27.121534741Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:27.507437039Z",
+            "lastUpdated": "2026-10-28T17:37:28.614729421Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:28.872453773Z",
+            "lastUpdated": "2026-10-28T17:37:39.704698029Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:40.212841484Z",
+            "lastUpdated": "2026-10-28T17:37:41.292456901Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:41.587596153Z",
+            "lastUpdated": "2026-10-28T17:37:47.66002632Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:48.021505947Z",
+            "lastUpdated": "2026-10-28T17:37:48.324167383Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-b",
+    "deployment_id": "d7c489cf-3453-412a-8c86-6fe1a5035bbd",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:38:10.413",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:38:12.931800308Z",
+        "lastUpdated": "2026-10-28T17:38:49.888334325Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:12.931800308Z",
+            "lastUpdated": "2026-10-28T17:38:32.322225775Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:32.403724234Z",
+            "lastUpdated": "2026-10-28T17:38:33.339399202Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:33.528860747Z",
+            "lastUpdated": "2026-10-28T17:38:34.868302085Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:35.051184376Z",
+            "lastUpdated": "2026-10-28T17:38:35.656134521Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:38:35.851836327Z",
+            "lastUpdated": "2026-10-28T17:38:49.888334325Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-b",
+    "deployment_id": "93fa2af0-4698-4ce6-97ea-0a569a84abb8",
+    "version": 4,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:52:23.450",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:52:27.915121524Z",
+        "lastUpdated": "2026-10-28T17:53:04.571133139Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:27.915121524Z",
+            "lastUpdated": "2026-10-28T17:52:47.09110896Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:47.18699578Z",
+            "lastUpdated": "2026-10-28T17:52:48.236929621Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:48.435052766Z",
+            "lastUpdated": "2026-10-28T17:52:49.123104534Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:49.352403298Z",
+            "lastUpdated": "2026-10-28T17:52:49.748841751Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:49.987678077Z",
+            "lastUpdated": "2026-10-28T17:53:04.571133139Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-c",
+    "deployment_id": "51c70d95-a027-476f-8620-e8e75f3919c6",
+    "version": 1,
+    "status": "failed",
+    "requested_at": "2026-10-28 17:46:24.618",
+    "jobs": [
+      {
+        "status": "failed",
+        "started": "2026-10-28T17:46:27.825083014Z",
+        "lastUpdated": "2026-10-28T17:47:07.647129472Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:27.825083014Z",
+            "lastUpdated": "2026-10-28T17:46:49.140106105Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:49.287529122Z",
+            "lastUpdated": "2026-10-28T17:46:50.232003947Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:50.48137077Z",
+            "lastUpdated": "2026-10-28T17:46:51.31359728Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:51.492243231Z",
+            "lastUpdated": "2026-10-28T17:46:51.967390475Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-28T17:46:52.188764437Z",
+            "lastUpdated": "2026-10-28T17:47:06.789541149Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "failed",
+            "started": "2026-10-28T17:47:07.002120111Z",
+            "lastUpdated": "2026-10-28T17:47:07.647129472Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          },
+          {
+            "name": "Save cache",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s",
+    "deployment_id": "3008d608-8dde-4c11-b0a3-c5a0d7901dfa",
+    "version": 1,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:33:51.562",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:34:51.923526808Z",
+        "lastUpdated": "2026-10-28T17:35:27.020599765Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:34:51.923526808Z",
+            "lastUpdated": "2026-10-28T17:34:52.505855506Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:35:10.247275105Z",
+            "lastUpdated": "2026-10-28T17:35:11.942058134Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:35:12.243780753Z",
+            "lastUpdated": "2026-10-28T17:35:13.866227782Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:35:14.129681365Z",
+            "lastUpdated": "2026-10-28T17:35:17.987336176Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:35:18.367763596Z",
+            "lastUpdated": "2026-10-28T17:35:27.020599765Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s",
+    "deployment_id": "b407eccc-691b-4862-976b-59bc2743ea99",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:37:20.395",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:37:31.403885703Z",
+        "lastUpdated": "2026-10-28T17:37:53.135517849Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:31.403885703Z",
+            "lastUpdated": "2026-10-28T17:37:32.178591862Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:35.035751461Z",
+            "lastUpdated": "2026-10-28T17:37:37.088393401Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:37.374004953Z",
+            "lastUpdated": "2026-10-28T17:37:38.863715928Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:39.155271137Z",
+            "lastUpdated": "2026-10-28T17:37:43.811766364Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:37:44.099500552Z",
+            "lastUpdated": "2026-10-28T17:37:53.135517849Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s",
+    "deployment_id": "d14f9b68-e67a-45ab-96ee-99b272524eb7",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:47:28.164",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:48:00.264186647Z",
+        "lastUpdated": "2026-10-28T17:48:37.457643048Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:00.264186647Z",
+            "lastUpdated": "2026-10-28T17:48:00.95598108Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:03.55024805Z",
+            "lastUpdated": "2026-10-28T17:48:06.217235062Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:06.501998198Z",
+            "lastUpdated": "2026-10-28T17:48:08.08633701Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:08.351134365Z",
+            "lastUpdated": "2026-10-28T17:48:28.825999579Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:29.709523204Z",
+            "lastUpdated": "2026-10-28T17:48:37.457643048Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s",
+    "deployment_id": "f2ebe11a-f0c5-4170-a760-8cf5af80fa65",
+    "version": 4,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:51:32.097",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:51:42.056600298Z",
+        "lastUpdated": "2026-10-28T17:52:19.547523138Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:51:42.056600298Z",
+            "lastUpdated": "2026-10-28T17:51:42.812272006Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:51:45.585434863Z",
+            "lastUpdated": "2026-10-28T17:51:49.343677269Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:51:49.606963483Z",
+            "lastUpdated": "2026-10-28T17:51:51.215502552Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:51:51.694596935Z",
+            "lastUpdated": "2026-10-28T17:52:11.066856023Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:11.433757501Z",
+            "lastUpdated": "2026-10-28T17:52:19.547523138Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s",
+    "deployment_id": "0ffa585d-2577-463a-9cf9-6164931a4b22",
+    "version": 5,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:54:02.815",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:54:05.268588578Z",
+        "lastUpdated": "2026-10-28T17:54:41.950020571Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:05.268588578Z",
+            "lastUpdated": "2026-10-28T17:54:05.890065498Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:08.083678433Z",
+            "lastUpdated": "2026-10-28T17:54:09.773675234Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:10.04683444Z",
+            "lastUpdated": "2026-10-28T17:54:11.431675463Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:11.680480346Z",
+            "lastUpdated": "2026-10-28T17:54:31.244513945Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:31.598654995Z",
+            "lastUpdated": "2026-10-28T17:54:41.950020571Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s-b",
+    "deployment_id": "6c8e3a0d-e874-4c02-a48f-0e8f0dd5957c",
+    "version": 1,
+    "status": "failed",
+    "requested_at": "2026-10-28 17:47:29.107",
+    "jobs": [
+      {
+        "status": "failed",
+        "started": "2026-10-28T17:48:08.147912427Z",
+        "lastUpdated": "2026-10-28T17:48:17.299680935Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:08.147912427Z",
+            "lastUpdated": "2026-10-28T17:48:08.823736921Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:11.629472532Z",
+            "lastUpdated": "2026-10-28T17:48:13.364197352Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:48:13.642824601Z",
+            "lastUpdated": "2026-10-28T17:48:16.197927147Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "failed",
+            "started": "2026-10-28T17:48:16.437661895Z",
+            "lastUpdated": "2026-10-28T17:48:17.299680935Z"
+          },
+          {
+            "name": "Pre-run command 2",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          },
+          {
+            "name": "pulumi update",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s-b",
+    "deployment_id": "4fb3a05e-9a18-4bc5-8a6a-40348fe7c6d3",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:51:33.133",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:52:21.793068651Z",
+        "lastUpdated": "2026-10-28T17:52:59.976404393Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:21.793068651Z",
+            "lastUpdated": "2026-10-28T17:52:22.408756059Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:23.558918459Z",
+            "lastUpdated": "2026-10-28T17:52:25.725302355Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:26.03052378Z",
+            "lastUpdated": "2026-10-28T17:52:28.262360768Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:28.523445717Z",
+            "lastUpdated": "2026-10-28T17:52:29.614661142Z"
+          },
+          {
+            "name": "Pre-run command 2",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:29.859562442Z",
+            "lastUpdated": "2026-10-28T17:52:47.711257389Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:52:47.980298152Z",
+            "lastUpdated": "2026-10-28T17:52:59.976404393Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-speed-validation-20261028/bench-k8s-b",
+    "deployment_id": "2622d210-8cca-4f89-b618-030ed509ffde",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-28 17:54:03.740",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-28T17:54:06.385740008Z",
+        "lastUpdated": "2026-10-28T17:54:43.000570745Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:06.385740008Z",
+            "lastUpdated": "2026-10-28T17:54:07.257834116Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:08.062395182Z",
+            "lastUpdated": "2026-10-28T17:54:09.557662101Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:09.785084073Z",
+            "lastUpdated": "2026-10-28T17:54:11.102356722Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:11.517238425Z",
+            "lastUpdated": "2026-10-28T17:54:12.673356022Z"
+          },
+          {
+            "name": "Pre-run command 2",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:12.906163551Z",
+            "lastUpdated": "2026-10-28T17:54:33.875537406Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-28T17:54:34.168145002Z",
+            "lastUpdated": "2026-10-28T17:54:43.000570745Z"
+          }
+        ]
+      }
+    ]
+  }
+]

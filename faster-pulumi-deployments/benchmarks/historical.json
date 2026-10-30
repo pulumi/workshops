@@ -1,0 +1,34 @@
+{
+  "defaults": {
+    "cohort": "historical-functional",
+    "include_in_comparison": false,
+    "notes": "Functional validation; not a controlled before-and-after comparison."
+  },
+  "annotations": {
+    "team-ce/deployment-speed-validation-20261028/bench-a#1": {"variant": "invalid-short-source-commit"},
+    "team-ce/deployment-speed-validation-20261028/bench-a#2": {"variant": "source-no-cache", "notes": "First deployment; resource creation."},
+    "team-ce/deployment-speed-validation-20261028/bench-a#3": {"variant": "source-cache-population"},
+    "team-ce/deployment-speed-validation-20261028/bench-a#4": {"variant": "program-artifact", "notes": "Changed executor image to add AWS CLI; cache restored."},
+    "team-ce/deployment-speed-validation-20261028/bench-a#5": {"variant": "complete-artifact", "notes": "Changed stack configuration to ESC; resource replacement; cache and dependency installation disabled."},
+    "team-ce/deployment-speed-validation-20261028/bench-a#6": {"variant": "prebuilt-image"},
+    "team-ce/deployment-speed-validation-20261028/bench-a#7": {"variant": "esc-config-change", "notes": "Includes artificial 45-second pre-run delay."},
+    "team-ce/deployment-speed-validation-20261028/bench-a#8": {"variant": "queue-attempt-without-overlap"},
+    "team-ce/deployment-speed-validation-20261028/bench-a#9": {"variant": "queue-attempt-without-overlap"},
+    "team-ce/deployment-speed-validation-20261028/bench-a#10": {"variant": "queue-active", "notes": "Includes artificial 45-second pre-run delay."},
+    "team-ce/deployment-speed-validation-20261028/bench-a#11": {"variant": "queue-skipped"},
+    "team-ce/deployment-speed-validation-20261028/bench-a#12": {"variant": "queue-latest"},
+    "team-ce/deployment-speed-validation-20261028/bench-b#1": {"variant": "new-stack-cache-cold", "notes": "First deployment; resource creation."},
+    "team-ce/deployment-speed-validation-20261028/bench-b#2": {"variant": "same-stack-cache-warm"},
+    "team-ce/deployment-speed-validation-20261028/bench-b#3": {"variant": "prebuilt-image", "notes": "Changed configuration; resource replacement."},
+    "team-ce/deployment-speed-validation-20261028/bench-b#4": {"variant": "git-config-change", "notes": "Changed configuration; resource replacement."},
+    "team-ce/deployment-speed-validation-20261028/bench-c#1": {"variant": "new-stack-cache-cold-failed", "notes": "Cache miss observed, but pre-run configuration command failed."},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s#1": {"variant": "npm-cache-population"},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s#2": {"variant": "npm-offline-repeat"},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s#3": {"variant": "concurrency-diagnostic", "notes": "Includes artificial 15-second delay."},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s#4": {"variant": "concurrency-diagnostic", "notes": "Includes artificial 15-second delay; agent polling affected overlap."},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s#5": {"variant": "concurrency-diagnostic", "notes": "Includes artificial 15-second delay; agent polling override enabled."},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s-b#1": {"variant": "concurrency-config-failure"},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s-b#2": {"variant": "concurrency-diagnostic", "notes": "Includes artificial 15-second delay; agent polling affected overlap."},
+    "team-ce/deployment-speed-validation-20261028/bench-k8s-b#3": {"variant": "concurrency-diagnostic", "notes": "Includes artificial 15-second delay; agent polling override enabled."}
+  }
+}

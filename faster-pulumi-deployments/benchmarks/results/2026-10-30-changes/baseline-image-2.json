@@ -1,0 +1,63 @@
+{
+  "runs": [
+    {
+      "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+      "deployment_id": "8479ad2f-ea6c-4c5f-a3a9-ba8250573eca",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "deployment-timings-changes-20261030-psdrj8@sha256:c706f072e40fd5748ea351400eb79eea05b415a9bae4f60ff8572bf1f1c4b164",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation. Failed warmup retained; explicitly retried by the operator.",
+      "status": "failed"
+    },
+    {
+      "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+      "deployment_id": "541fe5e4-756f-49a1-953b-1823ad3ff289",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "deployment-timings-changes-20261030-psdrj8@sha256:c706f072e40fd5748ea351400eb79eea05b415a9bae4f60ff8572bf1f1c4b164",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation. Failed warmup retained; explicitly retried by the operator.",
+      "status": "failed"
+    },
+    {
+      "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+      "deployment_id": "c9677a94-2c47-4958-9f29-88b738be7f13",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "deployment-timings-changes-20261030-psdrj8@sha256:c706f072e40fd5748ea351400eb79eea05b415a9bae4f60ff8572bf1f1c4b164",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.34124497199996995
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    }
+  ],
+  "config_fingerprint": "0ba5ce10052eb4daf152ba2f526a05e7b22e26d3dd214deb41e5c90cca01b249",
+  "metadata": {
+    "source": {
+      "repoUrl": "https://github.com/pulumi/workshops.git",
+      "commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "repoDir": "faster-pulumi-deployments/benchmarks/changed-program"
+    },
+    "platform": "linux/amd64",
+    "program_sha256": "5fb096430c13ad22e5237f860160785bcb88e5ddc0126ff45eeb673a67be8f42",
+    "tools_image": "deployment-timings-changes-20261030-psdrj8@sha256:4cb92de3405d4506a63667dd8a44e757f4f66e8d699f9c9579e515193551c57e",
+    "prepared_image": "deployment-timings-changes-20261030-psdrj8@sha256:c706f072e40fd5748ea351400eb79eea05b415a9bae4f60ff8572bf1f1c4b164",
+    "image_cache": "Not force-controlled; setup time includes runner and image preparation."
+  }
+}

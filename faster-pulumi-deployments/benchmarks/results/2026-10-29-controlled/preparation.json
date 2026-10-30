@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-29",
+  "platform": "linux/amd64 through Docker Desktop on an ARM64 host",
+  "source_commit": "d75621fdc6bdff47f3190d1cd7a0701dc0aa4e6a",
+  "pulumi_version": "3.259.0",
+  "go_version": "1.26.0",
+  "provider_version": "4.18.2",
+  "base_image": "pulumi/pulumi-go@sha256:040f9e9f1cec843bba3b4488253bfdb4414f7429c2000d80d7073ebaf59a2b41",
+  "program_sha256": "8f8b6eb11926678ee0226567486bc68695d9fdda094e7bcfee53d5fe155d0c74",
+  "measurements": [
+    {"label": "tools-image-build", "elapsed_s": 33.246, "returncode": 0},
+    {"label": "program-dependencies", "elapsed_s": 11.043, "returncode": 0},
+    {"label": "program-compilation", "elapsed_s": 86.824, "returncode": 0},
+    {"label": "provider-download", "elapsed_s": 3.587, "returncode": 0},
+    {"label": "archive-packaging", "elapsed_s": 5.218, "returncode": 0},
+    {"label": "prepared-image-assembly", "elapsed_s": 4.893, "returncode": 0},
+    {"label": "publish-image-tools", "elapsed_s": 68.672, "returncode": 0},
+    {"label": "publish-image-prepared", "elapsed_s": 18.303, "returncode": 0},
+    {"label": "publish-artifacts", "elapsed_s": 13.677, "returncode": 0}
+  ],
+  "notes": [
+    "Elapsed command times copied from time_command.py output; private command paths and registry addresses omitted.",
+    "Tools image built with --no-cache; prepared image assembly reused the tools layers.",
+    "Archive packaging and artifact publication each cover both archive variants together.",
+    "These are elapsed times, not CPU times or billing measurements."
+  ]
+}
