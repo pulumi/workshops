@@ -67,6 +67,8 @@ Each lab links to complete files rather than requiring you to reconstruct a scri
 
 The [controlled timing report](benchmarks/results/2026-10-29-controlled/README.md) includes phase breakdowns, preparation costs, and reproducible data from 29 managed deployments. Warm caching produced the largest repeated-update improvement in this small Go fixture. The results do not rank languages or predict production performance.
 
+The [changed-program follow-up](benchmarks/results/2026-10-30-changes/README.md) tests source edits and dependency updates across three stacks per approach. It includes release preparation and separates queue delays from job duration. The results show why a small source edit and a changed dependency cache key need separate comparisons.
+
 Run `make lint` from this directory to check the companion's links and provider-version agreement.
 
 ## Release boundaries

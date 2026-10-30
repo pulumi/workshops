@@ -1,0 +1,37 @@
+{
+  "runs": [
+    {
+      "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-1",
+      "deployment_id": "7410e304-918c-41f8-9e3b-503823611cfa",
+      "variant": "source-cache-miss",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "miss",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "deployment-timings-changes-20261030-psdrj8@sha256:4cb92de3405d4506a63667dd8a44e757f4f66e8d699f9c9579e515193551c57e",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "miss",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.36915676000000985
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    }
+  ],
+  "config_fingerprint": "ac58aca31e64bada477abd6f4412a54f4f889de0d4ebdd36fa8baac2a031189f",
+  "metadata": {
+    "source": {
+      "repoUrl": "https://github.com/pulumi/workshops.git",
+      "commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "repoDir": "faster-pulumi-deployments/benchmarks/changed-program"
+    },
+    "platform": "linux/amd64",
+    "program_sha256": "1de40eab0edfcf5af6e90c5ecf30e9753d8a7df87792e88d7eb21730be69e988",
+    "tools_image": "deployment-timings-changes-20261030-psdrj8@sha256:4cb92de3405d4506a63667dd8a44e757f4f66e8d699f9c9579e515193551c57e",
+    "prepared_image": "deployment-timings-changes-20261030-psdrj8@sha256:5c60f20e5ec008462c014b0d3fed5aaaa5c394bf0536f231a265c0be37be63fa",
+    "image_cache": "Not force-controlled; setup time includes runner and image preparation."
+  }
+}

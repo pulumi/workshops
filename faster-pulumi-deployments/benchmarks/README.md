@@ -4,7 +4,7 @@ Keep functional validation separate from performance measurement. The historical
 
 The [October 29 controlled results](results/2026-10-29-controlled/README.md) include 29 managed deployments, phase breakdowns, and preparation costs. The [historical export](results/2026-10-28-functional/README.md) preserves earlier functional observations separately.
 
-The [changed-program follow-up](results/2026-10-30-changes/README.md) records incremental local build costs. Its cloud comparison is paused during a service incident. The [fixture protocol](changed-program/README.md) separates source edits from dependency changes.
+The [changed-program follow-up](results/2026-10-30-changes/README.md) includes 12 successful comparison deployments and incremental release-build costs. Source-only edits retained useful cached work; a dependency update caused a new managed cache key. The [fixture protocol](changed-program/README.md) separates those cases.
 
 ## Export retained deployment history
 

@@ -1,0 +1,1084 @@
+[
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-1",
+    "deployment_id": "bfbe1c83-7b18-47f5-b8df-7d3e62dd7348",
+    "version": 1,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 18:52:17.195",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T18:52:20.773020048Z",
+        "lastUpdated": "2026-10-30T18:55:24.816279607Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T18:52:20.773020048Z",
+            "lastUpdated": "2026-10-30T18:52:42.691040616Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T18:52:42.791260477Z",
+            "lastUpdated": "2026-10-30T18:52:43.651572695Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T18:52:43.86337809Z",
+            "lastUpdated": "2026-10-30T18:52:49.95996147Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T18:52:50.150114587Z",
+            "lastUpdated": "2026-10-30T18:52:50.650427207Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T18:52:50.839217599Z",
+            "lastUpdated": "2026-10-30T18:53:04.205034667Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T18:53:04.417836713Z",
+            "lastUpdated": "2026-10-30T18:53:06.576801004Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T18:53:06.746857698Z",
+            "lastUpdated": "2026-10-30T18:55:10.980545877Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T18:55:11.183850742Z",
+            "lastUpdated": "2026-10-30T18:55:24.816279607Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-1",
+    "deployment_id": "44411d32-a9ec-447a-b32e-29c75c17a3f3",
+    "version": 1,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 18:55:31.658",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T18:55:33.401513832Z",
+        "lastUpdated": "2026-10-30T18:56:26.103687593Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T18:55:33.401513832Z",
+            "lastUpdated": "2026-10-30T18:55:56.06657648Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T18:55:56.144744581Z",
+            "lastUpdated": "2026-10-30T18:55:57.222707403Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T18:55:57.427215735Z",
+            "lastUpdated": "2026-10-30T18:56:03.70015215Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T18:56:03.886680907Z",
+            "lastUpdated": "2026-10-30T18:56:05.676943624Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T18:56:05.906487275Z",
+            "lastUpdated": "2026-10-30T18:56:26.103687593Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-2",
+    "deployment_id": "3e6d59d9-6918-47b3-a5c9-928fe3f56d0a",
+    "version": 1,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 18:56:30.268",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T18:56:33.591030628Z",
+        "lastUpdated": "2026-10-30T18:59:56.000158691Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T18:56:33.591030628Z",
+            "lastUpdated": "2026-10-30T18:56:57.861516014Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T18:56:57.964295736Z",
+            "lastUpdated": "2026-10-30T18:56:58.783276366Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T18:56:59.101809801Z",
+            "lastUpdated": "2026-10-30T18:57:05.589962193Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T18:57:05.849875859Z",
+            "lastUpdated": "2026-10-30T18:57:06.330456612Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T18:57:06.544009166Z",
+            "lastUpdated": "2026-10-30T18:57:20.04217103Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T18:57:20.286401554Z",
+            "lastUpdated": "2026-10-30T18:57:21.923266545Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T18:57:22.195102173Z",
+            "lastUpdated": "2026-10-30T18:59:30.923198391Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T18:59:31.211652185Z",
+            "lastUpdated": "2026-10-30T18:59:56.000158691Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+    "deployment_id": "8479ad2f-ea6c-4c5f-a3a9-ba8250573eca",
+    "version": 1,
+    "status": "failed",
+    "requested_at": "2026-10-30 19:00:34.987",
+    "jobs": [
+      {
+        "status": "failed",
+        "started": "2026-10-30T19:00:56.765288189Z",
+        "lastUpdated": "2026-10-30T19:07:48.558423208Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:00:56.765288189Z",
+            "lastUpdated": "2026-10-30T19:01:30.730070367Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:01:33.977591016Z",
+            "lastUpdated": "2026-10-30T19:01:56.320214297Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:02:17.549748295Z",
+            "lastUpdated": "2026-10-30T19:02:27.65695962Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:02:33.290342917Z",
+            "lastUpdated": "2026-10-30T19:03:49.58533735Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "failed",
+            "started": "2026-10-30T19:03:53.710776268Z",
+            "lastUpdated": "2026-10-30T19:07:48.558423208Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+    "deployment_id": "541fe5e4-756f-49a1-953b-1823ad3ff289",
+    "version": 2,
+    "status": "failed",
+    "requested_at": "2026-10-30 19:13:57.730",
+    "jobs": [
+      {
+        "status": "failed",
+        "started": null,
+        "lastUpdated": "2026-10-30T19:15:04.366020169Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          },
+          {
+            "name": "Get source",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          },
+          {
+            "name": "pulumi update",
+            "status": "not-started",
+            "started": null,
+            "lastUpdated": null
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+    "deployment_id": "c9677a94-2c47-4958-9f29-88b738be7f13",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 19:50:05.579",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T19:50:07.845618593Z",
+        "lastUpdated": "2026-10-30T19:51:01.338039002Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:50:07.845618593Z",
+            "lastUpdated": "2026-10-30T19:50:35.856848971Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:50:35.92544579Z",
+            "lastUpdated": "2026-10-30T19:50:37.143586778Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:50:37.75200646Z",
+            "lastUpdated": "2026-10-30T19:50:44.162832713Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:50:44.397548541Z",
+            "lastUpdated": "2026-10-30T19:50:46.128996215Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T19:50:46.496183791Z",
+            "lastUpdated": "2026-10-30T19:51:01.338039002Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-3",
+    "deployment_id": "1abd8de2-07d7-4739-9904-264dccc401aa",
+    "version": 1,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 19:51:07.574",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T19:51:38.784425976Z",
+        "lastUpdated": "2026-10-30T19:54:54.825396533Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:51:38.784425976Z",
+            "lastUpdated": "2026-10-30T19:52:02.59906943Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:52:02.683770466Z",
+            "lastUpdated": "2026-10-30T19:52:03.852188356Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:52:04.144518251Z",
+            "lastUpdated": "2026-10-30T19:52:11.011919476Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T19:52:11.373700423Z",
+            "lastUpdated": "2026-10-30T19:52:11.995530575Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T19:52:12.248847592Z",
+            "lastUpdated": "2026-10-30T19:52:26.355676511Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:52:27.019290795Z",
+            "lastUpdated": "2026-10-30T19:52:29.312025932Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T19:52:29.723654069Z",
+            "lastUpdated": "2026-10-30T19:54:39.507347731Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T19:54:39.775705214Z",
+            "lastUpdated": "2026-10-30T19:54:54.825396533Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-3",
+    "deployment_id": "29dea144-4ce2-41df-a0a7-cfce0b4611b6",
+    "version": 1,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 19:55:00.434",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T19:55:03.967507808Z",
+        "lastUpdated": "2026-10-30T19:55:55.252782315Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:55:03.967507808Z",
+            "lastUpdated": "2026-10-30T19:55:29.374827664Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:55:29.498668971Z",
+            "lastUpdated": "2026-10-30T19:55:30.671198048Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:55:31.00044629Z",
+            "lastUpdated": "2026-10-30T19:55:38.396550292Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:55:38.738751224Z",
+            "lastUpdated": "2026-10-30T19:55:40.946447129Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T19:55:41.230761392Z",
+            "lastUpdated": "2026-10-30T19:55:55.252782315Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-1",
+    "deployment_id": "74c3b750-0bde-406c-b581-b1eab0b46339",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 19:56:08.658",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T19:56:11.425196711Z",
+        "lastUpdated": "2026-10-30T19:57:07.54461002Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:56:11.425196711Z",
+            "lastUpdated": "2026-10-30T19:56:37.1948118Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:56:37.298355503Z",
+            "lastUpdated": "2026-10-30T19:56:38.441255602Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:56:38.689410694Z",
+            "lastUpdated": "2026-10-30T19:56:44.927121689Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T19:56:45.201465353Z",
+            "lastUpdated": "2026-10-30T19:56:55.313227473Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T19:56:55.555953667Z",
+            "lastUpdated": "2026-10-30T19:56:56.763188566Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:56:57.256148613Z",
+            "lastUpdated": "2026-10-30T19:56:59.089032926Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T19:56:59.480421389Z",
+            "lastUpdated": "2026-10-30T19:57:06.744947713Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T19:57:07.148464028Z",
+            "lastUpdated": "2026-10-30T19:57:07.54461002Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-1",
+    "deployment_id": "1d244f0e-ed93-442e-80ae-3016e8cd92a4",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 19:57:15.654",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T19:57:18.00793742Z",
+        "lastUpdated": "2026-10-30T19:58:12.933217172Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:57:18.00793742Z",
+            "lastUpdated": "2026-10-30T19:57:46.188208426Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:57:46.30548908Z",
+            "lastUpdated": "2026-10-30T19:57:47.393323871Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:57:47.711771213Z",
+            "lastUpdated": "2026-10-30T19:57:55.976098098Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:57:56.246907418Z",
+            "lastUpdated": "2026-10-30T19:57:58.050709523Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T19:57:58.348617481Z",
+            "lastUpdated": "2026-10-30T19:58:12.933217172Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-2",
+    "deployment_id": "7a5e0a9d-d894-4e3e-b5f1-9dbf77447cdc",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 19:58:17.650",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T19:58:19.606570018Z",
+        "lastUpdated": "2026-10-30T19:59:12.255431056Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:58:19.606570018Z",
+            "lastUpdated": "2026-10-30T19:58:42.310314392Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:58:42.38931445Z",
+            "lastUpdated": "2026-10-30T19:58:43.37440199Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:58:43.626502195Z",
+            "lastUpdated": "2026-10-30T19:58:50.148703266Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T19:58:50.399693531Z",
+            "lastUpdated": "2026-10-30T19:58:59.959924087Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:00.308299302Z",
+            "lastUpdated": "2026-10-30T19:59:01.585231705Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:01.915474327Z",
+            "lastUpdated": "2026-10-30T19:59:03.957909663Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:04.164291474Z",
+            "lastUpdated": "2026-10-30T19:59:11.603668374Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:11.867778236Z",
+            "lastUpdated": "2026-10-30T19:59:12.255431056Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+    "deployment_id": "d4eb8199-11e0-4272-b5b1-ecbbb8804238",
+    "version": 4,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 19:59:20.235",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T19:59:22.111924638Z",
+        "lastUpdated": "2026-10-30T20:00:13.414241185Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:22.111924638Z",
+            "lastUpdated": "2026-10-30T19:59:47.548377871Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:47.651099435Z",
+            "lastUpdated": "2026-10-30T19:59:48.812784616Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:49.204855241Z",
+            "lastUpdated": "2026-10-30T19:59:56.380161004Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:56.761334361Z",
+            "lastUpdated": "2026-10-30T19:59:58.688610557Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T19:59:59.146313781Z",
+            "lastUpdated": "2026-10-30T20:00:13.414241185Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-3",
+    "deployment_id": "c3a72ab7-125d-46d5-936e-2c0a4bd85837",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:00:21.566",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:01:07.240931341Z",
+        "lastUpdated": "2026-10-30T20:02:07.103880084Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:01:07.240931341Z",
+            "lastUpdated": "2026-10-30T20:01:33.580082852Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:01:33.673114244Z",
+            "lastUpdated": "2026-10-30T20:01:34.680685788Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:01:35.020127187Z",
+            "lastUpdated": "2026-10-30T20:01:42.068893551Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:01:42.329062487Z",
+            "lastUpdated": "2026-10-30T20:01:52.758770034Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T20:01:53.042553211Z",
+            "lastUpdated": "2026-10-30T20:01:54.309300674Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:01:54.556539036Z",
+            "lastUpdated": "2026-10-30T20:01:56.93189711Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:01:57.248762341Z",
+            "lastUpdated": "2026-10-30T20:02:06.343194124Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:02:06.60261902Z",
+            "lastUpdated": "2026-10-30T20:02:07.103880084Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-3",
+    "deployment_id": "aec1072e-7d81-4728-87a1-f979aa4b7169",
+    "version": 2,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:02:11.033",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:02:13.537006488Z",
+        "lastUpdated": "2026-10-30T20:03:03.108524578Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:02:13.537006488Z",
+            "lastUpdated": "2026-10-30T20:02:39.125414455Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:02:39.242002578Z",
+            "lastUpdated": "2026-10-30T20:02:40.607645973Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:02:41.102715148Z",
+            "lastUpdated": "2026-10-30T20:02:47.430014225Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:02:47.701660642Z",
+            "lastUpdated": "2026-10-30T20:02:49.451789903Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:02:49.840817637Z",
+            "lastUpdated": "2026-10-30T20:03:03.108524578Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-1",
+    "deployment_id": "7410e304-918c-41f8-9e3b-503823611cfa",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:03:11.071",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:03:13.492359829Z",
+        "lastUpdated": "2026-10-30T20:06:30.885070295Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:03:13.492359829Z",
+            "lastUpdated": "2026-10-30T20:03:37.528374487Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:03:37.693576423Z",
+            "lastUpdated": "2026-10-30T20:03:39.066883495Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:03:39.444412826Z",
+            "lastUpdated": "2026-10-30T20:03:46.469444654Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:03:46.771892747Z",
+            "lastUpdated": "2026-10-30T20:03:47.232829031Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T20:03:47.559533563Z",
+            "lastUpdated": "2026-10-30T20:04:02.389147848Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:04:02.871040271Z",
+            "lastUpdated": "2026-10-30T20:04:04.637928863Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:04:04.981602631Z",
+            "lastUpdated": "2026-10-30T20:06:14.336499831Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:06:14.668915738Z",
+            "lastUpdated": "2026-10-30T20:06:30.885070295Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-1",
+    "deployment_id": "2efaec23-250c-43a3-a8b3-d375ae150424",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:06:38.324",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:06:41.31728497Z",
+        "lastUpdated": "2026-10-30T20:07:28.846084345Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:06:41.31728497Z",
+            "lastUpdated": "2026-10-30T20:07:05.256365382Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:07:05.365846781Z",
+            "lastUpdated": "2026-10-30T20:07:06.322090695Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:07:06.553877794Z",
+            "lastUpdated": "2026-10-30T20:07:13.160443407Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:07:13.546152255Z",
+            "lastUpdated": "2026-10-30T20:07:15.659372923Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:07:16.029317962Z",
+            "lastUpdated": "2026-10-30T20:07:28.846084345Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-2",
+    "deployment_id": "a2243739-2fde-4192-b612-2780d38125e3",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:07:35.010",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:07:37.512907883Z",
+        "lastUpdated": "2026-10-30T20:11:05.307833752Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:07:37.512907883Z",
+            "lastUpdated": "2026-10-30T20:08:05.116630867Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:08:05.238125434Z",
+            "lastUpdated": "2026-10-30T20:08:06.551304511Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:08:06.893140404Z",
+            "lastUpdated": "2026-10-30T20:08:13.422051862Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:08:13.806106886Z",
+            "lastUpdated": "2026-10-30T20:08:14.585336471Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T20:08:15.052843594Z",
+            "lastUpdated": "2026-10-30T20:08:29.408753378Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:08:29.730834208Z",
+            "lastUpdated": "2026-10-30T20:08:31.577736013Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:08:31.850542168Z",
+            "lastUpdated": "2026-10-30T20:10:45.644683175Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:10:46.133612462Z",
+            "lastUpdated": "2026-10-30T20:11:05.307833752Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-2",
+    "deployment_id": "468eb5ca-930d-4881-834b-2b807ce001e6",
+    "version": 5,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:11:12.466",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:11:43.054143335Z",
+        "lastUpdated": "2026-10-30T20:12:32.041576239Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:11:43.054143335Z",
+            "lastUpdated": "2026-10-30T20:12:08.431411572Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:12:08.516987908Z",
+            "lastUpdated": "2026-10-30T20:12:09.803440043Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:12:10.301776992Z",
+            "lastUpdated": "2026-10-30T20:12:16.658160687Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:12:16.954261344Z",
+            "lastUpdated": "2026-10-30T20:12:18.697594581Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:12:19.07214113Z",
+            "lastUpdated": "2026-10-30T20:12:32.041576239Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/source-3",
+    "deployment_id": "5c00204d-6881-49f0-8709-eef49a0ebb08",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:12:34.727",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:12:37.666647068Z",
+        "lastUpdated": "2026-10-30T20:15:55.455152938Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:12:37.666647068Z",
+            "lastUpdated": "2026-10-30T20:13:02.761012184Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:13:02.89149489Z",
+            "lastUpdated": "2026-10-30T20:13:04.09164471Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:13:04.340299075Z",
+            "lastUpdated": "2026-10-30T20:13:11.988928236Z"
+          },
+          {
+            "name": "Restore cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:13:12.317741596Z",
+            "lastUpdated": "2026-10-30T20:13:13.104221083Z"
+          },
+          {
+            "name": "Download dependencies",
+            "status": "succeeded",
+            "started": "2026-10-30T20:13:13.496181611Z",
+            "lastUpdated": "2026-10-30T20:13:29.383451826Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:13:29.671067212Z",
+            "lastUpdated": "2026-10-30T20:13:31.769744311Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:13:32.103200306Z",
+            "lastUpdated": "2026-10-30T20:15:40.01422244Z"
+          },
+          {
+            "name": "Save cache",
+            "status": "succeeded",
+            "started": "2026-10-30T20:15:40.45511424Z",
+            "lastUpdated": "2026-10-30T20:15:55.455152938Z"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "stack": "team-ce/deployment-timings-changes-20261030-psdrj8/image-3",
+    "deployment_id": "42fc93c3-4914-41c4-b970-985e4e4389d9",
+    "version": 3,
+    "status": "succeeded",
+    "requested_at": "2026-10-30 20:16:01.340",
+    "jobs": [
+      {
+        "status": "succeeded",
+        "started": "2026-10-30T20:16:03.259920871Z",
+        "lastUpdated": "2026-10-30T20:16:50.252853674Z",
+        "steps": [
+          {
+            "name": "Setup",
+            "status": "succeeded",
+            "started": "2026-10-30T20:16:03.259920871Z",
+            "lastUpdated": "2026-10-30T20:16:27.743252071Z"
+          },
+          {
+            "name": "Download deployment executor",
+            "status": "succeeded",
+            "started": "2026-10-30T20:16:27.831349134Z",
+            "lastUpdated": "2026-10-30T20:16:28.98558185Z"
+          },
+          {
+            "name": "Get source",
+            "status": "succeeded",
+            "started": "2026-10-30T20:16:29.423137971Z",
+            "lastUpdated": "2026-10-30T20:16:35.526952321Z"
+          },
+          {
+            "name": "Pre-run command 1",
+            "status": "succeeded",
+            "started": "2026-10-30T20:16:35.856809565Z",
+            "lastUpdated": "2026-10-30T20:16:37.644349816Z"
+          },
+          {
+            "name": "pulumi update",
+            "status": "succeeded",
+            "started": "2026-10-30T20:16:37.934259044Z",
+            "lastUpdated": "2026-10-30T20:16:50.252853674Z"
+          }
+        ]
+      }
+    ]
+  }
+]
