@@ -196,3 +196,19 @@ html {
 .code-sm pre, .code-sm pre.shiki, .code-xs pre, .code-xs pre.shiki {
   padding: 0.9rem 1.1rem !important;
 }
+
+/* ── Presenter cue: who does what, now. Orange pill, word-first (ADAM:/ENGIN:),
+   ported from extending-pulumi-neo. Bottom-right so it clears two-line h1s. ── */
+.cue {
+  position: absolute; right: 4rem; bottom: 3.4rem;
+  display: flex; align-items: center; gap: 0.8rem; white-space: nowrap;
+  padding: 0.7rem 1.4rem; border-radius: 1rem;
+  background: #ff7a00; color: #fff;
+  font-size: 1.35rem; font-weight: 700; letter-spacing: .02em;
+  box-shadow: 0 10px 30px rgba(0,0,0,.25);
+  animation: cue-pulse 1.2s ease-in-out infinite;
+  z-index: 15;
+}
+.cue code { background: rgba(0,0,0,.25); color: #fff; padding: .1em .45em; border-radius: .4em; }
+.cue-ico { font-size: 1.8rem; flex-shrink: 0; }
+@keyframes cue-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }

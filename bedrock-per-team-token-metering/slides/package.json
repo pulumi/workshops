@@ -1,7 +1,7 @@
 {
   "name": "bedrock-per-team-token-metering-slides",
   "version": "0.1.0",
-  "description": "Meter every token: per-team Amazon Bedrock cost tracking and guardrails as code: Give each team its own tagged inference profile, count its tokens in CloudWatch, and block untagged profiles before they exist",
+  "description": "Who Spent All the Tokens? Per-Team AI Cost Control as Code: a tagged Amazon Bedrock inference profile and a scoped role per team, token counts in CloudWatch, and a policy pack that fails the preview. 60-minute demo-only workshop deck.",
   "type": "module",
   "private": true,
   "scripts": {

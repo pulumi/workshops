@@ -1,19 +1,31 @@
 {
   "slug": "bedrock-per-team-token-metering",
-  "title": "Meter every token: per-team Amazon Bedrock cost tracking and guardrails as code",
-  "subtitle": "Give each team its own tagged inference profile, count its tokens in CloudWatch, and block untagged profiles before they exist",
+  "title": "Who Spent All the Tokens?",
+  "subtitle": "Per-Team AI Cost Control as Code",
   "demo_title": "Per-team Bedrock metering",
   "speakers": [
     {
-      "placeholder": true
+      "name": "Adam Gordon Bell",
+      "role": "Community Engineer, Pulumi",
+      "x": "adamgordonbell",
+      "linkedin": "adamgordonbell",
+      "github": "adamgordonbell",
+      "image": "/img/adam-gordon-bell.png"
+    },
+    {
+      "name": "Engin Diri",
+      "role": "Senior Solutions Architect, Pulumi",
+      "x": "_ediri",
+      "linkedin": "engin-diri",
+      "github": "dirien",
+      "image": "/img/engin-diri.jpg"
     }
   ],
   "agenda": [
     "The unattributable bill",
-    "One profile and one role per team",
+    "Who, what, and what stops a mistake",
     "Token counts in CloudWatch",
-    "Guardrails in a policy pack",
-    "Live demo",
+    "Live demo, eleven steps",
     "Wrap-up and Q&A"
   ],
   "resources": [
@@ -29,12 +41,12 @@
     },
     {
       "title": "Pulumi ESC aws-login (OIDC)",
-      "url": "https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/",
+      "url": "https://www.pulumi.com/docs/esc/providers/login/aws-login/",
       "label": "pulumi.com/docs/esc"
     },
     {
       "title": "Write a Pulumi policy pack",
-      "url": "https://www.pulumi.com/docs/insights/policy/policy-packs/authoring/",
+      "url": "https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/",
       "label": "Policy pack authoring"
     }
   ]

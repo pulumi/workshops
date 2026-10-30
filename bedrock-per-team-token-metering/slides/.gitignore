@@ -3,3 +3,5 @@ dist/
 export-pages/
 *.pdf
 .DS_Store
+INTERNAL.md
+slides-export/
