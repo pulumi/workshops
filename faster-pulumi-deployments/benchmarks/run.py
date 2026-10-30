@@ -19,13 +19,14 @@ VARIANTS = {
     "source-no-cache": ("source", False, False),
     "cache-population": ("source", True, False),
     "source-cache-warm": ("source", True, False),
+    "source-cache-miss": ("source", True, False),
     "program-artifact": ("program", True, False),
     "complete-artifact": ("complete", True, False),
     "skip-install": ("complete", True, True),
     "skip-cache": ("complete", False, True),
     "prebuilt-image": ("image", False, True),
 }
-ORDER = tuple(VARIANTS)
+ORDER = tuple(name for name in VARIANTS if name != "source-cache-miss")
 
 
 def save(path, document):
@@ -71,7 +72,7 @@ def inspect(api_url, base, deployment, run):
     run["cache_observation"] = observation
     run["resource_result"] = "no-change" if no_change else json.dumps(changes, sort_keys=True)
     run["pre_run_measurements_s"] = custom
-    if run["cohort"] == "controlled-no-change" and not no_change:
+    if run["cohort"] in ("controlled-no-change", "controlled-code-change", "controlled-dependency-change") and not no_change:
         raise ValueError(f"Expected a no-change update, got {changes}")
     if run["cohort"] == "controlled-new-stack" and not (
         changes.get("create") == 2
@@ -87,10 +88,10 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
-    parser.add_argument("--variants", nargs="+", choices=ORDER, default=list(ORDER))
+    parser.add_argument("--variants", nargs="+", choices=tuple(VARIANTS), default=list(ORDER))
     parser.add_argument("--samples", type=int, default=3)
     parser.add_argument("--timeout", type=int, default=1200)
-    parser.add_argument("--cohort", choices=("controlled-no-change", "controlled-new-stack"), default="controlled-no-change")
+    parser.add_argument("--cohort", choices=("controlled-no-change", "controlled-new-stack", "controlled-code-change", "controlled-dependency-change"), default="controlled-no-change")
     args = parser.parse_args()
     config = json.loads(args.config.read_text())
     api_url = config.get("api_url", "https://api.pulumi.com")
@@ -117,14 +118,14 @@ def main():
         count = 1 if variant in ("seed", "cache-population") else args.samples
         for sample in range(1, count + 1):
             cohort = "warmup" if variant in ("seed", "cache-population") else args.cohort
-            stack_name = config["stack"] if args.cohort == "controlled-no-change" else f"{variant}-{sample}"
+            stack_name = f"{variant}-{sample}" if args.cohort == "controlled-new-stack" else config["stack"]
             stack = f"{config['organization']}/{project}/{stack_name}"
             base = stack_path(stack)
             previous = [r for r in document["runs"] if r["stack"] == stack and r["variant"] == variant and r["sample"] == sample]
             if previous and previous[-1].get("validated"):
                 continue
             image = config["prepared_image"] if mode == "image" else config["tools_image"]
-            expected = "miss" if variant == "cache-population" else ("hit" if cached else "disabled")
+            expected = "miss" if variant in ("cache-population", "source-cache-miss") else ("hit" if cached else "disabled")
             if previous:
                 run = previous[-1]
             else:
@@ -135,7 +136,8 @@ def main():
                     "BENCHMARK_RELEASE_URI": config["release_uri"],
                     "BENCHMARK_PROGRAM_SHA256": config["program_sha256"],
                 }
-                prepare = f"pulumi env run {shlex.quote(config['credential_environment'])} -- python3 ../../benchmarks/prepare.py"
+                prepare_script = config.get("prepare_script", "../../benchmarks/prepare.py")
+                prepare = f"pulumi env run {shlex.quote(config['credential_environment'])} -- python3 {shlex.quote(prepare_script)}"
                 body = {
                     "operation": "update", "inheritSettings": False,
                     "cacheOptions": {"enable": cached},
@@ -173,6 +175,12 @@ def main():
                 raise SystemExit(f"Deployment {run['deployment_id']} {deployment['status']}; no automatic retry")
             try:
                 inspect(api_url, base, deployment, run)
+                if "expected_revision" in config:
+                    exported = request(api_url, base.removesuffix("/deployments") + "/export")
+                    roots = [r for r in exported["deployment"]["resources"] if r["type"] == "pulumi:pulumi:Stack"]
+                    if len(roots) != 1 or roots[0].get("outputs", {}).get("revision") != config["expected_revision"]:
+                        raise ValueError("Deployed revision output does not match the prepared release")
+                    run["revision_output"] = config["expected_revision"]
             except ValueError as error:
                 save(args.manifest, document)
                 raise SystemExit(str(error)) from None
