@@ -91,6 +91,7 @@ def main():
     parser.add_argument("--variants", nargs="+", choices=tuple(VARIANTS), default=list(ORDER))
     parser.add_argument("--samples", type=int, default=3)
     parser.add_argument("--timeout", type=int, default=1200)
+    parser.add_argument("--retry-failed-warmup", action="store_true", help="Explicitly repeat a failed seed or cache-population run, retaining the failure")
     parser.add_argument("--cohort", choices=("controlled-no-change", "controlled-new-stack", "controlled-code-change", "controlled-dependency-change"), default="controlled-no-change")
     args = parser.parse_args()
     config = json.loads(args.config.read_text())
@@ -124,6 +125,11 @@ def main():
             previous = [r for r in document["runs"] if r["stack"] == stack and r["variant"] == variant and r["sample"] == sample]
             if previous and previous[-1].get("validated"):
                 continue
+            if previous and args.retry_failed_warmup and previous[-1].get("status") == "failed":
+                if cohort != "warmup":
+                    parser.error("Only failed warmup runs can be explicitly retried")
+                previous[-1]["notes"] += " Failed warmup retained; explicitly retried by the operator."
+                previous = []
             image = config["prepared_image"] if mode == "image" else config["tools_image"]
             expected = "miss" if variant in ("cache-population", "source-cache-miss") else ("hit" if cached else "disabled")
             if previous:

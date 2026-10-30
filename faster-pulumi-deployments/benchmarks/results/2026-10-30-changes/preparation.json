@@ -1,0 +1,67 @@
+[
+  {
+    "label": "baseline:tools-publish",
+    "elapsed_s": 1.012,
+    "returncode": 0
+  },
+  {
+    "label": "baseline:dependencies",
+    "elapsed_s": 10.552,
+    "returncode": 0
+  },
+  {
+    "label": "baseline:compile",
+    "elapsed_s": 95.296,
+    "returncode": 0
+  },
+  {
+    "label": "baseline:image-assembly",
+    "elapsed_s": 5.478,
+    "returncode": 0
+  },
+  {
+    "label": "baseline:image-publish",
+    "elapsed_s": 15.398,
+    "returncode": 0
+  },
+  {
+    "label": "code:dependencies",
+    "elapsed_s": 0.798,
+    "returncode": 0
+  },
+  {
+    "label": "code:compile",
+    "elapsed_s": 5.928,
+    "returncode": 0
+  },
+  {
+    "label": "code:image-assembly",
+    "elapsed_s": 3.833,
+    "returncode": 0
+  },
+  {
+    "label": "code:image-publish",
+    "elapsed_s": 12.399,
+    "returncode": 0
+  },
+  {
+    "label": "dependency:dependencies",
+    "elapsed_s": 0.851,
+    "returncode": 0
+  },
+  {
+    "label": "dependency:compile",
+    "elapsed_s": 12.851,
+    "returncode": 0
+  },
+  {
+    "label": "dependency:image-assembly",
+    "elapsed_s": 4.265,
+    "returncode": 0
+  },
+  {
+    "label": "dependency:image-publish",
+    "elapsed_s": 13.524,
+    "returncode": 0
+  }
+]

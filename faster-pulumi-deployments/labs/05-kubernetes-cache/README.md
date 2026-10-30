@@ -29,4 +29,29 @@ Repeat the test with two agents and two different stacks. `ReadWriteOnce` permit
 
 Go can persist both its module and build caches; Python can persist its package-manager cache. Avoid sharing concurrently modified installed dependency trees. Mount only the Pulumi plugin directory if you add plugin persistence, not a credential-containing home directory.
 
+## Reuse executor image layers on the nodes
+
+Kubernetes image caching is separate from the PVC above. Each node's container runtime stores downloaded image layers. Replacement job Pods can reuse those layers on the same node. Pods scheduled onto another node need that node's own copy.
+
+Pin the executor image by digest in deployment settings. To use an existing local image, merge this field into the worker template:
+
+```yaml
+spec:
+  containers:
+    - name: pulumi-workflow
+      imagePullPolicy: IfNotPresent
+```
+
+Keep the existing environment variables and mounts when you merge this example. Configure the execution container, not only the long-running agent. The agent component's `agentImagePullPolicy` also controls its helper image; that setting alone does not set the executor container's policy.
+
+`Always` still reuses local layers when the resolved image digest is present. It checks the registry before launch. `IfNotPresent` uses the existing local image, which is predictable when you select an immutable digest. See the [Kubernetes image-pull rules](https://kubernetes.io/docs/concepts/containers/images/#image-pull-policy).
+
+A stable runner node pool can retain common base layers across releases. Put stable tools and provider installation before frequently changed program files in the image recipe. A new program then needs only changed layers where their content differs. Node replacement and image garbage collection can make the next job cold again.
+
+For predictable startup, pre-pull a release onto the eligible nodes before its rollout. A DaemonSet can arrange a pull on each matching node. Record that preparation time separately. A nearby registry or pull-through cache reduces remote transfer costs but does not replace the node-local cache.
+
+Measure three cases separately: a fresh node, the same image on a retained node, and a new release sharing existing layers. Record the node name and Pod events, including image pulls. A fresh Pod alone does not establish a cold-image test.
+
+With Docker-in-Docker runners, executor images live in the inner Docker daemon's store. Node-level caching of the outer Pod image does not preserve that inner store when the daemon is replaced.
+
 Continue to [lab 6](../06-rollout/README.md).

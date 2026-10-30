@@ -5,6 +5,7 @@ import csv
 import json
 import os
 import statistics
+import time
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -125,12 +126,18 @@ def request(api_url, path, method="GET", body=None):
         "Accept": "application/vnd.pulumi+8",
         "Content-Type": "application/json",
     })
-    try:
-        with urllib.request.urlopen(req, timeout=60) as response:
-            data = response.read()
-            return json.loads(data) if data else {}
-    except urllib.error.HTTPError as error:
-        raise SystemExit(f"Pulumi API returned HTTP {error.code} for {path}") from None
+    attempts = 3 if method == "GET" else 1
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(req, timeout=60) as response:
+                data = response.read()
+                return json.loads(data) if data else {}
+        except urllib.error.HTTPError as error:
+            raise SystemExit(f"Pulumi API returned HTTP {error.code} for {path}") from None
+        except (TimeoutError, urllib.error.URLError):
+            if attempt == attempts - 1:
+                raise
+            time.sleep(2 ** attempt)
 
 
 def stack_path(stack):
