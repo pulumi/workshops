@@ -17,7 +17,7 @@ func main() {
 		if err != nil {
 			return err
 		}
-		revision, err := version.NewVersion("1.0.0")
+		revision, err := version.NewVersion("1.1.0")
 		if err != nil {
 			return err
 		}
