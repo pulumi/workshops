@@ -11,7 +11,7 @@ env_name="$(esc_env)"
 say "Creating $env_name"
 pulumi env init "$env_name" >/dev/null 2>&1 || true
 tmp="$(mktemp)"; trap 'rm -f "$tmp"' EXIT
-sed "s|__ROLE_ARN__|$ROLE_ARN|" "$(dirname "${BASH_SOURCE[0]}")/aws-login.yaml" >"$tmp"
+sed -e "s|__ROLE_ARN__|$ROLE_ARN|" -e "s|__REGION__|$REGION|" "$(dirname "${BASH_SOURCE[0]}")/aws-login.yaml" >"$tmp"
 pulumi env edit --file "$tmp" "$env_name"
 say "Environment definition (secrets hidden)"
 pulumi env get "$env_name"

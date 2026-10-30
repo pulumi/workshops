@@ -13,7 +13,7 @@ export interface MeteredModelAccessArgs {
     /** ARN the profile copies from: a system-defined inference profile or a foundation model. */
     copyFromArn: pulumi.Input<string>;
     /** Foundation model ARNs the copied profile routes to (every destination Region). */
-    routedModelArns: pulumi.Input<string>[];
+    routedModelArns: pulumi.Input<string[]>;
     /** AWS account id; the role's trust policy names the account root. */
     accountId: pulumi.Input<string>;
     /** CloudWatch Logs log group that receives the Bedrock invocation log. */

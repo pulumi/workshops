@@ -7,7 +7,7 @@ POLICY_DIR="$WORKSHOP_DIR/07-policy"
 STACK="${DEMO_STACK:-dev}"
 ESC_PROJECT="bedrock-metering"
 ESC_NAME="aws-login"
-REGION="${AWS_REGION:-us-east-1}"
+REGION="${AWS_REGION:-us-east-1}"   # one knob: export AWS_REGION to run the demo elsewhere
 LOG_GROUP="/workshop/bedrock-invocations"
 NAMESPACE="Workshop/Bedrock"
 
@@ -35,6 +35,7 @@ prepare_project() {
   local account
   account="$(aws_admin sts get-caller-identity --query Account --output text)"
   pulumi_stack config set accountId "$account"
+  pulumi_stack config set aws:region "$REGION"
 }
 
 # set_teams '<json>' : write the teams list and deploy.
@@ -49,10 +50,16 @@ team_profile_arn() { stack_output teamProfiles | jq -r --arg t "$1" '.[$t]'; }
 team_role_arn() { stack_output teamRoles | jq -r --arg t "$1" '.[$t]'; }
 
 # Print "export AWS_..." lines for a team's role, for use inside a subshell.
+# A role created seconds ago can still be unknown to STS (IAM propagation), so retry briefly.
 assume_team() {
-  local creds
-  creds="$(aws_admin sts assume-role --role-arn "$(team_role_arn "$1")" --role-session-name "demo-$1" \
-    --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text)"
+  local creds role attempt
+  role="$(team_role_arn "$1")"
+  for attempt in 1 2 3 4 5 6 7 8 9 10; do
+    creds="$(aws_admin sts assume-role --role-arn "$role" --role-session-name "demo-$1" \
+      --query 'Credentials.[AccessKeyId,SecretAccessKey,SessionToken]' --output text 2>/dev/null)" && break
+    [ "$attempt" -lt 10 ] || die "could not assume $role after $attempt attempts"
+    printf 'waiting for IAM to propagate %s (attempt %s)\n' "$role" "$attempt" >&2; sleep 3
+  done
   read -r AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN <<<"$creds"
   export AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN AWS_REGION="$REGION"
 }

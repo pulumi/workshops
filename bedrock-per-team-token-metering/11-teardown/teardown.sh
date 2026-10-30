@@ -6,7 +6,12 @@ source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 need pulumi; need aws
 say "pulumi destroy"
 pulumi_stack destroy --yes
-pulumi_stack stack rm --yes
+# Put the stack config back to its committed shape so the next run starts clean, then
+# remove the stack but keep Pulumi.dev.yaml (it holds the ESC environment import).
+for key in teams demoViolations enableBudget budgetEmail accountId; do
+  pulumi_stack config rm "$key" 2>/dev/null || true
+done
+pulumi_stack stack rm --yes --preserve-config
 if [ "${DELETE_POLICY_PACK:-0}" = 1 ]; then
   say "Removing the published policy pack"
   pulumi policy disable "$(org)/bedrock-metering-guardrails" || true

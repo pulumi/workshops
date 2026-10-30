@@ -4,6 +4,6 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 need pulumi; need aws; need jq
 aws_admin logs tail "$LOG_GROUP" --region "$REGION" --since 15m --format short \
-  | sed 's/^[^ ]* [^ ]* //' \
+  | sed 's/^[^ ]* //' | grep '^{' \
   | jq -c 'select(.identity != null) | {caller: .identity.arn, model: .modelId, input: .input.inputTokenCount, output: .output.outputTokenCount}' \
   | tail -n "${1:-10}"

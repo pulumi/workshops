@@ -5,7 +5,9 @@ set -euo pipefail
 source "$(dirname "${BASH_SOURCE[0]}")/../lib.sh"
 need pulumi; need aws
 teams=("$@"); [ ${#teams[@]} -gt 0 ] || teams=(search support)
-start="$(date -u -d '1 hour ago' +%Y-%m-%dT%H:%M:%SZ)"; end="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+fmt=%Y-%m-%dT%H:%M:%SZ
+# BSD date (macOS) takes -v, GNU date takes -d.
+start="$(date -u -v-1H +"$fmt" 2>/dev/null || date -u -d '1 hour ago' +"$fmt")"; end="$(date -u +"$fmt")"
 for team in "${teams[@]}"; do
   for kind in InputTokens OutputTokens; do
     total="$(aws_admin cloudwatch get-metric-statistics --region "$REGION" --namespace "$NAMESPACE" \

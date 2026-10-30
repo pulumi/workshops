@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "Policy pack for the per-team Amazon Bedrock metering workshop",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
     "test": "tsc -p tsconfig.test.json && node --test \"dist/test/*.js\""
   },

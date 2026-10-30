@@ -7,7 +7,7 @@ Demo code for the workshop. One Pulumi program gives each team its own Amazon Be
 - A Pulumi Cloud account and the Pulumi CLI 3.267.0
 - Node.js 24 (v24.21.0 was used) and npm
 - AWS CLI v2, `jq`, `bc`, `bash`
-- An AWS account with Amazon Bedrock enabled in `us-east-1` and access to Amazon Nova 2 Lite
+- An AWS account with Amazon Bedrock enabled and access to Amazon Nova 2 Lite. The demo runs in `us-east-1` unless you `export AWS_REGION=<region>` before step 1 (verified in `us-east-1` and `ca-central-1`)
 - An IAM OIDC provider for `https://api.pulumi.com/oidc` (audience `aws:<your Pulumi org>`) and a role it can assume. Create both before the session.
 - Pulumi organization: `export PULUMI_ORG=<org>` or run `pulumi org set-default <org>`
 
@@ -59,7 +59,7 @@ Metrics and alarms lag the calls by a minute or two. The first invocation record
 
 ## Model choice
 
-`amazon.nova-2-lite-v1:0` is reached through the US geographic system-defined profile `us.amazon.nova-2-lite-v1:0`, which routes to `us-east-1`, `us-east-2` and `us-west-2`. The invoke policy therefore names the foundation model in all three Regions. If Nova 2 Lite is not available to your account, switch to the In-Region fallback:
+`amazon.nova-2-lite-v1:0` is reached through the US geographic system-defined profile `us.amazon.nova-2-lite-v1:0`, which routes to several US Regions (and `ca-central-1` when called from there). The program reads the routed Regions from the profile and names the foundation model in each of them in the invoke policy. If Nova 2 Lite is not available to your account, switch to the In-Region fallback:
 
 ```bash
 cd 02-platform && pulumi config set model nova-lite
@@ -71,8 +71,12 @@ Nova 2 Lite In-Region lists at $0.00033 per 1K input tokens and $0.00275 per 1K 
 
 ## Teardown
 
-`11-teardown/teardown.sh` destroys the stack, removes the stack, and prints the three checks: no application inference profiles, an empty invocation logging configuration, and no `/workshop/` log groups. It then deletes the ESC environment. Run it after every session.
+`11-teardown/teardown.sh` destroys the stack, resets the demo config keys, removes the stack (keeping `Pulumi.dev.yaml`, which imports the ESC environment), and prints the three checks: no application inference profiles, an empty invocation logging configuration, and no `/workshop/` log groups. It then deletes the ESC environment. Run it after every session; the next run starts again from step 1.
+
+## Timing seen in a live run
+
+Numbers from runs on 2026-10-30 (`us-east-1` and `ca-central-1`): step 2 deploys in about 15 to 20 seconds, each team in about 5 seconds, the first invocation record appears within 15 seconds, metrics follow within a minute, and the alarm reached `ALARM` 80 to 90 seconds after the last call in step 9. A team role created in step 3 or 5 can take a few seconds to become assumable; the scripts retry.
 
 ## Verification status
 
-See the pull request for which checks ran and which need a live AWS account.
+Every step ran end to end against a live AWS account on 2026-10-30, twice (`us-east-1`, then `ca-central-1`), including teardown. Details in the pull request.

@@ -1,5 +1,5 @@
 # ESC environment definition for bedrock-metering/aws-login.
-# create-env.sh fills in the two placeholders and uploads it.
+# create-env.sh fills in the two placeholders (role ARN, Region) and uploads it.
 values:
   aws:
     login:
@@ -12,4 +12,4 @@ values:
     AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
     AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
     AWS_SESSION_TOKEN: ${aws.login.sessionToken}
-    AWS_REGION: us-east-1
+    AWS_REGION: __REGION__

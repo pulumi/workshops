@@ -23,25 +23,28 @@ const region = aws.config.region ?? "us-east-1";
 const namespace = "Workshop/Bedrock";
 
 // Nova 2 Lite is reached through its US geographic system-defined profile, which routes
-// to three Regions, so the invoke policy must name the foundation model in all three.
+// to several Regions, so the invoke policy must name the foundation model in each of them.
 // Nova Lite is the In-Region fallback: one Region, copy straight from the model.
 const models = {
     "nova-2-lite": {
         modelId: "amazon.nova-2-lite-v1:0",
         copyFrom: `arn:aws:bedrock:${region}:${accountId}:inference-profile/us.amazon.nova-2-lite-v1:0`,
-        regions: ["us-east-1", "us-east-2", "us-west-2"],
+        // The system-defined profile knows which Regions it routes to; read the list
+        // from it rather than hard-coding Regions that AWS may add to later.
+        routedModelArns: aws.bedrock.getInferenceProfileOutput({ inferenceProfileId: "us.amazon.nova-2-lite-v1:0" })
+            .models.apply(ms => ms.map(m => m.modelArn)),
     },
     "nova-lite": {
         modelId: "amazon.nova-lite-v1:0",
         copyFrom: `arn:aws:bedrock:${region}::foundation-model/amazon.nova-lite-v1:0`,
-        regions: [region],
+        routedModelArns: pulumi.output([`arn:aws:bedrock:${region}::foundation-model/amazon.nova-lite-v1:0`]),
     },
-} as const;
+};
 if (!(model in models)) {
     throw new Error(`config "model" must be one of ${Object.keys(models).join(", ")}; got "${model}"`);
 }
 const selected = models[model as keyof typeof models];
-const routedModelArns = selected.regions.map(r => `arn:aws:bedrock:${r}::foundation-model/${selected.modelId}`);
+const routedModelArns = selected.routedModelArns;
 
 // Foundation: the invocation log. Bedrock invocation logging is one setting per account
 // and Region, which is why this project is a single stack.
