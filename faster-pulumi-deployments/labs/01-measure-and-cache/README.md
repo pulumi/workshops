@@ -15,8 +15,14 @@ Record these cases:
 | First update, no managed cache | | | | | | |
 | First update with cache enabled | | | | | | |
 | Repeated update with cache enabled | | | | | | |
+| Source edit, unchanged dependency files | | | | | | |
+| First update after a dependency change | | | | | | |
 | New stack, same source and dependencies | | | | | | |
 
 Use actual deployment step logs. Do not treat a cache setting or a shorter total as proof of a hit.
+
+For Go, the managed cache includes downloaded modules and compiled package outputs. A source edit can reuse compiled dependencies, while a changed `go.sum` selects another managed cache entry. Record the first deployment after that dependency change separately from repeats that can restore the new entry.
+
+The [changed-program protocol](../../benchmarks/changed-program/README.md) tests those cases on three distinct stacks per approach. Its [results](../../benchmarks/results/2026-10-30-changes/README.md) include release preparation costs and keep queue delays separate from job execution. Use those measurements as a method to reproduce, not a prediction for your program.
 
 Continue to [lab 2](../02-build-once/README.md).

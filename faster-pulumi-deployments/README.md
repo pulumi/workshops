@@ -3,12 +3,12 @@ author: Jonathan Davenport
 language: typescript, python, go, csharp, java, yaml
 provider: random
 use: first-party
-status: draft
+status: active
 ---
 
 # Faster Pulumi deployments
 
-This is the runnable companion to the [deployment tutorial series](https://github.com/pulumi/docs/pull/22569). The articles explain the platform-engineering decisions; this directory contains the complete programs, build recipes, and lab instructions.
+This is the runnable companion to [Faster Pulumi deployments: Reuse preparation across environments](https://github.com/pulumi/docs/pull/22662). The article explains how to choose a strategy; this directory contains complete programs, build recipes, and lab instructions.
 
 The scenario is a platform team deploying reusable infrastructure across many accounts. Build preparation should be reusable, while configuration stays specific to each stack. You can apply that separation without rewriting your programs in Go.
 
@@ -28,7 +28,15 @@ Every track also needs the Pulumi CLI and the matching Random provider plugin. T
 
 The root `Pulumi.yaml` is an optional YAML version of the baseline program. YAML and Java do not have Pulumi-managed dependency caching; the artifact and image techniques remain useful.
 
-## Start with a local artifact
+## Choose a strategy
+
+Start with [measurement and caching](labs/01-measure-and-cache/README.md) for repeated deployments to existing stacks. Test a source edit and a dependency update separately; an unchanged repeat does not establish how useful the cache is for your normal changes.
+
+For releases reused across environments, try [preparing the program](labs/02-build-once/README.md), then choose [artifact delivery](labs/03-release-artifacts/README.md) or an [executor image](labs/04-executor-images/README.md). Include build and publication time in the comparison. These are alternatives to evaluate, not a requirement to add every technique.
+
+For customer-managed runners, see [Kubernetes cache persistence and image reuse](labs/05-kubernetes-cache/README.md). If waiting dominates, use the [rollout lab](labs/06-rollout/README.md) to examine triggers and concurrency.
+
+## Try a local artifact
 
 From this directory, select a track:
 
