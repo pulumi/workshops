@@ -5,3 +5,4 @@ export-pages/
 .DS_Store
 INTERNAL.md
 slides-export/
+!slides.pdf
