@@ -8,6 +8,10 @@ Record a first deployment and a repeated deployment without resource changes. Ke
 
 On Pulumi-managed runners, enable dependency caching for supported runtimes: Go, .NET, Node.js, and Python. Java and YAML require a different cache or image strategy. Managed caches are scoped per stack, so a new stack starts cold even when another stack has already used the same dependencies. Previews consume existing cache entries but do not populate them.
 
+For each disposable stack, open **Settings** → **Deploy**, enable **Cache dependencies to speed up deployments**, and save the settings. Run an update, then open its deployment logs. Inspect **Restore cache** for `Cache restored successfully` or `No cache to restore, skipping...`. A `Skipping caching step` message means you must investigate why caching did not run.
+
+After a cache miss, inspect **Save cache** for archive creation and a successful upload. Repeat the update with unchanged dependency files and confirm that **Restore cache** now reports success. The save step can skip an already cached key on that repeat. Record the actual log result for every sample.
+
 Record these cases:
 
 | Case | Setup | Cache transfer | Dependency preparation | Pulumi operation | Queue | Total |
