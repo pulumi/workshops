@@ -1,0 +1,6 @@
+# Local test key path: 00-signing-key/generate.sh prints the exact value to
+# set here once it has produced the certificate. The default below matches
+# that script's default identity so the two folders agree out of the box.
+config:
+  aws:region: us-east-1
+  supply-chain-signing-platform:certPath: ../00-signing-key/.notation/supply-chain-signing.demo.crt
