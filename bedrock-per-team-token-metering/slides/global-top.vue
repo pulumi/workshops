@@ -20,7 +20,7 @@ const fm = computed(() => nav.slides?.value?.[page.value - 1]?.meta?.slide?.fron
 
 const hidden = computed(() => {
   const f = fm.value
-  return ['stage-map', 'stage-demo'].includes(f.routeAlias ?? '') || ['cover', 'end'].includes(f.layout)
+  return ['stage-map', 'stage-demo', 'stage-pulumi'].includes(f.routeAlias ?? '') || ['cover', 'end'].includes(f.layout) || f.bleed === true
 })
 </script>
 

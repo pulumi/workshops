@@ -212,3 +212,17 @@ html {
 .cue code { background: rgba(0,0,0,.25); color: #fff; padding: .1em .45em; border-radius: .4em; }
 .cue-ico { font-size: 1.8rem; flex-shrink: 0; }
 @keyframes cue-pulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.04); } }
+
+/* ── Story slide: the screenshot fills the body, source line overlaid ── */
+.shot-full { flex: 1; min-height: 0; position: relative; display: flex; flex-direction: column; }
+.shot-full__frame { flex: 1; min-height: 0; overflow: hidden; border: 1.5px solid var(--p-border); border-radius: 14px; box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18); background: #fff; }
+.shot-full__frame img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.shot-full__src { position: absolute; right: 0.9rem; bottom: 0.9rem; font-family: var(--slidev-font-mono); font-size: 0.85rem !important; color: var(--p-fg-muted) !important; background: rgba(255, 255, 255, 0.9); padding: 0.25rem 0.7rem; border-radius: 6px; margin: 0 !important; }
+
+/* ── Full-bleed story slide: the screenshot is the slide, no chrome ── */
+.slidev-layout:has(.bleed) .pulumi-slide-body { padding: 0 !important; }
+.slidev-layout:has(.bleed) .pulumi-accent-bar,
+.slidev-layout:has(.bleed) .pulumi-footer { display: none !important; }
+.bleed { position: absolute; inset: 0; background: #fff; }
+.bleed img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; }
+.bleed__src { position: absolute; right: 1rem; bottom: 0.9rem; font-family: var(--slidev-font-mono); font-size: 0.85rem !important; color: var(--p-fg-muted) !important; background: rgba(255, 255, 255, 0.97); padding: 0.25rem 0.7rem; border-radius: 6px; margin: 0 !important; box-shadow: 0 2px 10px rgba(0,0,0,0.12); }

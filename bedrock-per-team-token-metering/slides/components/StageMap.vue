@@ -8,7 +8,8 @@ import { useNav, useSlideContext } from '@slidev/client'
 // inserting or cutting slides never touches this file — only those slides carry
 // position. Ported from extending-pulumi-neo (itself adapted from build-your-own-iac's ActNav).
 //
-//   size="lg"  on the map slide and the demo divider (prominent, names always shown)
+//   size="lg"  on the map slide and the demo divider (prominent, names always shown;
+//              on the map slide no stage has started yet, so every name reads as ahead)
 //   size="sm"  in global-top.vue (corner strip on every other slide, only the current name shows)
 const props = defineProps({
   size: { type: String, default: 'sm' },
@@ -18,10 +19,10 @@ const props = defineProps({
   page: { type: Number, default: 0 },
 })
 
-const ORDER = ['map', 'who', 'what', 'stop', 'howfast', 'demo', 'wrap']
+const ORDER = ['problem', 'idea', 'demo', 'further', 'pulumi', 'wrap']
 
 // Display names. Aliases must stay URL-safe, so multi-word stages get a label here.
-const LABEL = { howfast: 'how fast' }
+const LABEL = { further: 'go further', pulumi: 'why Pulumi' }
 const nameOf = (stage) => LABEL[stage] ?? stage
 
 const nav = useNav()
@@ -56,7 +57,7 @@ const stateOf = (stage) => {
 </script>
 
 <template>
-  <nav v-if="here" class="stage-map" :class="size" aria-label="Sections">
+  <nav v-if="here || size === 'lg'" class="stage-map" :class="size" aria-label="Sections">
     <template v-for="(s, i) in stages" :key="s.stage">
       <span v-if="i" class="sep" aria-hidden="true">·</span>
       <button
