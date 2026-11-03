@@ -1,0 +1,23 @@
+# The stack imports the ESC environment created by scripts/setup.sh. ESC mints
+# short-lived AWS credentials through OIDC on every run, so no AWS key is stored
+# here. The organization is implied by the stack (<org>/dev).
+environment:
+  - bedrock-metering/aws-login
+config:
+  aws:region: us-east-1
+  # Defaults for every team, in output tokens: the burst limit per minute and the
+  # cap per UTC day. Either alarm firing cuts the team off until a human restores it.
+  bedrock-metering:alarmOutputTokens: "3000"
+  bedrock-metering:dailyOutputTokens: "100000"
+  # One entry per team. A team may override either limit; the rest inherit the defaults.
+  bedrock-metering:teams:
+    - name: search
+      costCenter: cc-1001
+      dailyOutputTokens: 500000
+    - name: support
+      costCenter: cc-2002
+    - name: dev
+      costCenter: cc-3003
+      alarmOutputTokens: 20000
+    - name: billing
+      costCenter: cc-4004

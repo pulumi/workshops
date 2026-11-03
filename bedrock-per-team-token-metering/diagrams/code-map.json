@@ -1,0 +1,6 @@
+[
+ {
+  "name": "code-map",
+  "mermaid": "graph LR\n    Y[Pulumi.dev.yaml<br/>the teams list] --> I[index.ts<br/>the program]\n    P[policy/rules.ts<br/>two guardrails] -. at preview .-> I\n    I --> M[meteredModelAccess.ts<br/>one team, five resources]\n    I --> T[tokenCutoff.ts<br/>the stop]\n    M --> AWS[AWS<br/>profiles, roles, alarms]\n    T --> H[cutoff/index.mjs<br/>ALARM becomes a Deny]\n    H --> AWS\n    S[scripts/<br/>call, trip, check, restore] --> AWS"
+ }
+]

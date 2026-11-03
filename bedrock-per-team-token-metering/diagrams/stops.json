@@ -1,0 +1,5 @@
+[
+ {"name":"stop-preview","mermaid":"graph LR\n    CH[Code change] --> PV[pulumi preview]\n    PV --> PK[Policy pack]\n    PK -->|tagged, no wildcard| UP[pulumi up]\n    PK -->|untagged or wildcard| F1[Preview fails<br/>nothing reaches AWS]"},
+ {"name":"stop-call","mermaid":"graph LR\n    CALL[Team support<br/>calls Bedrock] --> IAM[IAM<br/>at call time]\n    IAM -->|its own profile| OK[Logged and metered]\n    IAM -->|the search profile| F2[AccessDenied]"},
+ {"name":"stop-minute","mermaid":"graph LR\n    T[Team search<br/>over the token<br/>threshold] --> AL[Alarm] --> FN[Cutoff<br/>function] --> DENY[Deny on the<br/>search role] --> F3[Next call<br/>AccessDenied]"}
+]
