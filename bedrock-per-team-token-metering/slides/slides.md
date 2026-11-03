@@ -429,7 +429,7 @@ routeAlias: stage-demo
     <div class="demo-links__qr"><QRCode data="https://github.com/pulumi/workshops/tree/main/bedrock-per-team-token-metering" /></div>
     <div class="demo-links__text">
       <span class="demo-links__label">code</span>
-      <a href="https://app.pulumi.com/adamgordonbell-org/bedrock-metering/dev" target="_blank" rel="noopener">Pulumi Cloud ↗</a>
+      <a href="https://app.pulumi.com/XXXX/bedrock-metering/dev" target="_blank" rel="noopener">Pulumi Cloud ↗</a>
       <a href="https://us-east-1.console.aws.amazon.com/cloudwatch/home?region=us-east-1#alarmsV2:" target="_blank" rel="noopener">AWS console ↗</a>
     </div>
   </div>

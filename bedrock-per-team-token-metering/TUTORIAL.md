@@ -9,8 +9,8 @@ The deck: `cd slides && npm ci && npm run dev` serves it at http://localhost:303
 ## Set two values, then copy every command as written
 
 ```bash
-export PULUMI_ORG=adamgordonbell-org
-export ROLE_ARN=arn:aws:iam::616138583583:role/pulumi-environments-oidc
+export PULUMI_ORG=XXXX
+export ROLE_ARN=arn:aws:iam::XXXXXXXXXXXX:role/pulumi-environments-oidc
 ```
 
 The first is your Pulumi organization. The second is an IAM role that trusts Pulumi's OIDC provider for that organization: it must trust `https://api.pulumi.com/oidc` with audience `aws:<org>` and be allowed to create IAM roles, Lambda functions, CloudWatch resources and Bedrock inference profiles.

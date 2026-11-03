@@ -37,8 +37,8 @@ There is one stack. Bedrock invocation logging is a single setting per account a
 `TUTORIAL.md` has the same commands with what to read at each step.
 
 ```bash
-export PULUMI_ORG=adamgordonbell-org
-export ROLE_ARN=arn:aws:iam::616138583583:role/pulumi-environments-oidc
+export PULUMI_ORG=XXXX
+export ROLE_ARN=arn:aws:iam::XXXXXXXXXXXX:role/pulumi-environments-oidc
 scripts/setup.sh
 pulumi up                       # three teams from Pulumi.dev.yaml, 36 resources
 pulumi stack output teamsOut
