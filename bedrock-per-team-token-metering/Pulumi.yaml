@@ -1,0 +1,9 @@
+name: bedrock-metering
+description: >-
+  Per-team Amazon Bedrock token metering: one application inference profile and
+  one scoped role per team, the invocation log in CloudWatch Logs, token
+  metrics per team, an alarm and a dashboard.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

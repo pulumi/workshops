@@ -1,0 +1,22 @@
+{
+  "name": "bedrock-per-team-token-metering-slides",
+  "version": "0.1.0",
+  "description": "Who Spent All the Tokens? Per-Team AI Cost Control as Code: a tagged Amazon Bedrock inference profile and a scoped role per team, token counts in CloudWatch, and a policy pack that fails the preview. 60-minute demo-only workshop deck.",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}

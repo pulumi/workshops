@@ -1,0 +1,53 @@
+{
+  "slug": "bedrock-per-team-token-metering",
+  "title": "Who Spent All the Tokens?",
+  "subtitle": "Per-Team AI Cost Control as Code",
+  "demo_title": "Per-team Bedrock metering",
+  "speakers": [
+    {
+      "name": "Adam Gordon Bell",
+      "role": "Community Engineer, Pulumi",
+      "x": "adamgordonbell",
+      "linkedin": "adamgordonbell",
+      "github": "adamgordonbell",
+      "image": "/img/adam-gordon-bell.png"
+    },
+    {
+      "name": "Engin Diri",
+      "role": "Senior Solutions Architect, Pulumi",
+      "x": "_ediri",
+      "linkedin": "engin-diri",
+      "github": "dirien",
+      "image": "/img/engin-diri.jpg"
+    }
+  ],
+  "agenda": [
+    "The unattributable bill",
+    "Who, what, and what stops a mistake",
+    "Token counts in CloudWatch",
+    "Live demo, eleven steps",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Application inference profiles and cost allocation",
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/cost-mgmt-application-inference-profiles.html",
+      "label": "docs.aws.amazon.com/bedrock"
+    },
+    {
+      "title": "Bedrock model invocation logging",
+      "url": "https://docs.aws.amazon.com/bedrock/latest/userguide/model-invocation-logging.html",
+      "label": "Model invocation logging"
+    },
+    {
+      "title": "Pulumi ESC aws-login (OIDC)",
+      "url": "https://www.pulumi.com/docs/esc/providers/login/aws-login/",
+      "label": "pulumi.com/docs/esc"
+    },
+    {
+      "title": "Write a Pulumi policy pack",
+      "url": "https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/",
+      "label": "Policy pack authoring"
+    }
+  ]
+}

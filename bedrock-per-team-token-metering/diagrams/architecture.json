@@ -1,0 +1,6 @@
+[
+ {
+  "name": "architecture",
+  "mermaid": "graph LR\n    A[Slack bot<br/>search] --> RA[Role<br/>search]\n    B[ECS bot<br/>support] --> RB[Role<br/>support]\n    C[Claude Code<br/>dev] --> RC[Role<br/>dev]\n    RA --> PA[Tagged profile<br/>search]\n    RB --> PB[Tagged profile<br/>support]\n    RC --> PC[Tagged profile<br/>dev]\n    PA --> M[Amazon<br/>Bedrock]\n    PB --> M\n    PC --> M\n    M --> L[Invocation log<br/>caller, profile, tokens]\n    L --> F[Metric filters<br/>tokens per team]\n    F --> AL[Alarm<br/>tokens per minute]"
+ }
+]
