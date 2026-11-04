@@ -12,3 +12,4 @@ benchmarks/results/**/*.log
 **/Pulumi.*.yaml
 !**/Pulumi.prebuilt.yaml
 !**/Pulumi.image.yaml
+!benchmarks/infra/Pulumi.benchmark.yaml

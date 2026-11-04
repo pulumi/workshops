@@ -1,6 +1,6 @@
 # Benchmark infrastructure
 
-This program creates the temporary infrastructure that the timing benchmarks use, and schedules its own destruction. Each `pulumi up` sets a [TTL schedule](https://www.pulumi.com/docs/deployments/concepts/ttl/) `ttlHours` from the time of the update, so a later update extends the deadline. When the schedule fires, Pulumi Deployments runs `pulumi destroy` from this directory on the configured branch and then deletes the stack.
+This program creates the temporary infrastructure that the timing benchmarks use, and schedules its own destruction. Each `pulumi up` sets a [TTL schedule](https://www.pulumi.com/docs/deployments/concepts/ttl/?utm_source=GitHub&utm_medium=referral&utm_campaign=workshops) `ttlHours` from the time of the update, so a later update extends the deadline. When the schedule fires, Pulumi Deployments runs `pulumi destroy` from this directory on the configured branch and then deletes the stack.
 
 It creates:
 

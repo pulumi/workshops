@@ -1,0 +1,7 @@
+environment:
+  - aws/pulumi-ce
+config:
+  aws:region: us-west-2
+  deployment-timings-infra:ttlHours: 8
+  deployment-timings-infra:kubernetesHost: false
+  deployment-timings-infra:buildHost: false
