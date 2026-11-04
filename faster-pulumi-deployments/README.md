@@ -73,9 +73,7 @@ Use distinct stack names for different language tracks. All programs intentional
 
 Each lab links to complete files rather than requiring you to reconstruct a script from article snippets. [Validation notes](VALIDATION.md) distinguish tested behavior from remaining integration work.
 
-The [controlled timing report](benchmarks/results/2026-10-29-controlled/README.md) includes phase breakdowns, preparation costs, and reproducible data from 29 managed deployments. Warm caching produced the largest repeated-update improvement in this small Go fixture. The results do not rank languages or predict production performance.
-
-The [changed-program follow-up](benchmarks/results/2026-10-30-changes/README.md) tests source edits and dependency updates across three stacks per approach. It includes release preparation and separates queue delays from job duration. The results show why a small source edit and a changed dependency cache key need separate comparisons.
+The [timing tools](benchmarks/README.md) export deployment step timings and run controlled comparisons of source deployments, custom executor images, and release bundles. Use them to measure these choices on your own programs and runners; results from one program and runner don't predict another's.
 
 Run `make lint` from this directory to check the companion's links and provider-version agreement.
 

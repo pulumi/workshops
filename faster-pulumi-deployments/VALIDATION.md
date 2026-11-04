@@ -22,9 +22,7 @@ Checksum tests cover valid artifacts, changed contents, and manifests that attem
 
 The preceding blog validation also exercised S3 retrieval through ESC, configuration-only changes to a reused Go image, Kubernetes npm cache persistence, concurrent cache consumers, and queue consolidation. The exact new cross-language images were executed through the CLI, not through the managed Deployments service.
 
-The image script defaults to Linux AMD64, but this matrix exercised its Linux ARM64 option. The separate [controlled benchmark](benchmarks/results/2026-10-29-controlled/README.md) completed 29 Go deployments on managed Linux AMD64 runners. It records phase timings, cache observations, first deployments, and preparation costs. Its small Random workload does not establish representative production performance.
-
-The [changed-program follow-up](benchmarks/results/2026-10-30-changes/README.md) completed 12 comparison deployments and six successful baseline deployments. Two baseline failures during a service incident remain excluded and recorded. All comparison runs verified their expected cache state and revision output without changing resource inputs. The six follow-up stacks were destroyed, and their managed cache and temporary image repository were removed.
+The image script defaults to Linux AMD64, but this matrix exercised its Linux ARM64 option. Go deployments on managed Linux AMD64 runners were exercised separately with the [timing tools](benchmarks/README.md).
 
 The other language images on Linux AMD64, live VCS path filtering, Artifactory-specific authentication, and multi-node volume behavior require separate validation. The .NET example uses a framework-dependent DLL; Native AOT and Java native-image builds are not part of this workshop.
 

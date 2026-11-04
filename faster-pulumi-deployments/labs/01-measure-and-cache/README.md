@@ -27,6 +27,6 @@ Use actual deployment step logs. Do not treat a cache setting or a shorter total
 
 For Go, the managed cache includes downloaded modules and compiled package outputs. A source edit can reuse compiled dependencies, while a changed `go.sum` selects another managed cache entry. Record the first deployment after that dependency change separately from repeats that can restore the new entry.
 
-The [changed-program protocol](../../benchmarks/changed-program/README.md) tests those cases on three distinct stacks per approach. Its [results](../../benchmarks/results/2026-10-30-changes/README.md) include release preparation costs and keep queue delays separate from job execution. Use those measurements as a method to reproduce, not a prediction for your program.
+The [changed-program protocol](../../benchmarks/changed-program/README.md) tests those cases on three distinct stacks per approach, records release preparation costs, and keeps queue delays separate from job execution. Use it as a method to apply to your own program, not as a prediction of its results.
 
 Continue to [lab 2](../02-build-once/README.md).

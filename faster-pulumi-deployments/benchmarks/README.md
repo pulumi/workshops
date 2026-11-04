@@ -1,12 +1,16 @@
 # Deployment timing measurements
 
-Keep functional validation separate from performance measurement. The historical export records what happened during earlier debugging; it is not the baseline for a controlled comparison.
+These tools measure how long each phase of a deployment takes, so you can compare preparation strategies on your own programs and runners. Keep functional validation separate from performance measurement, and treat any result as specific to the program, runner, and registry that produced it.
 
-The [October 29 controlled results](results/2026-10-29-controlled/README.md) include 29 managed deployments, phase breakdowns, and preparation costs. The [historical export](results/2026-10-28-functional/README.md) preserves earlier functional observations separately.
+The directory contains:
 
-The [November 4 comparison of recommended configurations](results/2026-11-04-recommended/README.md) measures source deployments on the default image with caching, a private custom executor image, and a release bundle with a public tools image, with release builds on GitHub Actions and EC2. Its ratios supersede the earlier comparisons for those configurations.
+- [collect.py](collect.py): a read-only exporter of deployment step timings.
+- [run.py](run.py): a serialized runner for controlled comparisons of one Go fixture across preparation variants.
+- [changed-program/](changed-program/README.md): a fixture with baseline, source edit, and dependency update revisions, which separates a source edit from a change to the dependency cache key.
+- [release/](release/): a release build script that times dependency preparation, compilation, plugin download, image assembly, bundle packaging, and publication, with a GitHub Actions workflow and an EC2 user data script that run it, a matrix that deploys the resulting releases, and an analysis script that combines deployment and build timings.
+- [kubernetes-runner/](kubernetes-runner/): manifests and scripts for a single-node kind cluster running the customer-managed workflow agent, which probe executor image pull behavior and compare source deployments with and without a persistent Go cache volume.
 
-The [changed-program follow-up](results/2026-10-30-changes/README.md) includes 12 successful comparison deployments and incremental release-build costs. Source-only edits retained useful cached work; a dependency update caused a new managed cache key. The [fixture protocol](changed-program/README.md) separates those cases.
+The release and Kubernetes scripts contain the account, bucket, registry, and organization names of the environment they were written for. Replace them before running the scripts elsewhere.
 
 ## Export retained deployment history
 

@@ -1,6 +1,0 @@
-{
-  "label": "tools",
-  "build_host": "gha",
-  "build_and_publish_s": 42.446,
-  "image": "public.ecr.aws/x4i4n0v4/deployment-timings-20261104-tools@sha256:a3e78ab11875d9752fd356cc146257401369888cfe34f230605d2c33c22d8e5b"
-}
