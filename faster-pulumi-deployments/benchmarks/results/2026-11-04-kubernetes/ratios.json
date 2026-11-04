@@ -1,0 +1,139 @@
+{
+  "medians_s": {
+    "Image, cold node": {
+      "job_s": 15.812,
+      "setup_s": 0.356,
+      "source_s": 3.378,
+      "dependency_install_s": 0.0,
+      "pre_run_s": 1.283,
+      "pulumi_operation_s": 2.949,
+      "job_range_s": [
+        14.56,
+        16.725
+      ]
+    },
+    "Image on node, IfNotPresent": {
+      "job_s": 10.04,
+      "setup_s": 0.428,
+      "source_s": 3.594,
+      "dependency_install_s": 0.0,
+      "pre_run_s": 1.138,
+      "pulumi_operation_s": 2.541,
+      "job_range_s": [
+        9.826,
+        10.417
+      ]
+    },
+    "Image on node, Always": {
+      "job_s": 10.669,
+      "setup_s": 0.519,
+      "source_s": 3.68,
+      "dependency_install_s": 0.0,
+      "pre_run_s": 1.221,
+      "pulumi_operation_s": 2.481,
+      "job_range_s": [
+        10.075,
+        11.277
+      ]
+    },
+    "New image release, base layers on node": {
+      "job_s": 11.444,
+      "setup_s": 0.435,
+      "source_s": 3.612,
+      "dependency_install_s": 0.0,
+      "pre_run_s": 1.177,
+      "pulumi_operation_s": 2.745,
+      "job_range_s": [
+        11.332,
+        12.666
+      ]
+    },
+    "Source, dependency update, no Go cache volume": {
+      "job_s": 55.233,
+      "setup_s": 0.33,
+      "source_s": 3.79,
+      "dependency_install_s": 5.398,
+      "pre_run_s": 1.128,
+      "pulumi_operation_s": 41.315,
+      "job_range_s": [
+        53.506,
+        56.712
+      ]
+    },
+    "Source, dependency update, Go cache volume": {
+      "job_s": 11.755,
+      "setup_s": 0.314,
+      "source_s": 3.657,
+      "dependency_install_s": 0.892,
+      "pre_run_s": 1.146,
+      "pulumi_operation_s": 3.447,
+      "job_range_s": [
+        11.092,
+        14.153
+      ]
+    },
+    "Source, new stack, Go cache volume": {
+      "job_s": 12.868,
+      "setup_s": 0.355,
+      "source_s": 3.524,
+      "dependency_install_s": 1.095,
+      "pre_run_s": 1.303,
+      "pulumi_operation_s": 3.86,
+      "job_range_s": [
+        11.501,
+        13.237
+      ]
+    }
+  },
+  "ratios": [
+    {
+      "comparison": "Image deployment: cold node \u00f7 image on node (IfNotPresent)",
+      "numerator": "Image, cold node",
+      "denominator": "Image on node, IfNotPresent",
+      "metric": "job_s",
+      "ratio": 1.57
+    },
+    {
+      "comparison": "Image deployment: Always \u00f7 IfNotPresent, image on node",
+      "numerator": "Image on node, Always",
+      "denominator": "Image on node, IfNotPresent",
+      "metric": "job_s",
+      "ratio": 1.06
+    },
+    {
+      "comparison": "Image deployment: new release \u00f7 image on node (IfNotPresent)",
+      "numerator": "New image release, base layers on node",
+      "denominator": "Image on node, IfNotPresent",
+      "metric": "job_s",
+      "ratio": 1.14
+    },
+    {
+      "comparison": "Dependency update: no cache volume \u00f7 cache volume",
+      "numerator": "Source, dependency update, no Go cache volume",
+      "denominator": "Source, dependency update, Go cache volume",
+      "metric": "job_s",
+      "ratio": 4.7
+    },
+    {
+      "comparison": "Dependency update: source without cache volume \u00f7 new image release",
+      "numerator": "Source, dependency update, no Go cache volume",
+      "denominator": "New image release, base layers on node",
+      "metric": "job_s",
+      "ratio": 4.83
+    },
+    {
+      "comparison": "Dependency update: source with cache volume \u00f7 new image release",
+      "numerator": "Source, dependency update, Go cache volume",
+      "denominator": "New image release, base layers on node",
+      "metric": "job_s",
+      "ratio": 1.03
+    },
+    {
+      "comparison": "New stack: source with cache volume \u00f7 new image release",
+      "numerator": "Source, new stack, Go cache volume",
+      "denominator": "New image release, base layers on node",
+      "metric": "job_s",
+      "ratio": 1.12
+    }
+  ]
+}

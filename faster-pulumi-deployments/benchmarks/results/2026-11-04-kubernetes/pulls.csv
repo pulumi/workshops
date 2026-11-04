@@ -1,0 +1,33 @@
+deployment_id,stack,condition,image,result,pull_s
+601a40c0-0ae8-4699-93ca-eafeab3e8cf3,team-ce/deployment-timings-20261104/k8s-image-1,Seed or probe,deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305,pulled,4.583
+cf74ee3c-a4cf-4b50-a870-bac6f3c66c71,team-ce/deployment-timings-20261104/k8s-image-2,Seed or probe,deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305,already present,0.0
+c64942b5-2415-4fe8-aa16-97cdc47560c5,team-ce/deployment-timings-20261104/k8s-image-3,Seed or probe,deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305,already present,0.0
+e8ab18eb-613c-4193-b91e-0283463b271b,team-ce/deployment-timings-20261104/k8s-image-1,Seed or probe,deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305,pulled,0.073
+ea62d71d-a0a6-4199-aaea-0c74b3b8f2c6,team-ce/deployment-timings-20261104/k8s-image-1,"Image, cold node",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,pulled,4.432
+,,,deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,already present,0.0
+d69ad14a-2af0-4b27-9192-f2fa94b31b05,team-ce/deployment-timings-20261104/k8s-image-2,"Image, cold node",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,pulled,5.135
+46742c2b-9adc-449a-9837-824b0f8298a8,team-ce/deployment-timings-20261104/k8s-image-3,"Image, cold node",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,pulled,4.987
+85fd8691-be39-4ecd-9185-935e04212155,team-ce/deployment-timings-20261104/k8s-image-1,"Image on node, IfNotPresent",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,already present,0.0
+b050e655-34e8-47c5-b713-c2439a4964a2,team-ce/deployment-timings-20261104/k8s-image-2,"Image on node, IfNotPresent",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,already present,0.0
+b3d31e61-7085-4866-bf5d-24473bcbfb63,team-ce/deployment-timings-20261104/k8s-image-3,"Image on node, IfNotPresent",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,already present,0.0
+c5b2a39d-d3a7-4afe-a244-2ac506e9779c,team-ce/deployment-timings-20261104/k8s-image-1,"Image on node, Always",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,pulled,0.077
+bff1a97a-cd60-48eb-a061-7bdc0c53825d,team-ce/deployment-timings-20261104/k8s-image-2,"Image on node, Always",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,pulled,0.072
+0d34e845-2c8d-495f-b226-7ad1bb10cced,team-ce/deployment-timings-20261104/k8s-image-3,"Image on node, Always",deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c,pulled,0.074
+66fca70e-d53e-4d7e-913e-4a1e2255cda7,team-ce/deployment-timings-20261104/k8s-image-1,"New image release, base layers on node",deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a,pulled,0.968
+f828d350-92d0-4fb7-8f81-700b3f1b595a,team-ce/deployment-timings-20261104/k8s-image-2,"New image release, base layers on node",deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a,pulled,0.776
+e5678a4a-099f-475b-9cef-6992dad8e977,team-ce/deployment-timings-20261104/k8s-image-3,"New image release, base layers on node",deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a,pulled,0.856
+7b9bd390-c934-4d4a-a9fb-0d2e50d66dca,team-ce/deployment-timings-20261104/k8s-src-nocache-1,Seed or probe,pulumi:latest,pulled,149.074
+a07a4d40-b188-478a-9e0d-03522a5e09e4,team-ce/deployment-timings-20261104/k8s-src-nocache-2,Seed or probe,pulumi:latest,already present,0.0
+388f35b1-c40f-4428-b324-aa4a68c50e39,team-ce/deployment-timings-20261104/k8s-src-nocache-3,Seed or probe,pulumi:latest,already present,0.0
+6a2663db-6480-47d4-908e-28a2b8f025d3,team-ce/deployment-timings-20261104/k8s-src-nocache-1,"Source, dependency update, no Go cache volume",pulumi:latest,already present,0.0
+c1db5d38-e3c9-464f-ace1-f268ad75df0b,team-ce/deployment-timings-20261104/k8s-src-nocache-2,"Source, dependency update, no Go cache volume",pulumi:latest,already present,0.0
+02140cc6-9360-48e3-8756-6ed18819f019,team-ce/deployment-timings-20261104/k8s-src-nocache-3,"Source, dependency update, no Go cache volume",pulumi:latest,already present,0.0
+4e09537c-5e4b-419e-98f5-775fcee81a96,team-ce/deployment-timings-20261104/k8s-src-cache-1,Seed or probe,pulumi:latest,already present,0.0
+e97b47e9-8642-46a1-bd33-48369f06ed63,team-ce/deployment-timings-20261104/k8s-src-cache-2,Seed or probe,pulumi:latest,already present,0.0
+1c09a3b9-0ca2-4549-8a3f-cf654713248a,team-ce/deployment-timings-20261104/k8s-src-cache-3,Seed or probe,pulumi:latest,already present,0.0
+aaa9f5a6-3031-4d1d-bca5-7ad6ca666c26,team-ce/deployment-timings-20261104/k8s-src-cache-1,"Source, dependency update, Go cache volume",pulumi:latest,already present,0.0
+b5fd1bc6-4b54-41b3-9ae6-ac27b917b1e8,team-ce/deployment-timings-20261104/k8s-src-cache-2,"Source, dependency update, Go cache volume",pulumi:latest,already present,0.0
+3cbe073b-82df-4950-a3b1-e42cd21c10f5,team-ce/deployment-timings-20261104/k8s-src-cache-3,"Source, dependency update, Go cache volume",pulumi:latest,already present,0.0
+bddbb3b8-ef48-4c1b-a780-6c79aecb0c19,team-ce/deployment-timings-20261104/source-no-cache-1,"Source, new stack, Go cache volume",pulumi:latest,already present,0.0
+239947ab-8fa3-4b70-bf25-1b8fb5d6c4a7,team-ce/deployment-timings-20261104/source-no-cache-2,"Source, new stack, Go cache volume",pulumi:latest,already present,0.0
+84227241-e0b7-4923-8b3a-2a56abd9d275,team-ce/deployment-timings-20261104/source-no-cache-3,"Source, new stack, Go cache volume",pulumi:latest,already present,0.0

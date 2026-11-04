@@ -1,0 +1,72 @@
+[
+  {
+    "label": "probe-agent-always",
+    "finished": 1793807677.190261,
+    "stdout": "configmap/worker-template unchanged\nconfigmap/agent-settings unchanged\ndeployment.apps/workflow-agent-pool restarted\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"workflow-agent-pool\" successfully rolled out\nconfigured template=cache agent_policy=Always worker_policy=none\n"
+  },
+  {
+    "label": "probe-template-always",
+    "finished": 1793807870.947569,
+    "stdout": "configmap/worker-template configured\nconfigmap/agent-settings configured\ndeployment.apps/workflow-agent-pool restarted\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"workflow-agent-pool\" successfully rolled out\nconfigured template=cache agent_policy=IfNotPresent worker_policy=Always\n"
+  },
+  {
+    "label": "pull-ifnotpresent",
+    "finished": 1793807949.7856278,
+    "stdout": "configmap/worker-template configured\nconfigmap/agent-settings unchanged\ndeployment.apps/workflow-agent-pool restarted\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"workflow-agent-pool\" successfully rolled out\nconfigured template=cache agent_policy=IfNotPresent worker_policy=IfNotPresent\n"
+  },
+  {
+    "label": "prune-cold-1",
+    "finished": 1793807956.444742,
+    "stdout": "Deleted: 052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305\nDeleted: docker.io/kindest/local-path-helper:v20260131-7181c60a\n"
+  },
+  {
+    "label": "prune-cold-2",
+    "finished": 1793808115.5707421,
+    "stdout": "5b0952e9c3aa577fb4865fbba6cdf95db49f9801dbcc9fba21d5089158264cc5\nbe9be186766d24cdafef41ba9cea4086802e8c5eb7cc2d8aa26bc0c51396b0b3\nDeleted: 052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c\nremaining:\nnone\n"
+  },
+  {
+    "label": "prune-cold-3",
+    "finished": 1793808192.280587,
+    "stdout": "6842da032e328f366c992a6d27b1a7f7019e5a84a21562cf9f62ce41ef090932\n77abb9b9c2ed3092b93a9cf1aa95e3e09122577aff3cdd11ee673f5dab7d0c26\nDeleted: 052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c\nremaining:\nnone\n"
+  },
+  {
+    "label": "pull-always",
+    "finished": 1793808443.547088,
+    "stdout": "configmap/worker-template configured\nconfigmap/agent-settings unchanged\ndeployment.apps/workflow-agent-pool restarted\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"workflow-agent-pool\" successfully rolled out\nconfigured template=cache agent_policy=IfNotPresent worker_policy=Always\n"
+  },
+  {
+    "label": "pull-ifnotpresent-release",
+    "finished": 1793808613.182625,
+    "stdout": "configmap/worker-template configured\nconfigmap/agent-settings unchanged\ndeployment.apps/workflow-agent-pool restarted\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"workflow-agent-pool\" successfully rolled out\nconfigured template=cache agent_policy=IfNotPresent worker_policy=IfNotPresent\n"
+  },
+  {
+    "label": "remove-dependency-image-1",
+    "finished": 1793808619.849374,
+    "stdout": "6d77604b8d3318b8925a0dc50b5210bc4ea9533eecbabd952e4b254f58ba9fb2\n7bf585cc2429a03cca752cdc5c8190d3ad206faec630efe8795ec2b343c0bb1b\nremaining:\n052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104   <none>               3cefee5dd668c       244MB\n"
+  },
+  {
+    "label": "remove-dependency-image-2",
+    "finished": 1793808692.3912141,
+    "stdout": "b39cb246a79aaea1e473f7196abaf7ef675555ef02ccfbbed1ed49eb6e2f24bd\n70c33ce98f1416d958ddd5b43ab492b5019f3efdfde6b995c84c437a621f41f7\nDeleted: 052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a\nremaining:\n052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104   <none>               3cefee5dd668c       244MB\n"
+  },
+  {
+    "label": "remove-dependency-image-3",
+    "finished": 1793808769.447344,
+    "stdout": "Deleted: 052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a\nremaining:\n052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104   <none>               3cefee5dd668c       244MB\n"
+  },
+  {
+    "label": "source-nocache",
+    "finished": 1793808840.9837482,
+    "stdout": "configmap/worker-template configured\nconfigmap/agent-settings unchanged\ndeployment.apps/workflow-agent-pool restarted\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"workflow-agent-pool\" successfully rolled out\nconfigured template=nocache agent_policy=IfNotPresent worker_policy=IfNotPresent\n"
+  },
+  {
+    "label": "source-cache",
+    "finished": 1793809481.158457,
+    "stdout": "configmap/worker-template configured\nconfigmap/agent-settings unchanged\ndeployment.apps/workflow-agent-pool restarted\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\nWaiting for deployment \"workflow-agent-pool\" rollout to finish: 1 old replicas are pending termination...\ndeployment \"workflow-agent-pool\" successfully rolled out\nconfigured template=cache agent_policy=IfNotPresent worker_policy=IfNotPresent\n"
+  },
+  {
+    "label": "collect-logs",
+    "finished": 1793810147.2892532,
+    "stdout": ""
+  }
+]

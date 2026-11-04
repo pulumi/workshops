@@ -1,0 +1,27 @@
+{
+  "organization": "team-ce",
+  "project": "deployment-timings-20261104",
+  "stack": "k8s-image-3",
+  "source": {
+    "repoUrl": "https://github.com/pulumi/workshops.git",
+    "commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+    "repoDir": "faster-pulumi-deployments/benchmarks/changed-program"
+  },
+  "executor_images": {
+    "source": null,
+    "image": {
+      "reference": "052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "registry": "node"
+    }
+  },
+  "release_uri": "s3://deployment-timings-20261104-052848974346/gha/code",
+  "program_sha256": "1e6991a53073ba1f4aac95cc82c3cd621a25ca063b5c7acbf7ed3180082b015a",
+  "credential_environment": "team-ce/aws/pulumi-ce",
+  "environment_variables": {
+    "AWS_DEFAULT_REGION": "us-west-2"
+  },
+  "ecr_region": "us-west-2",
+  "prepare_script": "../prepare.py",
+  "expected_revision": "1.1.0",
+  "agent_pool_id": "66df7913-3008-44f1-8679-2175e2c9b487"
+}

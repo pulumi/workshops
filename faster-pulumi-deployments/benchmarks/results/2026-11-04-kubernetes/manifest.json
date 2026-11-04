@@ -1,0 +1,624 @@
+{
+  "runs": [
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-1",
+      "deployment_id": "ea62d71d-a0a6-4199-aaea-0c74b3b8f2c6",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image, cold node",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.17195782899989354
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-2",
+      "deployment_id": "d69ad14a-2af0-4b27-9192-f2fa94b31b05",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image, cold node",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.16480433400010952
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-3",
+      "deployment_id": "46742c2b-9adc-449a-9837-824b0f8298a8",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image, cold node",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.20064019699998425
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-1",
+      "deployment_id": "66fca70e-d53e-4d7e-913e-4a1e2255cda7",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a",
+      "notes": "New image release, base layers on node",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.17618195400018521
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-2",
+      "deployment_id": "f828d350-92d0-4fb7-8f81-700b3f1b595a",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a",
+      "notes": "New image release, base layers on node",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.20651573200029816
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-3",
+      "deployment_id": "e5678a4a-099f-475b-9cef-6992dad8e977",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a",
+      "notes": "New image release, base layers on node",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.1793144220000613
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-1",
+      "deployment_id": "c5b2a39d-d3a7-4afe-a244-2ac506e9779c",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image on node, Always",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.1474759879999965
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-2",
+      "deployment_id": "bff1a97a-cd60-48eb-a061-7bdc0c53825d",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image on node, Always",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.17565632500009087
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-3",
+      "deployment_id": "0d34e845-2c8d-495f-b226-7ad1bb10cced",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image on node, Always",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.17814057499981573
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-1",
+      "deployment_id": "85fd8691-be39-4ecd-9185-935e04212155",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image on node, IfNotPresent",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.18618412000000717
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-2",
+      "deployment_id": "b050e655-34e8-47c5-b713-c2439a4964a2",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image on node, IfNotPresent",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.1580571230001624
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-3",
+      "deployment_id": "b3d31e61-7085-4866-bf5d-24473bcbfb63",
+      "variant": "prebuilt-image",
+      "cohort": "controlled-code-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "32ccc693f3bb3d4749be4804a6325bbe9a1e6768",
+      "executor_image": "deployment-timings-20261104@sha256:20873392f30573cc3006e942312a244b2039b0ceaa03fb46e868be79e73a173c",
+      "notes": "Image on node, IfNotPresent",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.1679923089998283
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-1",
+      "deployment_id": "601a40c0-0ae8-4699-93ca-eafeab3e8cf3",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.18201620799982265
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-2",
+      "deployment_id": "cf74ee3c-a4cf-4b50-a870-bac6f3c66c71",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.16186550100019303
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-3",
+      "deployment_id": "c64942b5-2415-4fe8-aa16-97cdc47560c5",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.19125655599987113
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-image-1",
+      "deployment_id": "e8ab18eb-613c-4193-b91e-0283463b271b",
+      "variant": "seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "deployment-timings-20261104@sha256:36ce552e2c5dc786503685890a15e58b4a8b50114b4d50cf77c551e474879305",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.1579649299999346
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-cache-1",
+      "deployment_id": "aaa9f5a6-3031-4d1d-bca5-7ad6ca666c26",
+      "variant": "source-no-cache",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, dependency update, Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.16928518299982898
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-cache-2",
+      "deployment_id": "b5fd1bc6-4b54-41b3-9ae6-ac27b917b1e8",
+      "variant": "source-no-cache",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, dependency update, Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.15631222699994396
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-cache-3",
+      "deployment_id": "3cbe073b-82df-4950-a3b1-e42cd21c10f5",
+      "variant": "source-no-cache",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, dependency update, Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.17700600199987093
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/source-no-cache-1",
+      "deployment_id": "bddbb3b8-ef48-4c1b-a780-6c79aecb0c19",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, new stack, Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.19058078099988052
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/source-no-cache-2",
+      "deployment_id": "239947ab-8fa3-4b70-bf25-1b8fb5d6c4a7",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 2,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, new stack, Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.1840390560000742
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/source-no-cache-3",
+      "deployment_id": "84227241-e0b7-4923-8b3a-2a56abd9d275",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 3,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, new stack, Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.2607765669999935
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-cache-1",
+      "deployment_id": "4e09537c-5e4b-419e-98f5-775fcee81a96",
+      "variant": "source-seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "default",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.16675874700013082
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-cache-2",
+      "deployment_id": "e97b47e9-8642-46a1-bd33-48369f06ed63",
+      "variant": "source-seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "default",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.18341307800028517
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-cache-3",
+      "deployment_id": "1c09a3b9-0ca2-4549-8a3f-cf654713248a",
+      "variant": "source-seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "default",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.1746273469998414
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-nocache-1",
+      "deployment_id": "6a2663db-6480-47d4-908e-28a2b8f025d3",
+      "variant": "source-no-cache",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, dependency update, no Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.173344317000101
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-nocache-2",
+      "deployment_id": "c1db5d38-e3c9-464f-ace1-f268ad75df0b",
+      "variant": "source-no-cache",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, dependency update, no Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.15208211300023322
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-nocache-3",
+      "deployment_id": "02140cc6-9360-48e3-8756-6ed18819f019",
+      "variant": "source-no-cache",
+      "cohort": "controlled-dependency-change",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Source, dependency update, no Go cache volume",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "no-change",
+      "pre_run_measurements_s": {
+        "configuration": 0.1786117930000728
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-nocache-1",
+      "deployment_id": "7b9bd390-c934-4d4a-a9fb-0d2e50d66dca",
+      "variant": "source-seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "default",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.15870692399994368
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-nocache-2",
+      "deployment_id": "a07a4d40-b188-478a-9e0d-03522a5e09e4",
+      "variant": "source-seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "default",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.1858349389999603
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/k8s-src-nocache-3",
+      "deployment_id": "388f35b1-c40f-4428-b324-aa4a68c50e39",
+      "variant": "source-seed",
+      "cohort": "warmup",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": false,
+      "source_commit": "239dc32154d35e30e1246d492437e23fa742c7db",
+      "executor_image": "default",
+      "notes": "Seed or probe",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.15944599700014805
+      },
+      "revision_output": "1.0.0",
+      "validated": true
+    }
+  ]
+}

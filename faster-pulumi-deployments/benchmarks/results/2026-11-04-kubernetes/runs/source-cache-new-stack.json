@@ -1,0 +1,79 @@
+{
+  "runs": [
+    {
+      "stack": "team-ce/deployment-timings-20261104/source-no-cache-1",
+      "deployment_id": "bddbb3b8-ef48-4c1b-a780-6c79aecb0c19",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 1,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.19058078099988052
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/source-no-cache-2",
+      "deployment_id": "239947ab-8fa3-4b70-bf25-1b8fb5d6c4a7",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 2,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.1840390560000742
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    },
+    {
+      "stack": "team-ce/deployment-timings-20261104/source-no-cache-3",
+      "deployment_id": "84227241-e0b7-4923-8b3a-2a56abd9d275",
+      "variant": "source-no-cache",
+      "cohort": "controlled-new-stack",
+      "sample": 3,
+      "cache_expectation": "disabled",
+      "include_in_comparison": true,
+      "source_commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "executor_image": "default",
+      "notes": "Serialized requests; image-layer cache not force-controlled. Setup includes runner and image preparation.",
+      "status": "succeeded",
+      "cache_observation": "disabled",
+      "resource_result": "{\"create\": 2}",
+      "pre_run_measurements_s": {
+        "configuration": 0.2607765669999935
+      },
+      "revision_output": "1.1.0",
+      "validated": true
+    }
+  ],
+  "config_fingerprint": "b326d8b8ad55a53bc9634f16fd502e43d6a2bab5a3cc3f6bbbae9c6263468b20",
+  "metadata": {
+    "source": {
+      "repoUrl": "https://github.com/pulumi/workshops.git",
+      "commit": "3609b0c5d3ede1b4965bde6c33a24cf052f872a1",
+      "repoDir": "faster-pulumi-deployments/benchmarks/changed-program"
+    },
+    "platform": "linux/amd64",
+    "program_sha256": "4670de1532b4d53d3479ca96463119e488b5d0e61ccca45671bc5acd871b3e49",
+    "executor_images": {
+      "source": "default",
+      "image": "deployment-timings-20261104@sha256:75eaec205fa7799659295b21a7dd6b76a72e69a2ae79ba9ec31ba0c3e7b27f6a"
+    },
+    "image_cache": "Not force-controlled; setup time includes runner and image preparation."
+  }
+}
