@@ -1,0 +1,22 @@
+{
+  "label": "code",
+  "build_host": "ec2",
+  "started": "2026-11-04T13:51:29Z",
+  "steps": {
+    "dependency_preparation": 0.015,
+    "compilation": 1.274,
+    "plugin_download": 0.002,
+    "image_assembly": 1.651,
+    "image_publication": 2.435,
+    "bundle_packaging": 1.796,
+    "bundle_publication": 1.012
+  },
+  "program_sha256": "e4e407a83c672231248d1dece0f6859014e5d022f53e06db7b5d186b490d5c26",
+  "image": "052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104@sha256:13319a28fb2a42f8e922051014a7ddf060b6ab830bf6ce92a2cfd073a86a15f5",
+  "release_uri": "s3://deployment-timings-20261104-052848974346/ec2/code",
+  "bundle_bytes": 32096153,
+  "go_version": "go version go1.26.10 linux/amd64",
+  "go_cache_hit": "not-applicable",
+  "machine": "x86_64",
+  "cpus": 4
+}

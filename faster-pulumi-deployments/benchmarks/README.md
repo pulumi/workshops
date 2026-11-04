@@ -4,6 +4,8 @@ Keep functional validation separate from performance measurement. The historical
 
 The [October 29 controlled results](results/2026-10-29-controlled/README.md) include 29 managed deployments, phase breakdowns, and preparation costs. The [historical export](results/2026-10-28-functional/README.md) preserves earlier functional observations separately.
 
+The [November 4 comparison of recommended configurations](results/2026-11-04-recommended/README.md) measures source deployments on the default image with caching, a private custom executor image, and a release bundle with a public tools image, with release builds on GitHub Actions and EC2. Its ratios supersede the earlier comparisons for those configurations.
+
 The [changed-program follow-up](results/2026-10-30-changes/README.md) includes 12 successful comparison deployments and incremental release-build costs. Source-only edits retained useful cached work; a dependency update caused a new managed cache key. The [fixture protocol](changed-program/README.md) separates those cases.
 
 ## Export retained deployment history

@@ -11,6 +11,7 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+AWS_ENVIRONMENT = "team-ce/aws/pulumi-ce"
 REVISIONS = {
     "baseline": ("239dc32154d35e30e1246d492437e23fa742c7db", "1.0.0"),
     "code": ("32ccc693f3bb3d4749be4804a6325bbe9a1e6768", "1.1.0"),
@@ -49,8 +50,8 @@ def config_for(args, release, tools, label, stack):
 def run(config, path, variant, cohort, samples=1):
     config_path = path.with_name(path.stem + "-config.json")
     config_path.write_text(json.dumps(config, indent=2) + "\n")
-    command = [sys.executable, str(HERE.parent / "run.py"), "--config", str(config_path), "--manifest", str(path),
-               "--variants", variant, "--samples", str(samples)]
+    command = ["pulumi", "env", "run", AWS_ENVIRONMENT, "--", sys.executable, str(HERE.parent / "run.py"),
+               "--config", str(config_path), "--manifest", str(path), "--variants", variant, "--samples", str(samples)]
     if cohort:
         command += ["--cohort", cohort]
     subprocess.run(command, check=True)
