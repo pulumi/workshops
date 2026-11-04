@@ -9,6 +9,7 @@ The directory contains:
 - [changed-program/](changed-program/README.md): a fixture with baseline, source edit, and dependency update revisions, which separates a source edit from a change to the dependency cache key.
 - [release/](release/): a release build script that times dependency preparation, compilation, plugin download, image assembly, bundle packaging, and publication, with a GitHub Actions workflow and an EC2 user data script that run it, a matrix that deploys the resulting releases, and an analysis script that combines deployment and build timings.
 - [kubernetes-runner/](kubernetes-runner/): manifests and scripts for a single-node kind cluster running the customer-managed workflow agent, which probe executor image pull behavior and compare source deployments with and without a persistent Go cache volume.
+- [infra/](infra/README.md): a Pulumi program that creates the bucket, registries, runner pool, IAM role, and optional EC2 hosts that the release and Kubernetes scripts use, as a stack with a TTL schedule that destroys it automatically.
 
 The release and Kubernetes scripts contain the account, bucket, registry, and organization names of the environment they were written for. Replace them before running the scripts elsewhere.
 
