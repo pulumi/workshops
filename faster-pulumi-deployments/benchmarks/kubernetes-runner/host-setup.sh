@@ -20,8 +20,10 @@ cd /opt/workshops/faster-pulumi-deployments/benchmarks/kubernetes-runner
 kind create cluster --name runners --wait 180s
 sed "s|__AGENT_IMAGE__|$AGENT_IMAGE|g" agent.yaml | kubectl apply -f -
 
+set +x
 kubectl -n cmwa create secret docker-registry ecr-pull --docker-server="$REGISTRY" \
     --docker-username=AWS --docker-password="$(aws ecr get-login-password)"
+set -x
 aws s3 cp "s3://$BUCKET/k8s/agent-token" /tmp/agent-token --only-show-errors
 aws s3 rm "s3://$BUCKET/k8s/agent-token" --only-show-errors
 kubectl -n cmwa create secret generic agent-token --from-file=PULUMI_AGENT_TOKEN=/tmp/agent-token
