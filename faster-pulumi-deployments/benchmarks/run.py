@@ -25,8 +25,12 @@ VARIANTS = {
     "skip-install": ("complete", True, True),
     "skip-cache": ("complete", False, True),
     "prebuilt-image": ("image", False, True),
+    "bundle-seed": ("complete", False, True),
+    "source-new-stack": ("source", True, False),
 }
-ORDER = tuple(name for name in VARIANTS if name != "source-cache-miss")
+ORDER = tuple(name for name in VARIANTS if name not in ("source-cache-miss", "bundle-seed", "source-new-stack"))
+WARMUP = ("seed", "cache-population", "bundle-seed")
+EXPECT_MISS = ("cache-population", "source-cache-miss", "source-new-stack")
 
 
 def save(path, document):
@@ -84,6 +88,15 @@ def inspect(api_url, base, deployment, run):
         raise ValueError(f"Expected cache {expected}, got {observation}")
 
 
+def executor_context(selected, password):
+    if not selected:
+        return None
+    executor = {"reference": selected["reference"]}
+    if selected.get("registry") == "ecr":
+        executor["credentials"] = {"username": "AWS", "password": {"secret": password}}
+    return {"executorImage": executor}
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, required=True)
@@ -101,7 +114,15 @@ def main():
         parser.error("Use a dedicated project named deployment-timings-<run-id>")
     if args.samples < 1:
         parser.error("samples must be positive")
-    password = subprocess.check_output(["aws", "ecr", "get-login-password", "--region", config["ecr_region"]], text=True).strip()
+    images = config.get("executor_images") or {
+        "source": {"reference": config["tools_image"], "registry": "ecr"},
+        "program": {"reference": config["tools_image"], "registry": "ecr"},
+        "complete": {"reference": config["tools_image"], "registry": "ecr"},
+        "image": {"reference": config["prepared_image"], "registry": "ecr"},
+    }
+    password = None
+    if any(i and i.get("registry") == "ecr" for i in images.values()):
+        password = subprocess.check_output(["aws", "ecr", "get-login-password", "--region", config["ecr_region"]], text=True).strip()
     document = json.loads(args.manifest.read_text()) if args.manifest.exists() else {"runs": []}
     fingerprint = hashlib.sha256(json.dumps(config, sort_keys=True).encode()).hexdigest()
     if document.get("config_fingerprint", fingerprint) != fingerprint:
@@ -110,15 +131,14 @@ def main():
     document["metadata"] = {
         "source": config["source"], "platform": "linux/amd64",
         "program_sha256": config["program_sha256"],
-        "tools_image": config["tools_image"].split("/")[-1],
-        "prepared_image": config["prepared_image"].split("/")[-1],
+        "executor_images": {mode: (i["reference"].split("/")[-1] if i else "default") for mode, i in images.items()},
         "image_cache": "Not force-controlled; setup time includes runner and image preparation.",
     }
     for variant in args.variants:
         mode, cached, skip_install = VARIANTS[variant]
-        count = 1 if variant in ("seed", "cache-population") else args.samples
+        count = 1 if variant in WARMUP else args.samples
         for sample in range(1, count + 1):
-            cohort = "warmup" if variant in ("seed", "cache-population") else args.cohort
+            cohort = "warmup" if variant in WARMUP else args.cohort
             stack_name = f"{variant}-{sample}" if args.cohort == "controlled-new-stack" else config["stack"]
             stack = f"{config['organization']}/{project}/{stack_name}"
             base = stack_path(stack)
@@ -130,8 +150,9 @@ def main():
                     parser.error("Only failed warmup runs can be explicitly retried")
                 previous[-1]["notes"] += " Failed warmup retained; explicitly retried by the operator."
                 previous = []
-            image = config["prepared_image"] if mode == "image" else config["tools_image"]
-            expected = "miss" if variant in ("cache-population", "source-cache-miss") else ("hit" if cached else "disabled")
+            selected = images.get(mode)
+            image = selected["reference"] if selected else "default"
+            expected = "miss" if variant in EXPECT_MISS else ("hit" if cached else "disabled")
             if previous:
                 run = previous[-1]
             else:
@@ -141,6 +162,7 @@ def main():
                     "BENCHMARK_STACK": stack,
                     "BENCHMARK_RELEASE_URI": config["release_uri"],
                     "BENCHMARK_PROGRAM_SHA256": config["program_sha256"],
+                    **config.get("environment_variables", {}),
                 }
                 prepare_script = config.get("prepare_script", "../../benchmarks/prepare.py")
                 prepare = f"pulumi env run {shlex.quote(config['credential_environment'])} -- python3 {shlex.quote(prepare_script)}"
@@ -148,13 +170,15 @@ def main():
                     "operation": "update", "inheritSettings": False,
                     "cacheOptions": {"enable": cached},
                     "sourceContext": {"git": config["source"]},
-                    "executorContext": {"executorImage": {"reference": image, "credentials": {"username": "AWS", "password": {"secret": password}}}},
+                    "executorContext": executor_context(selected, password),
                     "operationContext": {
                         "options": {"skipInstallDependencies": skip_install},
                         "environmentVariables": {key: {"plaintext": value} for key, value in variables.items()},
                         "preRunCommands": [prepare],
                     },
                 }
+                if body["executorContext"] is None:
+                    del body["executorContext"]
                 created = request(api_url, base, "POST", body)
                 run = {
                     "stack": stack, "deployment_id": created["id"], "variant": variant,
