@@ -1,0 +1,102 @@
+name: Deployment timings release build (2026-11-04)
+
+on:
+  push:
+    branches:
+      - bench/deployment-timings-20261104
+    paths:
+      - faster-pulumi-deployments/benchmarks/release/revision.txt
+
+permissions:
+  id-token: write
+  contents: read
+
+concurrency:
+  group: deployment-timings-20261104
+  cancel-in-progress: false
+
+env:
+  BUILD_HOST: gha
+  BASE_IMAGE: pulumi/pulumi-go:3.273.0@sha256:99ed8bb8b24722d1e41ab792348e4bdce7c52e3a86ebd549e310152cdc9f8e54
+  IMAGE_REPOSITORY: 052848974346.dkr.ecr.us-west-2.amazonaws.com/deployment-timings-20261104
+  TOOLS_REPOSITORY: public.ecr.aws/x4i4n0v4/deployment-timings-20261104-tools
+  RELEASE_BUCKET: deployment-timings-20261104-052848974346
+  AWS_DEFAULT_REGION: us-west-2
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - id: revision
+        run: |
+          read -r label commit < faster-pulumi-deployments/benchmarks/release/revision.txt
+          echo "label=$label" >> "$GITHUB_OUTPUT"
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          git worktree add fixture "$commit"
+
+      - id: go
+        if: steps.revision.outputs.label != 'tools'
+        uses: actions/setup-go@v6
+        with:
+          go-version: 1.26.10
+          cache-dependency-path: fixture/faster-pulumi-deployments/benchmarks/changed-program/go.sum
+
+      - uses: pulumi/auth-actions@v2
+        with:
+          organization: team-ce
+          requested-token-type: urn:pulumi:token-type:access_token:organization
+
+      - uses: pulumi/esc-action@v4
+        with:
+          environment: team-ce/aws/pulumi-ce
+
+      - uses: docker/setup-buildx-action@v4
+
+      - uses: crazy-max/ghaction-github-runtime@v4
+
+      - name: Log in to registries
+        run: |
+          aws ecr get-login-password --region us-west-2 \
+            | docker login --username AWS --password-stdin "${IMAGE_REPOSITORY%%/*}"
+          aws ecr-public get-login-password --region us-east-1 \
+            | docker login --username AWS --password-stdin public.ecr.aws
+
+      - name: Build and publish the tools image
+        if: steps.revision.outputs.label == 'tools'
+        working-directory: faster-pulumi-deployments/benchmarks/release
+        run: |
+          start=$(date +%s.%N)
+          docker buildx build --platform linux/amd64 --target tools \
+            --build-arg "BASE_IMAGE=$BASE_IMAGE" \
+            --cache-from type=gha,scope=tools --cache-to type=gha,mode=max,scope=tools \
+            --push -t "$TOOLS_REPOSITORY:3.273.0" -f Dockerfile .
+          end=$(date +%s.%N)
+          mkdir -p "$RUNNER_TEMP/out"
+          digest=$(docker buildx imagetools inspect "$TOOLS_REPOSITORY:3.273.0" --format '{{json .Manifest.Digest}}' | tr -d '"')
+          python3 -c 'import json,sys; json.dump({"label": "tools", "build_host": "gha", "build_and_publish_s": round(float(sys.argv[2]) - float(sys.argv[1]), 3), "image": sys.argv[3]}, open(sys.argv[4], "w"), indent=2)' \
+            "$start" "$end" "$TOOLS_REPOSITORY@$digest" "$RUNNER_TEMP/out/release-tools.json"
+          cat "$RUNNER_TEMP/out/release-tools.json"
+
+      - name: Build and publish the release
+        if: steps.revision.outputs.label != 'tools'
+        env:
+          GO_CACHE_HIT: ${{ steps.go.outputs.cache-hit }}
+          BUILDX_CACHE_ARGS: --cache-from type=gha,scope=prepared --cache-to type=gha,mode=max,scope=prepared
+        run: |
+          faster-pulumi-deployments/benchmarks/release/build-release.sh \
+            fixture/faster-pulumi-deployments/benchmarks/changed-program \
+            "${{ steps.revision.outputs.label }}" "$RUNNER_TEMP/out"
+
+      - name: Store timings
+        run: |
+          aws s3 cp "$RUNNER_TEMP/out/release-${{ steps.revision.outputs.label }}.json" \
+            "s3://$RELEASE_BUCKET/timings/gha/release-${{ steps.revision.outputs.label }}-${{ github.run_id }}.json" --only-show-errors
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: release-${{ steps.revision.outputs.label }}
+          path: ${{ runner.temp }}/out/*.json

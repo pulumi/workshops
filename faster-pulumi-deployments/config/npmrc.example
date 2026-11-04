@@ -1,0 +1,2 @@
+@acme:registry=https://<artifactory-host>/artifactory/api/npm/<npm-repository>/
+//<artifactory-host>/artifactory/api/npm/<npm-repository>/:_authToken=${NPM_TOKEN}

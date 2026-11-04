@@ -1,0 +1,6 @@
+name: deployment-timings-infra
+description: Temporary infrastructure for the deployment timing benchmarks, destroyed by a TTL schedule
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

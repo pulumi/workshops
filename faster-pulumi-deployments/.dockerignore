@@ -1,0 +1,12 @@
+dist
+workspaces
+**/node_modules
+**/bin
+**/obj
+**/target
+**/build
+**/.venv
+**/__pycache__
+**/Pulumi.*.yaml
+!**/Pulumi.prebuilt.yaml
+!**/Pulumi.image.yaml

@@ -1,0 +1,13 @@
+spec:
+  containers:
+    - name: pulumi-workflow
+      env:
+        - name: npm_config_cache
+          value: /cache/npm
+      volumeMounts:
+        - name: package-cache
+          mountPath: /cache
+  volumes:
+    - name: package-cache
+      persistentVolumeClaim:
+        claimName: pulumi-package-cache

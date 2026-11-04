@@ -1,0 +1,13 @@
+{
+  "name": "faster-pulumi-deployments-benchmark-infra",
+  "private": true,
+  "dependencies": {
+    "@pulumi/aws": "7.53.0",
+    "@pulumi/pulumi": "3.274.0",
+    "@pulumi/pulumiservice": "1.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "22.15.30",
+    "typescript": "5.8.3"
+  }
+}

@@ -1,0 +1,6 @@
+name: faster-pulumi-deployments
+runtime:
+  name: python
+  options:
+    virtualenv: /opt/pulumi-program/.venv
+main: /opt/pulumi-program

@@ -1,0 +1,110 @@
+# Customer-managed workflow agent for the timing measurements, modeled on the
+# kubernetes component in pulumi/customer-managed-workflow-agent.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cmwa
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: workflow-agent
+  namespace: cmwa
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: workflow-runner
+  namespace: cmwa
+imagePullSecrets:
+  - name: ecr-pull
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: workflow-agent
+  namespace: cmwa
+rules:
+  - apiGroups: [""]
+    resources: ["pods", "pods/log", "configmaps"]
+    verbs: ["create", "get", "list", "watch", "update", "delete"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: workflow-agent
+  namespace: cmwa
+subjects:
+  - kind: ServiceAccount
+    name: workflow-agent
+    namespace: cmwa
+roleRef:
+  kind: Role
+  name: workflow-agent
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: pulumi-package-cache
+  namespace: cmwa
+spec:
+  accessModes: [ReadWriteOnce]
+  resources:
+    requests:
+      storage: 10Gi
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: workflow-agent-pool
+  namespace: cmwa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: workflow-agent
+  template:
+    metadata:
+      labels:
+        app: workflow-agent
+    spec:
+      serviceAccountName: workflow-agent
+      containers:
+        - name: agent
+          image: __AGENT_IMAGE__
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: PULUMI_AGENT_DEPLOY_TARGET
+              value: kubernetes
+            - name: PULUMI_AGENT_SHARED_VOLUME_DIRECTORY
+              value: /mnt/work
+            - name: PULUMI_AGENT_SERVICE_URL
+              value: https://api.pulumi.com
+            - name: PULUMI_AGENT_IMAGE
+              value: __AGENT_IMAGE__
+            - name: PULUMI_AGENT_IMAGE_PULL_POLICY
+              valueFrom:
+                configMapKeyRef:
+                  name: agent-settings
+                  key: PULUMI_AGENT_IMAGE_PULL_POLICY
+            - name: PULUMI_AGENT_SERVICE_ACCOUNT_NAME
+              value: workflow-runner
+            - name: PULUMI_AGENT_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: agent-token
+                  key: PULUMI_AGENT_TOKEN
+          volumeMounts:
+            - name: agent-work
+              mountPath: /mnt/work
+            - name: worker-template
+              mountPath: /mnt/worker-pod.json
+              subPath: worker-pod.json
+              readOnly: true
+      volumes:
+        - name: agent-work
+          emptyDir: {}
+        - name: worker-template
+          configMap:
+            name: worker-template
