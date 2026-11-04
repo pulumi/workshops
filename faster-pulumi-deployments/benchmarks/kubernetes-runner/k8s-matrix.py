@@ -21,6 +21,8 @@ REVISIONS = {
     "dependency": ("3609b0c5d3ede1b4965bde6c33a24cf052f872a1", "1.1.0"),
 }
 NODE = "runners-control-plane"
+REMOVE_EXITED = "crictl ps -a -q --state exited | xargs -r crictl rm"
+LIST_IMAGES = "echo remaining:; crictl images | grep deployment-timings || echo none"
 SETUP = "export HOME=/root KUBECONFIG=/root/.kube/config; cd /opt/workshops/faster-pulumi-deployments/benchmarks/kubernetes-runner"
 
 
@@ -78,6 +80,8 @@ class Matrix:
             "agent_pool_id": self.args.pool,
         }
         manifest = self.args.output / "runs" / f"{name}.json"
+        if manifest.exists() and all(r["status"] == "succeeded" for r in json.loads(manifest.read_text())["runs"]):
+            return
         manifest.parent.mkdir(parents=True, exist_ok=True)
         config_path = manifest.with_name(manifest.stem + "-config.json")
         config_path.write_text(json.dumps(config, indent=2) + "\n")
@@ -87,11 +91,12 @@ class Matrix:
             command += ["--cohort", cohort]
         subprocess.run(command, check=True)
 
+    # Exited worker containers keep their images referenced, so remove them before removing images.
     def prune(self, label):
-        self.ssm(label, f"docker exec {NODE} crictl rmi --prune")
+        self.ssm(label, f"docker exec {NODE} sh -c '{REMOVE_EXITED}; crictl rmi --prune; {LIST_IMAGES}'")
 
     def remove(self, label, reference):
-        self.ssm(label, f"docker exec {NODE} crictl rmi {reference} || true")
+        self.ssm(label, f"docker exec {NODE} sh -c '{REMOVE_EXITED}; crictl rmi {reference} || true; {LIST_IMAGES}'")
 
 
 def main():
