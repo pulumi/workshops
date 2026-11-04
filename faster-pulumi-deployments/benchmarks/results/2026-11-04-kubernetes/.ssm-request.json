@@ -1,1 +1,0 @@
-{"InstanceIds": ["i-0ea2c2cb8dc64853c"], "DocumentName": "AWS-RunShellScript", "Parameters": {"commands": ["export HOME=/root KUBECONFIG=/root/.kube/config; cd /opt/workshops/faster-pulumi-deployments/benchmarks/kubernetes-runner", "aws s3 cp /opt/k8s-logs/ s3://deployment-timings-20261104-052848974346/k8s/logs/ --recursive --only-show-errors"], "executionTimeout": ["900"]}}

@@ -9,6 +9,7 @@ import argparse
 import json
 import subprocess
 import sys
+import tempfile
 import time
 from pathlib import Path
 
@@ -43,7 +44,7 @@ class Matrix:
             return
         request = {"InstanceIds": [self.args.instance], "DocumentName": "AWS-RunShellScript",
                    "Parameters": {"commands": [SETUP, script], "executionTimeout": ["900"]}}
-        path = self.args.output / ".ssm-request.json"
+        path = Path(tempfile.gettempdir()) / "k8s-matrix-ssm-request.json"
         path.write_text(json.dumps(request))
         command_id = self.aws("ssm", "send-command", "--region", "us-west-2", "--cli-input-json", f"file://{path}",
                               "--query", "Command.CommandId", "--output", "text").strip()
