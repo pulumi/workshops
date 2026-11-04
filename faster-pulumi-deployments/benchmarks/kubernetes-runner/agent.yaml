@@ -72,7 +72,7 @@ spec:
       serviceAccountName: workflow-agent
       containers:
         - name: agent
-          image: AGENT_IMAGE
+          image: __AGENT_IMAGE__
           imagePullPolicy: IfNotPresent
           env:
             - name: PULUMI_AGENT_DEPLOY_TARGET
@@ -82,7 +82,7 @@ spec:
             - name: PULUMI_AGENT_SERVICE_URL
               value: https://api.pulumi.com
             - name: PULUMI_AGENT_IMAGE
-              value: AGENT_IMAGE
+              value: __AGENT_IMAGE__
             - name: PULUMI_AGENT_IMAGE_PULL_POLICY
               valueFrom:
                 configMapKeyRef:

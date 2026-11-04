@@ -18,7 +18,7 @@ git clone --branch bench/deployment-timings-20261104 https://github.com/pulumi/w
 cd /opt/workshops/faster-pulumi-deployments/benchmarks/kubernetes-runner
 
 kind create cluster --name runners --wait 180s
-sed "s|AGENT_IMAGE|$AGENT_IMAGE|g" agent.yaml | kubectl apply -f -
+sed "s|__AGENT_IMAGE__|$AGENT_IMAGE|g" agent.yaml | kubectl apply -f -
 
 kubectl -n cmwa create secret docker-registry ecr-pull --docker-server="$REGISTRY" \
     --docker-username=AWS --docker-password="$(aws ecr get-login-password)"
