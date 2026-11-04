@@ -27,9 +27,10 @@ VARIANTS = {
     "prebuilt-image": ("image", False, True),
     "bundle-seed": ("complete", False, True),
     "source-new-stack": ("source", True, False),
+    "source-seed": ("source", False, False),
 }
-ORDER = tuple(name for name in VARIANTS if name not in ("source-cache-miss", "bundle-seed", "source-new-stack"))
-WARMUP = ("seed", "cache-population", "bundle-seed")
+ORDER = tuple(name for name in VARIANTS if name not in ("source-cache-miss", "bundle-seed", "source-new-stack", "source-seed"))
+WARMUP = ("seed", "cache-population", "bundle-seed", "source-seed")
 EXPECT_MISS = ("cache-population", "source-cache-miss", "source-new-stack")
 
 
@@ -177,6 +178,8 @@ def main():
                         "preRunCommands": [prepare],
                     },
                 }
+                if config.get("agent_pool_id"):
+                    body["agentPoolID"] = config["agent_pool_id"]
                 if body["executorContext"] is None:
                     del body["executorContext"]
                 created = request(api_url, base, "POST", body)

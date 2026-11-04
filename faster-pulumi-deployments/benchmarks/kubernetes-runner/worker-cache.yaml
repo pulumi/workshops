@@ -1,0 +1,16 @@
+spec:
+  containers:
+    - name: pulumi-workflow
+      PULL_POLICY_LINE
+      env:
+        - name: GOMODCACHE
+          value: /cache/go/mod
+        - name: GOCACHE
+          value: /cache/go/build
+      volumeMounts:
+        - name: package-cache
+          mountPath: /cache
+  volumes:
+    - name: package-cache
+      persistentVolumeClaim:
+        claimName: pulumi-package-cache
