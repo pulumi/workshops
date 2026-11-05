@@ -7,6 +7,8 @@ benchmarks/results/**/*.log
 **/obj/
 **/target/
 **/build/
+!delivery/build/
+delivery/**/sdks/
 **/.venv/
 **/__pycache__/
 **/Pulumi.*.yaml
