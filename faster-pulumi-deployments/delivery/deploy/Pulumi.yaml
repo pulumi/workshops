@@ -4,5 +4,3 @@ runtime:
   options:
     packagemanager: npm
 description: Deploys the build that another pipeline published, using its artifacts as stack configuration.
-packages:
-  delivery: delivery@0.0.1-alpha.4

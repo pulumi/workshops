@@ -1,0 +1,28 @@
+{
+    "name": "@pulumi/delivery",
+    "version": "0.0.1-alpha.4",
+    "keywords": [
+        "pulumi",
+        "delivery",
+        "category/utility",
+        "kind/native"
+    ],
+    "homepage": "https://github.com/pulumi/pulumi-delivery",
+    "repository": "https://github.com/pulumi/pulumi-delivery",
+    "main": "bin/index.js",
+    "scripts": {
+        "build": "tsc",
+        "postinstall": "node ./scripts/postinstall.js"
+    },
+    "dependencies": {
+        "@pulumi/pulumi": "^3.269.0",
+        "@types/node": "^20",
+        "typescript": "^4.7.0"
+    },
+    "pulumi": {
+        "resource": true,
+        "name": "delivery",
+        "version": "0.0.1-alpha.4",
+        "server": "https://get.pulumi.com/releases/plugins/"
+    }
+}

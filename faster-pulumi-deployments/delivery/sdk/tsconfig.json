@@ -1,0 +1,45 @@
+{
+    "compilerOptions": {
+        // Output
+        "outDir": "bin",
+        "declaration": true,
+        "declarationMap": true,
+        "sourceMap": true,
+        "stripInternal": true,
+        // Environment
+        "target": "ES2022",
+        "module": "nodenext",
+        "moduleResolution": "nodenext",
+        "moduleDetection": "force",
+        "types": ["node"],
+        // Type Checking
+        "strict": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitReturns": true,
+        "skipLibCheck": true
+    },
+    "files": [
+        "allOf.ts",
+        "anyOf.ts",
+        "approval.ts",
+        "artifact.ts",
+        "azureDevOpsSource.ts",
+        "bitbucketSource.ts",
+        "gitHubSource.ts",
+        "gitLabSource.ts",
+        "http.ts",
+        "index.ts",
+        "job.ts",
+        "manual.ts",
+        "pipeline.ts",
+        "pipelineSource.ts",
+        "provider.ts",
+        "stacks.ts",
+        "stage.ts",
+        "types/index.ts",
+        "types/input.ts",
+        "types/output.ts",
+        "utilities.ts",
+        "workflowsRuntime.ts"
+    ]
+}

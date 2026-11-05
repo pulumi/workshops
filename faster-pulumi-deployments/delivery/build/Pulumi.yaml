@@ -4,5 +4,3 @@ runtime:
   options:
     packagemanager: npm
 description: Builds the Go program once and deploys it to a development and a production stack.
-packages:
-  delivery: delivery@0.0.1-alpha.4

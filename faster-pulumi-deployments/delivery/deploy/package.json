@@ -2,7 +2,7 @@
     "private": true,
     "type": "module",
     "dependencies": {
-        "@pulumi/delivery": "file:sdks/delivery-delivery",
+        "@pulumi/delivery": "file:../sdk",
         "@pulumi/pulumi": "3.274.0"
     },
     "devDependencies": {
@@ -10,6 +10,6 @@
         "typescript": "^5.7.0"
     },
     "allowScripts": {
-        "file:sdks/delivery-delivery": true
+        "file:../sdk": true
     }
 }
