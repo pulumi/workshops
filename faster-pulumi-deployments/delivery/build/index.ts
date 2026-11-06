@@ -1,6 +1,8 @@
 import * as pulumi from "@pulumi/pulumi";
 import * as delivery from "@pulumi/delivery";
 
+const step = 1;
+
 const config = new pulumi.Config();
 const org = pulumi.getOrganization();
 const branch = config.get("branch") ?? "delivery-tests";
@@ -20,65 +22,69 @@ const pipeline = new delivery.Pipeline("fpd-build", {
 
 const build = new delivery.Stage("build", {pipeline});
 
-const probe = new delivery.Job("probe", {
-    stage: build,
-    source: repo,
-    directory: root,
-    command: "bash delivery/scripts/probe.sh",
-});
+export const release = pipeline.releaseNumber;
 
-const programDigest = probe.outputs.apply(outputs => String(outputs["programDigest"] ?? "none"));
-
-const dev = new delivery.Stacks("dev", {
-    stage: build,
-    stacks: {
-        app: {
-            stack: `${org}/faster-pulumi-deployments/delivery-dev`,
-            source: repo,
-            directory: `${root}/programs/go`,
-            config: {
-                environment: "development",
-                buildDigest: programDigest,
-            },
-        },
-    },
-});
-
-new delivery.Artifact("programDigest", {stage: build, value: programDigest});
-new delivery.Artifact("commit", {stage: build, value: probe.outputs.apply(outputs => String(outputs["commit"] ?? "none"))});
-if (publishSecretArtifact) {
-    new delivery.Artifact("probeSecret", {stage: build, value: probe.outputs.apply(outputs => outputs["probeSecret"])});
-}
-
-const prod = new delivery.Stage("prod", {
-    pipeline,
-    from: [build],
-    when: delivery.manualOutput({description: "Promote the development build to production."}),
-});
-
-new delivery.Stacks("prod", {
-    stage: prod,
-    stacks: {
-        app: {
-            stack: `${org}/faster-pulumi-deployments/delivery-prod`,
-            source: repo,
-            directory: `${root}/programs/go`,
-            config: {environment: "production"},
-        },
-    },
-});
-
-if (probeCrossStage) {
-    new delivery.Job("cross-stage", {
-        stage: prod,
+if (step >= 2) {
+    const probe = new delivery.Job("probe", {
+        stage: build,
         source: repo,
         directory: root,
-        command: "echo \"digest from the build stage: $DIGEST\"",
-        environment: {DIGEST: programDigest},
+        command: "bash delivery/scripts/probe.sh",
     });
-}
+    const programDigest = probe.outputs.apply(outputs => String(outputs["programDigest"] ?? "none"));
 
-export const release = pipeline.releaseNumber;
-export const commit = repo.commit;
-export const probeOutputs = probe.outputs;
-export const devOutputs = dev.outputs;
+    if (step >= 3) {
+        new delivery.Artifact("programDigest", {stage: build, value: programDigest});
+        new delivery.Artifact("commit", {stage: build, value: probe.outputs.apply(outputs => String(outputs["commit"] ?? "none"))});
+        if (publishSecretArtifact) {
+            new delivery.Artifact("probeSecret", {stage: build, value: probe.outputs.apply(outputs => outputs["probeSecret"])});
+        }
+    }
+
+    if (step >= 4) {
+        new delivery.Stacks("dev", {
+            stage: build,
+            stacks: {
+                app: {
+                    stack: `${org}/faster-pulumi-deployments/delivery-dev`,
+                    source: repo,
+                    directory: `${root}/programs/go`,
+                    config: {
+                        environment: "development",
+                        buildDigest: programDigest,
+                    },
+                },
+            },
+        });
+    }
+
+    if (step >= 5) {
+        const prod = new delivery.Stage("prod", {
+            pipeline,
+            from: [build],
+            when: delivery.manualOutput({description: "Promote the development build to production."}),
+        });
+
+        new delivery.Stacks("prod", {
+            stage: prod,
+            stacks: {
+                app: {
+                    stack: `${org}/faster-pulumi-deployments/delivery-prod`,
+                    source: repo,
+                    directory: `${root}/programs/go`,
+                    config: {environment: "production"},
+                },
+            },
+        });
+
+        if (probeCrossStage) {
+            new delivery.Job("cross-stage", {
+                stage: prod,
+                source: repo,
+                directory: root,
+                command: "echo \"digest from the build stage: $DIGEST\"",
+                environment: {DIGEST: programDigest},
+            });
+        }
+    }
+}
