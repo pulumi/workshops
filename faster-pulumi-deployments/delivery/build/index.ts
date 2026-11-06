@@ -45,7 +45,7 @@ const dev = new delivery.Stacks("dev", {
 });
 
 new delivery.Artifact("programDigest", {stage: build, value: programDigest});
-new delivery.Artifact("commit", {stage: build, value: repo.commit});
+new delivery.Artifact("commit", {stage: build, value: probe.outputs.apply(outputs => String(outputs["commit"] ?? "none"))});
 if (publishSecretArtifact) {
     new delivery.Artifact("probeSecret", {stage: build, value: probe.outputs.apply(outputs => outputs["probeSecret"])});
 }
