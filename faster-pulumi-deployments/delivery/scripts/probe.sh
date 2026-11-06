@@ -51,7 +51,7 @@ build_seconds=0
 if has go; then
     start=$(date +%s)
     mkdir -p dist/delivery
-    if (cd programs/go && CGO_ENABLED=0 go build -o ../../dist/delivery/infra .); then
+    if (cd programs/go && CGO_ENABLED=0 go build -buildvcs=false -trimpath -o ../../dist/delivery/infra .); then
         build_seconds=$(( $(date +%s) - start ))
         digest="sha256:$(sha256sum dist/delivery/infra | cut -d' ' -f1)"
         echo "built in ${build_seconds}s: $digest"
@@ -64,14 +64,18 @@ fi
 
 section "outputs"
 tool_list=$(IFS=,; echo "${found[*]}")
+secret_output=""
+if [ "${PUBLISH_SECRET:-}" = "true" ]; then
+    secret_output=',
+    "probeSecret": {"value": "not-a-real-secret", "secret": true}'
+fi
 cat > "${DELIVERY_OUTPUTS:-/dev/stdout}" <<EOF
 {
     "programDigest": "$digest",
     "buildSeconds": $build_seconds,
     "tools": "$tool_list",
     "commit": "${DELIVERY_COMMIT:-unknown}",
-    "release": "${DELIVERY_RELEASE:-unknown}",
-    "probeSecret": {"value": "not-a-real-secret", "secret": true}
+    "release": "${DELIVERY_RELEASE:-unknown}"$secret_output
 }
 EOF
 echo "wrote ${DELIVERY_OUTPUTS:-stdout}"
