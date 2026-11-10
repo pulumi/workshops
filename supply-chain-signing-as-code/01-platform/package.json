@@ -1,0 +1,17 @@
+{
+  "name": "supply-chain-signing-platform",
+  "version": "0.1.0",
+  "private": true,
+  "description": "supply-chain-signing-as-code: ECR repository, kind cluster, Kyverno chart and image-verification policy",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.20.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^7.48.0",
+    "@pulumi/command": "^1.2.1",
+    "@pulumi/kubernetes": "^4.34.2",
+    "@pulumi/pulumi": "^3.265.0"
+  }
+}

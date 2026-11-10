@@ -1,0 +1,41 @@
+{
+  "slug": "supply-chain-signing-as-code",
+  "title": "Supply chain signing as code",
+  "subtitle": "Sign a container image with Notation, block unsigned images at admission, and scan cluster posture with Kubescape, all provisioned as Pulumi code.",
+  "demo_title": "Supply chain signing",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The trust gap in container images",
+    "Signing with Notation",
+    "Admission enforcement with Kyverno",
+    "Cluster posture with Kubescape",
+    "Live demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Notary Project docs",
+      "url": "https://notaryproject.dev/docs/",
+      "label": "notaryproject.dev/docs"
+    },
+    {
+      "title": "Kyverno: verify images (Notary)",
+      "url": "https://kyverno.io/docs/policy-types/cluster-policy/verify-images/notary/",
+      "label": "kyverno.io/docs"
+    },
+    {
+      "title": "Kubescape docs",
+      "url": "https://kubescape.io/docs/",
+      "label": "kubescape.io/docs"
+    },
+    {
+      "title": "Pulumi IaC docs",
+      "url": "https://www.pulumi.com/docs/iac/",
+      "label": "pulumi.com/docs/iac"
+    }
+  ]
+}
