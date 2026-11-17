@@ -42,7 +42,7 @@ Platform engineering teams need to be able to fetch secrets at runtime, especial
             providerId: pulumi-cloud-oidc
             serviceAccount: pulumi-cloud@pulumi-workshops-project.iam.gserviceaccount.com
     environmentVariables:
-      GOOGLE_PROJECT: ${gcp.login.project}
+      GOOGLE_PROJECT: pulumi-workshops-project
       CLOUDSDK_AUTH_ACCESS_TOKEN: ${gcp.login.accessToken}
       GOOGLE_REGION: us-central1
       PULUMI_GCP_SKIP_REGION_VALIDATION: true
