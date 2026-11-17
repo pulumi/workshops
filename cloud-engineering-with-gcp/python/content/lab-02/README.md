@@ -162,7 +162,8 @@ Presenter: Please add the following to an `oidc-gcp` ESC Environment:
 # TO USE MY GOOGLE CLOUD OIDC
 # TO DO SO, I'D HAVE TO UPDATE MY AUDIENCE LIST ON GCP
 #
-# ALSO, NOTE THE GCP PROJECT NEEDS TO BE NUMERICAL VALUE
+# ALSO, NOTE THE GCP-LOGIN PROJECT NEEDS TO BE THE NUMERICAL PROJECT NUMBER,
+# WHILE GOOGLE_PROJECT AND gcp:project TAKE THE PROJECT ID
 values:
   gcp:
     login:
@@ -173,7 +174,7 @@ values:
           providerId: pulumi-cloud-oidc
           serviceAccount: pulumi-cloud@pulumi-workshops-project.iam.gserviceaccount.com
   environmentVariables:
-    GOOGLE_PROJECT: ${gcp.login.project}
+    GOOGLE_PROJECT: pulumi-workshops-project
     CLOUDSDK_AUTH_ACCESS_TOKEN: ${gcp.login.accessToken}
     GOOGLE_REGION: us-central1
     PULUMI_GCP_SKIP_REGION_VALIDATION: true
