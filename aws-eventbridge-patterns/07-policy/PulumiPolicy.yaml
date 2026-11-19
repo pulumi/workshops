@@ -1,0 +1,5 @@
+name: eventbridge-guardrails
+runtime: nodejs
+description: >-
+  Policy pack for the workshop "Event routing as code on AWS". Blocks any
+  EventBridge target that has no dead-letter queue.

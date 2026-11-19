@@ -1,0 +1,15 @@
+{
+  "name": "aws-eventbridge-patterns-dlq-and-retry",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Demo project for the workshop aws-eventbridge-patterns.",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.49.0",
+    "@pulumi/pulumi": "3.268.0"
+  }
+}

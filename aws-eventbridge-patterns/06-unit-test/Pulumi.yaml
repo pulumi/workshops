@@ -1,0 +1,8 @@
+name: aws-eventbridge-patterns
+description: >-
+  Demo project for "Event routing as code on AWS". Step 6: the component plus a Mocha unit test that fails when a target has no DLQ.
+  All steps share one project and one stack, so each step updates the previous one.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

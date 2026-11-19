@@ -1,0 +1,41 @@
+{
+  "slug": "aws-eventbridge-patterns",
+  "title": "Event routing as code on AWS",
+  "subtitle": "Build a tested, policy-checked EventBridge bus that never silently drops an event",
+  "demo_title": "Event routing as code",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The lost event",
+    "How EventBridge delivers",
+    "A component with safety built in",
+    "Tests and policies",
+    "Archive and replay",
+    "Live demo"
+  ],
+  "resources": [
+    {
+      "title": "EventBridge dead-letter queues (AWS docs)",
+      "url": "https://docs.aws.amazon.com/eventbridge/latest/userguide/eb-rule-dlq.html",
+      "label": "docs.aws.amazon.com"
+    },
+    {
+      "title": "Pulumi IaC components",
+      "url": "https://www.pulumi.com/docs/iac/concepts/components/",
+      "label": "pulumi.com/docs/iac/concepts/components"
+    },
+    {
+      "title": "Pulumi Policies",
+      "url": "https://www.pulumi.com/docs/discovery-governance/concepts/policy-as-code/",
+      "label": "pulumi.com/docs/discovery-governance"
+    },
+    {
+      "title": "Pulumi ESC: OIDC for AWS",
+      "url": "https://www.pulumi.com/docs/esc/guides/configuring-oidc/aws/",
+      "label": "pulumi.com/docs/esc"
+    }
+  ]
+}
