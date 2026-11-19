@@ -1,0 +1,16 @@
+# ESC environment <org>/agent-gates/aws-prod: short-lived AWS credentials over OIDC.
+# setup.sh replaces the roleArn placeholder with your ROLE_ARN.
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: ROLE_ARN_PLACEHOLDER
+          sessionName: agent-gates-session
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+  pulumiConfig:
+    aws:region: eu-west-1

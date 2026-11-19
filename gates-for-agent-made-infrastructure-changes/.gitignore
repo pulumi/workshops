@@ -1,0 +1,19 @@
+.DS_Store
+*.log
+venv/
+__pycache__/
+.pytest_cache/
+node_modules/
+slides/export-pages/
+slides/dist/
+# local state and stack config written by setup scripts
+.pulumi/
+Pulumi.*.yaml
+!Pulumi.yaml
+
+# Presenter-only working docs: the repo publishes the slides, the demo code
+# and the notes that describe them.
+*.md
+!README.md
+!AGENTS.md
+!slides/slides.md

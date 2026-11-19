@@ -1,0 +1,41 @@
+{
+  "slug": "gates-for-agent-made-infrastructure-changes",
+  "title": "Gates for agent-made infrastructure changes",
+  "subtitle": "Mandatory policies, ESC approvals and an audit trail with Pulumi",
+  "demo_title": "Gates for agent changes",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why agent changes need gates",
+    "Policies that block at preview",
+    "Approvals on credentials",
+    "Agent approval modes and audit logs",
+    "Live demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "ESC approvals",
+      "url": "https://www.pulumi.com/docs/esc/concepts/approvals/",
+      "label": "pulumi.com/docs/esc/concepts/approvals"
+    },
+    {
+      "title": "Write a policy pack",
+      "url": "https://www.pulumi.com/docs/discovery-governance/guides/write-a-policy-pack/",
+      "label": "pulumi.com/docs/discovery-governance"
+    },
+    {
+      "title": "Audit logs",
+      "url": "https://www.pulumi.com/docs/administration/concepts/audit-logs/",
+      "label": "pulumi.com/docs/administration"
+    },
+    {
+      "title": "Neo permissions",
+      "url": "https://www.pulumi.com/docs/ai/concepts/neo/permissions/",
+      "label": "pulumi.com/docs/ai/concepts/neo"
+    }
+  ]
+}

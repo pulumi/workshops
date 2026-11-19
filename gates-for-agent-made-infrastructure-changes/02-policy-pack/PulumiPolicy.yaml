@@ -1,0 +1,5 @@
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Mandatory S3 gates for agent-made changes - owner and change-ref tags, public access block, server-side encryption.

@@ -1,0 +1,11 @@
+name: agent-gates
+description: Baseline S3 bucket for the "Gates for agent-made infrastructure changes" workshop.
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+config:
+  agentChange:
+    type: string
+    default: none
+    description: "none, noncompliant or fixed. Set by the scripted agent in step 3."
