@@ -1,0 +1,7 @@
+name: itops-agent
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+description: Creates the IT-ops Foundry prompt agent via a pulumi_command.local.Command wrapping the azure-ai-projects data-plane SDK.

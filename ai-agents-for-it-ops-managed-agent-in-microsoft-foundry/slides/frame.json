@@ -1,0 +1,21 @@
+{
+  "slug": "ai-agents-for-it-ops-managed-agent-in-microsoft-foundry",
+  "title": "AI Agents for IT Ops",
+  "subtitle": "Managed Agent in Microsoft Foundry",
+  "demo_title": "Managed agent, start to teardown",
+  "speakers": [
+    {"placeholder": true}
+  ],
+  "agenda": [
+    "Why agents need answerable operators",
+    "The Foundry platform, as Pulumi code",
+    "The agent Azure won't give an ARM resource",
+    "Grounding the agent in your own runbooks",
+    "Live demo: start to teardown"
+  ],
+  "resources": [
+    {"title": "cognitiveservices.Account / Project (Pulumi registry)", "url": "https://www.pulumi.com/registry/packages/azure-native/api-docs/cognitiveservices/account/", "label": "pulumi.com/registry"},
+    {"title": "command.local.Command (Pulumi registry)", "url": "https://www.pulumi.com/registry/packages/command/api-docs/local/command/", "label": "pulumi.com/registry"},
+    {"title": "Microsoft Foundry Agent Service quickstart", "url": "https://learn.microsoft.com/en-us/azure/foundry/agents/quickstarts/prompt-agent", "label": "learn.microsoft.com"}
+  ]
+}

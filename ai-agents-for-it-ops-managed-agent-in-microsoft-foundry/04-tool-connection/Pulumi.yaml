@@ -1,0 +1,7 @@
+name: itops-tool-connection
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv
+description: Uploads sample IT-ops runbooks to blob storage, connects the container to the Foundry project, and re-creates the agent with a file-search tool referencing it.

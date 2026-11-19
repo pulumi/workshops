@@ -1,0 +1,5 @@
+pulumi>=3.0.0,<4.0.0
+pulumi-azure-native==3.28.0
+pulumi-command>=1.0.0,<2.0.0
+azure-ai-projects==2.7.0
+azure-identity==1.25.3
