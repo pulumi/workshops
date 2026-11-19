@@ -1,0 +1,40 @@
+{
+  "slug": "give-your-ai-agent-the-keys-safely",
+  "title": "Give your AI agent the keys, safely",
+  "subtitle": "Build and govern an MCP-based infrastructure agent that can propose changes but not apply them",
+  "demo_title": "Agent with scoped keys",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "When agents get infrastructure access",
+    "Questions to answer before trusting one",
+    "MCP, scoped tokens and approvals",
+    "The agent we will build",
+    "Live demo: propose, review, block, apply"
+  ],
+  "resources": [
+    {
+      "title": "Pulumi MCP server docs",
+      "url": "https://www.pulumi.com/docs/ai/mcp-server/",
+      "label": "pulumi.com/docs/ai/mcp-server"
+    },
+    {
+      "title": "Neo's permissions model",
+      "url": "https://www.pulumi.com/docs/ai/neo/permissions/",
+      "label": "pulumi.com/docs/ai/neo/permissions"
+    },
+    {
+      "title": "Pulumi Cloud access tokens",
+      "url": "https://www.pulumi.com/docs/administration/concepts/access-tokens/",
+      "label": "pulumi.com/docs/administration"
+    },
+    {
+      "title": "Model Context Protocol specification",
+      "url": "https://modelcontextprotocol.io/specification/",
+      "label": "modelcontextprotocol.io"
+    }
+  ]
+}

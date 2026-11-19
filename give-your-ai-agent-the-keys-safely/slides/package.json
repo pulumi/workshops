@@ -1,0 +1,22 @@
+{
+  "name": "give-your-ai-agent-the-keys-safely-slides",
+  "version": "0.1.0",
+  "description": "Give your AI agent the keys, safely: Build and govern an MCP-based infrastructure agent that can propose changes but not apply them",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}

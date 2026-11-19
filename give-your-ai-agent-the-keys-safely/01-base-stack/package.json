@@ -1,0 +1,15 @@
+{
+  "name": "give-your-ai-agent-the-keys-safely-base-stack",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Give your AI agent the keys, safely: base VPC + S3 stack an agent will later propose a change to",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/aws": "^7.48.0",
+    "@pulumi/pulumi": "^3.263.0"
+  }
+}
