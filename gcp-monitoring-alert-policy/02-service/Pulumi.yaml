@@ -1,0 +1,7 @@
+name: gcp-monitoring-demo
+description: >-
+  Step 2: a Cloud Run service to watch (an echo service with a failure switch).
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

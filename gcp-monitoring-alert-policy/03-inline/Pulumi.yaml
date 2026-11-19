@@ -1,0 +1,7 @@
+name: gcp-monitoring-demo
+description: >-
+  Steps 3 to 5: the service plus a custom service, SLO, burn-rate alerts, log metric and dashboard, written inline.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

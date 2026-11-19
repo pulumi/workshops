@@ -1,0 +1,15 @@
+{
+  "name": "gcp-monitoring-demo-service",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Step 2: the Cloud Run service the monitoring watches",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/gcp": "10.1.0",
+    "@pulumi/pulumi": "3.268.0"
+  }
+}
