@@ -1,0 +1,7 @@
+# kind-config.yaml — a single-node local cluster for the zero-trust-mesh
+# workshop. Pin the node image so every presenter and attendee gets the same
+# Kubernetes version regardless of which kind release they have installed.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane

@@ -1,0 +1,35 @@
+{
+  "slug": "zero-trust-networking-linkerd",
+  "title": "Zero-trust networking as code",
+  "subtitle": "Mutual TLS and traffic policy with Linkerd and Pulumi, root certificate included",
+  "demo_title": "Zero-trust networking as code",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why a flat cluster network is a risk",
+    "What a mesh adds: identity and policy",
+    "The solution we will build",
+    "Demo: trust anchor to deny",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Linkerd authorization policy reference",
+      "url": "https://linkerd.io/2.19/reference/authorization-policy/",
+      "label": "linkerd.io/2.19/reference/authorization-policy"
+    },
+    {
+      "title": "Linkerd server policy",
+      "url": "https://linkerd.io/2.19/features/server-policy/",
+      "label": "linkerd.io/2.19/features/server-policy"
+    },
+    {
+      "title": "Pulumi Kubernetes Helm v4 Chart",
+      "url": "https://www.pulumi.com/registry/packages/kubernetes/api-docs/helm/v4/chart/",
+      "label": "pulumi.com/registry/.../helm/v4/chart"
+    }
+  ]
+}
