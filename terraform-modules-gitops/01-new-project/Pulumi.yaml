@@ -1,0 +1,10 @@
+name: tf-modules-gitops
+description: 'Terraform modules in Pulumi: push-to-deploy and drift detection'
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: typescript

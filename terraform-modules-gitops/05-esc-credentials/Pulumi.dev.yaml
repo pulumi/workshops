@@ -1,0 +1,5 @@
+environment:
+  - tf-modules-gitops/aws-oidc
+config:
+  aws:region: us-west-2
+  tf-modules-gitops:allowedCidr: 203.0.113.10/32 # replace with your own public IP

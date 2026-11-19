@@ -1,0 +1,12 @@
+{
+    "name": "tf-modules-gitops",
+    "main": "index.ts",
+    "devDependencies": {
+        "@types/node": "24.19.2",
+        "typescript": "5.9.3"
+    },
+    "dependencies": {
+        "@pulumi/aws": "7.51.1",
+        "@pulumi/pulumi": "3.272.0"
+    }
+}

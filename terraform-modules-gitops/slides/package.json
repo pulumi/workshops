@@ -1,0 +1,22 @@
+{
+  "name": "terraform-modules-gitops-slides",
+  "version": "0.1.0",
+  "description": "Keep your Terraform modules, change the pipeline: Terraform modules in Pulumi with push-to-deploy and drift detection",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md --per-slide --wait 1500 --timeout 120000"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}
