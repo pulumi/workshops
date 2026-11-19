@@ -1,0 +1,15 @@
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: arn:aws:iam::__ACCOUNT__:role/agent-sandbox-provisioner
+          sessionName: agent-sandboxes
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: eu-west-1
+  pulumiConfig:
+    aws:region: eu-west-1

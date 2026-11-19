@@ -1,0 +1,40 @@
+{
+  "slug": "agent-sandboxes-pulumi",
+  "title": "Disposable Cloud Sandboxes for AI Agents: One Pulumi Stack per Task",
+  "subtitle": "Spawn a scoped AWS sandbox for every agent task, and delete it on schedule",
+  "demo_title": "Agent Sandboxes",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why agent sandboxes leak",
+    "One stack per task",
+    "Short-lived credentials and boundaries",
+    "Rules at preview, expiry by reaper",
+    "Demo: three sandboxes, one reaper"
+  ],
+  "resources": [
+    {
+      "title": "Pulumi Automation API guide",
+      "url": "https://www.pulumi.com/docs/iac/guides/building-extending/automation-api/",
+      "label": "pulumi.com/docs/iac/guides/building-extending/automation-api"
+    },
+    {
+      "title": "Configuring OIDC for AWS in Pulumi ESC",
+      "url": "https://www.pulumi.com/docs/esc/environments/configuring-oidc/aws/",
+      "label": "pulumi.com/docs/esc/environments/configuring-oidc/aws"
+    },
+    {
+      "title": "Pulumi Policies, policy as code",
+      "url": "https://www.pulumi.com/docs/discovery-governance/concepts/policy-as-code/",
+      "label": "pulumi.com/docs/discovery-governance/concepts/policy-as-code"
+    },
+    {
+      "title": "TTL stacks in Pulumi Cloud",
+      "url": "https://www.pulumi.com/docs/deployments/concepts/ttl/",
+      "label": "pulumi.com/docs/deployments/concepts/ttl"
+    }
+  ]
+}
