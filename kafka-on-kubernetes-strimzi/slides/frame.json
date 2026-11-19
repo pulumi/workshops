@@ -1,0 +1,35 @@
+{
+  "slug": "kafka-on-kubernetes-strimzi",
+  "title": "Running Apache Kafka on Kubernetes with the Strimzi operator and Pulumi",
+  "subtitle": "Provision a KRaft Kafka cluster with Pulumi, send messages through it, then scale and upgrade it live",
+  "demo_title": "Kafka on Kubernetes with Strimzi",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why Kafka on Kubernetes hurts",
+    "What the Strimzi operator does",
+    "Provisioning it with Pulumi",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Strimzi documentation",
+      "url": "https://strimzi.io/docs/operators/latest/deploying",
+      "label": "strimzi.io/docs"
+    },
+    {
+      "title": "Pulumi Kubernetes provider",
+      "url": "https://www.pulumi.com/registry/packages/kubernetes/",
+      "label": "pulumi.com/registry/kubernetes"
+    },
+    {
+      "title": "Pulumi stacks and stack references",
+      "url": "https://www.pulumi.com/docs/iac/concepts/stacks/",
+      "label": "pulumi.com/docs/stacks"
+    }
+  ]
+}
