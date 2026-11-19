@@ -1,0 +1,15 @@
+# ESC environment for the workshop. Replace roleArn with the role that
+# `pulumi env setup aws --policy AdministratorAccess` created, or with your own
+# role that trusts Pulumi Cloud as an OIDC provider.
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: arn:aws:iam::123456789012:role/pulumi-esc-oidc
+          sessionName: s3-baseline-workshop
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}

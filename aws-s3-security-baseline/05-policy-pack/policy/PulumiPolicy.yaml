@@ -1,0 +1,7 @@
+name: s3-baseline-policies
+runtime: nodejs
+description: >-
+  S3 security baseline as policy. Every aws:s3/bucket:Bucket needs the six
+  companion resources of the baseline, a public access block that keeps all
+  four settings on, and versioning set to Enabled. Mandatory, so a violation
+  stops the preview or update before anything reaches AWS.
