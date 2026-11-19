@@ -1,0 +1,35 @@
+{
+  "slug": "kbind-service-sharing-across-clusters",
+  "title": "One platform, many clusters",
+  "subtitle": "Share one Kubernetes API with every consumer cluster, using kbind and Pulumi IaC",
+  "demo_title": "One platform, many clusters",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why an operator per cluster hurts",
+    "How kbind shares an API",
+    "Pulumi IaC and ESC around it",
+    "Demo: two clusters, one binding",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "kbind documentation",
+      "url": "https://docs.kbind.dev/main/",
+      "label": "docs.kbind.dev"
+    },
+    {
+      "title": "Pulumi components",
+      "url": "https://www.pulumi.com/docs/iac/concepts/components/",
+      "label": "pulumi.com/docs/iac/concepts/components"
+    },
+    {
+      "title": "Pulumi ESC",
+      "url": "https://www.pulumi.com/docs/esc/",
+      "label": "pulumi.com/docs/esc"
+    }
+  ]
+}

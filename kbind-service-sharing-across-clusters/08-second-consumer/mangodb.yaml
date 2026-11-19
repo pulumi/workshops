@@ -1,0 +1,8 @@
+# One MangoDB object for consumer B.
+apiVersion: mangodb.com/v1alpha1
+kind: MangoDB
+metadata:
+  name: demo-from-consumer-b
+  namespace: default
+spec:
+  tier: Dedicated

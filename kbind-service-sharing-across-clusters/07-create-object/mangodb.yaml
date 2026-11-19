@@ -1,0 +1,9 @@
+# One MangoDB object for consumer A. The CRD arrives on the consumer through the
+# binding (06-bind); the provider receives the synced copy.
+apiVersion: mangodb.com/v1alpha1
+kind: MangoDB
+metadata:
+  name: demo-from-consumer-a
+  namespace: default
+spec:
+  tier: Shared

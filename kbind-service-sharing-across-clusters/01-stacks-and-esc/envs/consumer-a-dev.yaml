@@ -1,0 +1,28 @@
+# Pulumi ESC environment for the consumer-a-dev stack (consumer).
+# __AWS_ROLE_ARN__ is replaced by setup.sh with the value of KBIND_AWS_ROLE_ARN,
+# the IAM role your AWS account trusts the Pulumi Cloud OIDC issuer for.
+# No static AWS keys: ESC mints short-lived credentials on every run.
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: __AWS_ROLE_ARN__
+          sessionName: kbind-workshop-consumer-a-dev
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: eu-central-1
+  # The provider stack's outputs, read by the pulumi-stacks provider.
+  # `stack` is project/stack: project kbind-provider, stack provider-dev.
+  stacks:
+    fn::open::pulumi-stacks:
+      stacks:
+        provider:
+          stack: kbind-provider/provider-dev
+  pulumiConfig:
+    aws:region: eu-central-1
+    kbind-consumer:consumerName: consumer-a
+    kbind-consumer:providerUrl: ${stacks.provider.backendUrl}

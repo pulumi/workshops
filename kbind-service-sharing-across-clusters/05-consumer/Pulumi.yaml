@@ -1,0 +1,9 @@
+name: kbind-consumer
+description: >-
+  Consumer side of the kbind workshop: one EKS cluster per stack
+  (consumer-a-dev, consumer-b-dev). The provider URL and the consumer name come
+  from the stack's Pulumi ESC environment, which reads the provider stack's outputs.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
