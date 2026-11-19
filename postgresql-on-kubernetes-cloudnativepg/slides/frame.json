@@ -1,0 +1,35 @@
+{
+  "slug": "postgresql-on-kubernetes-cloudnativepg",
+  "title": "Running Production PostgreSQL on Kubernetes with CloudNativePG and Pulumi",
+  "subtitle": "Provision a self-healing, backed-up Postgres cluster on Kubernetes with Pulumi, then trigger a failover and a point-in-time restore live",
+  "demo_title": "CloudNativePG on Kubernetes",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The trouble with hand-rolled Postgres on Kubernetes",
+    "CloudNativePG, the Postgres operator",
+    "Provisioning the cluster and backups with Pulumi",
+    "Live demo: replication, failover, restore",
+    "Wrap-up and where this fits"
+  ],
+  "resources": [
+    {
+      "title": "CloudNativePG documentation",
+      "url": "https://cloudnative-pg.io/docs/1.30/",
+      "label": "cloudnative-pg.io/docs"
+    },
+    {
+      "title": "CNPG kubectl plugin reference",
+      "url": "https://cloudnative-pg.io/docs/1.30/kubectl-plugin",
+      "label": "cloudnative-pg.io/docs/kubectl-plugin"
+    },
+    {
+      "title": "Pulumi Kubernetes provider",
+      "url": "https://www.pulumi.com/registry/packages/kubernetes/",
+      "label": "pulumi.com/registry/packages/kubernetes"
+    }
+  ]
+}

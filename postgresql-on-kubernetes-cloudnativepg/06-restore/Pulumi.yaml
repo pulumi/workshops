@@ -1,0 +1,6 @@
+name: cnpg-workshop-restore
+runtime: nodejs
+description: "CloudNativePG workshop step 06: presenter-only demo restoring a new Cluster from an existing plugin-based (Barman Cloud) backup, optionally to a point in time."
+config:
+  renderToDirectory:
+    description: "When set, render Kubernetes manifests to this local directory instead of talking to a live cluster (offline verification)."
