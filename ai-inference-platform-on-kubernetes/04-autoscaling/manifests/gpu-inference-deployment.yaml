@@ -1,0 +1,39 @@
+# Dummy GPU-requesting workload for the step 5 scaling demo. Deliberately not
+# a real model server: it only requests one GPU per replica so scaling the
+# replica count is what drives Karpenter to add or remove nodes.
+#
+#   kubectl apply -f manifests/gpu-inference-deployment.yaml -n gpu-workloads
+#   kubectl scale deployment/gpu-echo -n gpu-workloads --replicas=2
+#   kubectl get nodes -w                      # a new node should appear
+#   kubectl scale deployment/gpu-echo -n gpu-workloads --replicas=0
+#   kubectl get nodes -w                      # the node should be reclaimed
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gpu-echo
+  labels:
+    app: gpu-echo
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: gpu-echo
+  template:
+    metadata:
+      labels:
+        app: gpu-echo
+    spec:
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
+      containers:
+        - name: cuda-probe
+          image: nvidia/cuda:12.6.0-base-ubuntu22.04
+          command: ["sh", "-c", "nvidia-smi -L; sleep infinity"]
+          resources:
+            requests:
+              nvidia.com/gpu: "1"
+            limits:
+              nvidia.com/gpu: "1"
