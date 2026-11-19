@@ -25,6 +25,7 @@ const gkeSubnet = new gcp.compute.Subnetwork("gke-subnet", {
 
 // Create a new GKE cluster
 const gkeCluster = new gcp.container.Cluster("gke-cluster", {
+    deletionProtection: false,
     addonsConfig: {
         dnsCacheConfig: {
             enabled: true,
