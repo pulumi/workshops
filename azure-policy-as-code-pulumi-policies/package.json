@@ -1,0 +1,14 @@
+{
+  "name": "azure-policy-as-code-pulumi-policies",
+  "private": true,
+  "description": "Azure Policy as code with Pulumi workshop: one npm workspace, one Pulumi project per step",
+  "workspaces": [
+    "0[1-7]-*",
+    "08-policy-pack",
+    "08-policy-pack/policy-pack"
+  ],
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "6.0.3"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "storage-policy-pack",
+  "private": true,
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node --test dist/test/*.js"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "3.268.0",
+    "@pulumi/policy": "1.21.0",
+    "@pulumi/azure-native": "3.28.0"
+  },
+  "version": "0.0.1"
+}

@@ -1,0 +1,4 @@
+runtime: nodejs
+name: azure-storage-policy-pack
+version: 0.0.1
+description: Preventive checks for the Azure Policy as code workshop

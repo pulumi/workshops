@@ -1,0 +1,6 @@
+name: azure-policy-workshop
+description: "Audit, exemption, remediation, switch to Deny"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
