@@ -1,0 +1,11 @@
+# `clusterStackRef` names the 02-cluster stack this project reads
+# `kubeconfigContext` from via a Pulumi StackReference. The placeholder
+# below must be edited to the real "<org>/vms-cluster/<stack>" before a live
+# run; see ../02-cluster/Pulumi.yaml for the project name.
+config:
+  vms-kubevirt:useEmulation: true
+  vms-kubevirt:clusterStackRef: "<org>/vms-cluster/dev"
+  # Uncomment to render manifests to a local directory instead of requiring
+  # a reachable cluster (offline verification; see the k8s.Provider docs'
+  # `renderYamlToDirectory` option):
+  # vms-kubevirt:renderYamlToDirectory: /tmp/render-03-kubevirt

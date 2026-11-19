@@ -1,0 +1,15 @@
+{
+  "name": "vms-cluster",
+  "version": "0.1.0",
+  "private": true,
+  "description": "VMs on Kubernetes as Code: the local three-node kind cluster",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.265.0",
+    "@pulumi/command": "^1.2.1"
+  }
+}
