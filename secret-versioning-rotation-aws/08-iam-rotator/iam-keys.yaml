@@ -1,0 +1,14 @@
+# Template. rotate.sh fills the placeholders from `pulumi stack output`.
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          roleArn: __ESC_ROLE_ARN__
+          sessionName: secret-rotation-workshop
+  iam:
+    fn::rotate::aws-iam:
+      inputs:
+        region: us-east-1
+        login: ${aws.login}
+        userArn: __USER_ARN__

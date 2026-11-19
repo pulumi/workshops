@@ -1,0 +1,7 @@
+name: require-secret-rotation
+runtime: nodejs
+description: >-
+  Guardrail for the "Secret versioning and rotation patterns on AWS" workshop.
+  Every Secrets Manager secret in the stack needs an aws.secretsmanager.SecretRotation
+  that points at it, so a secret without a rotation schedule fails `pulumi preview`
+  before it reaches AWS. Mandatory.

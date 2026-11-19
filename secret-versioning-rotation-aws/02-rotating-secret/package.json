@@ -1,0 +1,16 @@
+{
+  "name": "secret-rotation-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Secret versioning and rotation patterns on AWS: the Secrets Manager secret, its rotation Lambda and the IAM pieces Pulumi ESC needs",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "22.20.5",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.50.0",
+    "@pulumi/pulumi": "3.268.0",
+    "@pulumi/random": "4.21.2"
+  }
+}
