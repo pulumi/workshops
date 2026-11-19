@@ -1,0 +1,8 @@
+name: backstage-demo-guardrails
+runtime: nodejs
+description: >-
+  Guardrails for "Provisioning real infrastructure from a Backstage catalog
+  with Pulumi". Every S3 bucket the scaffolder action (03-scaffolder-action)
+  creates through the Automation API must carry a 'team' tag for cost
+  attribution. Mandatory enforcement, so a missing tag stops the update
+  before the bucket reaches AWS.

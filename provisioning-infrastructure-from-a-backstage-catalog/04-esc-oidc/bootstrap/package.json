@@ -1,0 +1,15 @@
+{
+  "name": "backstage-demo-oidc-bootstrap",
+  "version": "0.1.0",
+  "private": true,
+  "description": "One-time bootstrap: OIDC trust between Pulumi Cloud and AWS for the Backstage scaffolder demo",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.48.0",
+    "@pulumi/pulumi": "^3.266.0"
+  }
+}
