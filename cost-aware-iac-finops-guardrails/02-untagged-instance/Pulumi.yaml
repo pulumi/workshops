@@ -1,0 +1,6 @@
+name: cost-aware-iac-untagged-instance
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: An EC2 instance with no cost-allocation tag — the gap this workshop closes

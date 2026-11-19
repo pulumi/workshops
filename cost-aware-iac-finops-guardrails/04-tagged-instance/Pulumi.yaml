@@ -1,0 +1,6 @@
+name: cost-aware-iac-tagged-instance
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: The fixed EC2 instance — CostCenter tag added, instance size configurable for the size guardrail demo
