@@ -1,0 +1,22 @@
+{
+  "name": "policy-access-governance-as-code-slides",
+  "version": "0.1.0",
+  "description": "Access governance as code: BigQuery, Secret Manager and service-account bindings without console clicks: Model least-privilege IAM on Google Cloud and AWS as Pulumi IaC, read the diff before it applies, and block an over-broad binding with a policy pack",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.63.0",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}

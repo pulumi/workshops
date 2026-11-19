@@ -1,0 +1,7 @@
+name: access-gcp
+description: Least-privilege access model on Google Cloud, built up in three steps (dataset, secret, service account)
+runtime:
+  name: python
+  options:
+    toolchain: pip
+    virtualenv: venv

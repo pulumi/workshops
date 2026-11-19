@@ -1,0 +1,8 @@
+# Copy to Pulumi.dev.yaml (or run the `pulumi config set` lines in the README).
+config:
+  gcp:project: your-gcp-project-id
+  gcp:region: us-central1
+  access-gcp:step: "3"
+  access-gcp:viewerMember: group:data-readers@example.com
+  access-gcp:secretReaderMember: serviceAccount:reader@your-gcp-project-id.iam.gserviceaccount.com
+  access-gcp:widen: "false"

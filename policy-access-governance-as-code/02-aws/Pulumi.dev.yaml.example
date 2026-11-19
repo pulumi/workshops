@@ -1,0 +1,4 @@
+config:
+  aws:region: us-east-1
+  access-aws:trustedAccountId: "123456789012"
+  access-aws:bucketName: access-demo-reports
