@@ -1,0 +1,9 @@
+name: observability-metrics-stack
+description: >-
+  "Observability as code" workshop, step 2: kube-prometheus-stack (Prometheus,
+  Alertmanager, Grafana) plus Grafana Tempo for traces, both via
+  kubernetes.helm.v3.Release into the monitoring namespace.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

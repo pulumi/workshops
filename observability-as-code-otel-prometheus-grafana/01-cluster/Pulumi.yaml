@@ -1,0 +1,8 @@
+name: observability-cluster
+description: >-
+  "Observability as code" workshop, step 1: a local kind cluster with the
+  monitoring and demo namespaces the rest of the workshop deploys into.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

@@ -1,0 +1,9 @@
+# Pinned to a kind release verified 2026-09-28 (kind v0.33.0 release notes,
+# https://github.com/kubernetes-sigs/kind/releases). v1.37 clears the
+# `kubeVersion: >=1.25.0-0` floor that kube-prometheus-stack's CRDs
+# require in step 2.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+nodes:
+  - role: control-plane
+    image: kindest/node:v1.37.0@sha256:a1ed56cfb0e7b93589bdf97c8cd566405a265939e3620fc4f5de89adff580ae5

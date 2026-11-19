@@ -1,0 +1,6 @@
+node_modules/
+dist/
+export-pages/
+slides-export.pdf
+*.png
+!public/**/*.png

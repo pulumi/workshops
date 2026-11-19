@@ -1,0 +1,8 @@
+name: observability-dashboard
+description: >-
+  "Observability as code" workshop, step 5: a Grafana dashboard (metrics +
+  trace panel) auto-discovered by the sidecar configured in step 2.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
