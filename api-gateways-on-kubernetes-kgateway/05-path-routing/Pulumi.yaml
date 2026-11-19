@@ -1,0 +1,8 @@
+name: api-gateways-workshop-path-routing
+description: >-
+  An HTTPRoute that splits traffic on the Gateway by URL path: /a to app-a,
+  /b to app-b.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

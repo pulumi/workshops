@@ -1,0 +1,41 @@
+{
+  "slug": "api-gateways-on-kubernetes-kgateway",
+  "title": "API Gateways on Kubernetes with kgateway",
+  "subtitle": "Provision a Gateway API controller, a Gateway and HTTPRoutes as code with Pulumi IaC",
+  "demo_title": "kgateway and Gateway API",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why Ingress is ending",
+    "What Gateway API changes",
+    "kgateway and Pulumi IaC",
+    "The solution we build",
+    "Demo: routing as code",
+    "Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Gateway API in the Kubernetes docs",
+      "url": "https://kubernetes.io/docs/concepts/services-networking/gateway/",
+      "label": "kubernetes.io/docs"
+    },
+    {
+      "title": "kgateway documentation",
+      "url": "https://kgateway.dev/docs/envoy/latest/about/overview/",
+      "label": "kgateway.dev/docs"
+    },
+    {
+      "title": "Pulumi Kubernetes provider",
+      "url": "https://www.pulumi.com/registry/packages/kubernetes/",
+      "label": "pulumi.com/registry"
+    },
+    {
+      "title": "Ingress NGINX retirement announcement",
+      "url": "https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/",
+      "label": "kubernetes.io/blog"
+    }
+  ]
+}

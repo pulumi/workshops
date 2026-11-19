@@ -1,0 +1,15 @@
+{
+  "name": "api-gateways-workshop-backends",
+  "version": "0.1.0",
+  "private": true,
+  "description": "API gateways as code: app-a and app-b backend Deployments and Services",
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/pulumi": "^3.265.0",
+    "@pulumi/kubernetes": "^4.34.2"
+  }
+}

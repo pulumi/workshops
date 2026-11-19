@@ -1,0 +1,8 @@
+name: api-gateways-workshop-backends
+description: >-
+  Two backend Deployments and Services, app-a and app-b, each returning
+  distinguishable text so routing decisions are visible in curl output.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
