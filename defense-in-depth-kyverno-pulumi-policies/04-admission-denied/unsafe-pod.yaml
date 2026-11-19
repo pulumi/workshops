@@ -1,0 +1,14 @@
+# unsafe-pod.yaml — step 5's demo target: a Pod with no resource limits.
+# Kept as a plain manifest outside the Pulumi program, applied live with
+# kubectl, to show the admission-control path directly (Pulumi is not in
+# this request's way at all; Kyverno's webhook is).
+apiVersion: v1
+kind: Pod
+metadata:
+  name: unsafe-pod
+spec:
+  containers:
+    - name: app
+      image: nginx:1.27
+      # No `resources.limits` block: exactly what require-resource-limits
+      # (03-cluster-policy) rejects.
