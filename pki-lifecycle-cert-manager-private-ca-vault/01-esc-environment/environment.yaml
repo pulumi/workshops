@@ -1,0 +1,23 @@
+# ESC environment pki-workshop/aws-vault
+# Replace the roleArn with an IAM role that trusts the Pulumi Cloud OIDC issuer
+# (https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/aws-login/).
+values:
+  aws:
+    login:
+      fn::open::aws-login:
+        oidc:
+          duration: 1h
+          roleArn: arn:aws:iam::123456789012:role/pulumi-esc-workshop
+          sessionName: pki-workshop
+  vault:
+    # Throwaway token of the Vault dev server installed in step 06. Never reuse it.
+    rootToken:
+      fn::secret: root
+  environmentVariables:
+    AWS_ACCESS_KEY_ID: ${aws.login.accessKeyId}
+    AWS_SECRET_ACCESS_KEY: ${aws.login.secretAccessKey}
+    AWS_SESSION_TOKEN: ${aws.login.sessionToken}
+    AWS_REGION: eu-central-1
+    VAULT_TOKEN: ${vault.rootToken}
+  pulumiConfig:
+    aws:region: eu-central-1

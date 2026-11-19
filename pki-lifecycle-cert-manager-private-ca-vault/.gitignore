@@ -1,0 +1,16 @@
+node_modules/
+dist/
+bin/
+*.log
+.DS_Store
+
+# Presenter-only working docs (DEMO, REHEARSAL, OPEN-QUESTIONS, FACTCHECK ...):
+# the repo publishes the slides, the demo code and the notes that describe them.
+*.md
+!README.md
+!AGENTS.md
+!slides/slides.md
+slides/export-pages/
+slides/dist/
+*.pdf
+slides/*.png

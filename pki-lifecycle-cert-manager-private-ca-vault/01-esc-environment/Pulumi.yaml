@@ -1,0 +1,6 @@
+name: pki-01-esc-environment
+description: "PKI lifecycle workshop: ESC environment"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

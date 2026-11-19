@@ -1,0 +1,6 @@
+name: pki-04-cert-manager-pca-issuer
+description: "PKI lifecycle workshop: cert-manager and AWS Private CA issuer"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

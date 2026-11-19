@@ -1,0 +1,41 @@
+{
+  "slug": "pki-lifecycle-cert-manager-private-ca-vault",
+  "title": "Certificate and PKI lifecycle as code with cert-manager, AWS Private CA and Vault PKI",
+  "subtitle": "Issue, renew and alert on private certificates from two CAs, all declared in Pulumi IaC",
+  "demo_title": "Certificate and PKI lifecycle as code",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why certificates keep expiring",
+    "Private CAs and cert-manager",
+    "Renewal, alerts and Pulumi ESC",
+    "The solution we build",
+    "The demo",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "cert-manager documentation",
+      "url": "https://cert-manager.io/docs/",
+      "label": "cert-manager.io/docs"
+    },
+    {
+      "title": "AWS Private CA user guide",
+      "url": "https://docs.aws.amazon.com/privateca/latest/userguide/PcaWelcome.html",
+      "label": "docs.aws.amazon.com/privateca"
+    },
+    {
+      "title": "Pulumi ESC documentation",
+      "url": "https://www.pulumi.com/docs/esc/",
+      "label": "pulumi.com/docs/esc"
+    },
+    {
+      "title": "Pulumi components",
+      "url": "https://www.pulumi.com/docs/iac/concepts/resources/components/",
+      "label": "pulumi.com/docs/iac/components"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+name: pki-02-eks-cluster
+description: "PKI lifecycle workshop: EKS cluster"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

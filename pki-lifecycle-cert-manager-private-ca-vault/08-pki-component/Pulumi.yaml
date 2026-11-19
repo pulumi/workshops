@@ -1,0 +1,6 @@
+name: pki-08-pki-component
+description: "PKI lifecycle workshop: PkiCertificate component"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

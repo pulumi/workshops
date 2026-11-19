@@ -1,0 +1,6 @@
+name: pki-05-first-certificate
+description: "PKI lifecycle workshop: first certificate from the private CA"
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
