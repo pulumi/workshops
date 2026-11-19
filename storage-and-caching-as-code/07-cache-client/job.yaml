@@ -1,0 +1,28 @@
+# Client Job: writes five keys to Dragonfly, reads them back and fails if a value differs.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cache-client
+  namespace: demo
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: client
+          image: redis:8.2.10-alpine
+          command:
+            - sh
+            - -c
+            - |
+              set -e
+              for i in 1 2 3 4 5; do
+                redis-cli -h dragonfly set "workshop:key:$i" "value-$i" > /dev/null
+              done
+              for i in 1 2 3 4 5; do
+                got="$(redis-cli -h dragonfly get "workshop:key:$i")"
+                echo "workshop:key:$i -> $got"
+                [ "$got" = "value-$i" ]
+              done
+              echo "round trip ok: $(redis-cli -h dragonfly dbsize) keys in Dragonfly"

@@ -1,0 +1,40 @@
+{
+  "slug": "storage-and-caching-as-code",
+  "title": "Storage and caching as code",
+  "subtitle": "Provision Longhorn storage and a DragonflyDB cache on Kubernetes with Pulumi, then kill a node",
+  "demo_title": "Storage and caching",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "The problem with local disks",
+    "Replicated storage",
+    "A cache that speaks Redis",
+    "What we build",
+    "The node failure demo"
+  ],
+  "resources": [
+    {
+      "title": "Longhorn concepts",
+      "url": "https://longhorn.io/docs/latest/concepts/",
+      "label": "longhorn.io/docs"
+    },
+    {
+      "title": "Rook",
+      "url": "https://rook.io/",
+      "label": "rook.io"
+    },
+    {
+      "title": "DragonflyDB docs",
+      "url": "https://www.dragonflydb.io/docs",
+      "label": "dragonflydb.io/docs"
+    },
+    {
+      "title": "Kubernetes volumes",
+      "url": "https://kubernetes.io/docs/concepts/storage/volumes/",
+      "label": "kubernetes.io/docs"
+    }
+  ]
+}

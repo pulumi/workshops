@@ -1,0 +1,11 @@
+name: storage-caching-06-dragonfly
+description: >-
+  Step 6: DragonflyDB (Redis-compatible in-memory store) as a Deployment and Service.
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+config:
+  kubeContext:
+    type: string
+    default: kind-storage-workshop
