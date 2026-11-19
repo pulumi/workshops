@@ -1,0 +1,13 @@
+{
+  "name": "chaos-fis",
+  "private": true,
+  "main": "index.ts",
+  "devDependencies": {
+    "@types/node": "26.6.5",
+    "typescript": "5.9.3"
+  },
+  "dependencies": {
+    "@pulumi/aws": "7.51.1",
+    "@pulumi/pulumi": "3.272.0"
+  }
+}

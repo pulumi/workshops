@@ -1,0 +1,6 @@
+name: chaos-fis
+description: Chaos experiments as code with Pulumi IaC and AWS Fault Injection Service
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm

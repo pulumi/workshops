@@ -1,0 +1,22 @@
+{
+  "name": "chaos-experiments-as-code-aws-fis-slides",
+  "version": "0.1.0",
+  "description": "Chaos experiments as code with Pulumi IaC and AWS Fault Injection Service: Define a chaos experiment as a Pulumi resource, run it on AWS, and block any experiment without a stop condition",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "slidev slides.md --open",
+    "build": "slidev build slides.md",
+    "export": "slidev export slides.md"
+  },
+  "devDependencies": {
+    "@pulumi/slidev-theme": "latest",
+    "@slidev/cli": "^0.50.0",
+    "@slidev/client": "^0.50.0",
+    "@slidev/types": "^0.50.0",
+    "mermaid": "^11.4.0",
+    "playwright-chromium": "^1.64.1",
+    "qrcode": "^1.5.4",
+    "vue": "^3.5.13"
+  }
+}
