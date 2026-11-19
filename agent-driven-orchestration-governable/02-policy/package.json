@@ -1,0 +1,19 @@
+{
+  "name": "agent-orchestration-approval-gate",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Policy pack for the agent-driven-orchestration-governable workshop demo",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node bin/test/rules-test.js"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.9.0"
+  },
+  "dependencies": {
+    "@pulumi/policy": "^1.13.0",
+    "@pulumi/pulumi": "^3.262.0",
+    "@pulumi/random": "^4.21.2"
+  }
+}
