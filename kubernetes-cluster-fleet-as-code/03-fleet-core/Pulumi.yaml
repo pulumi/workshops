@@ -1,0 +1,6 @@
+name: fleet-core
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: The resources every cluster shares - resource group, hubless Azure Kubernetes Fleet Manager fleet, two-stage update strategy.

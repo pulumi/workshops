@@ -1,0 +1,4 @@
+# The start of every per-cluster environment: import the shared base.
+# create.sh then sets the group and the Kubernetes version with `pulumi env set`.
+imports:
+  - fleet/azure-base

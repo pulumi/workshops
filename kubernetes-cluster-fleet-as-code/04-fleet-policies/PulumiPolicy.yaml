@@ -1,0 +1,6 @@
+name: fleet-baseline
+runtime: nodejs
+description: >-
+  Baseline for every AKS cluster in the fleet: Kubernetes 1.35 or 1.36, RBAC on,
+  the tag fleet=workshop, and exactly one agent pool with one node. Mandatory,
+  so a violation stops `pulumi preview` and `pulumi up` before anything reaches Azure.

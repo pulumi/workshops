@@ -1,0 +1,36 @@
+{
+  "slug": "kubernetes-cluster-fleet-as-code",
+  "title": "Run a Kubernetes cluster fleet as code: one component, one stack per cluster, staged upgrades with Pulumi",
+  "subtitle": "Build three AKS clusters from one Pulumi component, roll them out in waves, upgrade them in two stages, and tear them down",
+  "demo_title": "Kubernetes cluster fleet as code",
+  "speakers": [
+    {
+      "placeholder": true
+    }
+  ],
+  "agenda": [
+    "Why one change reaches every cluster",
+    "One component, one stack per cluster",
+    "Credentials, policy and rollout order",
+    "The fleet we will build",
+    "Demo: build, upgrade, destroy",
+    "Wrap-up and Q&A"
+  ],
+  "resources": [
+    {
+      "title": "Azure Kubernetes Fleet Manager overview",
+      "url": "https://learn.microsoft.com/en-us/azure/kubernetes-fleet/overview",
+      "label": "learn.microsoft.com/azure/kubernetes-fleet"
+    },
+    {
+      "title": "Pulumi Automation API",
+      "url": "https://www.pulumi.com/docs/iac/concepts/automation-api/",
+      "label": "pulumi.com/docs/iac/concepts/automation-api"
+    },
+    {
+      "title": "Pulumi ESC: Azure login",
+      "url": "https://www.pulumi.com/docs/esc/integrations/dynamic-login-credentials/azure-login/",
+      "label": "pulumi.com/docs/esc/.../azure-login"
+    }
+  ]
+}

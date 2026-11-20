@@ -1,0 +1,6 @@
+name: fleet-update
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: The fleet update run - upgrade every member from 1.35 to 1.36 through the two-waves strategy.
