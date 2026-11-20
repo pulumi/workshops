@@ -71,8 +71,16 @@ state backend, because ESC environments can only be attached to stacks stored th
 
 ## Run the slides
 
-The deck has not been built yet. It follows on this branch under `slides/`,
-built from the demo flow below.
+The deck is a Slidev deck in `slides/`, built from the demo flow below. The demo
+steps on the slides are the commands in the table in the next section.
+
+```bash
+cd slides
+npm install
+npm run dev      # present from slides.md
+npm run build    # static build into dist/
+npm run export   # export to PDF (needs Playwright's Chromium)
+```
 
 ## Run the demo
 
