@@ -1,0 +1,4 @@
+environment:
+  - fleet/azure-base
+config:
+  fleet-update:kubernetesVersion: "1.36"

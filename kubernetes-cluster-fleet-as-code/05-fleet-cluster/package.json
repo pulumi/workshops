@@ -1,0 +1,21 @@
+{
+  "name": "fleet-cluster",
+  "version": "0.1.0",
+  "private": true,
+  "description": "FleetCluster component, one stack per cluster, and the Automation API rollout driver",
+  "main": "index.ts",
+  "scripts": {
+    "build": "tsc",
+    "rollout": "tsc && node bin/rollout.js"
+  },
+  "dependencies": {
+    "@pulumi/azure-native": "3.32.0",
+    "@pulumi/kubernetes": "4.34.3",
+    "@pulumi/pulumi": "3.277.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "ts-node": "10.9.2",
+    "typescript": "6.0.3"
+  }
+}

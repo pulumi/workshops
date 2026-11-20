@@ -1,0 +1,6 @@
+name: fleet-cluster
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: One AKS cluster per stack - the FleetCluster component, instantiated once. Stacks canary-1, rest-1 and rest-2.

@@ -1,0 +1,17 @@
+[
+  {
+    "name": "canary-1",
+    "group": "canary",
+    "wave": 1
+  },
+  {
+    "name": "rest-1",
+    "group": "rest",
+    "wave": 2
+  },
+  {
+    "name": "rest-2",
+    "group": "rest",
+    "wave": 2
+  }
+]

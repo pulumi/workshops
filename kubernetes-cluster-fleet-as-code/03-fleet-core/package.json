@@ -1,0 +1,15 @@
+{
+  "name": "fleet-core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Shared fleet resources for the cluster fleet workshop",
+  "main": "index.ts",
+  "dependencies": {
+    "@pulumi/pulumi": "3.277.0",
+    "@pulumi/azure-native": "3.32.0"
+  },
+  "devDependencies": {
+    "@types/node": "24.19.2",
+    "typescript": "6.0.3"
+  }
+}
