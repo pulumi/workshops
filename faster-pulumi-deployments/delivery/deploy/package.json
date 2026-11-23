@@ -2,14 +2,11 @@
     "private": true,
     "type": "module",
     "dependencies": {
-        "@pulumi/delivery": "file:../sdk",
-        "@pulumi/pulumi": "3.274.0"
+        "@pulumi/delivery": "0.2.0",
+        "@pulumi/pulumi": "3.277.0"
     },
     "devDependencies": {
         "@types/node": "^22.0.0",
         "typescript": "^5.7.0"
-    },
-    "allowScripts": {
-        "file:../sdk": true
     }
 }

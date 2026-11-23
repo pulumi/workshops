@@ -5,6 +5,8 @@ const config = new pulumi.Config();
 const org = pulumi.getOrganization();
 const branch = config.get("branch") ?? "delivery-tests";
 const buildPipeline = config.get("buildPipeline") ?? `${org}/fpd-build-delivery/main`;
+const registryUsername = config.require("registryUsername");
+const registryPassword = config.requireSecret("registryPassword");
 const root = "faster-pulumi-deployments";
 
 const repo = new delivery.GitHubSource("workshops", {
@@ -19,9 +21,7 @@ const built = new delivery.PipelineSource("built", {
     trigger: true,
 });
 
-const pipeline = new delivery.Pipeline("fpd-deploy", {
-    program: {source: repo, directory: `${root}/delivery/deploy`},
-});
+const pipeline = new delivery.Pipeline("fpd-deploy");
 
 const staging = new delivery.Stage("staging", {pipeline});
 
@@ -34,14 +34,17 @@ const app = new delivery.Stacks("staging", {
             directory: `${root}/programs/go`,
             config: {
                 environment: "staging",
-                buildDigest: built.artifacts.apply(artifacts => String(artifacts["programDigest"] ?? "none")),
-                buildCommit: built.artifacts.apply(artifacts => String(artifacts["commit"] ?? "none")),
+                buildCommit: built.artifacts.apply(artifacts => String(artifacts?.["commit"] ?? "")),
             },
+            image: {
+                reference: built.artifacts.apply(artifacts => String(artifacts?.["imageRef"] ?? "")),
+                credentials: {username: registryUsername, password: registryPassword},
+            },
+            preRunCommands: ["cp Pulumi.image.yaml Pulumi.yaml"],
         },
     },
 });
 
 export const upstreamRelease = built.releaseNumber;
-export const upstreamRun = built.runNumber;
 export const upstreamArtifacts = built.artifacts;
 export const stagingOutputs = app.outputs;
