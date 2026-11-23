@@ -1,8 +1,8 @@
 import * as pulumi from "@pulumi/pulumi";
+import * as aws from "@pulumi/aws";
 import * as dockerBuild from "@pulumi/docker-build";
 
 const config = new pulumi.Config();
-const repository = config.require("repository");
 const commit = config.require("commit");
 const language = config.get("language") ?? "go";
 const pulumiVersion = config.get("pulumiVersion") ?? "3.277.0";
@@ -19,8 +19,18 @@ if (!runtimeImage) {
     throw new Error(`unsupported language: ${language}`);
 }
 
-const [registryHost] = repository.split("/");
-const cacheRef = `${repository}:buildcache-${language}`;
+const usEast1 = new aws.Provider("us-east-1", {region: "us-east-1"});
+
+const repository = new aws.ecrpublic.Repository("executor", {
+    repositoryName: "faster-pulumi-deployments",
+    catalogData: {
+        description: "Prepared Pulumi executor images for the faster Pulumi deployments workshop.",
+    },
+}, {provider: usEast1});
+
+const token = aws.ecrpublic.getAuthorizationTokenOutput({}, {provider: usEast1});
+
+const cacheRef = pulumi.interpolate`${repository.repositoryUri}:buildcache-${language}`;
 
 const image = new dockerBuild.Image("executor", {
     context: {location: "../.."},
@@ -32,14 +42,21 @@ const image = new dockerBuild.Image("executor", {
         RUNTIME_IMAGE: runtimeImage,
         PULUMI_VERSION: pulumiVersion,
     },
-    tags: [`${repository}:${language}-${commit}`],
+    tags: [pulumi.interpolate`${repository.repositoryUri}:${language}-${commit}`],
     push: true,
     cacheFrom: [{registry: {ref: cacheRef}}],
-    cacheTo: [{registry: {ref: cacheRef, mode: dockerBuild.CacheMode.Max}}],
+    cacheTo: [{
+        registry: {
+            ref: cacheRef,
+            mode: dockerBuild.CacheMode.Max,
+            imageManifest: true,
+            ociMediaTypes: true,
+        },
+    }],
     registries: [{
-        address: registryHost,
-        username: process.env.REGISTRY_USERNAME,
-        password: pulumi.secret(process.env.REGISTRY_PASSWORD ?? ""),
+        address: "public.ecr.aws",
+        username: token.userName,
+        password: pulumi.secret(token.password),
     }],
 });
 

@@ -4,9 +4,6 @@ import * as delivery from "@pulumi/delivery";
 const config = new pulumi.Config();
 const org = pulumi.getOrganization();
 const branch = config.get("branch") ?? "delivery-tests";
-const repository = config.require("repository");
-const registryUsername = config.require("registryUsername");
-const registryPassword = config.requireSecret("registryPassword");
 const root = "faster-pulumi-deployments";
 const project = `${org}/faster-pulumi-deployments`;
 
@@ -36,11 +33,7 @@ const image = new delivery.Stacks("image", {
             stack: `${org}/fpd-image-delivery/go`,
             source: repo,
             directory: `${root}/delivery/image`,
-            config: {repository, commit: repo.commit, language: "go"},
-            environment: {
-                REGISTRY_USERNAME: registryUsername,
-                REGISTRY_PASSWORD: registryPassword,
-            },
+            config: {commit: repo.commit, language: "go"},
         },
     },
 });
@@ -59,10 +52,7 @@ function deployImage(stage: delivery.Stage, name: string, environment: string): 
                 source: repo,
                 directory: `${root}/programs/go`,
                 config: {environment},
-                image: {
-                    reference: imageRef,
-                    credentials: {username: registryUsername, password: registryPassword},
-                },
+                image: {reference: imageRef},
                 preRunCommands: ["cp Pulumi.image.yaml Pulumi.yaml"],
             },
         },

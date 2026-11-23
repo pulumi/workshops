@@ -5,8 +5,6 @@ const config = new pulumi.Config();
 const org = pulumi.getOrganization();
 const branch = config.get("branch") ?? "delivery-tests";
 const buildPipeline = config.get("buildPipeline") ?? `${org}/fpd-build-delivery/main`;
-const registryUsername = config.require("registryUsername");
-const registryPassword = config.requireSecret("registryPassword");
 const root = "faster-pulumi-deployments";
 
 const repo = new delivery.GitHubSource("workshops", {
@@ -38,7 +36,6 @@ const app = new delivery.Stacks("staging", {
             },
             image: {
                 reference: built.artifacts.apply(artifacts => String(artifacts?.["imageRef"] ?? "")),
-                credentials: {username: registryUsername, password: registryPassword},
             },
             preRunCommands: ["cp Pulumi.image.yaml Pulumi.yaml"],
         },
