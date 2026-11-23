@@ -1,0 +1,6 @@
+config:
+  fpd-build-delivery:branch: delivery-tests
+  delivery:source:
+    directory: faster-pulumi-deployments/delivery/build
+    url: https://github.com/pulumi/workshops
+    branch: delivery-tests
