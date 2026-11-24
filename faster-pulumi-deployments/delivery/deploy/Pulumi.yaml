@@ -1,0 +1,6 @@
+name: fpd-deploy-delivery
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: Deploys the build that another pipeline published, using its artifacts as stack configuration.

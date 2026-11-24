@@ -1,0 +1,6 @@
+name: fpd-image-delivery
+runtime:
+  name: nodejs
+  options:
+    packagemanager: npm
+description: Builds the prepared executor image for one language and pushes it with a registry build cache.
